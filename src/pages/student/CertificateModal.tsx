@@ -2,6 +2,7 @@ import React from 'react';
 import { Certificate } from '../../types';
 import { X, Award, CheckCircle, Printer, ExternalLink, ShieldCheck } from 'lucide-react';
 import { navigateTo } from '../../utils/navigation';
+import { BRAND_ASSETS } from '../../utils/brand';
 
 interface CertificateModalProps {
   certificate: Certificate;
@@ -54,10 +55,12 @@ export const CertificateModal: React.FC<CertificateModalProps> = ({ certificate,
         <div className="relative border-8 border-double border-slate-800 p-8 sm:p-12 text-center bg-gradient-to-b from-white via-slate-50/50 to-white rounded-xl shadow-inner space-y-6">
           {/* Top Seal & Monogram */}
           <div className="flex flex-col items-center justify-center">
-            <div className="w-14 h-14 rounded-full bg-slate-950 text-teal-400 flex items-center justify-center border-2 border-teal-500/40 shadow-sm mb-2">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" className="w-7 h-7">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
-              </svg>
+            <div className="w-16 h-16 rounded-2xl bg-white flex items-center justify-center border-2 border-amber-400/60 shadow-md p-2 mb-2 ring-4 ring-amber-100">
+              <img
+                src={BRAND_ASSETS.logoMark}
+                alt="Hridayam Official Seal"
+                className="w-12 h-12 object-contain"
+              />
             </div>
             <h3 className="text-sm font-bold tracking-widest uppercase text-slate-900">
               HRIDAYAM BY BELVO

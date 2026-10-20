@@ -3,6 +3,7 @@ import { useAuth } from '../../context/AuthContext';
 import { navigateTo } from '../../utils/navigation';
 import { Menu, X, ChevronDown, User, ShieldCheck, BookOpen, LogOut, Award, Layers } from 'lucide-react';
 import { NotificationBell } from './NotificationBell';
+import { BRAND_ASSETS } from '../../utils/brand';
 
 export const Navbar: React.FC<{ currentPath: string }> = ({ currentPath }) => {
   const { currentUser, role, isAuthenticated, isAdmin, isStudent, logout, switchRole } = useAuth();
@@ -84,16 +85,15 @@ export const Navbar: React.FC<{ currentPath: string }> = ({ currentPath }) => {
           <a
             href="#/"
             onClick={(e) => { e.preventDefault(); handleNavClick('#/'); }}
-            className="flex items-center gap-2.5 text-slate-900 group"
+            className="flex items-center gap-2.5 text-slate-900 group select-none"
           >
-            <div className="w-9 h-9 rounded-lg bg-gradient-to-tr from-slate-950 via-slate-900 to-teal-800 flex items-center justify-center text-white shadow-sm ring-1 ring-slate-800/10">
-              {/* Custom Hridayam Geometric Monogram */}
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" className="w-5 h-5 text-teal-400">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
-              </svg>
-            </div>
+            <img
+              src={BRAND_ASSETS.logoMark}
+              alt="Hridayam Logo"
+              className="w-10 h-10 object-contain drop-shadow-xs transition-transform duration-200 group-hover:scale-105"
+            />
             <div className="flex flex-col">
-              <span className="text-xl font-bold tracking-tight text-slate-950 leading-tight">
+              <span className="text-xl font-bold tracking-tight text-slate-950 leading-tight group-hover:text-purple-900 transition-colors">
                 Hridayam
               </span>
               <span className="text-[10px] uppercase tracking-wider font-semibold text-slate-500">

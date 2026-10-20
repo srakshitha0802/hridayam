@@ -4,6 +4,7 @@ import { storageService } from '../../services/storage';
 import { Course, Category, Enrolment, Certificate, Announcement, PlatformSettings, EmailNotification, Module, Lesson, Resource } from '../../types';
 import { navigateTo } from '../../utils/navigation';
 import { EmailPreviewModal } from '../../components/common/EmailPreviewModal';
+import { BRAND_ASSETS } from '../../utils/brand';
 import {
   Layers,
   BookOpen,
@@ -472,21 +473,30 @@ export const AdminDashboard: React.FC = () => {
     <div className="max-w-7xl mx-auto px-4 sm:px-6 py-10 space-y-8">
       {/* Admin Header */}
       <div className="bg-slate-950 text-white rounded-2xl p-6 sm:p-8 flex flex-col md:flex-row items-start md:items-center justify-between gap-6 border border-slate-800 shadow-md">
-        <div className="space-y-1">
-          <div className="flex items-center gap-2">
-            <span className="text-xs font-mono uppercase tracking-wider text-teal-400">
-              Belvo Governance
-            </span>
-            <span className="text-[10px] font-mono bg-teal-950 text-teal-300 border border-teal-800/80 px-2 py-0.5 rounded">
-              Super Admin
-            </span>
+        <div className="flex items-start gap-4">
+          <div className="w-12 h-12 rounded-xl bg-white/10 p-1.5 flex items-center justify-center border border-white/15 shadow-xs shrink-0 mt-0.5">
+            <img
+              src={BRAND_ASSETS.logoMark}
+              alt="Hridayam Logo"
+              className="w-9 h-9 object-contain"
+            />
           </div>
-          <h1 className="text-2xl font-extrabold tracking-tight text-white">
-            Hridayam Management Console
-          </h1>
-          <p className="text-xs text-slate-400">
-            Real-time curriculum management, student progress verification, and gateway configurations.
-          </p>
+          <div className="space-y-1">
+            <div className="flex items-center gap-2">
+              <span className="text-xs font-mono uppercase tracking-wider text-teal-400">
+                Belvo Governance
+              </span>
+              <span className="text-[10px] font-mono bg-teal-950 text-teal-300 border border-teal-800/80 px-2 py-0.5 rounded">
+                Super Admin
+              </span>
+            </div>
+            <h1 className="text-2xl font-extrabold tracking-tight text-white">
+              Hridayam Management Console
+            </h1>
+            <p className="text-xs text-slate-400">
+              Real-time curriculum management, student progress verification, and gateway configurations.
+            </p>
+          </div>
         </div>
 
         <button

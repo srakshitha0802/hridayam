@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Course, User, EmailNotification } from '../../types';
 import { storageService } from '../../services/storage';
 import { EmailPreviewModal } from './EmailPreviewModal';
+import { BRAND_ASSETS } from '../../utils/brand';
 import {
   ShieldCheck,
   CreditCard,
@@ -128,8 +129,12 @@ export const RazorpayCheckoutModal: React.FC<RazorpayCheckoutModalProps> = ({
         {/* Razorpay Top Header */}
         <div className="bg-slate-950 text-white p-5 flex items-center justify-between border-b border-slate-800">
           <div className="flex items-center gap-3">
-            <div className="w-9 h-9 rounded-lg bg-teal-500/20 border border-teal-400/40 flex items-center justify-center text-teal-400">
-              <Lock className="w-5 h-5" />
+            <div className="w-10 h-10 rounded-xl bg-white/10 p-1 flex items-center justify-center border border-white/15 shadow-xs">
+              <img
+                src={BRAND_ASSETS.logoMark}
+                alt="Hridayam Logo"
+                className="w-8 h-8 object-contain"
+              />
             </div>
             <div>
               <div className="flex items-center gap-2">

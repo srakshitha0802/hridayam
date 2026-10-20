@@ -5,6 +5,7 @@ import { CourseCard } from '../components/common/CourseCard';
 import { CategoryCard } from '../components/common/CategoryCard';
 import { VideoModal } from '../components/common/VideoModal';
 import { navigateTo } from '../utils/navigation';
+import { BRAND_ASSETS } from '../utils/brand';
 import {
   Search,
   ArrowRight,
@@ -242,8 +243,8 @@ export const HomePage: React.FC = () => {
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
             {/* Left Column: Compelling Copy */}
             <div className="lg:col-span-7 space-y-6 text-left">
-              <div className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-teal-800 bg-teal-50 border border-teal-200/80 px-3 py-1 rounded-md">
-                <Sparkles className="w-3.5 h-3.5 text-teal-600" />
+              <div className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-slate-800 bg-purple-50/70 border border-purple-200/80 px-3 py-1.5 rounded-full shadow-2xs">
+                <img src={BRAND_ASSETS.logoMark} alt="Hridayam" className="w-4 h-4 object-contain" />
                 <span>The Learning Platform by Belvo</span>
               </div>
 
@@ -471,7 +472,7 @@ export const HomePage: React.FC = () => {
                   </div>
                   <div>
                     <span className="text-slate-400 block text-[10px]">Duration</span>
-                    <span className="font-semibold text-white">{matchedCourse.duration}</span>
+                    <span className="font-semibold text-white">{matchedCourse.durationHours} hrs</span>
                   </div>
                   <div>
                     <span className="text-slate-400 block text-[10px]">Format</span>
@@ -725,9 +726,9 @@ export const HomePage: React.FC = () => {
               <thead>
                 <tr className="border-b border-slate-200 bg-slate-50/80">
                   <th className="py-4 px-6 font-bold text-slate-900 uppercase tracking-wider">Evaluation Dimension</th>
-                  <th className="py-4 px-6 font-bold text-teal-800 bg-teal-50/70 border-x border-teal-100 uppercase tracking-wider">
-                    <span className="flex items-center gap-1.5">
-                      <Sparkles className="w-3.5 h-3.5 text-teal-600" />
+                  <th className="py-4 px-6 font-bold text-slate-900 bg-purple-50/70 border-x border-purple-100 uppercase tracking-wider">
+                    <span className="flex items-center gap-2">
+                      <img src={BRAND_ASSETS.logoMark} alt="Hridayam" className="w-5 h-5 object-contain" />
                       Hridayam by Belvo
                     </span>
                   </th>

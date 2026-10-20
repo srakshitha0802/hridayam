@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { navigateTo } from '../../utils/navigation';
 import { Mail, Phone, MapPin, ArrowRight, CheckCircle2 } from 'lucide-react';
 import { storageService } from '../../services/storage';
+import { BRAND_ASSETS } from '../../utils/brand';
 
 export const Footer: React.FC = () => {
   const settings = storageService.getSettings();
@@ -23,13 +24,15 @@ export const Footer: React.FC = () => {
           {/* Brand info */}
           <div className="lg:col-span-2 space-y-4">
             <div className="flex items-center gap-2.5">
-              <div className="w-8 h-8 rounded-lg bg-teal-500/10 border border-teal-500/20 flex items-center justify-center text-teal-400">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" className="w-4 h-4">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
-                </svg>
+              <div className="w-9 h-9 rounded-xl bg-white/10 p-1 flex items-center justify-center border border-white/10 shadow-xs">
+                <img
+                  src={BRAND_ASSETS.logoMark}
+                  alt="Hridayam Logo"
+                  className="w-7 h-7 object-contain drop-shadow-xs"
+                />
               </div>
               <span className="text-xl font-bold tracking-tight text-white">Hridayam</span>
-              <span className="text-xs uppercase tracking-wider font-semibold text-slate-500">by Belvo</span>
+              <span className="text-xs uppercase tracking-wider font-semibold text-slate-400">by Belvo</span>
             </div>
 
             <p className="text-xs text-slate-400 leading-relaxed max-w-sm">

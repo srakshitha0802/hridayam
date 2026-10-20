@@ -1,17 +1,27 @@
 import React from 'react';
 import { navigateTo } from '../utils/navigation';
 import { Award, Compass, ShieldCheck, Code2, Users, ArrowRight } from 'lucide-react';
+import { BRAND_ASSETS } from '../utils/brand';
 
 export const AboutHridayamPage: React.FC = () => {
   return (
     <div className="max-w-4xl mx-auto px-4 sm:px-6 py-16 space-y-12">
-      <div className="border-b border-slate-200 pb-8 space-y-3">
-        <span className="text-xs font-mono uppercase tracking-wider text-teal-700 font-semibold">
-          Platform Origins
-        </span>
-        <h1 className="text-3xl sm:text-4xl font-extrabold text-slate-950 tracking-tight">
-          About Hridayam
-        </h1>
+      <div className="border-b border-slate-200 pb-8 space-y-4">
+        <div className="inline-block p-4 bg-gradient-to-br from-slate-50 to-purple-50/30 rounded-2xl border border-slate-200/80 shadow-xs">
+          <img
+            src={BRAND_ASSETS.logoFull}
+            alt="Hridayam by Belvo Logo"
+            className="h-24 sm:h-28 w-auto object-contain"
+          />
+        </div>
+        <div>
+          <span className="text-xs font-mono uppercase tracking-wider text-teal-700 font-semibold block mb-1">
+            Platform Origins
+          </span>
+          <h1 className="text-3xl sm:text-4xl font-extrabold text-slate-950 tracking-tight">
+            About Hridayam
+          </h1>
+        </div>
         <p className="text-base text-slate-600 leading-relaxed">
           Hridayam (from the Sanskrit for "core" or "heart") was founded by Belvo to redefine professional technical and creative training around authentic agency practice.
         </p>

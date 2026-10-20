@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { navigateTo } from '../utils/navigation';
 import { Mail, Lock, User, ArrowRight, CheckCircle2, ShieldCheck } from 'lucide-react';
+import { BRAND_ASSETS } from '../utils/brand';
 
 export const LoginPage: React.FC = () => {
   const { login, switchRole } = useAuth();
@@ -38,6 +39,13 @@ export const LoginPage: React.FC = () => {
   return (
     <div className="max-w-md mx-auto px-4 py-16 space-y-6">
       <div className="text-center space-y-2">
+        <a href="#/" className="inline-block group mb-1">
+          <img
+            src={BRAND_ASSETS.logoMark}
+            alt="Hridayam Logo"
+            className="w-12 h-12 mx-auto object-contain transition-transform duration-200 group-hover:scale-105"
+          />
+        </a>
         <h1 className="text-2xl font-extrabold text-slate-950 tracking-tight">
           Sign In to Hridayam
         </h1>
@@ -153,6 +161,13 @@ export const RegisterPage: React.FC = () => {
   return (
     <div className="max-w-md mx-auto px-4 py-16 space-y-6">
       <div className="text-center space-y-2">
+        <a href="#/" className="inline-block group mb-1">
+          <img
+            src={BRAND_ASSETS.logoMark}
+            alt="Hridayam Logo"
+            className="w-12 h-12 mx-auto object-contain transition-transform duration-200 group-hover:scale-105"
+          />
+        </a>
         <h1 className="text-2xl font-extrabold text-slate-950 tracking-tight">
           Student Registration
         </h1>
