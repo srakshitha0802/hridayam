@@ -1,7 +1,8 @@
 # Hridayam by Belvo — Digital Learning Platform
 
 > **Practical learning. Real-world skills. Career growth.**  
-> Built and maintained by digital agency practitioners at **Belvo**.
+> Built and maintained by digital agency practitioners at **Belvo**.  
+> 🌐 **Live Demo**: [https://srakshitha0802.github.io/hridayam/](https://srakshitha0802.github.io/hridayam/)
 
 Hridayam is Belvo's flagship digital learning platform, designed to bridge the gap between academic theory and high-standard digital agency execution. It equips students, professionals, creators, and entrepreneurs with production-grade skills through structured curricula, real-world portfolio deliverables, rigorous assessments, and verifiable digital credentials.
 
