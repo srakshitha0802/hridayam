@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Hridayam by Belvo</title>
+    <script>
+      // Single Page App redirect for GitHub Pages
+      const repo = '/hridayam';
+      const pathname = window.location.pathname;
+      const subpath = pathname.startsWith(repo)
+        ? pathname.slice(repo.length)
+        : pathname;
+      const cleanSubpath = subpath.startsWith('/') ? subpath : '/' + subpath;
+      window.location.replace(repo + '/#' + (cleanSubpath === '/' ? '' : cleanSubpath) + window.location.search);
+    </script>
+  </head>
+  <body>
+    <p>Redirecting to Hridayam by Belvo...</p>
+  </body>
+</html>
