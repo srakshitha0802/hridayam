@@ -1,0 +1,6 @@
+{
+  "name": "Hridayam by Belvo",
+  "description": "Digital learning platform by Belvo offering practical, industry-relevant courses, projects, and assessments in technology, design, and business.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
