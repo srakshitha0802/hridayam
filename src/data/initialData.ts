@@ -1,4 +1,4 @@
-import { Category, Course, LearningPath, User, Enrolment, Certificate, Announcement, PlatformSettings, EmailNotification } from '../types';
+import { Category, Course, LearningPath, User, Enrolment, Certificate, Announcement, PlatformSettings, EmailNotification, EnquiryLead } from '../types';
 
 export const INITIAL_CATEGORIES: Category[] = [
   {
@@ -19,7 +19,7 @@ export const INITIAL_CATEGORIES: Category[] = [
     description: 'Build modern responsive web applications, robust backend services, APIs, and scalable software systems.',
     subtopics: ['HTML, CSS, JavaScript', 'Frontend & backend frameworks', 'Full-stack application architecture', 'Databases, REST APIs & Git'],
     iconName: 'Code',
-    colorAccent: 'teal',
+    colorAccent: 'pink',
     displayOrder: 2,
     isActive: true,
   },
@@ -118,7 +118,7 @@ export const INITIAL_CATEGORIES: Category[] = [
     description: 'Transform raw datasets into actionable executive dashboards using spreadsheet modeling, SQL, and PowerBI.',
     subtopics: ['Advanced spreadsheet modeling', 'SQL queries & aggregation', 'Interactive dashboard design', 'Metric KPI formulation'],
     iconName: 'BarChart3',
-    colorAccent: 'cyan',
+    colorAccent: 'pink',
     displayOrder: 11,
     isActive: true,
   },
@@ -1061,7 +1061,7 @@ export const INITIAL_LEARNING_PATHS: LearningPath[] = [
       'Integrate cloud databases and write protected REST APIs',
       'Automate deployment pipelines and background task workers'
     ],
-    badgeColor: 'teal'
+    badgeColor: 'pink'
   },
   {
     id: 'path-2',
@@ -1121,7 +1121,7 @@ export const INITIAL_LEARNING_PATHS: LearningPath[] = [
       'Model business metrics and cohort retention analyses',
       'Build interactive dashboards for executive decision making'
     ],
-    badgeColor: 'cyan'
+    badgeColor: 'berry'
   },
   {
     id: 'path-6',
@@ -1321,6 +1321,31 @@ export const INITIAL_NOTIFICATIONS: EmailNotification[] = [
       courseTitle: 'Motion Graphics, VFX & Video Editing Masterclass',
       amount: 2999
     }
+  }
+];
+
+export const INITIAL_ENQUIRIES: EnquiryLead[] = [
+  {
+    id: 'enq-2026-001',
+    fullName: 'Pooja Kashyap',
+    email: 'pooja.kashyap@example.com',
+    phone: '+91 98450 12345',
+    areaOfInterest: 'Web & Software Development',
+    currentStatus: 'Student',
+    consent: true,
+    submittedAt: '2026-03-12T10:30:00Z',
+    status: 'new'
+  },
+  {
+    id: 'enq-2026-002',
+    fullName: 'Aditya Sen',
+    email: 'aditya.sen@example.com',
+    phone: '+91 97110 54321',
+    areaOfInterest: 'AI & Workflow Automation',
+    currentStatus: 'Working Professional',
+    consent: true,
+    submittedAt: '2026-03-11T15:20:00Z',
+    status: 'contacted'
   }
 ];
 

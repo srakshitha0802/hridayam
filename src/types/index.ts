@@ -216,3 +216,15 @@ export interface EmailNotification {
   };
 }
 
+export interface EnquiryLead {
+  id: string;
+  fullName: string;
+  email: string;
+  phone: string;
+  areaOfInterest: string;
+  currentStatus: 'Student' | 'Graduate' | 'Working Professional' | 'Other';
+  consent: boolean;
+  submittedAt: string;
+  status: 'new' | 'contacted' | 'enrolled';
+}
+

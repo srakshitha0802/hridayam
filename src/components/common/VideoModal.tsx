@@ -54,13 +54,13 @@ export const VideoModal: React.FC<VideoModalProps> = ({
         {/* Top Header */}
         <div className="px-6 py-4 border-b border-slate-800/80 flex items-center justify-between bg-slate-900/50">
           <div className="flex items-center gap-3">
-            <div className="w-8 h-8 rounded-lg bg-teal-500/20 text-teal-400 flex items-center justify-center border border-teal-500/30">
+            <div className="w-8 h-8 rounded-lg bg-[#C2185B]/20 text-[#E83E8C] flex items-center justify-center border border-[#C2185B]/40">
               <Play className="w-4 h-4 fill-current ml-0.5" />
             </div>
             <div>
               <div className="flex items-center gap-2">
                 {categoryName && (
-                  <span className="text-[10px] font-mono uppercase text-teal-400 font-semibold tracking-wider">
+                  <span className="text-[10px] font-mono uppercase text-[#E83E8C] font-semibold tracking-wider">
                     {categoryName}
                   </span>
                 )}
@@ -99,7 +99,7 @@ export const VideoModal: React.FC<VideoModalProps> = ({
         {/* Bottom Details Footer */}
         <div className="p-4 bg-slate-900/90 border-t border-slate-800 flex items-center justify-between text-xs text-slate-400">
           <div className="flex items-center gap-2">
-            <Sparkles className="w-4 h-4 text-teal-400" />
+            <Sparkles className="w-4 h-4 text-[#E83E8C]" />
             <span>Hridayam High-Definition Agency Stream</span>
           </div>
           {subtitle && <p className="text-slate-300 italic max-w-sm truncate">{subtitle}</p>}

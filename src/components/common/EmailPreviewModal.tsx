@@ -54,13 +54,13 @@ export const EmailPreviewModal: React.FC<EmailPreviewModalProps> = ({
         {/* Email Client Simulated Header */}
         <div className="bg-slate-950 text-white p-4 sm:p-5 flex items-center justify-between border-b border-slate-800">
           <div className="flex items-center gap-3">
-            <div className="w-8 h-8 rounded-lg bg-teal-500/20 border border-teal-400/30 flex items-center justify-center text-teal-400">
+            <div className="w-8 h-8 rounded-lg bg-[#C2185B]/20 border border-[#C2185B]/30 flex items-center justify-center text-[#E83E8C]">
               <Mail className="w-4 h-4" />
             </div>
             <div>
               <div className="flex items-center gap-2">
                 <span className="text-xs font-bold text-white tracking-tight">Transactional Email Notification</span>
-                <span className="text-[10px] uppercase font-mono px-1.5 py-0.5 rounded bg-teal-900 text-teal-300 font-semibold border border-teal-700">
+                <span className="text-[10px] uppercase font-mono px-1.5 py-0.5 rounded bg-[#760D3B] text-[#FCE7F3] font-semibold border border-[#C2185B]">
                   Resend / Belvo Mailer
                 </span>
               </div>
@@ -132,7 +132,7 @@ export const EmailPreviewModal: React.FC<EmailPreviewModalProps> = ({
           {notification.category === 'payment' && (
             <div className="bg-slate-50 border border-slate-200 rounded-xl p-5 space-y-4">
               <div className="flex items-center justify-between border-b border-slate-200 pb-3">
-                <span className="text-xs font-bold uppercase tracking-wider text-teal-800 flex items-center gap-1.5">
+                <span className="text-xs font-bold uppercase tracking-wider text-[#760D3B] flex items-center gap-1.5">
                   <CreditCard className="w-4 h-4" />
                   <span>Tax Invoice Breakdown (GST Included)</span>
                 </span>
@@ -160,7 +160,7 @@ export const EmailPreviewModal: React.FC<EmailPreviewModalProps> = ({
                 </div>
                 <div className="flex justify-between border-t border-slate-200 pt-2 font-bold text-slate-900">
                   <span>Total Amount Paid:</span>
-                  <span className="text-teal-700">₹{(notification.metadata?.amount || 0).toLocaleString('en-IN')}</span>
+                  <span className="text-[#C2185B]">₹{(notification.metadata?.amount || 0).toLocaleString('en-IN')}</span>
                 </div>
               </div>
             </div>
@@ -183,8 +183,8 @@ export const EmailPreviewModal: React.FC<EmailPreviewModalProps> = ({
           )}
 
           {notification.category === 'enrolment' && (
-            <div className="bg-teal-50/70 border border-teal-200 rounded-xl p-5 space-y-3">
-              <div className="flex items-center gap-2 text-teal-800 font-bold text-xs uppercase tracking-wider">
+            <div className="bg-[#FCE7F3]/70 border border-[#F0D6E3] rounded-xl p-5 space-y-3">
+              <div className="flex items-center gap-2 text-[#760D3B] font-bold text-xs uppercase tracking-wider">
                 <CheckCircle2 className="w-4 h-4" />
                 <span>Immediate Classroom Access Granted</span>
               </div>
@@ -195,8 +195,8 @@ export const EmailPreviewModal: React.FC<EmailPreviewModalProps> = ({
           )}
 
           {notification.category === 'quiz' && (
-            <div className="bg-sky-50/70 border border-sky-200 rounded-xl p-5 space-y-3">
-              <div className="flex items-center gap-2 text-sky-800 font-bold text-xs uppercase tracking-wider">
+            <div className="bg-pink-50/70 border border-[#F0D6E3] rounded-xl p-5 space-y-3">
+              <div className="flex items-center gap-2 text-[#760D3B] font-bold text-xs uppercase tracking-wider">
                 <BookOpen className="w-4 h-4" />
                 <span>Curriculum Evaluation Result</span>
               </div>
@@ -204,7 +204,7 @@ export const EmailPreviewModal: React.FC<EmailPreviewModalProps> = ({
                 Course: <strong>{notification.metadata?.courseTitle}</strong>
               </p>
               <div className="text-sm font-bold text-slate-900">
-                Score Achieved: <span className="text-teal-700">{notification.metadata?.quizScore}%</span>
+                Score Achieved: <span className="text-[#C2185B] font-mono">{notification.metadata?.quizScore}%</span>
               </div>
             </div>
           )}
@@ -213,7 +213,7 @@ export const EmailPreviewModal: React.FC<EmailPreviewModalProps> = ({
           <div className="pt-2 flex flex-col sm:flex-row items-center gap-3">
             <button
               onClick={handleAction}
-              className="w-full sm:w-auto px-6 py-3 bg-slate-950 hover:bg-slate-800 text-white text-xs font-bold uppercase tracking-wider rounded-xl transition-all shadow-sm hover:shadow flex items-center justify-center gap-2 cursor-pointer"
+              className="w-full sm:w-auto px-6 py-3 bg-[#C2185B] hover:bg-[#760D3B] text-white text-xs font-bold uppercase tracking-wider rounded-xl transition-all shadow-md shadow-[#C2185B]/20 flex items-center justify-center gap-2 cursor-pointer"
             >
               <span>
                 {notification.category === 'enrolment' ? 'Enter Classroom' : notification.category === 'certificate' ? 'Verify Certificate' : 'Go to Course'}

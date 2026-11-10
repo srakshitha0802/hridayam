@@ -5,7 +5,7 @@ export const PrivacyPolicyPage: React.FC = () => {
   return (
     <div className="max-w-4xl mx-auto px-4 sm:px-6 py-16 space-y-8 text-slate-800">
       <div className="border-b border-slate-200 pb-6 space-y-2">
-        <div className="flex items-center gap-1.5 text-xs font-mono uppercase text-teal-700 font-semibold">
+        <div className="flex items-center gap-1.5 text-xs font-mono uppercase text-[#C2185B] font-semibold">
           <ShieldCheck className="w-4 h-4" />
           <span>Governance & Compliance</span>
         </div>
@@ -51,7 +51,7 @@ export const TermsPage: React.FC = () => {
   return (
     <div className="max-w-4xl mx-auto px-4 sm:px-6 py-16 space-y-8 text-slate-800">
       <div className="border-b border-slate-200 pb-6 space-y-2">
-        <div className="flex items-center gap-1.5 text-xs font-mono uppercase text-teal-700 font-semibold">
+        <div className="flex items-center gap-1.5 text-xs font-mono uppercase text-[#C2185B] font-semibold">
           <FileText className="w-4 h-4" />
           <span>Legal Agreement</span>
         </div>
@@ -89,7 +89,7 @@ export const RefundPolicyPage: React.FC = () => {
   return (
     <div className="max-w-4xl mx-auto px-4 sm:px-6 py-16 space-y-8 text-slate-800">
       <div className="border-b border-slate-200 pb-6 space-y-2">
-        <div className="flex items-center gap-1.5 text-xs font-mono uppercase text-teal-700 font-semibold">
+        <div className="flex items-center gap-1.5 text-xs font-mono uppercase text-[#C2185B] font-semibold">
           <RefreshCw className="w-4 h-4" />
           <span>Fair Purchase Guarantee</span>
         </div>

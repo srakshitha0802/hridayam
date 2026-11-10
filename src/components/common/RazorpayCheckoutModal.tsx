@@ -139,7 +139,7 @@ export const RazorpayCheckoutModal: React.FC<RazorpayCheckoutModalProps> = ({
             <div>
               <div className="flex items-center gap-2">
                 <span className="text-sm font-bold text-white tracking-tight">Razorpay Secure Checkout</span>
-                <span className="text-[10px] uppercase font-mono px-1.5 py-0.5 rounded bg-teal-500/20 text-teal-300 font-semibold border border-teal-500/30">
+                <span className="text-[10px] uppercase font-mono px-1.5 py-0.5 rounded bg-[#C2185B]/25 text-[#FCE7F3] font-semibold border border-[#C2185B]/40">
                   {settings.razorpaySandboxMode ? 'Test Sandbox' : 'Live Gateway'}
                 </span>
               </div>
@@ -190,7 +190,7 @@ export const RazorpayCheckoutModal: React.FC<RazorpayCheckoutModalProps> = ({
               </div>
               <div className="flex items-center justify-between pt-1 font-sans">
                 <span className="text-slate-500 font-medium">Total Paid (Incl. 18% GST):</span>
-                <span className="text-base font-extrabold text-teal-800">₹{finalPrice.toLocaleString('en-IN')}</span>
+                <span className="text-base font-extrabold text-[#760D3B]">₹{finalPrice.toLocaleString('en-IN')}</span>
               </div>
             </div>
 
@@ -198,7 +198,7 @@ export const RazorpayCheckoutModal: React.FC<RazorpayCheckoutModalProps> = ({
             <div className="flex flex-col sm:flex-row items-center justify-center gap-3 pt-2">
               <button
                 onClick={() => onSuccess(paymentId)}
-                className="w-full sm:w-auto px-6 py-3 bg-slate-950 hover:bg-slate-800 text-white text-xs font-bold uppercase tracking-wider rounded-xl transition-all shadow-sm flex items-center justify-center gap-2 cursor-pointer"
+                className="w-full sm:w-auto px-6 py-3 bg-[#C2185B] hover:bg-[#760D3B] text-white text-xs font-bold uppercase tracking-wider rounded-xl transition-all shadow-md shadow-[#C2185B]/20 flex items-center justify-center gap-2 cursor-pointer"
               >
                 <span>Enter Classroom Now</span>
                 <ArrowRight className="w-4 h-4" />
@@ -214,7 +214,7 @@ export const RazorpayCheckoutModal: React.FC<RazorpayCheckoutModalProps> = ({
 
               <button
                 onClick={() => setShowInvoiceModal(true)}
-                className="w-full sm:w-auto px-4 py-3 bg-teal-50 hover:bg-teal-100 text-teal-800 text-xs font-semibold rounded-xl transition-colors flex items-center justify-center gap-1.5 cursor-pointer"
+                className="w-full sm:w-auto px-4 py-3 bg-[#FCE7F3]/70 hover:bg-[#FCE7F3] text-[#760D3B] text-xs font-semibold rounded-xl transition-colors flex items-center justify-center gap-1.5 cursor-pointer"
               >
                 <Mail className="w-4 h-4" />
                 <span>View Email Receipt</span>
@@ -227,7 +227,7 @@ export const RazorpayCheckoutModal: React.FC<RazorpayCheckoutModalProps> = ({
             {/* Course Summary Box */}
             <div className="bg-slate-50 border border-slate-200 rounded-xl p-4 flex items-center justify-between">
               <div>
-                <span className="text-[10px] font-mono uppercase text-teal-700 font-semibold">Course Purchase</span>
+                <span className="text-[10px] font-mono uppercase text-[#C2185B] font-semibold">Course Purchase</span>
                 <h4 className="text-sm font-bold text-slate-900 truncate max-w-xs">{course.title}</h4>
                 <p className="text-[11px] text-slate-500 mt-0.5">Includes full curriculum, code assets & certificate</p>
               </div>
@@ -237,7 +237,7 @@ export const RazorpayCheckoutModal: React.FC<RazorpayCheckoutModalProps> = ({
                     <span className="text-xs text-slate-400 line-through mr-1.5">
                       ₹{rawPrice.toLocaleString('en-IN')}
                     </span>
-                    <span className="text-xl font-extrabold text-teal-700 tabular-nums">
+                    <span className="text-xl font-extrabold text-[#C2185B] tabular-nums">
                       ₹{finalPrice.toLocaleString('en-IN')}
                     </span>
                     <span className="block text-[10px] text-emerald-600 font-bold">
@@ -262,7 +262,7 @@ export const RazorpayCheckoutModal: React.FC<RazorpayCheckoutModalProps> = ({
                   value={couponCode}
                   onChange={(e) => setCouponCode(e.target.value)}
                   placeholder="Promo code (e.g. BELVO2026, LAUNCH50)"
-                  className="flex-1 bg-white border border-slate-200 rounded-lg px-3 py-1.5 text-xs text-slate-900 placeholder-slate-400 uppercase font-mono focus:outline-none focus:border-teal-500"
+                  className="flex-1 bg-white border border-slate-200 rounded-lg px-3 py-1.5 text-xs text-slate-900 placeholder-slate-400 uppercase font-mono focus:outline-none focus:border-[#C2185B]"
                 />
                 <button
                   type="submit"
@@ -297,7 +297,7 @@ export const RazorpayCheckoutModal: React.FC<RazorpayCheckoutModalProps> = ({
               <button
                 onClick={() => setActiveTab('upi')}
                 className={`flex-1 py-2.5 flex items-center justify-center gap-2 border-b-2 transition-colors cursor-pointer ${
-                  activeTab === 'upi' ? 'border-teal-600 text-teal-700' : 'border-transparent text-slate-500 hover:text-slate-800'
+                  activeTab === 'upi' ? 'border-[#C2185B] text-[#C2185B]' : 'border-transparent text-slate-500 hover:text-slate-800'
                 }`}
               >
                 <QrCode className="w-4 h-4" />
@@ -306,7 +306,7 @@ export const RazorpayCheckoutModal: React.FC<RazorpayCheckoutModalProps> = ({
               <button
                 onClick={() => setActiveTab('card')}
                 className={`flex-1 py-2.5 flex items-center justify-center gap-2 border-b-2 transition-colors cursor-pointer ${
-                  activeTab === 'card' ? 'border-teal-600 text-teal-700' : 'border-transparent text-slate-500 hover:text-slate-800'
+                  activeTab === 'card' ? 'border-[#C2185B] text-[#C2185B]' : 'border-transparent text-slate-500 hover:text-slate-800'
                 }`}
               >
                 <CreditCard className="w-4 h-4" />
@@ -315,7 +315,7 @@ export const RazorpayCheckoutModal: React.FC<RazorpayCheckoutModalProps> = ({
               <button
                 onClick={() => setActiveTab('netbanking')}
                 className={`flex-1 py-2.5 flex items-center justify-center gap-2 border-b-2 transition-colors cursor-pointer ${
-                  activeTab === 'netbanking' ? 'border-teal-600 text-teal-700' : 'border-transparent text-slate-500 hover:text-slate-800'
+                  activeTab === 'netbanking' ? 'border-[#C2185B] text-[#C2185B]' : 'border-transparent text-slate-500 hover:text-slate-800'
                 }`}
               >
                 <Building2 className="w-4 h-4" />
@@ -339,11 +339,11 @@ export const RazorpayCheckoutModal: React.FC<RazorpayCheckoutModalProps> = ({
                       onClick={() => setSelectedUpiApp(app.id)}
                       className={`p-2.5 rounded-lg border text-xs font-semibold flex flex-col items-center justify-center transition-all cursor-pointer ${
                         selectedUpiApp === app.id
-                          ? 'border-teal-600 bg-teal-50 text-teal-900 shadow-xs'
+                          ? 'border-[#C2185B] bg-[#FCE7F3]/60 text-[#760D3B] shadow-xs'
                           : 'border-slate-200 bg-white text-slate-700 hover:bg-slate-50'
                       }`}
                     >
-                      <Smartphone className="w-4 h-4 mb-1 text-teal-600" />
+                      <Smartphone className="w-4 h-4 mb-1 text-[#C2185B]" />
                       <span>{app.name}</span>
                     </button>
                   ))}
@@ -357,12 +357,12 @@ export const RazorpayCheckoutModal: React.FC<RazorpayCheckoutModalProps> = ({
                       value={upiId}
                       onChange={(e) => setUpiId(e.target.value)}
                       placeholder="e.g. mobile@upi or username@okhdfcbank"
-                      className="flex-1 px-3 py-2 text-xs bg-slate-50 border border-slate-200 rounded-lg text-slate-900 focus:bg-white focus:outline-none focus:border-teal-500"
+                      className="flex-1 px-3 py-2 text-xs bg-slate-50 border border-slate-200 rounded-lg text-slate-900 focus:bg-white focus:outline-none focus:border-[#C2185B]"
                     />
                     <button
                       type="button"
                       onClick={() => setUpiId(`${user.email.split('@')[0]}@okaxis`)}
-                      className="px-3 py-1.5 text-[11px] font-semibold text-teal-700 bg-teal-50 rounded-lg border border-teal-200 hover:bg-teal-100"
+                      className="px-3 py-1.5 text-[11px] font-semibold text-[#C2185B] bg-[#FCE7F3]/60 rounded-lg border border-[#F0D6E3] hover:bg-[#FCE7F3]"
                     >
                       Auto-fill
                     </button>
@@ -380,7 +380,7 @@ export const RazorpayCheckoutModal: React.FC<RazorpayCheckoutModalProps> = ({
                       <p className="text-[11px] text-slate-500">Supports all BHIM / UPI compatible apps</p>
                     </div>
                   </div>
-                  <span className="text-[10px] font-mono text-teal-700 font-bold bg-teal-50 px-2 py-1 rounded">
+                  <span className="text-[10px] font-mono text-[#C2185B] font-bold bg-[#FCE7F3]/60 px-2 py-1 rounded">
                     Instant Verified
                   </span>
                 </div>
@@ -395,7 +395,7 @@ export const RazorpayCheckoutModal: React.FC<RazorpayCheckoutModalProps> = ({
                   <button
                     type="button"
                     onClick={handleFillTestCard}
-                    className="text-[11px] font-bold text-teal-700 hover:underline cursor-pointer"
+                    className="text-[11px] font-bold text-[#C2185B] hover:underline cursor-pointer"
                   >
                     Auto-Fill Test Visa Card
                   </button>
@@ -409,7 +409,7 @@ export const RazorpayCheckoutModal: React.FC<RazorpayCheckoutModalProps> = ({
                       value={cardNumber}
                       onChange={(e) => setCardNumber(e.target.value)}
                       placeholder="4111 1111 1111 1111"
-                      className="w-full px-3 py-2 text-xs font-mono bg-slate-50 border border-slate-200 rounded-lg text-slate-900 focus:bg-white focus:outline-none focus:border-teal-500"
+                      className="w-full px-3 py-2 text-xs font-mono bg-slate-50 border border-slate-200 rounded-lg text-slate-900 focus:bg-white focus:outline-none focus:border-[#C2185B]"
                     />
                     <CreditCard className="w-4 h-4 text-slate-400 absolute right-3 top-1/2 -translate-y-1/2" />
                   </div>
@@ -423,7 +423,7 @@ export const RazorpayCheckoutModal: React.FC<RazorpayCheckoutModalProps> = ({
                       value={cardExpiry}
                       onChange={(e) => setCardExpiry(e.target.value)}
                       placeholder="12/28"
-                      className="w-full px-3 py-2 text-xs font-mono bg-slate-50 border border-slate-200 rounded-lg text-slate-900 focus:bg-white focus:outline-none focus:border-teal-500"
+                      className="w-full px-3 py-2 text-xs font-mono bg-slate-50 border border-slate-200 rounded-lg text-slate-900 focus:bg-white focus:outline-none focus:border-[#C2185B]"
                     />
                   </div>
                   <div className="space-y-1.5">
@@ -434,7 +434,7 @@ export const RazorpayCheckoutModal: React.FC<RazorpayCheckoutModalProps> = ({
                       value={cardCvv}
                       onChange={(e) => setCardCvv(e.target.value)}
                       placeholder="•••"
-                      className="w-full px-3 py-2 text-xs font-mono bg-slate-50 border border-slate-200 rounded-lg text-slate-900 focus:bg-white focus:outline-none focus:border-teal-500"
+                      className="w-full px-3 py-2 text-xs font-mono bg-slate-50 border border-slate-200 rounded-lg text-slate-900 focus:bg-white focus:outline-none focus:border-[#C2185B]"
                     />
                   </div>
                 </div>
@@ -453,7 +453,7 @@ export const RazorpayCheckoutModal: React.FC<RazorpayCheckoutModalProps> = ({
                       onClick={() => setSelectedBank(bank)}
                       className={`p-2.5 rounded-lg border text-left font-medium transition-colors cursor-pointer ${
                         selectedBank === bank
-                          ? 'border-teal-600 bg-teal-50 text-teal-900 font-semibold'
+                          ? 'border-[#C2185B] bg-[#FCE7F3]/60 text-[#760D3B] font-semibold'
                           : 'border-slate-200 bg-white text-slate-700 hover:bg-slate-50'
                       }`}
                     >
@@ -469,7 +469,7 @@ export const RazorpayCheckoutModal: React.FC<RazorpayCheckoutModalProps> = ({
               <button
                 onClick={handlePayNow}
                 disabled={isProcessing}
-                className="w-full py-3.5 px-4 bg-slate-950 hover:bg-slate-800 disabled:opacity-50 text-white rounded-xl text-xs font-bold uppercase tracking-wider transition-all flex items-center justify-center gap-2 cursor-pointer shadow-md"
+                className="w-full py-3.5 px-4 bg-[#C2185B] hover:bg-[#760D3B] disabled:opacity-50 text-white rounded-xl text-xs font-bold uppercase tracking-wider transition-all flex items-center justify-center gap-2 cursor-pointer shadow-md shadow-[#C2185B]/20"
               >
                 {isProcessing ? (
                   <>
@@ -478,7 +478,7 @@ export const RazorpayCheckoutModal: React.FC<RazorpayCheckoutModalProps> = ({
                   </>
                 ) : (
                   <>
-                    <Lock className="w-4 h-4 text-teal-400" />
+                    <Lock className="w-4 h-4 text-[#FCE7F3]" />
                     <span>Pay ₹{finalPrice.toLocaleString('en-IN')} & Unlock Course</span>
                     <ArrowRight className="w-4 h-4" />
                   </>

@@ -1,7 +1,7 @@
 import React from 'react';
 import { storageService } from '../services/storage';
 import { navigateTo } from '../utils/navigation';
-import { Users, ArrowRight, Award, BookOpen } from 'lucide-react';
+import { Users, ArrowRight } from 'lucide-react';
 
 export const InstructorsPage: React.FC = () => {
   const courses = storageService.getCourses();
@@ -99,44 +99,44 @@ export const InstructorsPage: React.FC = () => {
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 py-12 space-y-12">
-      <div className="border-b border-slate-200 pb-8 space-y-2">
-        <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-teal-800">
-          <Users className="w-3.5 h-3.5" />
+      <div className="border-b border-[#F0D6E3] pb-8 space-y-2">
+        <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-[#760D3B]">
+          <Users className="w-3.5 h-3.5 text-[#C2185B]" />
           <span>Faculty Directory</span>
         </div>
-        <h1 className="text-3xl sm:text-4xl font-extrabold text-slate-950 tracking-tight">
+        <h1 className="text-3xl sm:text-4xl font-extrabold text-[#21131B] tracking-tight">
           Mentors & Faculty
         </h1>
-        <p className="text-xs sm:text-sm text-slate-600 max-w-2xl leading-relaxed">
+        <p className="text-xs sm:text-sm text-[#756572] max-w-2xl leading-relaxed">
           Learn from active digital agency practitioners who build, design, and market real software products every day.
         </p>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {instructors.map((inst, idx) => (
-          <div key={idx} className="bg-white rounded-2xl border border-slate-200 p-6 flex flex-col justify-between shadow-xs space-y-4">
+          <div key={idx} className="bg-white rounded-3xl border border-[#F0D6E3] p-6 flex flex-col justify-between shadow-xs hover:border-[#C2185B]/40 hover:shadow-md transition-all space-y-4">
             <div className="space-y-4">
               <div className="flex items-center gap-3">
                 <img
                   src={inst.avatar}
                   alt={inst.name}
                   referrerPolicy="no-referrer"
-                  className="w-14 h-14 rounded-full object-cover ring-2 ring-teal-500/20"
+                  className="w-14 h-14 rounded-full object-cover ring-2 ring-[#F0D6E3]"
                 />
                 <div>
-                  <h3 className="text-base font-bold text-slate-900">{inst.name}</h3>
-                  <p className="text-xs text-teal-700 font-semibold">{inst.role}</p>
-                  <p className="text-[11px] text-slate-400">{inst.agency}</p>
+                  <h3 className="text-base font-bold text-[#21131B]">{inst.name}</h3>
+                  <p className="text-xs text-[#C2185B] font-bold">{inst.role}</p>
+                  <p className="text-[11px] text-[#756572]">{inst.agency}</p>
                 </div>
               </div>
 
-              <p className="text-xs text-slate-600 leading-relaxed">
+              <p className="text-xs text-[#756572] leading-relaxed">
                 {inst.bio}
               </p>
             </div>
 
-            <div className="pt-4 border-t border-slate-100">
-              <p className="text-[11px] font-semibold text-slate-400 uppercase tracking-wide mb-2">
+            <div className="pt-4 border-t border-[#F0D6E3]/60">
+              <p className="text-[11px] font-bold text-[#760D3B] uppercase tracking-wide mb-2">
                 Curriculums Authored:
               </p>
               {inst.coursesTaught.length > 0 ? (
@@ -145,15 +145,15 @@ export const InstructorsPage: React.FC = () => {
                     <button
                       key={c.id}
                       onClick={() => navigateTo(`/course/${c.id}`)}
-                      className="w-full text-left text-xs font-medium text-slate-800 hover:text-teal-700 truncate flex items-center justify-between group cursor-pointer"
+                      className="w-full text-left text-xs font-semibold text-[#21131B] hover:text-[#C2185B] truncate flex items-center justify-between group cursor-pointer transition-colors"
                     >
                       <span className="truncate">{c.title}</span>
-                      <ArrowRight className="w-3.5 h-3.5 text-slate-400 group-hover:translate-x-1 transition-transform" />
+                      <ArrowRight className="w-3.5 h-3.5 text-[#756572] group-hover:text-[#C2185B] group-hover:translate-x-1 transition-all" />
                     </button>
                   ))}
                 </div>
               ) : (
-                <p className="text-xs text-slate-400 italic">Advanced masterclasses in development.</p>
+                <p className="text-xs text-[#756572] italic">Advanced masterclasses in development.</p>
               )}
             </div>
           </div>

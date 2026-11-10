@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useAuth } from '../../context/AuthContext';
 import { storageService } from '../../services/storage';
-import { Course, Category, Enrolment, Certificate, Announcement, PlatformSettings, EmailNotification, Module, Lesson, Resource } from '../../types';
+import { Course, Category, Enrolment, Certificate, Announcement, PlatformSettings, EmailNotification, Module, Lesson, Resource, EnquiryLead } from '../../types';
 import { navigateTo } from '../../utils/navigation';
 import { EmailPreviewModal } from '../../components/common/EmailPreviewModal';
 import { BRAND_ASSETS } from '../../utils/brand';
@@ -33,18 +33,21 @@ import {
   Play,
   Download,
   RefreshCw,
-  Tag
+  Tag,
+  MessageSquare,
+  Phone
 } from 'lucide-react';
 
 export const AdminDashboard: React.FC = () => {
   const { currentUser, isAdmin } = useAuth();
 
-  const [activeTab, setActiveTab] = useState<'overview' | 'courses' | 'categories' | 'enrolments' | 'certificates' | 'emails' | 'settings'>('overview');
+  const [activeTab, setActiveTab] = useState<'overview' | 'courses' | 'categories' | 'enrolments' | 'certificates' | 'enquiries' | 'emails' | 'settings'>('overview');
 
   const [courses, setCourses] = useState<Course[]>(() => storageService.getCourses());
   const [categories, setCategories] = useState<Category[]>(() => storageService.getCategories());
   const [enrolments, setEnrolments] = useState<Enrolment[]>(() => storageService.getEnrolments());
   const [certificates, setCertificates] = useState<Certificate[]>(() => storageService.getCertificates());
+  const [enquiries, setEnquiries] = useState<EnquiryLead[]>(() => storageService.getEnquiries());
   const [announcement, setAnnouncement] = useState<Announcement>(() => storageService.getAnnouncement());
   const [settings, setSettings] = useState<PlatformSettings>(() => storageService.getSettings());
 
@@ -132,6 +135,11 @@ export const AdminDashboard: React.FC = () => {
   }, 0);
 
   // Handlers
+  const handleUpdateEnquiryStatus = (id: string, status: EnquiryLead['status']) => {
+    storageService.updateEnquiryStatus(id, status);
+    setEnquiries(storageService.getEnquiries());
+  };
+
   const handleOpenCreateCourse = () => {
     setEditingCourse(null);
     setCourseFormData({
@@ -472,7 +480,7 @@ export const AdminDashboard: React.FC = () => {
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 py-10 space-y-8">
       {/* Admin Header */}
-      <div className="bg-slate-950 text-white rounded-2xl p-6 sm:p-8 flex flex-col md:flex-row items-start md:items-center justify-between gap-6 border border-slate-800 shadow-md">
+      <div className="bg-gradient-to-r from-[#21131B] via-[#4A0A26] to-[#760D3B] text-white rounded-2xl p-6 sm:p-8 flex flex-col md:flex-row items-start md:items-center justify-between gap-6 border border-[#760D3B]/40 shadow-lg">
         <div className="flex items-start gap-4">
           <div className="w-12 h-12 rounded-xl bg-white/10 p-1.5 flex items-center justify-center border border-white/15 shadow-xs shrink-0 mt-0.5">
             <img
@@ -483,25 +491,25 @@ export const AdminDashboard: React.FC = () => {
           </div>
           <div className="space-y-1">
             <div className="flex items-center gap-2">
-              <span className="text-xs font-mono uppercase tracking-wider text-teal-400">
+              <span className="text-xs font-mono uppercase tracking-wider text-[#FCE7F3] font-semibold">
                 Belvo Governance
               </span>
-              <span className="text-[10px] font-mono bg-teal-950 text-teal-300 border border-teal-800/80 px-2 py-0.5 rounded">
+              <span className="text-[10px] font-mono bg-[#760D3B]/60 text-[#FCE7F3] border border-[#C2185B]/50 px-2 py-0.5 rounded">
                 Super Admin
               </span>
             </div>
             <h1 className="text-2xl font-extrabold tracking-tight text-white">
               Hridayam Management Console
             </h1>
-            <p className="text-xs text-slate-400">
-              Real-time curriculum management, student progress verification, and gateway configurations.
+            <p className="text-xs text-[#FCE7F3]/80">
+              Real-time curriculum management, student progress verification, enquiry tracking, and gateway configurations.
             </p>
           </div>
         </div>
 
         <button
           onClick={handleOpenCreateCourse}
-          className="px-4 py-2.5 text-xs font-bold text-slate-950 bg-teal-400 hover:bg-teal-300 rounded-xl transition-colors flex items-center gap-1.5 cursor-pointer shadow-xs"
+          className="px-4 py-2.5 text-xs font-bold text-white bg-[#C2185B] hover:bg-[#760D3B] rounded-xl transition-colors flex items-center gap-1.5 cursor-pointer shadow-md"
         >
           <Plus className="w-4 h-4" />
           <span>Create New Course</span>
@@ -509,46 +517,55 @@ export const AdminDashboard: React.FC = () => {
       </div>
 
       {/* Admin Navigation Tabs */}
-      <div className="flex border-b border-slate-200 gap-6 text-xs font-semibold overflow-x-auto pb-1">
+      <div className="flex border-b border-[#F0D6E3] gap-6 text-xs font-semibold overflow-x-auto pb-1">
         <button
           onClick={() => setActiveTab('overview')}
-          className={`pb-3 transition-colors cursor-pointer whitespace-nowrap ${activeTab === 'overview' ? 'text-teal-700 border-b-2 border-teal-600 font-bold' : 'text-slate-500 hover:text-slate-900'}`}
+          className={`pb-3 transition-colors cursor-pointer whitespace-nowrap ${activeTab === 'overview' ? 'text-[#C2185B] border-b-2 border-[#C2185B] font-bold' : 'text-[#756572] hover:text-[#21131B]'}`}
         >
           Overview & Metrics
         </button>
         <button
+          onClick={() => setActiveTab('enquiries')}
+          className={`pb-3 transition-colors cursor-pointer whitespace-nowrap flex items-center gap-1.5 ${activeTab === 'enquiries' ? 'text-[#C2185B] border-b-2 border-[#C2185B] font-bold' : 'text-[#756572] hover:text-[#21131B]'}`}
+        >
+          <span>Admissions Enquiries</span>
+          <span className="px-1.5 py-0.2 rounded-full text-[10px] bg-[#FCE7F3] text-[#760D3B] font-mono font-bold">
+            {enquiries.length}
+          </span>
+        </button>
+        <button
           onClick={() => setActiveTab('courses')}
-          className={`pb-3 transition-colors cursor-pointer whitespace-nowrap ${activeTab === 'courses' ? 'text-teal-700 border-b-2 border-teal-600 font-bold' : 'text-slate-500 hover:text-slate-900'}`}
+          className={`pb-3 transition-colors cursor-pointer whitespace-nowrap ${activeTab === 'courses' ? 'text-[#C2185B] border-b-2 border-[#C2185B] font-bold' : 'text-[#756572] hover:text-[#21131B]'}`}
         >
           Courses ({courses.length})
         </button>
         <button
           onClick={() => setActiveTab('categories')}
-          className={`pb-3 transition-colors cursor-pointer whitespace-nowrap ${activeTab === 'categories' ? 'text-teal-700 border-b-2 border-teal-600 font-bold' : 'text-slate-500 hover:text-slate-900'}`}
+          className={`pb-3 transition-colors cursor-pointer whitespace-nowrap ${activeTab === 'categories' ? 'text-[#C2185B] border-b-2 border-[#C2185B] font-bold' : 'text-[#756572] hover:text-[#21131B]'}`}
         >
           Categories ({categories.length})
         </button>
         <button
           onClick={() => setActiveTab('enrolments')}
-          className={`pb-3 transition-colors cursor-pointer whitespace-nowrap ${activeTab === 'enrolments' ? 'text-teal-700 border-b-2 border-teal-600 font-bold' : 'text-slate-500 hover:text-slate-900'}`}
+          className={`pb-3 transition-colors cursor-pointer whitespace-nowrap ${activeTab === 'enrolments' ? 'text-[#C2185B] border-b-2 border-[#C2185B] font-bold' : 'text-[#756572] hover:text-[#21131B]'}`}
         >
           Enrolments ({enrolments.length})
         </button>
         <button
           onClick={() => setActiveTab('certificates')}
-          className={`pb-3 transition-colors cursor-pointer whitespace-nowrap ${activeTab === 'certificates' ? 'text-teal-700 border-b-2 border-teal-600 font-bold' : 'text-slate-500 hover:text-slate-900'}`}
+          className={`pb-3 transition-colors cursor-pointer whitespace-nowrap ${activeTab === 'certificates' ? 'text-[#C2185B] border-b-2 border-[#C2185B] font-bold' : 'text-[#756572] hover:text-[#21131B]'}`}
         >
           Certificates ({certificates.length})
         </button>
         <button
           onClick={() => setActiveTab('emails')}
-          className={`pb-3 transition-colors cursor-pointer whitespace-nowrap ${activeTab === 'emails' ? 'text-teal-700 border-b-2 border-teal-600 font-bold' : 'text-slate-500 hover:text-slate-900'}`}
+          className={`pb-3 transition-colors cursor-pointer whitespace-nowrap ${activeTab === 'emails' ? 'text-[#C2185B] border-b-2 border-[#C2185B] font-bold' : 'text-[#756572] hover:text-[#21131B]'}`}
         >
           Emails & Integrations ({notifications.length})
         </button>
         <button
           onClick={() => setActiveTab('settings')}
-          className={`pb-3 transition-colors cursor-pointer whitespace-nowrap ${activeTab === 'settings' ? 'text-teal-700 border-b-2 border-teal-600 font-bold' : 'text-slate-500 hover:text-slate-900'}`}
+          className={`pb-3 transition-colors cursor-pointer whitespace-nowrap ${activeTab === 'settings' ? 'text-[#C2185B] border-b-2 border-[#C2185B] font-bold' : 'text-[#756572] hover:text-[#21131B]'}`}
         >
           Platform & Gateways
         </button>
@@ -562,7 +579,7 @@ export const AdminDashboard: React.FC = () => {
             <div className="bg-white rounded-xl border border-slate-200 p-5 shadow-xs space-y-1">
               <div className="flex items-center justify-between text-slate-500 text-xs">
                 <span>Registered Students</span>
-                <Users className="w-4 h-4 text-teal-600" />
+                <Users className="w-4 h-4 text-[#C2185B]" />
               </div>
               <p className="text-2xl font-extrabold text-slate-900 tabular-nums">{totalStudents}</p>
               <p className="text-[11px] text-slate-400">Unique student accounts</p>
@@ -571,7 +588,7 @@ export const AdminDashboard: React.FC = () => {
             <div className="bg-white rounded-xl border border-slate-200 p-5 shadow-xs space-y-1">
               <div className="flex items-center justify-between text-slate-500 text-xs">
                 <span>Published Courses</span>
-                <BookOpen className="w-4 h-4 text-teal-600" />
+                <BookOpen className="w-4 h-4 text-[#C2185B]" />
               </div>
               <p className="text-2xl font-extrabold text-slate-900 tabular-nums">{publishedCoursesCount}</p>
               <p className="text-[11px] text-slate-400">Of {courses.length} total curriculums</p>
@@ -580,7 +597,7 @@ export const AdminDashboard: React.FC = () => {
             <div className="bg-white rounded-xl border border-slate-200 p-5 shadow-xs space-y-1">
               <div className="flex items-center justify-between text-slate-500 text-xs">
                 <span>Active Enrolments</span>
-                <Layers className="w-4 h-4 text-teal-600" />
+                <Layers className="w-4 h-4 text-[#C2185B]" />
               </div>
               <p className="text-2xl font-extrabold text-slate-900 tabular-nums">{totalEnrolmentsCount}</p>
               <p className="text-[11px] text-slate-400">{completedCoursesCount} completed</p>
@@ -589,7 +606,7 @@ export const AdminDashboard: React.FC = () => {
             <div className="bg-white rounded-xl border border-slate-200 p-5 shadow-xs space-y-1">
               <div className="flex items-center justify-between text-slate-500 text-xs">
                 <span>Gross Course Value</span>
-                <DollarSign className="w-4 h-4 text-teal-600" />
+                <DollarSign className="w-4 h-4 text-[#C2185B]" />
               </div>
               <p className="text-2xl font-extrabold text-slate-900 tabular-nums">₹{totalRevenue.toLocaleString('en-IN')}</p>
               <p className="text-[11px] text-slate-400">Total value from paid enrollments</p>
@@ -616,7 +633,7 @@ export const AdminDashboard: React.FC = () => {
                       <td className="p-3 font-medium text-slate-900">{e.userName}</td>
                       <td className="p-3 text-slate-700">{e.courseTitle}</td>
                       <td className="p-3 text-slate-500">{new Date(e.enrolledAt).toLocaleDateString()}</td>
-                      <td className="p-3 font-mono font-semibold text-teal-700">{e.progressPercent}%</td>
+                      <td className="p-3 font-mono font-semibold text-[#C2185B]">{e.progressPercent}%</td>
                       <td className="p-3">
                         <span className={`px-2 py-0.5 rounded text-[10px] font-semibold uppercase ${e.status === 'completed' ? 'bg-emerald-50 text-emerald-700' : 'bg-slate-100 text-slate-700'}`}>
                           {e.status}
@@ -701,7 +718,7 @@ export const AdminDashboard: React.FC = () => {
                         </button>
                         <button
                           onClick={() => handleEditCourse(course)}
-                          className="p-1 text-teal-600 hover:text-teal-800 cursor-pointer"
+                          className="p-1 text-[#C2185B] hover:text-[#760D3B] cursor-pointer"
                           title="Edit Course Metadata"
                         >
                           <Edit2 className="w-4 h-4" />
@@ -734,7 +751,7 @@ export const AdminDashboard: React.FC = () => {
               <div key={cat.id} className="bg-white rounded-xl border border-slate-200 p-4 space-y-2 shadow-xs">
                 <div className="flex items-center justify-between text-xs">
                   <span className="font-mono text-slate-400">Order: {cat.displayOrder}</span>
-                  <span className="text-[10px] uppercase font-bold text-teal-700 bg-teal-50 px-1.5 py-0.5 rounded">
+                  <span className="text-[10px] uppercase font-bold text-[#760D3B] bg-[#FCE7F3] px-1.5 py-0.5 rounded">
                     Active
                   </span>
                 </div>
@@ -777,7 +794,7 @@ export const AdminDashboard: React.FC = () => {
                       <p className="text-[11px] text-slate-400">{enrol.userEmail}</p>
                     </td>
                     <td className="p-3.5 text-slate-800 font-medium">{enrol.courseTitle}</td>
-                    <td className="p-3.5 font-mono font-semibold text-teal-700">{enrol.progressPercent}%</td>
+                    <td className="p-3.5 font-mono font-semibold text-[#C2185B]">{enrol.progressPercent}%</td>
                     <td className="p-3.5">
                       <span className={`px-2 py-0.5 rounded text-[10px] font-semibold uppercase ${enrol.status === 'completed' ? 'bg-emerald-50 text-emerald-700' : 'bg-slate-100 text-slate-700'}`}>
                         {enrol.status}
@@ -810,7 +827,7 @@ export const AdminDashboard: React.FC = () => {
               <tbody className="divide-y divide-slate-100">
                 {certificates.map((cert) => (
                   <tr key={cert.id} className="hover:bg-slate-50/50">
-                    <td className="p-3.5 font-mono font-bold text-teal-800">{cert.id}</td>
+                    <td className="p-3.5 font-mono font-bold text-[#760D3B]">{cert.id}</td>
                     <td className="p-3.5 font-medium text-slate-900">{cert.userName}</td>
                     <td className="p-3.5 text-slate-700">{cert.courseTitle}</td>
                     <td className="p-3.5 text-slate-500">{cert.issueDate}</td>
@@ -822,7 +839,7 @@ export const AdminDashboard: React.FC = () => {
                     <td className="p-3.5 text-right space-x-2">
                       <button
                         onClick={() => navigateTo(`/verify-certificate?id=${cert.id}`)}
-                        className="text-xs text-teal-700 hover:underline cursor-pointer"
+                        className="text-xs text-[#C2185B] hover:underline cursor-pointer"
                       >
                         Verify Record
                       </button>
@@ -843,13 +860,135 @@ export const AdminDashboard: React.FC = () => {
         </div>
       )}
 
+      {/* ----------------- Tab: Admissions Enquiries ----------------- */}
+      {activeTab === 'enquiries' && (
+        <div className="space-y-4">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+            <div>
+              <h3 className="text-sm font-bold text-[#21131B]">Prospective Student Admissions Leads</h3>
+              <p className="text-xs text-[#756572] mt-0.5">
+                Real-time admissions enquiries captured via the Homepage Enquiry Form and Contact Portal.
+              </p>
+            </div>
+            <div className="flex items-center gap-2">
+              <span className="text-xs font-semibold px-2.5 py-1 rounded-full bg-[#FCE7F3] text-[#760D3B] border border-[#F0D6E3]">
+                {enquiries.length} Total Applications
+              </span>
+            </div>
+          </div>
+
+          <div className="bg-white rounded-xl border border-[#F0D6E3] overflow-hidden shadow-xs">
+            {enquiries.length === 0 ? (
+              <div className="py-12 text-center text-[#756572]">
+                <MessageSquare className="w-8 h-8 text-[#C2185B] mx-auto mb-2 opacity-50" />
+                <p className="text-xs font-semibold">No admissions enquiries recorded yet.</p>
+                <p className="text-[11px] text-[#756572] mt-1">
+                  Enquiries submitted from the homepage form will appear here in real-time.
+                </p>
+              </div>
+            ) : (
+              <div className="overflow-x-auto">
+                <table className="w-full text-xs text-left">
+                  <thead className="bg-[#FFFBFD] text-[#756572] font-semibold border-b border-[#F0D6E3]">
+                    <tr>
+                      <th className="p-3.5">Applicant Name</th>
+                      <th className="p-3.5">Contact Info</th>
+                      <th className="p-3.5">Area of Interest</th>
+                      <th className="p-3.5">Current Status</th>
+                      <th className="p-3.5">Consent</th>
+                      <th className="p-3.5">Received Date</th>
+                      <th className="p-3.5">Lead Status</th>
+                      <th className="p-3.5 text-right">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-[#F0D6E3]/60">
+                    {enquiries.map((lead) => (
+                      <tr key={lead.id} className="hover:bg-[#FCE7F3]/20 transition-colors">
+                        <td className="p-3.5 font-bold text-[#21131B]">{lead.fullName}</td>
+                        <td className="p-3.5">
+                          <p className="text-[#21131B] font-mono text-[11px]">
+                            <a href={`mailto:${lead.email}`} className="text-[#C2185B] hover:underline">
+                              {lead.email}
+                            </a>
+                          </p>
+                          <p className="text-[#756572] font-mono text-[11px]">
+                            <a href={`tel:${lead.phone}`} className="hover:underline">
+                              {lead.phone}
+                            </a>
+                          </p>
+                        </td>
+                        <td className="p-3.5">
+                          <span className="inline-block px-2 py-0.5 rounded-full text-[10px] font-semibold bg-[#FCE7F3] text-[#760D3B] border border-[#F0D6E3]">
+                            {lead.areaOfInterest}
+                          </span>
+                        </td>
+                        <td className="p-3.5 text-[#21131B] font-medium">{lead.currentStatus}</td>
+                        <td className="p-3.5">
+                          {lead.consent ? (
+                            <span className="text-[10px] text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded font-semibold border border-emerald-200">
+                              Verified
+                            </span>
+                          ) : (
+                            <span className="text-[10px] text-amber-700 bg-amber-50 px-2 py-0.5 rounded font-semibold">
+                              Pending
+                            </span>
+                          )}
+                        </td>
+                        <td className="p-3.5 text-[#756572] font-mono text-[11px]">
+                          {new Date(lead.submittedAt).toLocaleDateString('en-IN', {
+                            day: 'numeric',
+                            month: 'short',
+                            year: 'numeric'
+                          })}
+                        </td>
+                        <td className="p-3.5">
+                          <select
+                            value={lead.status}
+                            onChange={(e) => handleUpdateEnquiryStatus(lead.id, e.target.value as any)}
+                            aria-label={`Lead status for ${lead.fullName}`}
+                            className="text-[11px] font-semibold px-2 py-1 rounded bg-[#FFFBFD] border border-[#F0D6E3] text-[#21131B] focus:border-[#C2185B] focus:outline-none cursor-pointer"
+                          >
+                            <option value="new">New Lead</option>
+                            <option value="contacted">Contacted</option>
+                            <option value="enrolled">Enrolled</option>
+                            <option value="closed">Closed</option>
+                          </select>
+                        </td>
+                        <td className="p-3.5 text-right space-x-2">
+                          {lead.status === 'new' && (
+                            <button
+                              onClick={() => handleUpdateEnquiryStatus(lead.id, 'contacted')}
+                              className="text-[11px] text-[#C2185B] hover:text-[#760D3B] font-semibold cursor-pointer underline"
+                            >
+                              Mark Contacted
+                            </button>
+                          )}
+                          {lead.status !== 'enrolled' && (
+                            <button
+                              onClick={() => handleUpdateEnquiryStatus(lead.id, 'enrolled')}
+                              className="text-[11px] text-emerald-700 hover:text-emerald-800 font-semibold cursor-pointer underline"
+                            >
+                              Mark Enrolled
+                            </button>
+                          )}
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
+
       {/* ----------------- Tab 6: Settings & Gateway Setup ----------------- */}
       {activeTab === 'settings' && (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {/* Announcement Bar Form */}
           <div className="bg-white rounded-xl border border-slate-200 p-6 shadow-xs space-y-4">
             <div className="flex items-center gap-2 border-b border-slate-100 pb-3">
-              <Megaphone className="w-5 h-5 text-teal-600" />
+              <Megaphone className="w-5 h-5 text-[#C2185B]" />
               <h3 className="text-sm font-bold text-slate-900">Announcement Bar Configuration</h3>
             </div>
 
@@ -860,7 +999,7 @@ export const AdminDashboard: React.FC = () => {
                   type="text"
                   value={announcement.message}
                   onChange={(e) => setAnnouncement({ ...announcement, message: e.target.value })}
-                  className="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:border-teal-500"
+                  className="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:border-[#C2185B]"
                 />
               </div>
 
@@ -870,7 +1009,7 @@ export const AdminDashboard: React.FC = () => {
                   type="text"
                   value={announcement.linkText || ''}
                   onChange={(e) => setAnnouncement({ ...announcement, linkText: e.target.value })}
-                  className="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:border-teal-500"
+                  className="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:border-[#C2185B]"
                 />
               </div>
 
@@ -880,7 +1019,7 @@ export const AdminDashboard: React.FC = () => {
                   id="annPublished"
                   checked={announcement.isPublished}
                   onChange={(e) => setAnnouncement({ ...announcement, isPublished: e.target.checked })}
-                  className="rounded text-teal-600"
+                  className="rounded text-[#C2185B]"
                 />
                 <label htmlFor="annPublished" className="text-slate-800 font-semibold cursor-pointer">
                   Publish announcement bar on top of all pages
@@ -889,7 +1028,7 @@ export const AdminDashboard: React.FC = () => {
 
               <button
                 type="submit"
-                className="px-4 py-2 text-xs font-semibold text-white bg-slate-900 rounded-lg hover:bg-slate-800 transition-colors cursor-pointer"
+                className="px-4 py-2 text-xs font-semibold text-white bg-[#C2185B] hover:bg-[#760D3B] rounded-lg transition-colors cursor-pointer"
               >
                 Save Announcement
               </button>
@@ -899,7 +1038,7 @@ export const AdminDashboard: React.FC = () => {
           {/* Payment Gateway: Razorpay Setup Guide & Status */}
           <div className="bg-white rounded-xl border border-slate-200 p-6 shadow-xs space-y-4">
             <div className="flex items-center gap-2 border-b border-slate-100 pb-3">
-              <CreditCard className="w-5 h-5 text-teal-600" />
+              <CreditCard className="w-5 h-5 text-[#C2185B]" />
               <h3 className="text-sm font-bold text-slate-900">Razorpay Payment Gateway</h3>
             </div>
 
@@ -930,7 +1069,7 @@ export const AdminDashboard: React.FC = () => {
           {/* Email Provider: Resend Setup Guide */}
           <div className="bg-white rounded-xl border border-slate-200 p-6 shadow-xs space-y-4">
             <div className="flex items-center gap-2 border-b border-slate-100 pb-3">
-              <Mail className="w-5 h-5 text-teal-600" />
+              <Mail className="w-5 h-5 text-[#C2185B]" />
               <h3 className="text-sm font-bold text-slate-900">Transactional Email (Resend)</h3>
             </div>
 
@@ -947,7 +1086,7 @@ export const AdminDashboard: React.FC = () => {
           {/* Platform Identity */}
           <div className="bg-white rounded-xl border border-slate-200 p-6 shadow-xs space-y-4">
             <div className="flex items-center gap-2 border-b border-slate-100 pb-3">
-              <Settings className="w-5 h-5 text-teal-600" />
+              <Settings className="w-5 h-5 text-[#C2185B]" />
               <h3 className="text-sm font-bold text-slate-900">Platform Identity & Contact</h3>
             </div>
 
@@ -958,7 +1097,7 @@ export const AdminDashboard: React.FC = () => {
                   type="email"
                   value={settings.supportEmail}
                   onChange={(e) => setSettings({ ...settings, supportEmail: e.target.value })}
-                  className="w-full p-2 bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:border-teal-500"
+                  className="w-full p-2 bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:border-[#C2185B]"
                 />
               </div>
 
@@ -968,13 +1107,13 @@ export const AdminDashboard: React.FC = () => {
                   type="text"
                   value={settings.officeAddress}
                   onChange={(e) => setSettings({ ...settings, officeAddress: e.target.value })}
-                  className="w-full p-2 bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:border-teal-500"
+                  className="w-full p-2 bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:border-[#C2185B]"
                 />
               </div>
 
               <button
                 type="submit"
-                className="px-4 py-2 text-xs font-semibold text-white bg-slate-900 rounded-lg hover:bg-slate-800 cursor-pointer"
+                className="px-4 py-2 text-xs font-semibold text-white bg-[#C2185B] hover:bg-[#760D3B] rounded-lg cursor-pointer transition-colors"
               >
                 Save Identity Settings
               </button>
@@ -990,7 +1129,7 @@ export const AdminDashboard: React.FC = () => {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <div className="bg-white rounded-xl border border-slate-200 p-5 shadow-xs space-y-2">
               <div className="flex items-center justify-between">
-                <span className="text-[10px] font-mono uppercase tracking-wider text-teal-700 font-bold bg-teal-50 px-2 py-0.5 rounded border border-teal-200/60">
+                <span className="text-[10px] font-mono uppercase tracking-wider text-[#760D3B] font-bold bg-[#FCE7F3] px-2 py-0.5 rounded border border-[#F0D6E3]">
                   PAYMENT GATEWAY
                 </span>
                 <span className="flex items-center gap-1 text-[10px] text-emerald-700 font-bold">
@@ -999,7 +1138,7 @@ export const AdminDashboard: React.FC = () => {
                 </span>
               </div>
               <h4 className="text-sm font-bold text-slate-900 flex items-center gap-1.5">
-                <CreditCard className="w-4 h-4 text-teal-600" />
+                <CreditCard className="w-4 h-4 text-[#C2185B]" />
                 <span>Razorpay Sandbox & Webhooks</span>
               </h4>
               <p className="text-xs text-slate-500 leading-relaxed">
@@ -1064,7 +1203,7 @@ export const AdminDashboard: React.FC = () => {
                 onClick={() => handleSendTestEmail('welcome')}
                 className="px-4 py-2 bg-slate-900 hover:bg-slate-800 text-white text-xs font-semibold rounded-lg flex items-center gap-1.5 cursor-pointer transition-colors"
               >
-                <Sparkles className="w-3.5 h-3.5 text-teal-400" />
+                <Sparkles className="w-3.5 h-3.5 text-[#E83E8C]" />
                 <span>Send Welcome Email</span>
               </button>
 
@@ -1121,7 +1260,7 @@ export const AdminDashboard: React.FC = () => {
                             ? 'bg-amber-50 text-amber-700 border border-amber-200'
                             : notif.category === 'quiz'
                             ? 'bg-sky-50 text-sky-700 border border-sky-200'
-                            : 'bg-teal-50 text-teal-700 border border-teal-200'
+                            : 'bg-[#FCE7F3] text-[#760D3B] border border-[#F0D6E3]'
                         }`}>
                           {notif.category}
                         </span>
@@ -1151,7 +1290,7 @@ export const AdminDashboard: React.FC = () => {
                       <td className="p-3.5 text-right">
                         <button
                           onClick={() => setSelectedEmail(notif)}
-                          className="px-3 py-1.5 text-xs font-semibold text-teal-700 hover:text-teal-900 bg-teal-50 hover:bg-teal-100 rounded-lg transition-colors cursor-pointer inline-flex items-center gap-1"
+                          className="px-3 py-1.5 text-xs font-semibold text-[#760D3B] hover:text-[#21131B] bg-[#FCE7F3] hover:bg-[#F0D6E3] rounded-lg transition-colors cursor-pointer inline-flex items-center gap-1"
                         >
                           <Eye className="w-3.5 h-3.5" />
                           <span>View Email</span>
@@ -1188,7 +1327,7 @@ export const AdminDashboard: React.FC = () => {
                   value={courseFormData.title}
                   onChange={(e) => setCourseFormData({ ...courseFormData, title: e.target.value })}
                   placeholder="e.g. Full-Stack Web Development with React & Node.js"
-                  className="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:border-teal-500"
+                  className="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:border-[#C2185B]"
                 />
               </div>
 
@@ -1198,7 +1337,7 @@ export const AdminDashboard: React.FC = () => {
                   <select
                     value={courseFormData.categoryId}
                     onChange={(e) => setCourseFormData({ ...courseFormData, categoryId: e.target.value })}
-                    className="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:border-teal-500"
+                    className="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:border-[#C2185B]"
                   >
                     {categories.map((c) => (
                       <option key={c.id} value={c.id}>
@@ -1213,7 +1352,7 @@ export const AdminDashboard: React.FC = () => {
                   <select
                     value={courseFormData.level}
                     onChange={(e) => setCourseFormData({ ...courseFormData, level: e.target.value as any })}
-                    className="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:border-teal-500"
+                    className="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:border-[#C2185B]"
                   >
                     <option value="Beginner">Beginner</option>
                     <option value="Intermediate">Intermediate</option>
@@ -1230,7 +1369,7 @@ export const AdminDashboard: React.FC = () => {
                     min="1"
                     value={courseFormData.durationHours}
                     onChange={(e) => setCourseFormData({ ...courseFormData, durationHours: Number(e.target.value) })}
-                    className="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:border-teal-500"
+                    className="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:border-[#C2185B]"
                   />
                 </div>
 
@@ -1241,7 +1380,7 @@ export const AdminDashboard: React.FC = () => {
                     min="0"
                     value={courseFormData.price}
                     onChange={(e) => setCourseFormData({ ...courseFormData, price: Number(e.target.value) })}
-                    className="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:border-teal-500"
+                    className="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:border-[#C2185B]"
                   />
                 </div>
 
@@ -1250,7 +1389,7 @@ export const AdminDashboard: React.FC = () => {
                   <select
                     value={courseFormData.status}
                     onChange={(e) => setCourseFormData({ ...courseFormData, status: e.target.value as any })}
-                    className="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:border-teal-500"
+                    className="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:border-[#C2185B]"
                   >
                     <option value="published">Published</option>
                     <option value="draft">Draft</option>
@@ -1265,7 +1404,7 @@ export const AdminDashboard: React.FC = () => {
                   <select
                     value={courseFormData.format}
                     onChange={(e) => setCourseFormData({ ...courseFormData, format: e.target.value as any })}
-                    className="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:border-teal-500"
+                    className="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:border-[#C2185B]"
                   >
                     <option value="Cohort-Based">Cohort-Based</option>
                     <option value="Self-Paced">Self-Paced</option>
@@ -1280,7 +1419,7 @@ export const AdminDashboard: React.FC = () => {
                     value={courseFormData.thumbnail}
                     onChange={(e) => setCourseFormData({ ...courseFormData, thumbnail: e.target.value })}
                     placeholder="https://images.unsplash.com/..."
-                    className="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:border-teal-500 text-[11px]"
+                    className="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:border-[#C2185B] text-[11px]"
                   />
                 </div>
               </div>
@@ -1292,7 +1431,7 @@ export const AdminDashboard: React.FC = () => {
                   value={courseFormData.previewVideoUrl}
                   onChange={(e) => setCourseFormData({ ...courseFormData, previewVideoUrl: e.target.value })}
                   placeholder="https://commondatastorage.googleapis.com/.../sample.mp4"
-                  className="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:border-teal-500 text-[11px]"
+                  className="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:border-[#C2185B] text-[11px]"
                 />
               </div>
 
@@ -1304,7 +1443,7 @@ export const AdminDashboard: React.FC = () => {
                   value={courseFormData.shortDescription}
                   onChange={(e) => setCourseFormData({ ...courseFormData, shortDescription: e.target.value })}
                   placeholder="One or two sentences explaining the core outcome..."
-                  className="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:border-teal-500"
+                  className="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:border-[#C2185B]"
                 />
               </div>
 
@@ -1316,7 +1455,7 @@ export const AdminDashboard: React.FC = () => {
                   value={courseFormData.fullDescription}
                   onChange={(e) => setCourseFormData({ ...courseFormData, fullDescription: e.target.value })}
                   placeholder="Detailed course description..."
-                  className="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:border-teal-500"
+                  className="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:border-[#C2185B]"
                 />
               </div>
 
@@ -1328,7 +1467,7 @@ export const AdminDashboard: React.FC = () => {
                     required
                     value={courseFormData.instructorName}
                     onChange={(e) => setCourseFormData({ ...courseFormData, instructorName: e.target.value })}
-                    className="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:border-teal-500"
+                    className="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:border-[#C2185B]"
                   />
                 </div>
                 <div>
@@ -1338,7 +1477,7 @@ export const AdminDashboard: React.FC = () => {
                     required
                     value={courseFormData.instructorRole}
                     onChange={(e) => setCourseFormData({ ...courseFormData, instructorRole: e.target.value })}
-                    className="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:border-teal-500"
+                    className="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:border-[#C2185B]"
                   />
                 </div>
               </div>
@@ -1349,7 +1488,7 @@ export const AdminDashboard: React.FC = () => {
                   id="courseFeatured"
                   checked={courseFormData.isFeatured}
                   onChange={(e) => setCourseFormData({ ...courseFormData, isFeatured: e.target.checked })}
-                  className="rounded text-teal-600"
+                  className="rounded text-[#C2185B]"
                 />
                 <label htmlFor="courseFeatured" className="text-slate-800 font-semibold cursor-pointer">
                   Feature this course on the homepage
@@ -1366,7 +1505,7 @@ export const AdminDashboard: React.FC = () => {
                 </button>
                 <button
                   type="submit"
-                  className="px-5 py-2 font-bold text-white bg-slate-950 hover:bg-slate-800 rounded-lg cursor-pointer"
+                  className="px-5 py-2 font-bold text-white bg-[#C2185B] hover:bg-[#760D3B] rounded-lg cursor-pointer"
                 >
                   Save Course
                 </button>
@@ -1388,7 +1527,7 @@ export const AdminDashboard: React.FC = () => {
             {/* Header */}
             <div className="flex items-start justify-between border-b border-slate-100 pb-4">
               <div>
-                <span className="text-[10px] font-mono uppercase tracking-wider text-teal-700 font-bold bg-teal-50 px-2 py-0.5 rounded border border-teal-200/60">
+                <span className="text-[10px] font-mono uppercase tracking-wider text-[#760D3B] font-bold bg-[#FCE7F3] px-2 py-0.5 rounded border border-[#F0D6E3]">
                   Curriculum & Materials Studio
                 </span>
                 <h3 className="text-xl font-extrabold text-slate-950 mt-1">
@@ -1409,7 +1548,7 @@ export const AdminDashboard: React.FC = () => {
             {/* Quick Pricing & Enrolment Settings */}
             <div className="bg-slate-50 border border-slate-200 rounded-xl p-4 flex flex-col sm:flex-row items-center justify-between gap-4">
               <div className="flex items-center gap-3 w-full sm:w-auto">
-                <div className="w-9 h-9 rounded-lg bg-teal-50 border border-teal-200 flex items-center justify-center text-teal-700 shrink-0">
+                <div className="w-9 h-9 rounded-lg bg-[#FCE7F3] border border-[#F0D6E3] flex items-center justify-center text-[#C2185B] shrink-0">
                   <CreditCard className="w-5 h-5" />
                 </div>
                 <div>
@@ -1425,12 +1564,12 @@ export const AdminDashboard: React.FC = () => {
                   min="0"
                   value={quickPrice}
                   onChange={(e) => setQuickPrice(Number(e.target.value))}
-                  className="w-28 px-3 py-1.5 text-xs font-mono bg-white border border-slate-200 rounded-lg focus:outline-none focus:border-teal-500 font-bold"
+                  className="w-28 px-3 py-1.5 text-xs font-mono bg-white border border-slate-200 rounded-lg focus:outline-none focus:border-[#C2185B] font-bold"
                 />
                 <button
                   type="button"
                   onClick={handleUpdatePrice}
-                  className="px-3 py-1.5 text-xs font-bold text-white bg-slate-900 hover:bg-slate-800 rounded-lg cursor-pointer transition-colors"
+                  className="px-3 py-1.5 text-xs font-bold text-white bg-[#C2185B] hover:bg-[#760D3B] rounded-lg cursor-pointer transition-colors"
                 >
                   Update Price
                 </button>
@@ -1444,7 +1583,7 @@ export const AdminDashboard: React.FC = () => {
                 {/* 1. Add Module Form */}
                 <div className="bg-white border border-slate-200 rounded-xl p-4 space-y-3">
                   <h4 className="text-xs font-bold text-slate-900 flex items-center gap-1.5">
-                    <Layers className="w-4 h-4 text-teal-600" />
+                    <Layers className="w-4 h-4 text-[#C2185B]" />
                     <span>Create Curriculum Module</span>
                   </h4>
                   <form onSubmit={handleAddModule} className="flex gap-2">
@@ -1454,11 +1593,11 @@ export const AdminDashboard: React.FC = () => {
                       value={newModuleName}
                       onChange={(e) => setNewModuleName(e.target.value)}
                       placeholder="e.g. Module 3: Advanced API Patterns"
-                      className="flex-1 px-3 py-1.5 text-xs bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:border-teal-500"
+                      className="flex-1 px-3 py-1.5 text-xs bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:border-[#C2185B]"
                     />
                     <button
                       type="submit"
-                      className="px-3.5 py-1.5 text-xs font-semibold text-white bg-teal-700 hover:bg-teal-800 rounded-lg cursor-pointer shrink-0"
+                      className="px-3.5 py-1.5 text-xs font-semibold text-white bg-[#C2185B] hover:bg-[#760D3B] rounded-lg cursor-pointer shrink-0"
                     >
                       Add Module
                     </button>
@@ -1468,7 +1607,7 @@ export const AdminDashboard: React.FC = () => {
                 {/* 2. Upload / Add Video Lesson Form */}
                 <div className="bg-white border border-slate-200 rounded-xl p-4 space-y-3">
                   <h4 className="text-xs font-bold text-slate-900 flex items-center gap-1.5">
-                    <Video className="w-4 h-4 text-indigo-600" />
+                    <Video className="w-4 h-4 text-[#C2185B]" />
                     <span>Upload / Add Video Lesson</span>
                   </h4>
                   <form onSubmit={handleAddLesson} className="space-y-3 text-xs">
@@ -1516,7 +1655,7 @@ export const AdminDashboard: React.FC = () => {
                             type="checkbox"
                             checked={lessonFormData.isPreview}
                             onChange={(e) => setLessonFormData({ ...lessonFormData, isPreview: e.target.checked })}
-                            className="rounded text-teal-600"
+                            className="rounded text-[#C2185B]"
                           />
                           <span className="text-slate-700 font-semibold text-[11px]">Free Preview Lesson</span>
                         </label>
@@ -1536,7 +1675,7 @@ export const AdminDashboard: React.FC = () => {
                         <button
                           type="button"
                           onClick={() => setLessonFormData({ ...lessonFormData, videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4' })}
-                          className="text-[10px] text-teal-700 underline"
+                          className="text-[10px] text-[#C2185B] underline"
                         >
                           Preset 1 (Elephants)
                         </button>
@@ -1544,7 +1683,7 @@ export const AdminDashboard: React.FC = () => {
                         <button
                           type="button"
                           onClick={() => setLessonFormData({ ...lessonFormData, videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4' })}
-                          className="text-[10px] text-teal-700 underline"
+                          className="text-[10px] text-[#C2185B] underline"
                         >
                           Preset 2 (Blazes)
                         </button>
@@ -1680,12 +1819,12 @@ export const AdminDashboard: React.FC = () => {
                           <div key={les.id} className="p-2.5 bg-slate-50 rounded-lg text-xs space-y-1.5">
                             <div className="flex items-center justify-between">
                               <span className="font-semibold text-slate-800 flex items-center gap-1.5">
-                                <Play className="w-3.5 h-3.5 text-teal-600 shrink-0" />
+                                <Play className="w-3.5 h-3.5 text-[#C2185B] shrink-0" />
                                 <span>{les.title}</span>
                               </span>
                               <div className="flex items-center gap-2">
                                 {les.isPreview && (
-                                  <span className="text-[9px] font-bold text-teal-800 bg-teal-100 px-1.5 py-0.5 rounded">
+                                  <span className="text-[9px] font-bold text-[#760D3B] bg-[#FCE7F3] px-1.5 py-0.5 rounded border border-[#F0D6E3]">
                                     FREE PREVIEW
                                   </span>
                                 )}
@@ -1719,7 +1858,7 @@ export const AdminDashboard: React.FC = () => {
               <button
                 type="button"
                 onClick={() => setManagingCurriculumCourse(null)}
-                className="px-6 py-2.5 bg-slate-950 hover:bg-slate-800 text-white text-xs font-bold uppercase tracking-wider rounded-xl transition-colors cursor-pointer"
+                className="px-6 py-2.5 bg-[#C2185B] hover:bg-[#760D3B] text-white text-xs font-bold uppercase tracking-wider rounded-xl transition-colors cursor-pointer shadow-md"
               >
                 Close & Complete Studio Edits
               </button>

@@ -3,29 +3,22 @@ import { Course, Category, LearningPath } from '../types';
 import { storageService } from '../services/storage';
 import { CourseCard } from '../components/common/CourseCard';
 import { CategoryCard } from '../components/common/CategoryCard';
-import { VideoModal } from '../components/common/VideoModal';
+import { EnquiryForm } from '../components/common/EnquiryForm';
+import { DreamscapeHeroBackground } from '../components/common/DreamscapeHeroBackground';
 import { navigateTo } from '../utils/navigation';
 import { BRAND_ASSETS } from '../utils/brand';
 import {
   Search,
   ArrowRight,
-  BookOpen,
   Code2,
   Cpu,
   Layers,
   Award,
   Sparkles,
-  ChevronRight,
-  CheckCircle2,
   HelpCircle,
-  Clock,
   Compass,
   Laptop,
-  Play,
-  ShieldCheck,
-  Zap,
   TrendingUp,
-  FileCheck,
   Eye,
   X,
   Star,
@@ -34,8 +27,9 @@ import {
   ChevronDown,
   ChevronUp,
   Target,
-  BarChart3,
-  GraduationCap
+  Download,
+  CheckCircle2,
+  FileText
 } from 'lucide-react';
 
 export const HomePage: React.FC = () => {
@@ -54,9 +48,6 @@ export const HomePage: React.FC = () => {
   // Interactive Skill Matcher State
   const [matcherGoal, setMatcherGoal] = useState<'web' | 'ai' | 'marketing' | 'design'>('web');
   const [matcherLevel, setMatcherLevel] = useState<'beginner' | 'intermediate'>('beginner');
-
-  // Video Tour Modal State
-  const [isTourModalOpen, setIsTourModalOpen] = useState(false);
 
   // FAQ Accordion State (single open index or null)
   const [openFaqIndex, setOpenFaqIndex] = useState<number | null>(0);
@@ -115,7 +106,7 @@ export const HomePage: React.FC = () => {
       if (sortBy === 'newest') return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
       if (sortBy === 'price-asc') return a.price - b.price;
       if (sortBy === 'price-desc') return b.price - a.price;
-      return 0; // default order
+      return 0;
     });
 
   const practicalDeliverables = [
@@ -237,129 +228,78 @@ export const HomePage: React.FC = () => {
 
   return (
     <div className="space-y-24 pb-20">
-      {/* ----------------- Hero Section with Video Composition ----------------- */}
-      <section className="relative overflow-hidden bg-white border-b border-slate-200/80 pt-16 pb-20 lg:pt-24 lg:pb-28">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
-            {/* Left Column: Compelling Copy */}
+      {/* ----------------- Hero Section with Functional Enquiry Form ----------------- */}
+      <section className="relative overflow-hidden bg-[#FFF7FA] border-b border-[#F0D6E3] pt-12 pb-16 lg:pt-20 lg:pb-24">
+        {/* Gen Z Dark Rose Dreamscape Background Atmosphere */}
+        <DreamscapeHeroBackground />
+
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 relative z-10">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-10 items-center">
+            {/* Left Column: Compelling Copy & Preserved Download Brochure */}
             <div className="lg:col-span-7 space-y-6 text-left">
-              <div className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-slate-800 bg-purple-50/70 border border-purple-200/80 px-3 py-1.5 rounded-full shadow-2xs">
+              <div className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-[#A81752] bg-white/80 backdrop-blur-md border border-[#F0D6E3] px-3.5 py-1.5 rounded-full shadow-2xs">
                 <img src={BRAND_ASSETS.logoMark} alt="Hridayam" className="w-4 h-4 object-contain" />
                 <span>The Learning Platform by Belvo</span>
               </div>
 
-              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-slate-950 leading-[1.1] text-balance">
-                Turn Your Curiosity Into Real-World Skills.
+              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-[#21131B] leading-[1.1] text-balance">
+                GenZ learning by the{' '}
+                <span className="relative inline-block">
+                  <span className="bg-gradient-to-r from-[#A81752] via-[#C2185B] to-[#760D3B] bg-clip-text text-transparent">
+                    GenZ
+                  </span>
+                  <span
+                    className="absolute -bottom-1 left-0 right-0 h-1 bg-gradient-to-r from-[#A81752]/40 via-[#E83E8C]/50 to-transparent rounded-full blur-[1px]"
+                    aria-hidden="true"
+                  />
+                </span>
               </h1>
 
-              <p className="text-base sm:text-lg text-slate-600 leading-relaxed max-w-2xl">
+              <p className="text-base sm:text-lg text-[#756572] leading-relaxed max-w-2xl">
                 Learn digital, creative, and technical skills through practical courses designed to help you build, create, and grow. Engineered by agency practitioners for students, creators, and professionals.
               </p>
 
-              {/* CTAs */}
+              {/* CTAs: Explore Courses + Preserved Download Brochure */}
               <div className="flex flex-wrap items-center gap-4 pt-2">
                 <button
                   onClick={() => navigateTo('/courses')}
-                  className="px-6 py-3.5 text-xs font-bold uppercase tracking-wider text-white bg-slate-950 hover:bg-slate-800 rounded-xl transition-all shadow-sm hover:shadow flex items-center gap-2 cursor-pointer"
+                  className="px-6 py-3.5 text-xs font-bold uppercase tracking-wider text-white bg-[#A81752] hover:bg-[#8A1041] active:scale-[0.99] rounded-xl transition-all shadow-md hover:shadow-lg shadow-[#A81752]/20 flex items-center gap-2 cursor-pointer"
                 >
                   <span>Explore Courses</span>
                   <ArrowRight className="w-4 h-4" />
                 </button>
 
-                <button
-                  onClick={() => setIsTourModalOpen(true)}
-                  className="px-6 py-3.5 text-xs font-bold uppercase tracking-wider text-slate-800 hover:text-slate-950 bg-slate-100 hover:bg-slate-200 rounded-xl transition-colors flex items-center gap-2 cursor-pointer border border-slate-200"
+                <a
+                  href={BRAND_ASSETS.brochurePdf}
+                  download="Hridayam_by_Belvo_Platform_Brochure.pdf"
+                  className="px-6 py-3.5 text-xs font-bold uppercase tracking-wider text-[#A81752] hover:text-[#760D3B] bg-white/90 backdrop-blur-md hover:bg-white rounded-xl transition-colors flex items-center gap-2 cursor-pointer border border-[#F0D6E3] hover:border-[#A81752]/50 shadow-xs"
+                  title="Download Official 2026/2027 Course Prospectus (PDF)"
                 >
-                  <Play className="w-3.5 h-3.5 fill-current text-teal-600" />
-                  <span>Watch Platform Tour</span>
-                </button>
+                  <Download className="w-4 h-4 text-[#A81752]" />
+                  <span>Download Brochure</span>
+                </a>
               </div>
 
               {/* Clean Editorial Value Badges */}
-              <div className="pt-6 border-t border-slate-100 grid grid-cols-3 gap-4 text-left">
-                <div>
-                  <p className="text-xs font-bold text-slate-900">Project-Driven</p>
-                  <p className="text-[11px] text-slate-500 mt-0.5">Real code & live deliverables</p>
+              <div className="pt-6 border-t border-[#F0D6E3]/70 grid grid-cols-3 gap-4 text-left">
+                <div className="p-2.5 rounded-xl bg-white/60 backdrop-blur-xs border border-white/80 shadow-2xs">
+                  <p className="text-xs font-bold text-[#21131B]">Project-Driven</p>
+                  <p className="text-[11px] text-[#756572] mt-0.5">Real code & live deliverables</p>
                 </div>
-                <div>
-                  <p className="text-xs font-bold text-slate-900">Agency Standard</p>
-                  <p className="text-[11px] text-slate-500 mt-0.5">Built by Belvo practitioners</p>
+                <div className="p-2.5 rounded-xl bg-white/60 backdrop-blur-xs border border-white/80 shadow-2xs">
+                  <p className="text-xs font-bold text-[#21131B]">Agency Standard</p>
+                  <p className="text-[11px] text-[#756572] mt-0.5">Built by Belvo practitioners</p>
                 </div>
-                <div>
-                  <p className="text-xs font-bold text-slate-900">Verifiable</p>
-                  <p className="text-[11px] text-slate-500 mt-0.5">Tamper-evident certificates</p>
+                <div className="p-2.5 rounded-xl bg-white/60 backdrop-blur-xs border border-white/80 shadow-2xs">
+                  <p className="text-xs font-bold text-[#21131B]">Verifiable</p>
+                  <p className="text-[11px] text-[#756572] mt-0.5">Tamper-evident certificates</p>
                 </div>
               </div>
             </div>
 
-            {/* Right Column: Interactive Video Preview Composition */}
+            {/* Right Column: Premium Functional Enquiry Form */}
             <div className="lg:col-span-5 relative">
-              <div className="relative rounded-2xl bg-gradient-to-br from-slate-900 via-slate-950 to-teal-950 p-6 text-white border border-slate-800 shadow-xl overflow-hidden">
-                {/* Decorative architectural grid lines */}
-                <div className="absolute inset-0 bg-[linear-gradient(to_right,#1e293b_1px,transparent_1px),linear-gradient(to_bottom,#1e293b_1px,transparent_1px)] bg-[size:24px_24px] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_50%,#000_70%,transparent_100%)] opacity-30 pointer-events-none" />
-
-                <div className="relative z-10 space-y-5">
-                  <div className="flex items-center justify-between border-b border-white/10 pb-4">
-                    <div className="flex items-center gap-2">
-                      <div className="w-2.5 h-2.5 rounded-full bg-teal-400 animate-pulse" />
-                      <span className="text-xs font-semibold tracking-wide text-teal-300">Curriculum Preview</span>
-                    </div>
-                    <span className="text-xs text-slate-400 font-mono">11 Core Disciplines</span>
-                  </div>
-
-                  {/* Sample Module Card 1 with Thumbnail Preview */}
-                  <div className="bg-white/5 border border-white/10 rounded-xl p-4 backdrop-blur-xs space-y-3">
-                    <div className="flex items-center justify-between text-xs">
-                      <span className="font-semibold text-slate-200">Track 02 · Web & Software Dev</span>
-                      <span className="text-teal-400 font-mono text-[11px]">Free Course</span>
-                    </div>
-                    <p className="text-xs text-slate-300 font-medium">Full-Stack Architecture & TypeScript Components</p>
-                    <div className="flex items-center justify-between text-[11px] text-slate-400">
-                      <span>36 hours · 5 practical modules</span>
-                      <button
-                        onClick={() => navigateTo('/course/course-1')}
-                        className="text-teal-300 hover:text-white font-semibold flex items-center gap-1 cursor-pointer"
-                      >
-                        <span>View Syllabus</span>
-                        <ChevronRight className="w-3 h-3" />
-                      </button>
-                    </div>
-                  </div>
-
-                  {/* Sample Module Card 2 */}
-                  <div className="bg-white/5 border border-white/10 rounded-xl p-4 backdrop-blur-xs space-y-3">
-                    <div className="flex items-center justify-between text-xs">
-                      <span className="font-semibold text-slate-200">Track 05 · AI & Workflow Automation</span>
-                      <span className="text-emerald-400 font-mono text-[11px]">Masterclass</span>
-                    </div>
-                    <p className="text-xs text-slate-300 font-medium">Structured JSON Schemas & Production n8n Pipelines</p>
-                    <div className="flex items-center justify-between text-[11px] text-slate-400">
-                      <span>24 hours · Real webhook testing</span>
-                      <button
-                        onClick={() => navigateTo('/course/course-2')}
-                        className="text-emerald-300 hover:text-white font-semibold flex items-center gap-1 cursor-pointer"
-                      >
-                        <span>View Syllabus</span>
-                        <ChevronRight className="w-3 h-3" />
-                      </button>
-                    </div>
-                  </div>
-
-                  {/* Video Reel CTA */}
-                  <div
-                    onClick={() => setIsTourModalOpen(true)}
-                    className="p-3 bg-teal-500/10 hover:bg-teal-500/20 border border-teal-500/30 rounded-xl flex items-center justify-between text-xs text-teal-300 cursor-pointer transition-colors"
-                  >
-                    <div className="flex items-center gap-2">
-                      <Play className="w-4 h-4 fill-current text-teal-400" />
-                      <span className="font-semibold">Watch 2-Min Platform Walkthrough</span>
-                    </div>
-                    <span className="font-mono text-[10px] bg-teal-950 px-2 py-0.5 rounded text-teal-300">
-                      PLAY HD
-                    </span>
-                  </div>
-                </div>
-              </div>
+              <EnquiryForm />
             </div>
           </div>
         </div>
@@ -367,23 +307,23 @@ export const HomePage: React.FC = () => {
 
       {/* ----------------- Interactive 30-Second Skill Matcher ----------------- */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6">
-        <div className="bg-gradient-to-r from-slate-950 via-slate-900 to-teal-950 rounded-3xl p-6 sm:p-10 text-white shadow-xl border border-slate-800">
+        <div className="bg-gradient-to-r from-[#21131B] via-[#351525] to-[#760D3B] rounded-3xl p-6 sm:p-10 text-white shadow-xl border border-[#F0D6E3]/20">
           <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-8">
             <div className="space-y-4 max-w-xl">
-              <div className="inline-flex items-center gap-2 text-xs font-mono uppercase tracking-wider text-teal-400 bg-teal-950/80 px-3 py-1 rounded-md border border-teal-800/60">
-                <Target className="w-3.5 h-3.5" />
+              <div className="inline-flex items-center gap-2 text-xs font-mono uppercase tracking-wider text-[#FCE7F3] bg-[#760D3B]/80 px-3 py-1 rounded-md border border-[#C2185B]/60">
+                <Target className="w-3.5 h-3.5 text-[#E83E8C]" />
                 <span>Smart Skill Matcher · 30 Seconds</span>
               </div>
               <h2 className="text-2xl sm:text-3xl font-extrabold tracking-tight">
                 Not sure where to begin? Let's match your career objective.
               </h2>
-              <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
+              <p className="text-xs sm:text-sm text-[#FCE7F3]/80 leading-relaxed">
                 Select your focus area and experience level. We'll instantly match you with the highest-impact Belvo course and learning path.
               </p>
 
               {/* Goal Selection Buttons */}
               <div className="space-y-2 pt-2">
-                <label className="text-xs font-semibold text-slate-400">1. What do you want to master?</label>
+                <label className="text-xs font-semibold text-[#FCE7F3]/70">1. What do you want to master?</label>
                 <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
                   {[
                     { id: 'web', label: 'Web & Software', icon: Code2 },
@@ -400,8 +340,8 @@ export const HomePage: React.FC = () => {
                         onClick={() => setMatcherGoal(g.id as any)}
                         className={`p-2.5 rounded-xl border text-xs font-semibold flex flex-col items-center gap-1.5 transition-all cursor-pointer text-center ${
                           isSelected
-                            ? 'bg-teal-500 text-slate-950 border-teal-400 shadow-sm'
-                            : 'bg-white/5 border-white/10 text-slate-300 hover:bg-white/10 hover:text-white'
+                            ? 'bg-[#C2185B] text-white border-[#E83E8C] shadow-sm'
+                            : 'bg-white/5 border-white/10 text-[#FCE7F3]/80 hover:bg-white/10 hover:text-white'
                         }`}
                       >
                         <Icon className="w-4 h-4" />
@@ -414,7 +354,7 @@ export const HomePage: React.FC = () => {
 
               {/* Level Selection */}
               <div className="space-y-2 pt-1">
-                <label className="text-xs font-semibold text-slate-400">2. What is your current proficiency?</label>
+                <label className="text-xs font-semibold text-[#FCE7F3]/70">2. What is your current proficiency?</label>
                 <div className="flex gap-2">
                   {[
                     { id: 'beginner', label: 'Beginner / Career Starter' },
@@ -428,8 +368,8 @@ export const HomePage: React.FC = () => {
                         onClick={() => setMatcherLevel(lvl.id as any)}
                         className={`px-3 py-2 rounded-xl border text-xs font-medium transition-all cursor-pointer ${
                           isSelected
-                            ? 'bg-white text-slate-950 border-white font-bold'
-                            : 'bg-white/5 border-white/10 text-slate-300 hover:bg-white/10'
+                            ? 'bg-white text-[#760D3B] border-white font-bold shadow-xs'
+                            : 'bg-white/5 border-white/10 text-[#FCE7F3]/80 hover:bg-white/10'
                         }`}
                       >
                         {lvl.label}
@@ -442,40 +382,40 @@ export const HomePage: React.FC = () => {
 
             {/* Matched Course Result Card */}
             {matchedCourse && (
-              <div className="lg:max-w-md w-full bg-white/10 backdrop-blur-md rounded-2xl p-6 border border-white/15 space-y-4">
+              <div className="lg:max-w-md w-full bg-white/10 backdrop-blur-md rounded-2xl p-6 border border-white/20 space-y-4">
                 <div className="flex items-center justify-between text-xs border-b border-white/10 pb-3">
-                  <span className="font-mono text-teal-300 flex items-center gap-1">
-                    <Sparkles className="w-3.5 h-3.5" />
+                  <span className="font-mono text-[#FCE7F3] flex items-center gap-1">
+                    <Sparkles className="w-3.5 h-3.5 text-[#E83E8C]" />
                     98% High Alignment Match
                   </span>
-                  <span className="bg-teal-400/20 text-teal-300 text-[10px] font-bold px-2 py-0.5 rounded">
+                  <span className="bg-[#C2185B]/30 text-[#FCE7F3] text-[10px] font-bold px-2 py-0.5 rounded border border-[#C2185B]/50">
                     {matchedCourse.price === 0 ? 'FREE COURSE' : `₹${matchedCourse.price}`}
                   </span>
                 </div>
 
                 <div>
-                  <span className="text-[10px] uppercase font-mono tracking-wider text-slate-400">
+                  <span className="text-[10px] uppercase font-mono tracking-wider text-[#FCE7F3]/70">
                     {matchedCourse.categoryName}
                   </span>
                   <h3 className="text-lg font-bold text-white mt-1 leading-snug">
                     {matchedCourse.title}
                   </h3>
-                  <p className="text-xs text-slate-300 mt-2 line-clamp-2 leading-relaxed">
+                  <p className="text-xs text-[#FCE7F3]/80 mt-2 line-clamp-2 leading-relaxed">
                     {matchedCourse.shortDescription}
                   </p>
                 </div>
 
-                <div className="grid grid-cols-3 gap-2 text-[11px] text-slate-300 py-2 border-y border-white/10">
+                <div className="grid grid-cols-3 gap-2 text-[11px] text-[#FCE7F3]/90 py-2 border-y border-white/10">
                   <div>
-                    <span className="text-slate-400 block text-[10px]">Level</span>
+                    <span className="text-[#FCE7F3]/60 block text-[10px]">Level</span>
                     <span className="font-semibold text-white">{matchedCourse.level}</span>
                   </div>
                   <div>
-                    <span className="text-slate-400 block text-[10px]">Duration</span>
+                    <span className="text-[#FCE7F3]/60 block text-[10px]">Duration</span>
                     <span className="font-semibold text-white">{matchedCourse.durationHours} hrs</span>
                   </div>
                   <div>
-                    <span className="text-slate-400 block text-[10px]">Format</span>
+                    <span className="text-[#FCE7F3]/60 block text-[10px]">Format</span>
                     <span className="font-semibold text-white">{matchedCourse.format}</span>
                   </div>
                 </div>
@@ -483,7 +423,7 @@ export const HomePage: React.FC = () => {
                 <div className="flex items-center gap-3 pt-1">
                   <button
                     onClick={() => navigateTo(`/course/${matchedCourse.id}`)}
-                    className="flex-1 py-2.5 px-4 bg-teal-400 hover:bg-teal-300 text-slate-950 font-bold text-xs uppercase tracking-wider rounded-xl transition-all flex items-center justify-center gap-2 cursor-pointer shadow-md"
+                    className="flex-1 py-2.5 px-4 bg-[#C2185B] hover:bg-[#E83E8C] text-white font-bold text-xs uppercase tracking-wider rounded-xl transition-all flex items-center justify-center gap-2 cursor-pointer shadow-md"
                   >
                     <span>View Matched Course</span>
                     <ArrowRight className="w-3.5 h-3.5" />
@@ -503,23 +443,23 @@ export const HomePage: React.FC = () => {
 
       {/* ----------------- Course Discovery & Search ----------------- */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6">
-        <div className="bg-white rounded-2xl border border-slate-200 p-6 sm:p-8 shadow-xs space-y-6">
+        <div className="bg-white rounded-2xl border border-[#F0D6E3] p-6 sm:p-8 shadow-xs space-y-6">
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
             <div>
-              <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-teal-800 mb-1">
-                <Compass className="w-3.5 h-3.5" />
+              <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-[#760D3B] mb-1">
+                <Compass className="w-3.5 h-3.5 text-[#C2185B]" />
                 <span>Search & Filter</span>
               </div>
-              <h2 className="text-2xl font-bold text-slate-950 tracking-tight">
+              <h2 className="text-2xl font-bold text-[#21131B] tracking-tight">
                 Course Discovery Engine
               </h2>
-              <p className="text-xs text-slate-500 mt-1">
+              <p className="text-xs text-[#756572] mt-1">
                 Browse all 11 disciplines. Filter by domain, skill difficulty, pricing, and format.
               </p>
             </div>
             <button
               onClick={() => navigateTo('/courses')}
-              className="text-xs font-bold text-teal-700 hover:text-teal-900 inline-flex items-center gap-1 cursor-pointer"
+              className="text-xs font-bold text-[#C2185B] hover:text-[#760D3B] inline-flex items-center gap-1 cursor-pointer"
             >
               <span>View Full Catalogue ({courses.length})</span>
               <ArrowRight className="w-3.5 h-3.5" />
@@ -528,25 +468,25 @@ export const HomePage: React.FC = () => {
 
           {/* Search Bar */}
           <div className="relative">
-            <Search className="w-5 h-5 text-slate-400 absolute left-4 top-1/2 -translate-y-1/2" />
+            <Search className="w-5 h-5 text-[#756572] absolute left-4 top-1/2 -translate-y-1/2" />
             <input
               type="text"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder="Search by course title, skill, category, or instructor..."
-              className="w-full pl-12 pr-4 py-3 text-sm bg-slate-50 border border-slate-200 rounded-xl text-slate-900 placeholder-slate-400 focus:bg-white focus:outline-none focus:border-teal-500 transition-colors"
+              className="w-full pl-12 pr-4 py-3 text-sm bg-[#FFFBFD] border border-[#F0D6E3] rounded-xl text-[#21131B] placeholder-[#756572]/60 focus:bg-white focus:outline-none focus:border-[#C2185B] focus:ring-2 focus:ring-[#FCE7F3] transition-colors"
             />
           </div>
 
           {/* Filters Row */}
           <div className="flex flex-wrap items-center gap-3 pt-2 text-xs">
-            <span className="font-semibold text-slate-500 mr-1">Filter by:</span>
+            <span className="font-semibold text-[#756572] mr-1">Filter by:</span>
 
             {/* Category Dropdown */}
             <select
               value={selectedCategory}
               onChange={(e) => setSelectedCategory(e.target.value)}
-              className="px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-slate-700 focus:outline-none focus:border-teal-500 cursor-pointer"
+              className="px-3 py-2 bg-[#FFFBFD] border border-[#F0D6E3] rounded-xl text-[#21131B] focus:outline-none focus:border-[#C2185B] cursor-pointer"
             >
               <option value="all">All Categories ({categories.length})</option>
               {categories.map((c) => (
@@ -560,7 +500,7 @@ export const HomePage: React.FC = () => {
             <select
               value={selectedLevel}
               onChange={(e) => setSelectedLevel(e.target.value)}
-              className="px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-slate-700 focus:outline-none focus:border-teal-500 cursor-pointer"
+              className="px-3 py-2 bg-[#FFFBFD] border border-[#F0D6E3] rounded-xl text-[#21131B] focus:outline-none focus:border-[#C2185B] cursor-pointer"
             >
               <option value="all">All Skill Levels</option>
               <option value="beginner">Beginner</option>
@@ -572,7 +512,7 @@ export const HomePage: React.FC = () => {
             <select
               value={selectedPrice}
               onChange={(e) => setSelectedPrice(e.target.value)}
-              className="px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-slate-700 focus:outline-none focus:border-teal-500 cursor-pointer"
+              className="px-3 py-2 bg-[#FFFBFD] border border-[#F0D6E3] rounded-xl text-[#21131B] focus:outline-none focus:border-[#C2185B] cursor-pointer"
             >
               <option value="all">All Pricing</option>
               <option value="free">Free Courses</option>
@@ -583,7 +523,7 @@ export const HomePage: React.FC = () => {
             <select
               value={selectedFormat}
               onChange={(e) => setSelectedFormat(e.target.value)}
-              className="px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-slate-700 focus:outline-none focus:border-teal-500 cursor-pointer"
+              className="px-3 py-2 bg-[#FFFBFD] border border-[#F0D6E3] rounded-xl text-[#21131B] focus:outline-none focus:border-[#C2185B] cursor-pointer"
             >
               <option value="all">All Formats</option>
               <option value="Self-Paced">Self-Paced</option>
@@ -595,7 +535,7 @@ export const HomePage: React.FC = () => {
             <select
               value={sortBy}
               onChange={(e) => setSortBy(e.target.value as any)}
-              className="px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-slate-700 focus:outline-none focus:border-teal-500 cursor-pointer ml-auto"
+              className="px-3 py-2 bg-[#FFFBFD] border border-[#F0D6E3] rounded-xl text-[#21131B] focus:outline-none focus:border-[#C2185B] cursor-pointer ml-auto"
             >
               <option value="featured">Featured Order</option>
               <option value="newest">Newest Releases</option>
@@ -613,7 +553,7 @@ export const HomePage: React.FC = () => {
                   setSelectedFormat('all');
                   setSortBy('featured');
                 }}
-                className="text-xs text-rose-600 hover:underline cursor-pointer ml-2"
+                className="text-xs text-[#C2185B] hover:underline cursor-pointer ml-2 font-bold"
               >
                 Reset Filters
               </button>
@@ -629,10 +569,10 @@ export const HomePage: React.FC = () => {
                 ))}
               </div>
             ) : (
-              <div className="p-12 text-center border border-dashed border-slate-200 rounded-xl bg-slate-50/50">
-                <Compass className="w-8 h-8 text-slate-400 mx-auto mb-2" />
-                <h4 className="text-sm font-semibold text-slate-800">No courses match your query</h4>
-                <p className="text-xs text-slate-500 mt-1 max-w-sm mx-auto">
+              <div className="p-12 text-center border border-dashed border-[#F0D6E3] rounded-2xl bg-[#FFF5F9]/50">
+                <Compass className="w-8 h-8 text-[#756572] mx-auto mb-2" />
+                <h4 className="text-sm font-bold text-[#21131B]">No courses match your query</h4>
+                <p className="text-xs text-[#756572] mt-1 max-w-sm mx-auto">
                   Try adjusting your search terms or clearing the filter dropdowns.
                 </p>
               </div>
@@ -645,21 +585,21 @@ export const HomePage: React.FC = () => {
       <section className="max-w-7xl mx-auto px-4 sm:px-6">
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-4">
           <div>
-            <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-teal-800 mb-2">
-              <Layers className="w-3.5 h-3.5" />
+            <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-[#760D3B] mb-2">
+              <Layers className="w-3.5 h-3.5 text-[#C2185B]" />
               <span>Disciplines</span>
             </div>
-            <h2 className="text-2xl sm:text-3xl font-bold text-slate-950 tracking-tight">
+            <h2 className="text-2xl sm:text-3xl font-bold text-[#21131B] tracking-tight">
               11 Core Learning Categories
             </h2>
-            <p className="text-xs sm:text-sm text-slate-600 mt-1 max-w-2xl">
+            <p className="text-xs sm:text-sm text-[#756572] mt-1 max-w-2xl">
               From full-stack code and AI automations to brand strategy and data modeling — curated practical tracks backed by Belvo.
             </p>
           </div>
 
           <button
             onClick={() => navigateTo('/categories')}
-            className="text-xs font-semibold text-teal-700 hover:text-teal-900 inline-flex items-center gap-1 cursor-pointer whitespace-nowrap"
+            className="text-xs font-bold text-[#C2185B] hover:text-[#760D3B] inline-flex items-center gap-1 cursor-pointer whitespace-nowrap"
           >
             <span>Explore All Categories</span>
             <ArrowRight className="w-3.5 h-3.5" />
@@ -678,21 +618,21 @@ export const HomePage: React.FC = () => {
       <section className="max-w-7xl mx-auto px-4 sm:px-6">
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-4">
           <div>
-            <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-teal-800 mb-2">
-              <Award className="w-3.5 h-3.5" />
+            <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-[#760D3B] mb-2">
+              <Award className="w-3.5 h-3.5 text-[#C2185B]" />
               <span>Editor's Selection</span>
             </div>
-            <h2 className="text-2xl sm:text-3xl font-bold text-slate-950 tracking-tight">
+            <h2 className="text-2xl sm:text-3xl font-bold text-[#21131B] tracking-tight">
               Featured Programs
             </h2>
-            <p className="text-xs sm:text-sm text-slate-600 mt-1 max-w-xl">
+            <p className="text-xs sm:text-sm text-[#756572] mt-1 max-w-xl">
               Comprehensive curriculums with complete lesson syllabi, downloadable project assets, and verifiable completion credentials.
             </p>
           </div>
 
           <button
             onClick={() => navigateTo('/courses')}
-            className="text-xs font-semibold text-teal-700 hover:text-teal-900 inline-flex items-center gap-1 cursor-pointer"
+            className="text-xs font-bold text-[#C2185B] hover:text-[#760D3B] inline-flex items-center gap-1 cursor-pointer"
           >
             <span>Browse Full Catalogue ({courses.length})</span>
             <ArrowRight className="w-3.5 h-3.5" />
@@ -709,33 +649,33 @@ export const HomePage: React.FC = () => {
       {/* ----------------- Belvo Agency Standard vs Traditional Academies ----------------- */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6">
         <div className="text-center max-w-2xl mx-auto mb-10">
-          <span className="text-xs font-semibold uppercase tracking-wider text-teal-800 bg-teal-50 px-3 py-1 rounded-md border border-teal-200">
+          <span className="text-xs font-bold uppercase tracking-wider text-[#760D3B] bg-[#FCE7F3] px-3.5 py-1.5 rounded-full border border-[#F0D6E3]">
             Agency Rigor vs Traditional Academies
           </span>
-          <h2 className="text-2xl sm:text-3xl font-bold text-slate-950 tracking-tight mt-3">
+          <h2 className="text-2xl sm:text-3xl font-bold text-[#21131B] tracking-tight mt-3">
             Why Learning with an Active Agency Makes All the Difference
           </h2>
-          <p className="text-xs sm:text-sm text-slate-600 mt-2">
+          <p className="text-xs sm:text-sm text-[#756572] mt-2">
             Most bootcamps teach 4-year-old curriculum on toy projects. Hridayam applies Belvo's active production standards to every module.
           </p>
         </div>
 
-        <div className="bg-white border border-slate-200 rounded-3xl overflow-hidden shadow-sm">
+        <div className="bg-white border border-[#F0D6E3] rounded-3xl overflow-hidden shadow-sm">
           <div className="overflow-x-auto">
             <table className="w-full text-left border-collapse text-xs">
               <thead>
-                <tr className="border-b border-slate-200 bg-slate-50/80">
-                  <th className="py-4 px-6 font-bold text-slate-900 uppercase tracking-wider">Evaluation Dimension</th>
-                  <th className="py-4 px-6 font-bold text-slate-900 bg-purple-50/70 border-x border-purple-100 uppercase tracking-wider">
+                <tr className="border-b border-[#F0D6E3] bg-[#FFF5F9]">
+                  <th className="py-4 px-6 font-bold text-[#21131B] uppercase tracking-wider">Evaluation Dimension</th>
+                  <th className="py-4 px-6 font-bold text-[#760D3B] bg-[#FCE7F3]/70 border-x border-[#F0D6E3] uppercase tracking-wider">
                     <span className="flex items-center gap-2">
                       <img src={BRAND_ASSETS.logoMark} alt="Hridayam" className="w-5 h-5 object-contain" />
                       Hridayam by Belvo
                     </span>
                   </th>
-                  <th className="py-4 px-6 font-bold text-slate-500 uppercase tracking-wider">Conventional Online Academies</th>
+                  <th className="py-4 px-6 font-bold text-[#756572] uppercase tracking-wider">Conventional Online Academies</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-slate-100">
+              <tbody className="divide-y divide-[#F0D6E3]/60">
                 {[
                   {
                     dim: 'Curriculum & Stack',
@@ -763,15 +703,15 @@ export const HomePage: React.FC = () => {
                     other: 'Aggressive sales calls, predatory multi-lakh loans, and hidden subscription fees'
                   }
                 ].map((row, i) => (
-                  <tr key={i} className="hover:bg-slate-50/50 transition-colors">
-                    <td className="py-4 px-6 font-semibold text-slate-900">{row.dim}</td>
-                    <td className="py-4 px-6 bg-teal-50/30 border-x border-teal-100 text-teal-950 font-medium">
+                  <tr key={i} className="hover:bg-[#FFF5F9]/40 transition-colors">
+                    <td className="py-4 px-6 font-semibold text-[#21131B]">{row.dim}</td>
+                    <td className="py-4 px-6 bg-[#FCE7F3]/30 border-x border-[#F0D6E3] text-[#21131B] font-medium">
                       <div className="flex items-start gap-2">
-                        <Check className="w-4 h-4 text-teal-600 shrink-0 mt-0.5" />
+                        <Check className="w-4 h-4 text-[#C2185B] shrink-0 mt-0.5" />
                         <span>{row.belvo}</span>
                       </div>
                     </td>
-                    <td className="py-4 px-6 text-slate-500">
+                    <td className="py-4 px-6 text-[#756572]">
                       <div className="flex items-start gap-2">
                         <X className="w-4 h-4 text-rose-400 shrink-0 mt-0.5" />
                         <span>{row.other}</span>
@@ -786,24 +726,24 @@ export const HomePage: React.FC = () => {
       </section>
 
       {/* ----------------- Learning Paths ----------------- */}
-      <section className="bg-slate-900 text-white py-20 -mx-4 sm:-mx-6 px-4 sm:px-6 border-y border-slate-800">
+      <section className="bg-[#21131B] text-white py-20 -mx-4 sm:-mx-6 px-4 sm:px-6 border-y border-[#760D3B]/40">
         <div className="max-w-7xl mx-auto">
           <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-4">
             <div>
-              <span className="text-xs font-mono uppercase tracking-wider text-teal-400">
+              <span className="text-xs font-mono uppercase tracking-wider text-[#E83E8C] font-bold">
                 Career Trajectories
               </span>
               <h2 className="text-2xl sm:text-3xl font-bold text-white tracking-tight mt-1">
                 Curated Learning Paths
               </h2>
-              <p className="text-xs sm:text-sm text-slate-400 mt-1 max-w-xl">
+              <p className="text-xs sm:text-sm text-[#FCE7F3]/70 mt-1 max-w-xl">
                 Structured sequences of courses designed to take you from foundational concepts to professional, role-ready execution.
               </p>
             </div>
 
             <button
               onClick={() => navigateTo('/paths')}
-              className="text-xs font-semibold text-teal-300 hover:text-white inline-flex items-center gap-1 cursor-pointer"
+              className="text-xs font-bold text-[#E83E8C] hover:text-white inline-flex items-center gap-1 cursor-pointer"
             >
               <span>View All Career Paths</span>
               <ArrowRight className="w-3.5 h-3.5" />
@@ -815,29 +755,29 @@ export const HomePage: React.FC = () => {
               <div
                 key={path.id}
                 onClick={() => navigateTo(`/paths`)}
-                className="group bg-slate-950/70 border border-slate-800 hover:border-teal-500/50 rounded-2xl p-6 flex flex-col justify-between transition-all cursor-pointer"
+                className="group bg-[#351525]/70 border border-[#760D3B]/60 hover:border-[#E83E8C]/70 rounded-2xl p-6 flex flex-col justify-between transition-all cursor-pointer"
               >
                 <div>
-                  <div className="flex items-center justify-between text-xs text-slate-400 mb-3">
-                    <span className="font-mono text-teal-400">{path.totalDurationHours}h sequence</span>
+                  <div className="flex items-center justify-between text-xs text-[#FCE7F3]/70 mb-3">
+                    <span className="font-mono text-[#E83E8C] font-semibold">{path.totalDurationHours}h sequence</span>
                     <span>{path.courseIds.length} courses included</span>
                   </div>
 
-                  <h3 className="text-base font-bold text-white group-hover:text-teal-300 transition-colors mb-2">
+                  <h3 className="text-base font-bold text-white group-hover:text-[#E83E8C] transition-colors mb-2">
                     {path.title}
                   </h3>
 
-                  <p className="text-xs text-slate-400 leading-relaxed mb-4">
+                  <p className="text-xs text-[#FCE7F3]/70 leading-relaxed mb-4">
                     {path.shortDescription}
                   </p>
 
-                  <div className="space-y-1.5 pt-3 border-t border-slate-800/80 mb-6">
-                    <p className="text-[11px] font-semibold text-slate-300 uppercase tracking-wide">Target Role:</p>
-                    <p className="text-xs text-teal-300 font-medium">{path.targetRole}</p>
+                  <div className="space-y-1.5 pt-3 border-t border-[#760D3B]/50 mb-6">
+                    <p className="text-[11px] font-semibold text-[#FCE7F3]/60 uppercase tracking-wide">Target Role:</p>
+                    <p className="text-xs text-[#FCE7F3] font-bold">{path.targetRole}</p>
                   </div>
                 </div>
 
-                <div className="flex items-center text-xs font-semibold text-teal-400 group-hover:text-teal-300 gap-1">
+                <div className="flex items-center text-xs font-bold text-[#E83E8C] group-hover:text-white gap-1">
                   <span>Explore Sequence</span>
                   <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
                 </div>
@@ -849,16 +789,16 @@ export const HomePage: React.FC = () => {
 
       {/* ----------------- Practical Learning Showcase ----------------- */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6">
-        <div className="bg-slate-50 border border-slate-200 rounded-3xl p-8 sm:p-10">
+        <div className="bg-[#FFFBFD] border border-[#F0D6E3] rounded-3xl p-8 sm:p-10">
           <div className="max-w-2xl mb-8">
-            <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-teal-800 mb-1">
-              <Laptop className="w-3.5 h-3.5" />
+            <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-[#760D3B] mb-1">
+              <Laptop className="w-3.5 h-3.5 text-[#C2185B]" />
               <span>Demonstration Deliverables</span>
             </div>
-            <h2 className="text-2xl font-bold text-slate-950 tracking-tight">
+            <h2 className="text-2xl font-bold text-[#21131B] tracking-tight">
               Practical Learning Showcase
             </h2>
-            <p className="text-xs text-slate-500 mt-1">
+            <p className="text-xs text-[#756572] mt-1">
               Illustrative examples of real-world portfolio deliverables built throughout Hridayam courses. Click any project to inspect specs.
             </p>
           </div>
@@ -868,26 +808,26 @@ export const HomePage: React.FC = () => {
               <div
                 key={idx}
                 onClick={() => setActiveDeliverable(proj)}
-                className="bg-white border border-slate-200 hover:border-teal-500/50 hover:shadow-md rounded-2xl p-5 flex flex-col justify-between cursor-pointer transition-all"
+                className="bg-white border border-[#F0D6E3] hover:border-[#C2185B]/50 hover:shadow-md rounded-2xl p-5 flex flex-col justify-between cursor-pointer transition-all"
               >
                 <div>
                   <div className="flex items-center justify-between mb-2">
-                    <span className="text-[10px] font-mono uppercase tracking-wider text-teal-700 font-semibold">
+                    <span className="text-[10px] font-mono uppercase tracking-wider text-[#C2185B] font-bold">
                       {proj.category}
                     </span>
-                    <Eye className="w-3.5 h-3.5 text-slate-400" />
+                    <Eye className="w-3.5 h-3.5 text-[#756572]" />
                   </div>
-                  <h4 className="text-sm font-bold text-slate-900 mb-2 leading-snug">
+                  <h4 className="text-sm font-bold text-[#21131B] mb-2 leading-snug">
                     {proj.title}
                   </h4>
-                  <p className="text-xs text-slate-600 leading-relaxed mb-4">
+                  <p className="text-xs text-[#756572] leading-relaxed mb-4">
                     {proj.description}
                   </p>
                 </div>
 
-                <div className="pt-3 border-t border-slate-100 flex flex-wrap gap-1">
+                <div className="pt-3 border-t border-[#F0D6E3]/60 flex flex-wrap gap-1">
                   {proj.techStack.slice(0, 3).map((t, i) => (
-                    <span key={i} className="text-[10px] font-mono text-slate-600 bg-slate-100 px-1.5 py-0.5 rounded">
+                    <span key={i} className="text-[10px] font-mono text-[#760D3B] bg-[#FCE7F3] px-2 py-0.5 rounded font-medium">
                       {t}
                     </span>
                   ))}
@@ -902,20 +842,20 @@ export const HomePage: React.FC = () => {
       <section className="max-w-7xl mx-auto px-4 sm:px-6">
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-10 gap-4">
           <div>
-            <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-teal-800 mb-2">
-              <Users className="w-3.5 h-3.5" />
+            <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-[#760D3B] mb-2">
+              <Users className="w-3.5 h-3.5 text-[#C2185B]" />
               <span>Verified Alumni</span>
             </div>
-            <h2 className="text-2xl sm:text-3xl font-bold text-slate-950 tracking-tight">
+            <h2 className="text-2xl sm:text-3xl font-bold text-[#21131B] tracking-tight">
               Taught by Practitioners. Proven by Learners.
             </h2>
-            <p className="text-xs sm:text-sm text-slate-600 mt-1 max-w-xl">
+            <p className="text-xs sm:text-sm text-[#756572] mt-1 max-w-xl">
               Real feedback from students, founders, and professionals who have leveled up their technical and digital skills with Hridayam.
             </p>
           </div>
 
-          <div className="flex items-center gap-2 text-xs font-bold text-amber-600 bg-amber-50 border border-amber-200/80 px-3 py-1.5 rounded-lg">
-            <Star className="w-4 h-4 fill-amber-500 text-amber-500" />
+          <div className="flex items-center gap-2 text-xs font-bold text-[#760D3B] bg-[#FCE7F3] border border-[#F0D6E3] px-3.5 py-1.5 rounded-xl shadow-2xs">
+            <Star className="w-4 h-4 fill-[#C2185B] text-[#C2185B]" />
             <span>4.9 / 5.0 Average Platform Rating</span>
           </div>
         </div>
@@ -924,29 +864,29 @@ export const HomePage: React.FC = () => {
           {testimonials.map((t, idx) => (
             <div
               key={idx}
-              className="bg-white border border-slate-200 rounded-2xl p-6 flex flex-col justify-between shadow-xs hover:shadow-md transition-shadow"
+              className="bg-white border border-[#F0D6E3] rounded-2xl p-6 flex flex-col justify-between shadow-xs hover:shadow-md transition-shadow"
             >
               <div>
-                <div className="flex items-center gap-1 text-amber-500 mb-3">
+                <div className="flex items-center gap-1 text-[#C2185B] mb-3">
                   {[...Array(t.rating)].map((_, i) => (
                     <Star key={i} className="w-3.5 h-3.5 fill-current" />
                   ))}
                 </div>
-                <p className="text-xs text-slate-700 leading-relaxed italic mb-4">
+                <p className="text-xs text-[#21131B] leading-relaxed italic mb-4">
                   "{t.quote}"
                 </p>
               </div>
 
-              <div className="pt-4 border-t border-slate-100 flex items-center gap-3">
+              <div className="pt-4 border-t border-[#F0D6E3]/60 flex items-center gap-3">
                 <img
                   src={t.avatar}
                   alt={t.name}
-                  className="w-10 h-10 rounded-full object-cover border border-slate-200 shrink-0"
+                  className="w-10 h-10 rounded-full object-cover border border-[#F0D6E3] shrink-0"
                 />
                 <div>
-                  <h4 className="text-xs font-bold text-slate-900">{t.name}</h4>
-                  <p className="text-[11px] text-slate-500">{t.role} · {t.company}</p>
-                  <span className="text-[10px] text-teal-700 font-mono font-medium block mt-0.5">
+                  <h4 className="text-xs font-bold text-[#21131B]">{t.name}</h4>
+                  <p className="text-[11px] text-[#756572]">{t.role} · {t.company}</p>
+                  <span className="text-[10px] text-[#C2185B] font-mono font-bold block mt-0.5">
                     {t.course}
                   </span>
                 </div>
@@ -959,10 +899,10 @@ export const HomePage: React.FC = () => {
       {/* ----------------- How It Works ----------------- */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6">
         <div className="text-center max-w-xl mx-auto mb-12">
-          <span className="text-xs font-semibold uppercase tracking-wider text-teal-800">
+          <span className="text-xs font-bold uppercase tracking-wider text-[#760D3B] bg-[#FCE7F3] px-3.5 py-1 rounded-full border border-[#F0D6E3]">
             Step by Step
           </span>
-          <h2 className="text-2xl sm:text-3xl font-bold text-slate-950 tracking-tight mt-1">
+          <h2 className="text-2xl sm:text-3xl font-bold text-[#21131B] tracking-tight mt-3">
             How Hridayam Works
           </h2>
         </div>
@@ -975,27 +915,27 @@ export const HomePage: React.FC = () => {
             { step: '04', title: 'Assess', desc: 'Pass rigorous module quizzes & submit work.' },
             { step: '05', title: 'Certify', desc: 'Receive your verified Belvo digital credential.' }
           ].map((item, idx) => (
-            <div key={idx} className="space-y-2 p-5 bg-white border border-slate-200 rounded-2xl shadow-xs">
-              <span className="text-xs font-mono font-bold text-teal-700 bg-teal-50 px-2.5 py-1 rounded-md inline-block border border-teal-200/50">
+            <div key={idx} className="space-y-2 p-5 bg-white border border-[#F0D6E3] rounded-2xl shadow-xs hover:border-[#C2185B]/40 transition-colors">
+              <span className="text-xs font-mono font-bold text-[#C2185B] bg-[#FCE7F3] px-2.5 py-1 rounded-md inline-block border border-[#F0D6E3]">
                 {item.step}
               </span>
-              <h4 className="text-sm font-bold text-slate-900">{item.title}</h4>
-              <p className="text-xs text-slate-500 leading-relaxed">{item.desc}</p>
+              <h4 className="text-sm font-bold text-[#21131B]">{item.title}</h4>
+              <p className="text-xs text-[#756572] leading-relaxed">{item.desc}</p>
             </div>
           ))}
         </div>
       </section>
 
-      {/* ----------------- Frequently Asked Questions (Interactive Accordion) ----------------- */}
+      {/* ----------------- Frequently Asked Questions ----------------- */}
       <section className="max-w-4xl mx-auto px-4 sm:px-6">
         <div className="text-center mb-10">
-          <span className="text-xs font-semibold uppercase tracking-wider text-teal-800">
+          <span className="text-xs font-bold uppercase tracking-wider text-[#760D3B] bg-[#FCE7F3] px-3.5 py-1 rounded-full border border-[#F0D6E3]">
             Got Questions?
           </span>
-          <h2 className="text-2xl sm:text-3xl font-bold text-slate-950 tracking-tight mt-1">
+          <h2 className="text-2xl sm:text-3xl font-bold text-[#21131B] tracking-tight mt-3">
             Frequently Asked Questions
           </h2>
-          <p className="text-xs text-slate-500 mt-1">
+          <p className="text-xs text-[#756572] mt-1">
             Everything you need to know about enrolment, curriculums, certificates, and student support.
           </p>
         </div>
@@ -1006,24 +946,24 @@ export const HomePage: React.FC = () => {
             return (
               <div
                 key={idx}
-                className="bg-white border border-slate-200 rounded-2xl shadow-xs overflow-hidden transition-all"
+                className="bg-white border border-[#F0D6E3] rounded-2xl shadow-xs overflow-hidden transition-all"
               >
                 <button
                   type="button"
                   onClick={() => setOpenFaqIndex(isOpen ? null : idx)}
-                  className="w-full text-left p-5 flex items-center justify-between gap-4 cursor-pointer hover:bg-slate-50/50 transition-colors"
+                  className="w-full text-left p-5 flex items-center justify-between gap-4 cursor-pointer hover:bg-[#FFF5F9]/60 transition-colors"
                 >
-                  <h4 className="text-sm font-bold text-slate-900 flex items-center gap-2.5">
-                    <HelpCircle className="w-4 h-4 text-teal-600 shrink-0" />
+                  <h4 className="text-sm font-bold text-[#21131B] flex items-center gap-2.5">
+                    <HelpCircle className="w-4 h-4 text-[#C2185B] shrink-0" />
                     <span>{faq.q}</span>
                   </h4>
-                  <div className="p-1 rounded-lg bg-slate-100 text-slate-500 shrink-0">
+                  <div className="p-1 rounded-lg bg-[#FFF5F9] text-[#760D3B] shrink-0 border border-[#F0D6E3]">
                     {isOpen ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
                   </div>
                 </button>
 
                 {isOpen && (
-                  <div className="px-5 pb-5 pt-1 text-xs text-slate-600 leading-relaxed border-t border-slate-100/80">
+                  <div className="px-5 pb-5 pt-1 text-xs text-[#756572] leading-relaxed border-t border-[#F0D6E3]/60 bg-[#FFFBFD]">
                     <p className="ml-6.5">{faq.a}</p>
                   </div>
                 )}
@@ -1035,7 +975,7 @@ export const HomePage: React.FC = () => {
         <div className="text-center mt-8">
           <button
             onClick={() => navigateTo('/faq')}
-            className="text-xs font-bold text-teal-700 hover:text-teal-900 inline-flex items-center gap-1 cursor-pointer"
+            className="text-xs font-bold text-[#C2185B] hover:text-[#760D3B] inline-flex items-center gap-1 cursor-pointer"
           >
             <span>View Full Help & FAQ Center</span>
             <ArrowRight className="w-3.5 h-3.5" />
@@ -1043,46 +983,72 @@ export const HomePage: React.FC = () => {
         </div>
       </section>
 
-      {/* Video Platform Tour Modal */}
-      <VideoModal
-        isOpen={isTourModalOpen}
-        onClose={() => setIsTourModalOpen(false)}
-        title="Hridayam by Belvo — Platform Overview & Philosophy"
-        videoUrl="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"
-        subtitle="Practical learning, verifiable skills, agency-backed curricula."
-      />
+      {/* ----------------- High-Conversion Bottom Banner ----------------- */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6">
+        <div className="bg-gradient-to-r from-[#760D3B] via-[#C2185B] to-[#E83E8C] rounded-3xl p-8 sm:p-12 text-white shadow-xl flex flex-col md:flex-row items-center justify-between gap-8">
+          <div className="space-y-3 max-w-xl text-left">
+            <span className="text-[11px] font-mono uppercase tracking-wider font-bold bg-white/20 px-3 py-1 rounded-md">
+              Start Learning Today
+            </span>
+            <h2 className="text-2xl sm:text-3xl font-extrabold tracking-tight">
+              Ready to Build Industry-Grade Skills?
+            </h2>
+            <p className="text-xs sm:text-sm text-white/90 leading-relaxed">
+              Explore our full catalogue of practical, agency-engineered courses or download the 2026/2027 curriculum brochure.
+            </p>
+          </div>
+
+          <div className="flex flex-wrap items-center gap-3">
+            <button
+              onClick={() => navigateTo('/courses')}
+              className="px-6 py-3.5 bg-white text-[#760D3B] hover:bg-[#FFF5F9] text-xs font-bold uppercase tracking-wider rounded-xl transition-all shadow-md hover:shadow-lg flex items-center gap-2 cursor-pointer"
+            >
+              <span>Explore All Courses</span>
+              <ArrowRight className="w-4 h-4" />
+            </button>
+            <a
+              href={BRAND_ASSETS.brochurePdf}
+              download="Hridayam_by_Belvo_Platform_Brochure.pdf"
+              className="px-6 py-3.5 bg-[#760D3B]/40 hover:bg-[#760D3B]/70 border border-white/30 text-white text-xs font-bold uppercase tracking-wider rounded-xl transition-colors flex items-center gap-2 cursor-pointer"
+            >
+              <Download className="w-4 h-4" />
+              <span>Download Brochure</span>
+            </a>
+          </div>
+        </div>
+      </section>
 
       {/* Deliverable Details Modal */}
       {activeDeliverable && (
         <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-xs flex items-center justify-center p-4">
-          <div className="bg-white rounded-2xl max-w-lg w-full p-6 space-y-5 border border-slate-200 shadow-2xl">
-            <div className="flex items-center justify-between border-b border-slate-100 pb-3">
+          <div className="bg-white rounded-3xl max-w-lg w-full p-6 space-y-5 border border-[#F0D6E3] shadow-2xl animate-in fade-in zoom-in-95 duration-150">
+            <div className="flex items-center justify-between border-b border-[#F0D6E3]/60 pb-3">
               <div>
-                <span className="text-[10px] font-mono uppercase text-teal-700 font-bold">
+                <span className="text-[10px] font-mono uppercase text-[#C2185B] font-bold">
                   {activeDeliverable.category}
                 </span>
-                <h3 className="text-base font-bold text-slate-950 mt-0.5">
+                <h3 className="text-base font-bold text-[#21131B] mt-0.5">
                   {activeDeliverable.title}
                 </h3>
               </div>
               <button
                 onClick={() => setActiveDeliverable(null)}
-                className="p-1.5 text-slate-400 hover:text-slate-600 rounded-lg cursor-pointer"
+                className="p-1.5 text-[#756572] hover:text-[#21131B] rounded-lg cursor-pointer"
               >
                 <X className="w-5 h-5" />
               </button>
             </div>
 
-            <p className="text-xs text-slate-600 leading-relaxed">
+            <p className="text-xs text-[#756572] leading-relaxed">
               {activeDeliverable.description}
             </p>
 
             <div className="space-y-2">
-              <h4 className="text-xs font-bold text-slate-900">Key Production Features:</h4>
-              <ul className="space-y-1.5 text-xs text-slate-600">
+              <h4 className="text-xs font-bold text-[#21131B]">Key Production Features:</h4>
+              <ul className="space-y-1.5 text-xs text-[#756572]">
                 {activeDeliverable.features.map((f, i) => (
                   <li key={i} className="flex items-start gap-2">
-                    <CheckCircle2 className="w-3.5 h-3.5 text-teal-600 shrink-0 mt-0.5" />
+                    <CheckCircle2 className="w-3.5 h-3.5 text-[#C2185B] shrink-0 mt-0.5" />
                     <span>{f}</span>
                   </li>
                 ))}
@@ -1090,20 +1056,20 @@ export const HomePage: React.FC = () => {
             </div>
 
             <div className="pt-2">
-              <p className="text-[11px] font-semibold text-slate-500 mb-1.5">Toolchain & Technologies:</p>
+              <p className="text-[11px] font-semibold text-[#756572] mb-1.5">Toolchain & Technologies:</p>
               <div className="flex flex-wrap gap-1.5">
                 {activeDeliverable.techStack.map((t, i) => (
-                  <span key={i} className="text-[11px] font-mono text-slate-700 bg-slate-100 px-2 py-0.5 rounded">
+                  <span key={i} className="text-[11px] font-mono text-[#760D3B] bg-[#FCE7F3] px-2 py-0.5 rounded font-medium">
                     {t}
                   </span>
                 ))}
               </div>
             </div>
 
-            <div className="pt-2 border-t border-slate-100 flex justify-end">
+            <div className="pt-2 border-t border-[#F0D6E3]/60 flex justify-end">
               <button
                 onClick={() => setActiveDeliverable(null)}
-                className="px-4 py-2 bg-slate-950 text-white text-xs font-semibold rounded-xl hover:bg-slate-800"
+                className="px-5 py-2.5 bg-[#C2185B] text-white text-xs font-bold rounded-xl hover:bg-[#760D3B] transition-colors cursor-pointer"
               >
                 Close Spec
               </button>

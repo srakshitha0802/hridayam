@@ -87,7 +87,7 @@ export const LearningInterface: React.FC<{ courseId: string }> = ({ courseId }) 
     return (
       <div className="max-w-4xl mx-auto p-12 text-center text-white">
         <h2 className="text-xl font-bold">Course Not Found</h2>
-        <button onClick={() => navigateTo('/courses')} className="mt-4 px-4 py-2 bg-teal-600 text-white rounded-lg">
+        <button onClick={() => navigateTo('/courses')} className="mt-4 px-4 py-2 bg-[#C2185B] hover:bg-[#760D3B] text-white rounded-lg transition-colors cursor-pointer">
           Back to Courses
         </button>
       </div>
@@ -279,7 +279,7 @@ export const LearningInterface: React.FC<{ courseId: string }> = ({ courseId }) 
             <ArrowLeft className="w-5 h-5" />
           </button>
           <div className="min-w-0">
-            <span className="text-[10px] font-mono uppercase tracking-wider text-teal-400 font-semibold">
+            <span className="text-[10px] font-mono uppercase tracking-wider text-[#E83E8C] font-semibold">
               {course.categoryName}
             </span>
             <h1 className="text-sm font-bold text-white truncate max-w-md sm:max-w-xl">
@@ -294,7 +294,7 @@ export const LearningInterface: React.FC<{ courseId: string }> = ({ courseId }) 
             <span>Progress:</span>
             <div className="w-24 bg-slate-800 rounded-full h-2 overflow-hidden">
               <div
-                className="bg-teal-400 h-full rounded-full transition-all duration-300"
+                className="bg-[#E83E8C] h-full rounded-full transition-all duration-300"
                 style={{ width: `${currentEnrolment?.progressPercent || 0}%` }}
               />
             </div>
@@ -341,7 +341,7 @@ export const LearningInterface: React.FC<{ courseId: string }> = ({ courseId }) 
                 {!isPlaying && activeLesson && (
                   <button
                     onClick={togglePlay}
-                    className="absolute w-16 h-16 rounded-full bg-teal-500/90 text-slate-950 flex items-center justify-center hover:scale-110 transition-transform shadow-xl cursor-pointer"
+                    className="absolute w-16 h-16 rounded-full bg-[#C2185B]/90 text-white flex items-center justify-center hover:scale-110 transition-transform shadow-xl cursor-pointer"
                   >
                     <Play className="w-7 h-7 fill-current ml-1" />
                   </button>
@@ -358,14 +358,14 @@ export const LearningInterface: React.FC<{ courseId: string }> = ({ courseId }) 
                     max={duration || 100}
                     value={currentTime}
                     onChange={handleSeekSlider}
-                    className="w-full h-1.5 bg-slate-700 rounded-lg appearance-none cursor-pointer accent-teal-400"
+                    className="w-full h-1.5 bg-slate-700 rounded-lg appearance-none cursor-pointer accent-[#C2185B]"
                   />
                 </div>
 
                 <div className="flex items-center justify-between text-xs text-slate-300">
                   {/* Left Controls: Play/Pause, Replay 10s, Forward 10s, Time */}
                   <div className="flex items-center gap-3">
-                    <button onClick={togglePlay} className="text-white hover:text-teal-400 cursor-pointer">
+                    <button onClick={togglePlay} className="text-white hover:text-[#E83E8C] cursor-pointer">
                       {isPlaying ? <Pause className="w-4 h-4" /> : <Play className="w-4 h-4 fill-current" />}
                     </button>
                     <button onClick={() => seekRelative(-10)} className="text-slate-400 hover:text-white cursor-pointer" title="Rewind 10s">
@@ -389,7 +389,7 @@ export const LearningInterface: React.FC<{ courseId: string }> = ({ courseId }) 
                           key={rate}
                           onClick={() => handleRateChange(rate)}
                           className={`px-1.5 py-0.5 rounded transition-colors ${
-                            playbackRate === rate ? 'bg-teal-500 text-slate-950 font-bold' : 'text-slate-400 hover:text-white'
+                            playbackRate === rate ? 'bg-[#C2185B] text-white font-bold' : 'text-slate-400 hover:text-white'
                           }`}
                         >
                           {rate}x
@@ -416,14 +416,14 @@ export const LearningInterface: React.FC<{ courseId: string }> = ({ courseId }) 
 
               <div className="flex items-center gap-2.5 w-full sm:w-auto justify-end">
                 {completedLessonIds.includes(activeLesson?.id) ? (
-                  <div className="px-3 py-2 text-xs font-semibold text-teal-400 bg-teal-950/60 border border-teal-800/80 rounded-lg flex items-center gap-1.5">
-                    <CheckCircle2 className="w-4 h-4 text-teal-400" />
+                  <div className="px-3 py-2 text-xs font-semibold text-[#FCE7F3] bg-[#760D3B]/60 border border-[#C2185B]/60 rounded-lg flex items-center gap-1.5">
+                    <CheckCircle2 className="w-4 h-4 text-[#E83E8C]" />
                     <span>Completed</span>
                   </div>
                 ) : (
                   <button
                     onClick={() => handleMarkComplete(activeLesson.id)}
-                    className="px-4 py-2 text-xs font-bold text-slate-950 bg-teal-400 hover:bg-teal-300 rounded-lg transition-colors flex items-center gap-1.5 cursor-pointer shadow-sm"
+                    className="px-4 py-2 text-xs font-bold text-white bg-[#C2185B] hover:bg-[#760D3B] rounded-lg transition-colors flex items-center gap-1.5 cursor-pointer shadow-sm"
                   >
                     <CheckCircle2 className="w-4 h-4" />
                     <span>Mark Complete</span>
@@ -456,7 +456,7 @@ export const LearningInterface: React.FC<{ courseId: string }> = ({ courseId }) 
                 onClick={() => setActiveTab('overview')}
                 className={`pb-3 transition-colors cursor-pointer flex items-center gap-2 ${
                   activeTab === 'overview'
-                    ? 'border-b-2 border-teal-500 text-teal-400 font-bold'
+                    ? 'border-b-2 border-[#C2185B] text-[#E83E8C] font-bold'
                     : 'text-slate-400 hover:text-white'
                 }`}
               >
@@ -468,7 +468,7 @@ export const LearningInterface: React.FC<{ courseId: string }> = ({ courseId }) 
                 onClick={() => setActiveTab('transcript')}
                 className={`pb-3 transition-colors cursor-pointer flex items-center gap-2 ${
                   activeTab === 'transcript'
-                    ? 'border-b-2 border-teal-500 text-teal-400 font-bold'
+                    ? 'border-b-2 border-[#C2185B] text-[#E83E8C] font-bold'
                     : 'text-slate-400 hover:text-white'
                 }`}
               >
@@ -480,7 +480,7 @@ export const LearningInterface: React.FC<{ courseId: string }> = ({ courseId }) 
                 onClick={() => setActiveTab('notes')}
                 className={`pb-3 transition-colors cursor-pointer flex items-center gap-2 ${
                   activeTab === 'notes'
-                    ? 'border-b-2 border-teal-500 text-teal-400 font-bold'
+                    ? 'border-b-2 border-[#C2185B] text-[#E83E8C] font-bold'
                     : 'text-slate-400 hover:text-white'
                 }`}
               >
@@ -493,7 +493,7 @@ export const LearningInterface: React.FC<{ courseId: string }> = ({ courseId }) 
                   onClick={() => setActiveTab('quiz')}
                   className={`pb-3 transition-colors cursor-pointer flex items-center gap-2 ${
                     activeTab === 'quiz'
-                      ? 'border-b-2 border-teal-500 text-teal-400 font-bold'
+                      ? 'border-b-2 border-[#C2185B] text-[#E83E8C] font-bold'
                       : 'text-slate-400 hover:text-white'
                   }`}
                 >
@@ -507,7 +507,7 @@ export const LearningInterface: React.FC<{ courseId: string }> = ({ courseId }) 
                   onClick={() => setActiveTab('assignment')}
                   className={`pb-3 transition-colors cursor-pointer flex items-center gap-2 ${
                     activeTab === 'assignment'
-                      ? 'border-b-2 border-teal-500 text-teal-400 font-bold'
+                      ? 'border-b-2 border-[#C2185B] text-[#E83E8C] font-bold'
                       : 'text-slate-400 hover:text-white'
                   }`}
                 >
@@ -521,7 +521,7 @@ export const LearningInterface: React.FC<{ courseId: string }> = ({ courseId }) 
             {activeTab === 'overview' && (
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <div className="md:col-span-2 bg-slate-900 border border-slate-800 rounded-xl p-5 space-y-3">
-                  <h3 className="text-xs font-bold uppercase tracking-wider text-teal-400">
+                  <h3 className="text-xs font-bold uppercase tracking-wider text-[#E83E8C]">
                     Lesson Overview
                   </h3>
                   <p className="text-xs text-slate-300 leading-relaxed whitespace-pre-line">
@@ -530,7 +530,7 @@ export const LearningInterface: React.FC<{ courseId: string }> = ({ courseId }) 
                 </div>
 
                 <div className="bg-slate-900 border border-slate-800 rounded-xl p-5 space-y-3">
-                  <h3 className="text-xs font-bold uppercase tracking-wider text-teal-400">
+                  <h3 className="text-xs font-bold uppercase tracking-wider text-[#E83E8C]">
                     Downloads & References
                   </h3>
                   {activeLesson?.resources && activeLesson.resources.length > 0 ? (
@@ -541,10 +541,10 @@ export const LearningInterface: React.FC<{ courseId: string }> = ({ courseId }) 
                           href={res.url}
                           target="_blank"
                           rel="noreferrer"
-                          className="p-2.5 bg-slate-950 border border-slate-800 hover:border-teal-500/50 rounded-lg flex items-center justify-between text-xs text-slate-300 transition-colors"
+                          className="p-2.5 bg-slate-950 border border-slate-800 hover:border-[#C2185B]/50 rounded-lg flex items-center justify-between text-xs text-slate-300 transition-colors"
                         >
                           <span className="truncate pr-2">{res.title}</span>
-                          <Download className="w-3.5 h-3.5 text-teal-400 shrink-0" />
+                          <Download className="w-3.5 h-3.5 text-[#E83E8C] shrink-0" />
                         </a>
                       ))}
                     </div>
@@ -562,7 +562,7 @@ export const LearningInterface: React.FC<{ courseId: string }> = ({ courseId }) 
               <div className="bg-slate-900 border border-slate-800 rounded-xl p-5 space-y-4">
                 <div className="flex items-center justify-between border-b border-slate-800 pb-3">
                   <div>
-                    <h3 className="text-xs font-bold uppercase tracking-wider text-teal-400">
+                    <h3 className="text-xs font-bold uppercase tracking-wider text-[#E83E8C]">
                       Timestamped Audio Transcript
                     </h3>
                     <p className="text-[11px] text-slate-400">
@@ -579,11 +579,11 @@ export const LearningInterface: React.FC<{ courseId: string }> = ({ courseId }) 
                         onClick={() => seekTo(cue.time)}
                         className={`p-3 rounded-lg border transition-all cursor-pointer flex items-start gap-3 ${
                           currentTime >= cue.time && (idx === activeLesson.transcript!.length - 1 || currentTime < activeLesson.transcript![idx + 1].time)
-                            ? 'bg-teal-950/60 border-teal-500/60 text-white'
+                            ? 'bg-[#760D3B]/40 border-[#C2185B]/60 text-white'
                             : 'bg-slate-950 border-slate-800/80 text-slate-300 hover:bg-slate-800'
                         }`}
                       >
-                        <span className="font-mono text-xs font-bold text-teal-400 bg-slate-900 px-2 py-0.5 rounded shrink-0">
+                        <span className="font-mono text-xs font-bold text-[#E83E8C] bg-slate-900 px-2 py-0.5 rounded shrink-0">
                           {formatTime(cue.time)}
                         </span>
                         <p className="text-xs leading-relaxed">{cue.text}</p>
@@ -603,7 +603,7 @@ export const LearningInterface: React.FC<{ courseId: string }> = ({ courseId }) 
             {activeTab === 'notes' && (
               <div className="bg-slate-900 border border-slate-800 rounded-xl p-5 space-y-6">
                 <div>
-                  <h3 className="text-xs font-bold uppercase tracking-wider text-teal-400">
+                  <h3 className="text-xs font-bold uppercase tracking-wider text-[#E83E8C]">
                     Personal Learning Notes
                   </h3>
                   <p className="text-[11px] text-slate-400">
@@ -615,13 +615,13 @@ export const LearningInterface: React.FC<{ courseId: string }> = ({ courseId }) 
                 <form onSubmit={handleAddNote} className="space-y-3 bg-slate-950 border border-slate-800 p-4 rounded-xl">
                   <div className="flex items-center justify-between text-xs">
                     <span className="text-slate-400 flex items-center gap-1.5 font-medium">
-                      <Clock className="w-3.5 h-3.5 text-teal-400" />
-                      <span>Tagging current time: <strong className="font-mono text-teal-300">{formatTime(currentTime)}</strong></span>
+                      <Clock className="w-3.5 h-3.5 text-[#E83E8C]" />
+                      <span>Tagging current time: <strong className="font-mono text-[#FCE7F3]">{formatTime(currentTime)}</strong></span>
                     </span>
                     <button
                       type="submit"
                       disabled={!newNoteText.trim()}
-                      className="px-3 py-1.5 bg-teal-500 hover:bg-teal-400 disabled:opacity-50 text-slate-950 font-bold rounded-lg text-xs flex items-center gap-1.5 cursor-pointer"
+                      className="px-3 py-1.5 bg-[#C2185B] hover:bg-[#760D3B] disabled:opacity-50 text-white font-bold rounded-lg text-xs flex items-center gap-1.5 cursor-pointer transition-colors"
                     >
                       <BookmarkPlus className="w-3.5 h-3.5" />
                       <span>Save Note</span>
@@ -632,7 +632,7 @@ export const LearningInterface: React.FC<{ courseId: string }> = ({ courseId }) 
                     onChange={(e) => setNewNoteText(e.target.value)}
                     placeholder="Type your note, syntax reminder, or key takeaway here..."
                     rows={3}
-                    className="w-full px-3 py-2 text-xs bg-slate-900 border border-slate-800 rounded-lg text-white placeholder-slate-500 focus:outline-none focus:border-teal-500"
+                    className="w-full px-3 py-2 text-xs bg-slate-900 border border-slate-800 rounded-lg text-white placeholder-slate-500 focus:outline-none focus:border-[#C2185B]"
                   />
                 </form>
 
@@ -648,7 +648,7 @@ export const LearningInterface: React.FC<{ courseId: string }> = ({ courseId }) 
                           <div className="flex items-center gap-2 text-[11px]">
                             <button
                               onClick={() => seekTo(note.timestamp)}
-                              className="font-mono text-teal-400 hover:underline flex items-center gap-1 cursor-pointer"
+                              className="font-mono text-[#E83E8C] hover:underline flex items-center gap-1 cursor-pointer"
                             >
                               <Play className="w-2.5 h-2.5 fill-current" />
                               <span>{formatTime(note.timestamp)}</span>
@@ -722,7 +722,7 @@ export const LearningInterface: React.FC<{ courseId: string }> = ({ courseId }) 
                       {quizPassed && currentEnrolment?.certificateId && (
                         <button
                           onClick={handleViewCertificate}
-                          className="px-4 py-2 bg-amber-400 hover:bg-amber-300 text-slate-950 text-xs font-bold rounded-lg cursor-pointer flex items-center gap-1.5"
+                          className="px-4 py-2 bg-gradient-to-r from-[#C2185B] to-[#E83E8C] hover:opacity-90 text-white text-xs font-bold rounded-lg cursor-pointer flex items-center gap-1.5 shadow-md shadow-[#C2185B]/20"
                         >
                           <Award className="w-4 h-4" />
                           <span>View Official Certificate</span>
@@ -746,16 +746,16 @@ export const LearningInterface: React.FC<{ courseId: string }> = ({ courseId }) 
                               onClick={() => handleQuizOptionSelect(q.id, optIdx)}
                               className={`p-3 rounded-lg border text-xs flex items-center gap-3 transition-colors cursor-pointer ${
                                 selectedAnswers[q.id] === optIdx
-                                  ? 'bg-teal-950/70 border-teal-500 text-white font-medium'
+                                  ? 'bg-[#760D3B]/40 border-[#C2185B] text-white font-medium'
                                   : 'bg-slate-900 border-slate-800 text-slate-300 hover:bg-slate-850'
                               }`}
                             >
                               <div
                                 className={`w-4 h-4 rounded-full border flex items-center justify-center shrink-0 ${
-                                  selectedAnswers[q.id] === optIdx ? 'border-teal-400 bg-teal-500' : 'border-slate-600'
+                                  selectedAnswers[q.id] === optIdx ? 'border-[#E83E8C] bg-[#C2185B]' : 'border-slate-600'
                                 }`}
                               >
-                                {selectedAnswers[q.id] === optIdx && <div className="w-1.5 h-1.5 rounded-full bg-slate-950" />}
+                                {selectedAnswers[q.id] === optIdx && <div className="w-1.5 h-1.5 rounded-full bg-white" />}
                               </div>
                               <span>{opt}</span>
                             </label>
@@ -767,7 +767,7 @@ export const LearningInterface: React.FC<{ courseId: string }> = ({ courseId }) 
                     <button
                       type="submit"
                       disabled={Object.keys(selectedAnswers).length < course.quiz.questions.length}
-                      className="px-6 py-3 bg-teal-500 hover:bg-teal-400 disabled:opacity-50 text-slate-950 text-xs font-extrabold uppercase tracking-wider rounded-xl cursor-pointer"
+                      className="px-6 py-3 bg-[#C2185B] hover:bg-[#760D3B] disabled:opacity-50 text-white text-xs font-extrabold uppercase tracking-wider rounded-xl cursor-pointer shadow-md shadow-[#C2185B]/20"
                     >
                       Submit Assessment for Verification
                     </button>
@@ -800,13 +800,13 @@ export const LearningInterface: React.FC<{ courseId: string }> = ({ courseId }) 
                         value={assignmentText}
                         onChange={(e) => setAssignmentText(e.target.value)}
                         placeholder="Paste your GitHub repository link, deployed live URL, or Figma specs here..."
-                        className="w-full mt-1.5 px-3 py-2 text-xs bg-slate-950 border border-slate-800 rounded-lg text-white placeholder-slate-500 focus:outline-none focus:border-teal-500"
+                        className="w-full mt-1.5 px-3 py-2 text-xs bg-slate-950 border border-slate-800 rounded-lg text-white placeholder-slate-500 focus:outline-none focus:border-[#C2185B]"
                         required
                       />
                     </div>
                     <button
                       type="submit"
-                      className="px-5 py-2.5 bg-teal-500 hover:bg-teal-400 text-slate-950 text-xs font-bold rounded-xl cursor-pointer flex items-center gap-2"
+                      className="px-5 py-2.5 bg-[#C2185B] hover:bg-[#760D3B] text-white text-xs font-bold rounded-xl cursor-pointer flex items-center gap-2 shadow-md shadow-[#C2185B]/20"
                     >
                       <Send className="w-3.5 h-3.5" />
                       <span>Submit Assignment</span>
@@ -824,7 +824,7 @@ export const LearningInterface: React.FC<{ courseId: string }> = ({ courseId }) 
             <span className="text-xs font-bold uppercase tracking-wider text-slate-400">
               Course Content
             </span>
-            <span className="text-xs font-mono text-teal-400">
+            <span className="text-xs font-mono text-[#E83E8C]">
               {completedLessonIds.length} / {allLessons.length} completed
             </span>
           </div>
@@ -850,13 +850,13 @@ export const LearningInterface: React.FC<{ courseId: string }> = ({ courseId }) 
                         }}
                         className={`w-full p-2.5 rounded-lg text-left text-xs transition-colors flex items-center justify-between gap-3 cursor-pointer ${
                           isActive
-                            ? 'bg-teal-950/80 border border-teal-500/80 text-white font-semibold'
+                            ? 'bg-[#760D3B]/40 border border-[#C2185B]/70 text-white font-semibold'
                             : 'hover:bg-slate-800 text-slate-300'
                         }`}
                       >
                         <div className="flex items-center gap-2.5 min-w-0">
                           {isCompleted ? (
-                            <CheckCircle2 className="w-4 h-4 text-teal-400 shrink-0" />
+                            <CheckCircle2 className="w-4 h-4 text-[#E83E8C] shrink-0" />
                           ) : (
                             <Circle className="w-4 h-4 text-slate-600 shrink-0" />
                           )}

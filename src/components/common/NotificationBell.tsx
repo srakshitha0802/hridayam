@@ -1,42 +1,19 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { useAuth } from '../../context/AuthContext';
+import React, { useState, useRef, useEffect } from 'react';
 import { storageService } from '../../services/storage';
 import { EmailNotification } from '../../types';
+import { Bell, Mail, Check, ExternalLink, CheckCheck, Sparkles, CreditCard, Award, BookOpen } from 'lucide-react';
 import { EmailPreviewModal } from './EmailPreviewModal';
-import {
-  Bell,
-  CheckCheck,
-  CreditCard,
-  Award,
-  BookOpen,
-  Mail,
-  ShieldCheck,
-  Sparkles,
-  ExternalLink
-} from 'lucide-react';
 
 export const NotificationBell: React.FC = () => {
-  const { currentUser } = useAuth();
+  const [notifications, setNotifications] = useState<EmailNotification[]>(() =>
+    storageService.getNotifications()
+  );
   const [isOpen, setIsOpen] = useState(false);
-  const [notifications, setNotifications] = useState<EmailNotification[]>([]);
-  const [activeNotification, setActiveNotification] = useState<EmailNotification | null>(null);
+  const [selectedNotification, setSelectedNotification] = useState<EmailNotification | null>(null);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
-  const fetchNotifications = () => {
-    if (currentUser) {
-      setNotifications(storageService.getNotifications(currentUser.id));
-    } else {
-      setNotifications(storageService.getNotifications());
-    }
-  };
+  const unreadCount = notifications.filter((n) => !n.isRead).length;
 
-  useEffect(() => {
-    fetchNotifications();
-    const interval = setInterval(fetchNotifications, 4000);
-    return () => clearInterval(interval);
-  }, [currentUser]);
-
-  // Handle click outside to close dropdown
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
@@ -47,34 +24,36 @@ export const NotificationBell: React.FC = () => {
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
-  const unreadCount = notifications.filter((n) => !n.isRead).length;
+  const refreshNotifications = () => {
+    setNotifications(storageService.getNotifications());
+  };
 
   const handleOpenNotification = (notif: EmailNotification) => {
     storageService.markNotificationRead(notif.id);
-    fetchNotifications();
-    setActiveNotification(notif);
+    refreshNotifications();
+    setSelectedNotification(notif);
     setIsOpen(false);
   };
 
   const handleMarkAllRead = () => {
-    if (currentUser) {
-      storageService.markAllNotificationsRead(currentUser.id);
-      fetchNotifications();
-    }
+    notifications.forEach((n) => {
+      if (!n.isRead) storageService.markNotificationRead(n.id);
+    });
+    refreshNotifications();
   };
 
   const getIcon = (category: EmailNotification['category']) => {
     switch (category) {
       case 'payment':
-        return <CreditCard className="w-4 h-4 text-emerald-600" />;
+        return <CreditCard className="w-4 h-4 text-[#C2185B]" />;
       case 'certificate':
-        return <Award className="w-4 h-4 text-amber-500" />;
+        return <Award className="w-4 h-4 text-[#E83E8C]" />;
       case 'quiz':
-        return <BookOpen className="w-4 h-4 text-sky-600" />;
+        return <BookOpen className="w-4 h-4 text-[#760D3B]" />;
       case 'enrolment':
-        return <Sparkles className="w-4 h-4 text-teal-600" />;
+        return <Sparkles className="w-4 h-4 text-[#C2185B]" />;
       default:
-        return <Mail className="w-4 h-4 text-slate-600" />;
+        return <Mail className="w-4 h-4 text-[#756572]" />;
     }
   };
 
@@ -83,25 +62,25 @@ export const NotificationBell: React.FC = () => {
       <div className="relative" ref={dropdownRef}>
         <button
           onClick={() => setIsOpen(!isOpen)}
-          className="relative p-2 text-slate-600 hover:text-slate-950 hover:bg-slate-100 rounded-xl transition-colors cursor-pointer"
+          className="relative p-2 text-[#756572] hover:text-[#21131B] hover:bg-[#FCE7F3]/40 rounded-xl transition-colors cursor-pointer"
           title="Notifications & Emails"
         >
           <Bell className="w-4.5 h-4.5" />
           {unreadCount > 0 && (
-            <span className="absolute top-1 right-1 w-4 h-4 rounded-full bg-teal-600 text-[10px] font-bold text-white flex items-center justify-center animate-pulse">
+            <span className="absolute top-1 right-1 w-4 h-4 rounded-full bg-[#C2185B] text-[10px] font-bold text-white flex items-center justify-center animate-pulse">
               {unreadCount}
             </span>
           )}
         </button>
 
         {isOpen && (
-          <div className="absolute right-0 mt-2 w-80 sm:w-96 bg-white rounded-2xl shadow-2xl border border-slate-200 py-2 z-50 animate-in fade-in zoom-in-95 duration-150">
+          <div className="absolute right-0 mt-2 w-80 sm:w-96 bg-white rounded-2xl shadow-2xl border border-[#F0D6E3] py-2 z-50 animate-in fade-in zoom-in-95 duration-150">
             {/* Header */}
-            <div className="px-4 py-2.5 border-b border-slate-100 flex items-center justify-between">
+            <div className="px-4 py-2.5 border-b border-[#F0D6E3]/60 flex items-center justify-between">
               <div className="flex items-center gap-2">
-                <span className="text-xs font-bold text-slate-900">Notifications</span>
+                <span className="text-xs font-bold text-[#21131B]">Notifications</span>
                 {unreadCount > 0 && (
-                  <span className="text-[10px] bg-teal-50 text-teal-700 font-mono font-semibold px-2 py-0.5 rounded-full border border-teal-200">
+                  <span className="text-[10px] bg-[#FCE7F3] text-[#760D3B] font-mono font-bold px-2 py-0.5 rounded-full border border-[#F0D6E3]">
                     {unreadCount} new
                   </span>
                 )}
@@ -109,7 +88,7 @@ export const NotificationBell: React.FC = () => {
               {unreadCount > 0 && (
                 <button
                   onClick={handleMarkAllRead}
-                  className="text-[11px] text-teal-700 hover:text-teal-900 font-semibold flex items-center gap-1 cursor-pointer"
+                  className="text-[11px] text-[#C2185B] hover:text-[#760D3B] font-bold flex items-center gap-1 cursor-pointer"
                 >
                   <CheckCheck className="w-3.5 h-3.5" />
                   <span>Mark all read</span>
@@ -118,34 +97,34 @@ export const NotificationBell: React.FC = () => {
             </div>
 
             {/* List */}
-            <div className="max-h-80 overflow-y-auto divide-y divide-slate-100">
+            <div className="max-h-80 overflow-y-auto divide-y divide-[#F0D6E3]/40">
               {notifications.length > 0 ? (
                 notifications.slice(0, 8).map((notif) => (
                   <div
                     key={notif.id}
                     onClick={() => handleOpenNotification(notif)}
-                    className={`p-3.5 hover:bg-slate-50 transition-colors cursor-pointer flex items-start gap-3 ${
-                      !notif.isRead ? 'bg-teal-50/30' : ''
+                    className={`p-3.5 hover:bg-[#FFF5F9] transition-colors cursor-pointer flex items-start gap-3 ${
+                      !notif.isRead ? 'bg-[#FFF5F9]' : ''
                     }`}
                   >
-                    <div className="w-8 h-8 rounded-lg bg-slate-100 flex items-center justify-center shrink-0 mt-0.5">
+                    <div className="w-8 h-8 rounded-lg bg-[#FCE7F3]/60 flex items-center justify-center shrink-0 mt-0.5 border border-[#F0D6E3]/60">
                       {getIcon(notif.category)}
                     </div>
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center justify-between gap-1">
-                        <p className={`text-xs truncate ${!notif.isRead ? 'font-bold text-slate-950' : 'font-medium text-slate-800'}`}>
+                        <p className={`text-xs truncate ${!notif.isRead ? 'font-bold text-[#21131B]' : 'font-medium text-[#756572]'}`}>
                           {notif.subject}
                         </p>
                         {!notif.isRead && (
-                          <span className="w-2 h-2 rounded-full bg-teal-500 shrink-0" />
+                          <span className="w-2 h-2 rounded-full bg-[#C2185B] shrink-0" />
                         )}
                       </div>
-                      <p className="text-[11px] text-slate-500 line-clamp-2 mt-0.5 leading-snug">
+                      <p className="text-[11px] text-[#756572] line-clamp-2 mt-0.5 leading-snug">
                         {notif.previewText}
                       </p>
-                      <div className="flex items-center justify-between mt-1 text-[10px] text-slate-400">
+                      <div className="flex items-center justify-between mt-1 text-[10px] text-[#756572]/80">
                         <span>{new Date(notif.sentAt).toLocaleDateString('en-IN', { month: 'short', day: 'numeric' })}</span>
-                        <span className="text-teal-700 font-medium hover:underline flex items-center gap-0.5">
+                        <span className="text-[#C2185B] font-bold hover:underline flex items-center gap-0.5">
                           <span>View Email</span>
                           <ExternalLink className="w-2.5 h-2.5" />
                         </span>
@@ -154,28 +133,22 @@ export const NotificationBell: React.FC = () => {
                   </div>
                 ))
               ) : (
-                <div className="p-8 text-center text-slate-400 text-xs">
-                  No notifications yet.
+                <div className="p-8 text-center text-xs text-[#756572]">
+                  No notifications or transactional emails yet.
                 </div>
               )}
-            </div>
-
-            {/* Footer */}
-            <div className="p-2 border-t border-slate-100 bg-slate-50/50 text-center">
-              <span className="text-[10px] text-slate-400 font-mono">
-                Integrated with Resend Transactional Dispatch
-              </span>
             </div>
           </div>
         )}
       </div>
 
-      {/* Transactional Email Modal */}
-      <EmailPreviewModal
-        isOpen={!!activeNotification}
-        notification={activeNotification}
-        onClose={() => setActiveNotification(null)}
-      />
+      {selectedNotification && (
+        <EmailPreviewModal
+          notification={selectedNotification}
+          isOpen={!!selectedNotification}
+          onClose={() => setSelectedNotification(null)}
+        />
+      )}
     </>
   );
 };

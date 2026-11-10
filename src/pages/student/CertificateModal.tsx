@@ -37,7 +37,7 @@ export const CertificateModal: React.FC<CertificateModalProps> = ({ certificate,
             </button>
             <button
               onClick={handleVerifyLink}
-              className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-teal-700 hover:text-teal-900 bg-teal-50 hover:bg-teal-100 rounded-lg transition-colors cursor-pointer"
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-[#C2185B] hover:text-[#760D3B] bg-[#FCE7F3]/70 hover:bg-[#FCE7F3] rounded-lg transition-colors cursor-pointer"
             >
               <ExternalLink className="w-3.5 h-3.5" />
               <span>Verify Link</span>
@@ -81,7 +81,7 @@ export const CertificateModal: React.FC<CertificateModalProps> = ({ certificate,
             <p className="text-xs text-slate-600 max-w-lg mx-auto leading-relaxed">
               has satisfactorily completed all practical curriculums, assessments, and verified laboratory milestones for
             </p>
-            <h3 className="text-lg sm:text-xl font-bold text-teal-900">
+            <h3 className="text-lg sm:text-xl font-bold text-[#760D3B]">
               {certificate.courseTitle}
             </h3>
             <p className="text-xs text-slate-500">
@@ -96,7 +96,7 @@ export const CertificateModal: React.FC<CertificateModalProps> = ({ certificate,
               <p className="text-xs font-semibold text-slate-800 mt-0.5">{certificate.issueDate}</p>
 
               <p className="text-[10px] uppercase font-mono tracking-wider text-slate-400 mt-3">Certificate Record ID</p>
-              <p className="text-xs font-mono font-bold text-teal-800 mt-0.5">{certificate.id}</p>
+              <p className="text-xs font-mono font-bold text-[#C2185B] mt-0.5">{certificate.id}</p>
             </div>
 
             <div className="text-right">
@@ -113,7 +113,7 @@ export const CertificateModal: React.FC<CertificateModalProps> = ({ certificate,
 
           {/* Tamper-Evident Footer Bar */}
           <div className="pt-4 flex items-center justify-between text-[10px] text-slate-400 font-mono border-t border-slate-100">
-            <span className="flex items-center gap-1 text-teal-700 font-semibold">
+            <span className="flex items-center gap-1 text-[#C2185B] font-semibold">
               <ShieldCheck className="w-3.5 h-3.5" />
               <span>RECORD AUTHENTICATED BY BELVO REGISTRY</span>
             </span>

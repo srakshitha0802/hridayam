@@ -57,8 +57,8 @@ export const FAQPage: React.FC = () => {
   return (
     <div className="max-w-4xl mx-auto px-4 sm:px-6 py-16 space-y-10">
       <div className="border-b border-slate-200 pb-8 space-y-2 text-center">
-        <div className="inline-flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider text-teal-800 bg-teal-50 border border-teal-200/60 px-3 py-1 rounded-md">
-          <HelpCircle className="w-4 h-4 text-teal-600" />
+        <div className="inline-flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider text-[#760D3B] bg-[#FCE7F3]/70 border border-[#F0D6E3] px-3 py-1 rounded-md">
+          <HelpCircle className="w-4 h-4 text-[#C2185B]" />
           <span>Support & Clarifications</span>
         </div>
         <h1 className="text-3xl sm:text-4xl font-extrabold text-slate-950 tracking-tight">
@@ -77,7 +77,7 @@ export const FAQPage: React.FC = () => {
           value={search}
           onChange={(e) => setSearch(e.target.value)}
           placeholder="Search by topic or keyword..."
-          className="w-full pl-10 pr-4 py-2.5 text-xs bg-white border border-slate-200 rounded-xl focus:outline-none focus:border-teal-500 shadow-xs"
+          className="w-full pl-10 pr-4 py-2.5 text-xs bg-white border border-slate-200 rounded-xl focus:outline-none focus:border-[#C2185B] shadow-xs"
         />
       </div>
 
@@ -92,7 +92,7 @@ export const FAQPage: React.FC = () => {
                 className="w-full p-5 text-left flex items-center justify-between gap-4 hover:bg-slate-50/50 transition-colors cursor-pointer"
               >
                 <div>
-                  <span className="text-[10px] font-mono uppercase text-teal-700 font-semibold tracking-wider">
+                  <span className="text-[10px] font-mono uppercase text-[#C2185B] font-semibold tracking-wider">
                     {faq.category}
                   </span>
                   <h3 className="text-sm font-bold text-slate-900 mt-0.5">{faq.q}</h3>
@@ -111,13 +111,13 @@ export const FAQPage: React.FC = () => {
       </div>
 
       {/* Still need help CTA */}
-      <div className="p-6 bg-slate-50 rounded-2xl border border-slate-200 text-center space-y-2">
+      <div className="p-6 bg-[#FFFBFD] rounded-2xl border border-[#F0D6E3] text-center space-y-2">
         <h4 className="text-sm font-bold text-slate-900">Have a specific question not covered here?</h4>
         <p className="text-xs text-slate-500">Our faculty advisory desk is available to assist you.</p>
         <div className="pt-2">
           <button
             onClick={() => navigateTo('/contact')}
-            className="px-4 py-2 text-xs font-semibold text-white bg-slate-900 hover:bg-slate-800 rounded-lg cursor-pointer"
+            className="px-4 py-2 text-xs font-semibold text-white bg-[#C2185B] hover:bg-[#760D3B] rounded-lg cursor-pointer shadow-md shadow-[#C2185B]/20"
           >
             Contact Academy Desk
           </button>

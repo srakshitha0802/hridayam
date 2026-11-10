@@ -1,4 +1,4 @@
-import { Category, Course, Enrolment, Certificate, LearningPath, Announcement, PlatformSettings, StudentNote, EmailNotification } from '../types';
+import { Category, Course, Enrolment, Certificate, LearningPath, Announcement, PlatformSettings, StudentNote, EmailNotification, EnquiryLead } from '../types';
 import {
   INITIAL_CATEGORIES,
   INITIAL_COURSES,
@@ -7,7 +7,8 @@ import {
   INITIAL_LEARNING_PATHS,
   INITIAL_ANNOUNCEMENT,
   INITIAL_SETTINGS,
-  INITIAL_NOTIFICATIONS
+  INITIAL_NOTIFICATIONS,
+  INITIAL_ENQUIRIES
 } from '../data/initialData';
 
 const STORAGE_KEYS = {
@@ -19,6 +20,7 @@ const STORAGE_KEYS = {
   ANNOUNCEMENT: 'hridayam_announcement_v2',
   SETTINGS: 'hridayam_settings_v2',
   NOTIFICATIONS: 'hridayam_notifications_v2',
+  ENQUIRIES: 'hridayam_enquiries_v2',
 };
 
 function getFromStorage<T>(key: string, fallback: T): T {
@@ -496,6 +498,47 @@ export const storageService = {
     saveToStorage(STORAGE_KEYS.SETTINGS, settings);
   },
 
+  // ----------------- Enquiries / Admissions Leads -----------------
+  getEnquiries(): EnquiryLead[] {
+    return getFromStorage<EnquiryLead[]>(STORAGE_KEYS.ENQUIRIES, INITIAL_ENQUIRIES);
+  },
+
+  saveEnquiry(enquiry: Omit<EnquiryLead, 'id' | 'submittedAt' | 'status'>): EnquiryLead {
+    const enquiries = this.getEnquiries();
+    const newLead: EnquiryLead = {
+      ...enquiry,
+      id: `ENQ-${Date.now().toString().slice(-6)}`,
+      submittedAt: new Date().toISOString(),
+      status: 'new'
+    };
+    enquiries.unshift(newLead);
+    saveToStorage(STORAGE_KEYS.ENQUIRIES, enquiries);
+
+    // Send high-priority notification to platform administrator
+    this.sendNotification({
+      userId: 'user-admin-1',
+      recipientEmail: 'admissions@hridayam.belvo.com',
+      recipientName: 'Hridayam Admissions Faculty',
+      subject: `🎯 New Admissions Enquiry: ${newLead.fullName} (${newLead.areaOfInterest})`,
+      category: 'system',
+      previewText: `${newLead.fullName} (${newLead.currentStatus}) submitted an enquiry for ${newLead.areaOfInterest}. Phone: ${newLead.phone} | Email: ${newLead.email}`,
+      metadata: {
+        orderId: newLead.id
+      }
+    });
+
+    return newLead;
+  },
+
+  updateEnquiryStatus(id: string, status: EnquiryLead['status']): void {
+    const enquiries = this.getEnquiries();
+    const index = enquiries.findIndex((e) => e.id === id);
+    if (index >= 0) {
+      enquiries[index].status = status;
+      saveToStorage(STORAGE_KEYS.ENQUIRIES, enquiries);
+    }
+  },
+
   // ----------------- Reset -----------------
   resetAll(): void {
     localStorage.removeItem(STORAGE_KEYS.CATEGORIES);
@@ -506,5 +549,6 @@ export const storageService = {
     localStorage.removeItem(STORAGE_KEYS.ANNOUNCEMENT);
     localStorage.removeItem(STORAGE_KEYS.SETTINGS);
     localStorage.removeItem(STORAGE_KEYS.NOTIFICATIONS);
+    localStorage.removeItem(STORAGE_KEYS.ENQUIRIES);
   }
 };

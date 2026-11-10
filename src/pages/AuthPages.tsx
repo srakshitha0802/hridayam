@@ -54,7 +54,7 @@ export const LoginPage: React.FC = () => {
         </p>
       </div>
 
-      <div className="bg-white rounded-2xl border border-slate-200 p-6 sm:p-8 shadow-xs space-y-5">
+      <div className="bg-white rounded-2xl border border-[#F0D6E3] p-6 sm:p-8 shadow-xs space-y-5">
         {error && (
           <div className="p-3 bg-rose-50 border border-rose-200 rounded-lg text-xs text-rose-700">
             {error}
@@ -72,7 +72,7 @@ export const LoginPage: React.FC = () => {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="name@example.com"
-                className="w-full pl-9 pr-3 py-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:outline-none focus:border-teal-500"
+                className="w-full pl-9 pr-3 py-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:outline-none focus:border-[#C2185B]"
               />
             </div>
           </div>
@@ -83,7 +83,7 @@ export const LoginPage: React.FC = () => {
               <button
                 type="button"
                 onClick={() => navigateTo('/forgot-password')}
-                className="text-teal-700 hover:underline"
+                className="text-[#C2185B] hover:underline"
               >
                 Forgot Password?
               </button>
@@ -96,14 +96,14 @@ export const LoginPage: React.FC = () => {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="••••••••"
-                className="w-full pl-9 pr-3 py-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:outline-none focus:border-teal-500"
+                className="w-full pl-9 pr-3 py-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:outline-none focus:border-[#C2185B]"
               />
             </div>
           </div>
 
           <button
             type="submit"
-            className="w-full py-3 text-xs font-bold text-white bg-slate-950 hover:bg-slate-800 rounded-xl transition-colors cursor-pointer shadow-xs"
+            className="w-full py-3 text-xs font-bold text-white bg-[#C2185B] hover:bg-[#760D3B] rounded-xl transition-colors cursor-pointer shadow-md shadow-[#C2185B]/20"
           >
             Sign In
           </button>
@@ -117,7 +117,7 @@ export const LoginPage: React.FC = () => {
           <div className="grid grid-cols-2 gap-2">
             <button
               onClick={handleDemoStudent}
-              className="py-2 px-3 text-xs font-semibold text-teal-800 bg-teal-50 hover:bg-teal-100 rounded-lg border border-teal-200 transition-colors cursor-pointer text-center"
+              className="py-2 px-3 text-xs font-semibold text-[#760D3B] bg-[#FCE7F3]/70 hover:bg-[#FCE7F3] rounded-lg border border-[#F0D6E3] transition-colors cursor-pointer text-center"
             >
               Sign In as Student
             </button>
@@ -134,7 +134,7 @@ export const LoginPage: React.FC = () => {
           Don’t have an account yet?{' '}
           <button
             onClick={() => navigateTo('/register')}
-            className="text-teal-700 font-semibold hover:underline"
+            className="text-[#C2185B] font-semibold hover:underline"
           >
             Register here
           </button>
@@ -176,7 +176,7 @@ export const RegisterPage: React.FC = () => {
         </p>
       </div>
 
-      <div className="bg-white rounded-2xl border border-slate-200 p-6 sm:p-8 shadow-xs space-y-5">
+      <div className="bg-white rounded-2xl border border-[#F0D6E3] p-6 sm:p-8 shadow-xs space-y-5">
         <form onSubmit={handleSubmit} className="space-y-4 text-xs">
           <div>
             <label className="block font-semibold text-slate-700 mb-1">Full Name:</label>
@@ -188,7 +188,7 @@ export const RegisterPage: React.FC = () => {
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 placeholder="e.g. Rahul Sharma"
-                className="w-full pl-9 pr-3 py-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:outline-none focus:border-teal-500"
+                className="w-full pl-9 pr-3 py-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:outline-none focus:border-[#C2185B]"
               />
             </div>
           </div>
@@ -203,7 +203,7 @@ export const RegisterPage: React.FC = () => {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="name@example.com"
-                className="w-full pl-9 pr-3 py-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:outline-none focus:border-teal-500"
+                className="w-full pl-9 pr-3 py-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:outline-none focus:border-[#C2185B]"
               />
             </div>
           </div>
@@ -219,14 +219,14 @@ export const RegisterPage: React.FC = () => {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="At least 6 characters"
-                className="w-full pl-9 pr-3 py-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:outline-none focus:border-teal-500"
+                className="w-full pl-9 pr-3 py-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:outline-none focus:border-[#C2185B]"
               />
             </div>
           </div>
 
           <button
             type="submit"
-            className="w-full py-3 text-xs font-bold text-white bg-slate-950 hover:bg-slate-800 rounded-xl transition-colors cursor-pointer shadow-xs"
+            className="w-full py-3 text-xs font-bold text-white bg-[#C2185B] hover:bg-[#760D3B] rounded-xl transition-colors cursor-pointer shadow-md shadow-[#C2185B]/20"
           >
             Create Free Account
           </button>
@@ -236,7 +236,7 @@ export const RegisterPage: React.FC = () => {
           Already registered?{' '}
           <button
             onClick={() => navigateTo('/login')}
-            className="text-teal-700 font-semibold hover:underline"
+            className="text-[#C2185B] font-semibold hover:underline"
           >
             Log in
           </button>
@@ -266,10 +266,10 @@ export const ForgotPasswordPage: React.FC = () => {
         </p>
       </div>
 
-      <div className="bg-white rounded-2xl border border-slate-200 p-6 sm:p-8 shadow-xs">
+      <div className="bg-white rounded-2xl border border-[#F0D6E3] p-6 sm:p-8 shadow-xs">
         {sent ? (
           <div className="text-center space-y-3">
-            <CheckCircle2 className="w-10 h-10 text-teal-600 mx-auto" />
+            <CheckCircle2 className="w-10 h-10 text-[#C2185B] mx-auto" />
             <h3 className="text-sm font-bold text-slate-900">Recovery Link Dispatched</h3>
             <p className="text-xs text-slate-600 leading-relaxed">
               If an account is associated with <strong className="text-slate-900">{email}</strong>, a secure expiring token has been prepared.
@@ -277,7 +277,7 @@ export const ForgotPasswordPage: React.FC = () => {
             <div className="pt-2">
               <button
                 onClick={() => navigateTo('/login')}
-                className="w-full py-2.5 text-xs font-semibold text-white bg-slate-900 rounded-lg hover:bg-slate-800"
+                className="w-full py-2.5 text-xs font-semibold text-white bg-[#C2185B] hover:bg-[#760D3B] rounded-lg shadow-md shadow-[#C2185B]/20 cursor-pointer"
               >
                 Return to Login
               </button>
@@ -295,14 +295,14 @@ export const ForgotPasswordPage: React.FC = () => {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="name@example.com"
-                  className="w-full pl-9 pr-3 py-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:outline-none focus:border-teal-500"
+                  className="w-full pl-9 pr-3 py-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:outline-none focus:border-[#C2185B]"
                 />
               </div>
             </div>
 
             <button
               type="submit"
-              className="w-full py-3 text-xs font-bold text-white bg-slate-950 hover:bg-slate-800 rounded-xl transition-colors cursor-pointer shadow-xs"
+              className="w-full py-3 text-xs font-bold text-white bg-[#C2185B] hover:bg-[#760D3B] rounded-xl transition-colors cursor-pointer shadow-md shadow-[#C2185B]/20"
             >
               Send Recovery Link
             </button>

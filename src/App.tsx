@@ -111,7 +111,7 @@ function AppContent() {
   const isClassroom = path.startsWith('/learn/');
 
   return (
-    <div className="min-h-screen flex flex-col bg-slate-50 text-slate-900">
+    <div className="min-h-screen flex flex-col bg-[#FFF7FA] text-[#21131B]">
       {!isClassroom && <AnnouncementBar announcement={announcement} />}
       {!isClassroom && <Navbar currentPath={path} />}
       <main className="flex-1">{renderView()}</main>
