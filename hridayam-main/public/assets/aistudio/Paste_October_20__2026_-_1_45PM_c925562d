@@ -1,0 +1,846 @@
+# MASTER PROMPT — HRIDAYAM BY BELVO
+## AI-Powered Development Brief for Google AI Studio
+
+### 1. Project Overview
+
+Act as a senior full-stack software engineer, UI/UX designer, SaaS architect, and product strategist. Build a production-oriented educational platform called **“Hridayam by Belvo”**.
+
+Reference website: https://optrondigital.in
+
+Study the reference website's overall presentation, professional visual hierarchy, service-oriented layout, typography, spacing, navigation, and conversion-focused design. Use it as inspiration for the quality and structure of the experience, but create an original design for Hridayam. Do not copy its branding, source code, text, or exact layouts.
+
+**Product vision:** Hridayam is Belvo's digital learning platform, helping students, aspiring professionals, freelancers, creators, and entrepreneurs develop practical, industry-relevant skills through structured courses, projects, assessments, and learning resources.
+
+The result must look like a premium EdTech product backed by a modern digital agency: professional, trustworthy, intuitive, responsive, and ready to scale.
+
+### 2. Core Development Rules
+
+1. Build a complete, functional web application, not just a static homepage or a visual prototype.
+2. Implement the frontend, backend integrations, authentication flows, data models, and dashboard interfaces wherever supported by the available environment.
+3. Use real database records and genuine integration responses. Never fabricate payment success, student activity, course statistics, certificates, reviews, or API responses.
+4. If an API key, database connection, payment gateway, email provider, or video provider is unavailable, create a clear integration interface and setup instructions. Do not expose secret keys in frontend code.
+5. Every visible button, link, filter, form, tab, dashboard action, and navigation item must work or clearly indicate that its functionality requires configuration.
+6. Separate public pages, student functionality, and administrative functionality.
+7. Make the application accessible, mobile-friendly, secure, maintainable, and scalable.
+8. Do not remove requested features simply to make the initial implementation easier. Prioritize the MVP while keeping the architecture ready for subsequent modules.
+9. Do not claim that the application is production-ready until authentication, data persistence, security, payments, and deployment have been verified.
+10. Before finishing, run the available build checks, resolve errors, and provide setup instructions.
+
+---
+
+### 3. Branding and Visual Identity
+
+Brand name: **Hridayam by Belvo**
+
+Brand positioning: Practical learning. Real-world skills. Career growth.
+
+Create an elegant, modern identity that communicates education, creativity, technology, and professional growth.
+
+**Visual direction:**
+- Premium editorial-style homepage.
+- Clean, generous spacing and strong visual hierarchy.
+- Deep navy or charcoal as the primary dark color, warm off-white backgrounds, and a distinctive teal or electric blue accent.
+- Use restrained gradients, subtle shadows, refined borders, and smooth micro-interactions.
+- Use a consistent typography system with a bold display font for headings and a highly readable font for body text.
+- Use high-quality course imagery, authentic project previews, and consistent category illustrations.
+- Avoid excessive glassmorphism, unnecessary animations, generic AI-generated-looking layouts, and repetitive card grids.
+- Use subtle scroll reveals and hover transitions without compromising performance or accessibility.
+- Design a recognizable Hridayam wordmark and a simple original symbol. Keep Belvo attribution visible but secondary.
+
+The design should feel custom-built rather than like an unmodified template.
+
+### 4. Website Structure and Navigation
+
+Create the following public pages:
+
+- Home
+- Explore Courses
+- Course Categories
+- Course Details
+- Learning Paths
+- About Hridayam
+- About Belvo
+- Instructors or Mentors
+- Resources or Learning Blog
+- Contact
+- FAQ
+- Login
+- Student Registration
+- Forgot Password
+- Privacy Policy
+- Terms and Conditions
+- Refund and Cancellation Policy
+
+Include a responsive navigation bar with the Hridayam logo, course search, category navigation, login, and a prominent “Explore Courses” CTA.
+
+For authenticated students, replace the login CTA with a profile menu and a direct link to the learning dashboard.
+
+For administrators, provide a protected administrative entry point that is not presented as an unrestricted public admin login.
+
+### 5. Homepage Design
+
+Create a polished homepage with the following sections.
+
+**A. Announcement bar**
+
+A slim, dismissible announcement bar for new courses, learning opportunities, or platform announcements. Display only published announcements configured by an administrator.
+
+**B. Hero section**
+
+Use a two-column desktop layout with compelling copy and a visually rich learning-themed composition.
+
+Suggested headline:
+
+“Turn Your Curiosity Into Real-World Skills.”
+
+Supporting text:
+
+“Learn digital, creative, and technical skills through practical courses designed to help you build, create, and grow.”
+
+Primary CTA: “Explore Courses”
+
+Secondary CTA: “Discover Hridayam”
+
+Add a visual composition featuring course previews, project thumbnails, learning resources, or a curated learning-path graphic. These must not imply fake enrolment counts or unverified outcomes.
+
+**C. Course discovery**
+
+Create a prominent course search bar that supports searching by title, skill, category, and instructor.
+
+Include filters for:
+- Category
+- Beginner, intermediate, and advanced levels
+- Free and paid courses
+- Course duration
+- Language
+- Course format
+
+Include sorting by newest, alphabetical order, and price.
+
+**D. Explore learning categories**
+
+Present visually distinctive category cards for the 11 core categories defined below. Each card should include a relevant visual, concise description, and a working navigation link to filtered course results.
+
+**E. Featured courses**
+
+Display only real courses marked as featured by the administrator. Each course card should include its thumbnail, title, instructor, level, duration, price, and publication status where relevant.
+
+Do not invent ratings, student counts, testimonials, or instructor credentials.
+
+**F. Learning paths**
+
+Show curated learning paths that group related courses into a coherent sequence, such as:
+- Full-Stack Web Developer
+- Digital Marketing Specialist
+- UI/UX Designer
+- AI and Automation Practitioner
+- Content Creator
+- Cybersecurity Foundations
+- Data Analytics Practitioner
+
+A learning path must show its actual included courses and prerequisites. If it has not been configured, label it as an upcoming offering rather than inventing content.
+
+**G. Why Hridayam**
+
+Explain the platform's value through practical learning, structured curricula, projects, assessments, and skill development. Only promise mentor access, placement assistance, industry certification, or other benefits if they are genuinely offered.
+
+**H. Practical learning showcase**
+
+Present examples of the types of work learners can create: websites, marketing campaigns, UI prototypes, AI automations, data dashboards, and content portfolios.
+
+Clearly label illustrative examples as demonstrations rather than real student achievements.
+
+**I. How it works**
+
+1. Discover a course.
+2. Enrol in a free or paid course.
+3. Learn through structured lessons.
+4. Complete assessments and assignments.
+5. Earn a certificate when the course's completion criteria are satisfied.
+
+**J. Frequently asked questions**
+
+Include FAQs about registration, course pricing, access duration, course requirements, assessments, certificates, payments, refunds, and technical support.
+
+**K. Footer**
+
+Include navigation links, contact information configured by the administrator, social links, policies, newsletter subscription, and “Hridayam by Belvo” branding.
+
+Never invent addresses, phone numbers, email addresses, or social media accounts.
+
+### 6. Course Categories
+
+Implement the following categories as database-driven records rather than hardcoded page content.
+
+1. **Digital Marketing and Social Media Management**
+   - Social media strategy
+   - Campaign management
+   - Paid advertising
+   - Analytics and reporting
+
+2. **Web, App, and Software Development**
+   - HTML, CSS, JavaScript
+   - Frontend and backend development
+   - Mobile application development
+   - APIs, databases, and software engineering
+
+3. **Graphic Design, Branding, and UI/UX**
+   - Visual design fundamentals
+   - Brand identity
+   - UI/UX research
+   - Prototyping and design systems
+
+4. **Video Editing, Animation, and VFX**
+   - Video editing workflows
+   - Motion graphics
+   - Animation fundamentals
+   - Visual effects
+
+5. **Artificial Intelligence, Machine Learning, and Automation**
+   - AI fundamentals
+   - Machine learning concepts
+   - Generative AI tools
+   - Workflow automation and AI application development
+
+6. **E-commerce and Online Business**
+   - Online store creation
+   - Product listings
+   - E-commerce operations
+   - Digital business models
+
+7. **Photography and Content Creation**
+   - Photography fundamentals
+   - Editing and visual storytelling
+   - Short-form video
+   - Content planning and production
+
+8. **Business Development, Sales, and Entrepreneurship**
+   - Sales fundamentals
+   - Customer acquisition
+   - Business models
+   - Startup operations
+
+9. **Copywriting, SEO, and Content Marketing**
+   - Copywriting
+   - Keyword research
+   - On-page SEO
+   - Content strategy
+
+10. **Cloud Computing, IT, and Cybersecurity Awareness**
+    - Cloud fundamentals
+    - Networking basics
+    - Security awareness
+    - Secure development practices
+
+11. **Data Analytics and Business Intelligence**
+    - Spreadsheet analytics
+    - SQL
+    - Data visualization
+    - Business intelligence dashboards
+
+Administrators must be able to create additional categories, rename them, reorder them, and deactivate them without changing application code.
+
+### 7. Individual Course Details Page
+
+Each course must have a dedicated page with:
+
+- Course title and short description
+- Course thumbnail or preview video
+- Instructor information
+- Skill level and language
+- Total duration and lesson count
+- Pricing and any configured discount
+- Learning outcomes
+- Prerequisites
+- Detailed syllabus organized into modules and lessons
+- Lesson previews where enabled
+- Projects, assignments, and assessment details
+- Certificate eligibility criteria
+- Course access and expiry rules
+- FAQs
+- Enrolment or purchase CTA
+- Related courses
+
+The enrolment button must reflect the user's state:
+
+- Logged out: ask the user to log in or register.
+- Free course: enrol through a server-side process.
+- Paid course: initiate a verified payment flow.
+- Already enrolled: open the course learning interface.
+- Unpublished or unavailable course: prevent enrolment.
+
+Prices, discounts, and access permissions must be determined by trusted backend data.
+
+### 8. Authentication and User Roles
+
+Implement secure authentication using a suitable supported authentication provider.
+
+Support these roles:
+
+**Guest**
+- Browse published courses.
+- Search and filter courses.
+- View public course information.
+- Register or log in.
+
+**Student**
+- Access enrolled courses.
+- View lessons and learning materials.
+- Track progress.
+- Complete quizzes and assignments.
+- View eligible certificates.
+- Manage profile and account settings.
+- View enrolment and payment history.
+
+**Administrator**
+- Access the protected admin dashboard.
+- Create, edit, publish, unpublish, and archive courses.
+- Manage course content, students, categories, pricing, and enrolments.
+- Review assessments and assignments where applicable.
+- Issue or revoke certificates according to defined policies.
+- View verified platform activity and reports.
+- Manage announcements and platform settings.
+
+Use server-enforced role-based access control. Never rely solely on frontend route guards or a user-editable role field.
+
+If instructor functionality is introduced later, structure permissions so it can be added without redesigning the entire system.
+
+### 9. Student Dashboard
+
+Build a professional, responsive student dashboard with a sidebar on desktop and an accessible navigation pattern on mobile.
+
+**Dashboard overview**
+- Welcome message
+- Enrolled courses
+- Continue Learning section
+- Recently accessed courses
+- Progress indicators calculated from recorded lesson completion
+- Upcoming assignment deadlines, if configured
+- Recent assessment results
+- Certificates earned
+
+**My Learning**
+- All enrolled courses
+- In-progress courses
+- Completed courses
+- Course search and filtering
+- Continue from the last accessible lesson
+
+**Learning interface**
+- Course curriculum sidebar
+- Embedded video player
+- Lesson description and downloadable resources
+- Previous and next lesson navigation
+- Mark-as-complete functionality
+- Resume from saved progress
+- Accessible video controls
+- Captions or transcripts when available
+
+**Assessments**
+- Multiple-choice quizzes
+- True/false questions
+- Configurable attempts and passing scores
+- Server-side grading for supported question types
+- Feedback and recorded scores
+- Assignment submission through supported file uploads
+- Instructor/admin review for manually graded assignments
+
+Do not expose correct answers or hidden assessment data through public API responses before submission.
+
+**Certificates**
+- Generate a certificate only after the configured completion requirements are met.
+- Include a unique certificate identifier, learner name, course title, issue date, and issuing organization.
+- Provide a verification page that checks the certificate against server-side records.
+- Support revocation and verification status.
+- Do not imply external accreditation unless it actually exists.
+
+### 10. Admin Dashboard
+
+Create a functional administrative workspace with role-protected pages.
+
+**Overview**
+- Total registered students
+- Published courses
+- Enrolments
+- Course completion data
+- Revenue and refunds where payment integration is enabled
+- Recent enrolments and administrative activity
+
+Every metric must be calculated from real database records and displayed with an appropriate date range. If no data exists, show a proper empty state rather than fabricated numbers.
+
+**Course management**
+- Create and edit courses
+- Add descriptions, thumbnails, outcomes, prerequisites, level, language, duration, and pricing
+- Create modules and lessons
+- Reorder curriculum items
+- Upload or configure lesson videos and learning resources
+- Configure previews, access duration, and completion requirements
+- Preview the course before publishing
+- Publish, unpublish, archive, and restore where supported
+
+**Student management**
+- Search and filter students
+- View enrolments and learning progress
+- View relevant account status
+- Manage course access
+- Apply administrative restrictions with appropriate permissions and audit records
+
+**Enrolment management**
+- View course enrolments
+- Distinguish free enrolments from paid purchases
+- Review verified payment status
+- Handle refunds through supported gateway workflows
+- Correct enrolment issues with recorded administrative actions
+
+**Assessment management**
+- Create quizzes
+- Configure attempts and passing scores
+- Manage assignments
+- Review submissions
+- Record manual grades and feedback
+
+**Certificate management**
+- View issued certificates
+- Verify certificate records
+- Revoke certificates when justified
+- Maintain an audit trail
+
+**Settings**
+- Brand information
+- Course categories
+- Announcements
+- Email templates
+- Payment and video provider configuration status
+- Platform policies
+- Administrative permissions
+
+Use confirmation dialogs for destructive operations and provide clear success and error messages.
+
+### 11. Payments and Enrolment Workflow
+
+Support both free and paid courses.
+
+Design a payment integration abstraction that can support an appropriate provider, such as Razorpay for India, subject to account setup and provider approval.
+
+Paid course workflow:
+
+1. Student selects a paid course.
+2. Backend validates the course, price, account, and enrolment eligibility.
+3. Backend creates a payment order with the provider.
+4. Frontend opens the provider's checkout experience.
+5. Backend verifies the payment signature or equivalent provider verification.
+6. Server processes verified webhooks idempotently.
+7. Enrolment is granted only after successful payment verification.
+8. Confirmation appears in the student's account.
+9. A confirmation email is sent if email delivery is configured.
+
+Additional requirements:
+- Store provider transaction identifiers and payment status.
+- Handle pending, failed, successful, refunded, and disputed transactions where supported.
+- Prevent duplicate enrolments and duplicate webhook processing.
+- Never store raw card information.
+- Never trust a frontend success redirect as proof of payment.
+- Never simulate a successful payment in production mode.
+- Clearly label sandbox/test transactions.
+- Document gateway keys, webhook configuration, and deployment requirements.
+
+Free course workflow:
+
+1. Validate that the course is published and free.
+2. Create the enrolment securely.
+3. Grant the configured course access.
+4. Record the enrolment and notify the student if email is configured.
+
+### 12. Email and Notifications
+
+Create notification workflows for:
+
+- Account verification
+- Password reset
+- Enrolment confirmation
+- Payment confirmation
+- Payment failure where appropriate
+- Assignment submission
+- Assignment feedback
+- Course completion
+- Certificate availability
+- Administrative announcements
+
+Use a configurable provider such as Resend or another suitable transactional email service.
+
+Email functionality must remain explicitly unconfigured until valid credentials and verified sender-domain settings are supplied.
+
+Use secure, expiring tokens for account verification and password recovery. Do not expose private account information in notification links.
+
+### 13. Technology Stack
+
+Use the following preferred architecture, adapting only when necessary for the capabilities of the current AI Studio environment.
+
+**Frontend**
+- React
+- TypeScript
+- Vite
+- Tailwind CSS
+- Accessible component primitives such as shadcn/ui where compatible
+- React Router for navigation
+- TanStack Query or an equivalent data-fetching layer
+- React Hook Form and Zod for form validation
+
+**Backend**
+- Node.js
+- Express.js
+- TypeScript where practical
+- REST API with validated request and response contracts
+- Server-side authentication and authorization middleware
+
+**Database**
+- MongoDB Atlas or another suitable managed MongoDB deployment
+- Mongoose or an equivalent data-access layer
+- Database indexes for frequent queries
+- Schema validation and migrations or versioned data changes where appropriate
+
+**Authentication**
+- Prefer a managed provider such as Firebase Authentication if supported, or implement another secure, documented approach.
+- Ensure the backend verifies identity tokens before accessing protected resources.
+- Enforce roles and permissions on the server.
+
+**File and video storage**
+- Use object storage or a suitable media provider for course assets.
+- Use a dedicated video hosting or streaming service for production video delivery.
+- Keep large media files out of the application database.
+- Apply appropriate access restrictions to paid-course materials.
+- Use signed URLs or authorized playback when supported by the provider.
+
+**Payments**
+- Razorpay or another supported payment gateway.
+- Server-side order creation and payment verification.
+- Verified webhooks.
+
+**Email**
+- Resend or another transactional email provider.
+
+**Deployment**
+- Frontend: a suitable static hosting or frontend platform.
+- Backend: a suitable Node.js hosting platform.
+- Database: managed MongoDB.
+- Store production secrets in the hosting provider's secret-management settings.
+
+Do not assume that installing a frontend framework automatically provides a working backend, database, authentication system, or payment integration. Verify each service separately.
+
+If Google AI Studio's available environment supports a different implementation more reliably, document the substitution and preserve the system requirements.
+
+### 14. Database Design
+
+Create a clean, maintainable data model with appropriate indexes and relationships.
+
+Recommended collections:
+
+**Users**
+- Name
+- Email
+- Authentication provider identifier
+- Role
+- Account status
+- Profile details
+- Created and updated timestamps
+
+**Categories**
+- Name
+- Slug
+- Description
+- Icon or image
+- Display order
+- Active status
+
+**Courses**
+- Title
+- Slug
+- Short and full descriptions
+- Category reference
+- Instructor reference, if applicable
+- Thumbnail and preview media
+- Learning outcomes
+- Prerequisites
+- Level
+- Language
+- Duration
+- Curriculum
+- Price and currency
+- Publication status
+- Featured status
+- Access policy
+- Completion criteria
+- Created and updated timestamps
+
+**Enrolments**
+- Student reference
+- Course reference
+- Enrolment source
+- Payment reference where applicable
+- Enrolment status
+- Progress records
+- Start and completion dates
+
+**Lessons**
+- Course and module references
+- Title and description
+- Media reference
+- Resources
+- Preview permission
+- Display order
+
+**Assessments**
+- Course or lesson reference
+- Question configuration
+- Scoring rules
+- Attempt limits
+- Passing criteria
+
+**Submissions**
+- Student and assignment references
+- Submission file or text
+- Submission timestamp
+- Review status
+- Grade and feedback
+
+**Payments**
+- Student reference
+- Course reference
+- Provider order identifier
+- Provider payment identifier
+- Amount and currency
+- Payment status
+- Refund information
+- Verification timestamps
+
+**Certificates**
+- Unique certificate identifier
+- Student reference
+- Course reference
+- Issue date
+- Verification status
+- Revocation information
+
+**Notifications**
+- Recipient
+- Notification type
+- Content or template reference
+- Delivery status
+- Timestamp
+
+**AuditLogs**
+- Actor
+- Action
+- Affected resource
+- Timestamp
+- Relevant non-sensitive metadata
+
+Add suitable indexes and enforce uniqueness where needed, including normalized user email addresses where applicable, course slugs, provider transaction identifiers, and certificate identifiers.
+
+Avoid storing passwords in plaintext, payment card details, unnecessary personal information, or unrestricted copies of authentication secrets.
+
+### 15. Security, Privacy, and Performance
+
+Implement security from the beginning.
+
+Required controls:
+- Server-side authorization and role checks.
+- Input validation and output encoding.
+- Secure session or token handling.
+- Appropriate CORS configuration.
+- Rate limiting for sensitive endpoints.
+- Secure HTTP headers.
+- Protection against common injection and cross-site scripting risks.
+- Safe file-upload validation and size limits.
+- Secrets stored exclusively in server-side environment variables or a secret manager.
+- No credentials committed to GitHub.
+- No unrestricted admin endpoints.
+- No unauthorized access to paid lessons or private student records.
+- Audit logging for important administrative and payment operations.
+- Proper error handling without leaking stack traces or secrets.
+- Backup and restoration procedures.
+- Database access restrictions and transport encryption.
+- Privacy-conscious analytics.
+- Consent and cookie handling where applicable.
+
+For performance and scalability:
+- Lazy-load routes and heavy components.
+- Optimize images and media delivery.
+- Paginate course and student lists.
+- Use database indexes and avoid unnecessary queries.
+- Cache suitable public data without caching private student information improperly.
+- Provide loading, empty, error, and retry states.
+- Design APIs so additional categories, courses, students, and learning modules can be added without rewriting the application.
+
+### 16. UI/UX Requirements
+
+Create a consistent design system with reusable components.
+
+Required components:
+- Responsive navigation
+- Buttons and links
+- Course cards
+- Category cards
+- Search and filter panels
+- Forms and validation messages
+- Tabs and dropdown menus
+- Confirmation dialogs
+- Toast notifications
+- Progress indicators
+- Pagination
+- Video player container
+- Empty states
+- Loading skeletons
+- Error states
+- Accessible modals
+- Responsive dashboard sidebar
+
+Responsive behavior:
+- Desktop: full navigation and spacious layouts.
+- Tablet: adaptive columns and compact navigation.
+- Mobile: collapsible navigation, stacked layouts, touch-friendly controls, and optimized course learning screens.
+
+Accessibility:
+- Semantic HTML
+- Keyboard navigation
+- Visible focus indicators
+- Proper form labels
+- Sufficient contrast
+- Alternative text for meaningful images
+- Accessible validation and error messages
+- Reduced-motion support
+- Captions or transcripts when available
+
+Use a consistent spacing scale, typography scale, border-radius system, and color tokens.
+
+### 17. MVP Scope
+
+The initial release should prioritize a fully functional core learning experience.
+
+**MVP — Phase 1**
+- Public homepage and branding
+- Course catalogue and search
+- Course details and syllabus
+- Student registration and login
+- Free course enrolment
+- Student dashboard
+- Course lessons and progress tracking
+- Basic quizzes
+- Admin dashboard
+- Course and category management
+- Database persistence
+- Responsive layouts
+- Basic transactional email integration
+- Secure role-based access control
+
+**Phase 2**
+- Paid courses and payment gateway
+- Video hosting integration
+- Assignment uploads and reviews
+- Certificates and public verification
+- Email notifications and improved reporting
+- Learning paths
+- Advanced course filtering
+
+**Phase 3**
+- Enhanced analytics
+- Additional instructor workflows
+- Personalized course recommendations
+- Multilingual interface
+- Advanced assessments
+- Integrations and automation
+- Mobile application, if separately approved
+
+Design the codebase so Phase 2 and Phase 3 can be introduced without major architectural changes.
+
+Do not create nonfunctional placeholder buttons for deferred features. Either implement them or clearly mark them as upcoming and keep them out of the active user workflow.
+
+### 18. Development Workflow
+
+Work through these stages in order.
+
+**Stage 1: Requirements and architecture**
+- Review this specification.
+- Identify dependencies, technical risks, and missing configuration.
+- Define the frontend, backend, database, authentication, payment, email, and media architecture.
+- Produce the route map, data model, and API endpoint plan.
+
+**Stage 2: Design system**
+- Define brand tokens, typography, colors, layout rules, and reusable components.
+- Build the homepage, course catalogue, course details, and responsive navigation.
+- Validate the design on desktop and mobile.
+
+**Stage 3: Functional frontend**
+- Implement routing, search, filtering, forms, course details, loading states, empty states, and error states.
+- Connect UI components to the actual data layer rather than hardcoded demo values.
+
+**Stage 4: Backend and persistence**
+- Implement database models, APIs, validation, authentication, authorization, course management, enrolments, and progress tracking.
+- Verify that data persists across sessions and reloads.
+
+**Stage 5: Dashboards and learning**
+- Implement student learning workflows, quizzes, progress tracking, and administrative course management.
+- Add certificate and assignment functionality according to the agreed release scope.
+
+**Stage 6: Integrations**
+- Configure payment, email, media, and other external services.
+- Verify credentials, callbacks, webhooks, permissions, and error handling.
+- Provide a documented setup process for every integration.
+
+**Stage 7: Testing and deployment**
+- Run the production build.
+- Test navigation, authentication, permissions, course enrolment, lesson access, progress tracking, assessments, and administrative workflows.
+- Test payment success and failure using the provider's sandbox.
+- Check mobile responsiveness, accessibility, and common security issues.
+- Document environment variables, deployment, backups, and troubleshooting.
+
+### 19. Acceptance Criteria
+
+The implementation will be considered functionally complete for the agreed MVP when:
+
+1. All public pages load and navigate correctly.
+2. Course categories and published courses are retrieved from persistent data.
+3. Search and filtering return the correct results.
+4. Users can register, log in, log out, and recover accounts through the configured authentication flow.
+5. Students can enrol in eligible free courses.
+6. Enrolled students can access authorized lessons and resume their learning.
+7. Progress is stored persistently and calculated from actual completion records.
+8. Administrators can create, edit, publish, and manage courses.
+9. Unauthorized users cannot access protected student or administrative resources.
+10. Assessments record results according to their configured rules.
+11. Certificates are issued only when defined requirements are satisfied.
+12. Payment-dependent features remain disabled until verified payment integration is configured.
+13. Email-dependent features clearly indicate their configuration status.
+14. The interface works on desktop, tablet, and mobile.
+15. No fabricated production statistics, fake payment confirmations, or misleading claims are displayed.
+16. Build errors and critical runtime errors are resolved.
+17. Setup and deployment instructions are complete.
+
+### 20. Final Deliverables
+
+Produce the following:
+
+1. Complete responsive website.
+2. Original Hridayam branding and reusable UI design system.
+3. Public pages and course discovery experience.
+4. Student dashboard and learning interface.
+5. Admin dashboard and course management interface.
+6. Backend APIs and persistent database integration, where supported.
+7. Authentication and role-based authorization.
+8. Payment, email, and video integration interfaces with setup instructions.
+9. Database schema and indexes.
+10. Environment-variable template such as `.env.example`, containing placeholder values only.
+11. Clear README with installation, development, testing, and deployment instructions.
+12. API documentation.
+13. A testing checklist and known limitations.
+14. A phased roadmap identifying completed, pending, and configuration-dependent functionality.
+
+### Final Instruction to Google AI Studio
+
+Begin by analyzing the project requirements and proposing a concise architecture and implementation plan. Then start building the actual application, prioritizing the homepage and course discovery experience before implementing the remaining functional modules.
+
+Do not stop after producing the plan or homepage. Continue implementing the agreed scope in logical stages, verifying each stage before moving forward.
+
+If the environment cannot implement a particular backend or integration directly, state the limitation, build the appropriate integration boundary, and provide the exact steps required to complete it.
+
+The final result must be a professional, original, scalable learning platform for **Hridayam by Belvo** — not merely a landing page, a collection of static dashboard screens, or a mock application with fake data.

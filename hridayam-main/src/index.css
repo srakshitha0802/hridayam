@@ -1,0 +1,265 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Plus Jakarta Sans", system-ui, -apple-system, sans-serif;
+
+  /* Premium Gen Z Dark Rose Palette */
+  --color-primary-pink: #A81752;
+  --color-dark-pink: #A81752;
+  --color-dark-berry: #760D3B;
+  --color-accent-pink: #E83E8C;
+  --color-light-pink: #FCE7F3;
+  --color-blush-bg: #FFF7FA;
+  --color-brand-bg: #FFF7FA;
+  --color-dusty-rose: #D4809E;
+  --color-main-text: #21131B;
+  --color-secondary-text: #756572;
+  --color-border-pink: #F0D6E3;
+
+  /* Harmonized mapping for teal shades to eliminate conflicting legacy teal */
+  --color-teal-50: #FFF5F9;
+  --color-teal-100: #FCE7F3;
+  --color-teal-200: #FBCFE8;
+  --color-teal-300: #F472B6;
+  --color-teal-400: #E83E8C;
+  --color-teal-500: #A81752;
+  --color-teal-600: #8A1041;
+  --color-teal-700: #760D3B;
+  --color-teal-800: #5C0A2E;
+  --color-teal-900: #430722;
+  --color-teal-950: #2E0517;
+
+  /* Harmonized mapping for cyan shades */
+  --color-cyan-50: #FFF5F9;
+  --color-cyan-100: #FCE7F3;
+  --color-cyan-200: #FBCFE8;
+  --color-cyan-300: #F472B6;
+  --color-cyan-400: #E83E8C;
+  --color-cyan-500: #A81752;
+  --color-cyan-600: #8A1041;
+  --color-cyan-700: #760D3B;
+  --color-cyan-800: #5C0A2E;
+  --color-cyan-900: #430722;
+  --color-cyan-950: #2E0517;
+
+  /* Harmonized mapping for navy shades */
+  --color-navy-950: #21131B;
+  --color-navy-900: #351525;
+  --color-navy-800: #4A1932;
+}
+
+body {
+  font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  color: #21131B;
+  background-color: #FFF7FA;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+/* Custom scrollbar for sleek premium pink layout */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #FFF7FA;
+}
+::-webkit-scrollbar-thumb {
+  background: #F0D6E3;
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #A81752;
+}
+
+::selection {
+  background-color: #A81752;
+  color: #FFFFFF;
+}
+
+/* ========================================================
+   Gen Z Dark Rose Dreamscape Animation Keyframes
+   ======================================================== */
+@keyframes dreamscape-float-1 {
+  0% {
+    transform: translate3d(0, 0, 0) rotate(0deg);
+  }
+  50% {
+    transform: translate3d(14px, -24px, 0) rotate(8deg);
+  }
+  100% {
+    transform: translate3d(-10px, 12px, 0) rotate(-6deg);
+  }
+}
+
+@keyframes dreamscape-float-2 {
+  0% {
+    transform: translate3d(0, 0, 0) rotate(0deg);
+  }
+  50% {
+    transform: translate3d(-18px, 20px, 0) rotate(-10deg);
+  }
+  100% {
+    transform: translate3d(12px, -16px, 0) rotate(6deg);
+  }
+}
+
+@keyframes dreamscape-float-3 {
+  0% {
+    transform: translate3d(0, 0, 0) rotate(0deg);
+  }
+  50% {
+    transform: translate3d(18px, 16px, 0) rotate(6deg);
+  }
+  100% {
+    transform: translate3d(-14px, -20px, 0) rotate(-7deg);
+  }
+}
+
+@keyframes dreamscape-blob-pulse {
+  0% {
+    transform: scale(1) translate(0, 0);
+    opacity: 0.85;
+  }
+  50% {
+    transform: scale(1.09) translate(14px, -10px);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1) translate(0, 0);
+    opacity: 0.85;
+  }
+}
+
+@keyframes dreamscape-blob-reverse {
+  0% {
+    transform: scale(1) translate(0, 0);
+    opacity: 0.8;
+  }
+  50% {
+    transform: scale(1.07) translate(-14px, 12px);
+    opacity: 0.98;
+  }
+  100% {
+    transform: scale(1) translate(0, 0);
+    opacity: 0.8;
+  }
+}
+
+@keyframes dreamscape-twinkle {
+  0%, 100% {
+    opacity: 0.25;
+    transform: scale(0.75) rotate(0deg);
+  }
+  50% {
+    opacity: 0.95;
+    transform: scale(1.15) rotate(15deg);
+  }
+}
+
+/* Hardware accelerated animation utility classes */
+.animate-float-slow-1 {
+  animation: dreamscape-float-1 15s ease-in-out infinite alternate;
+  will-change: transform;
+}
+
+.animate-float-slow-2 {
+  animation: dreamscape-float-2 19s ease-in-out infinite alternate;
+  will-change: transform;
+}
+
+.animate-float-slow-3 {
+  animation: dreamscape-float-3 23s ease-in-out infinite alternate;
+  will-change: transform;
+}
+
+.animate-blob-slow {
+  animation: dreamscape-blob-pulse 20s ease-in-out infinite alternate;
+  will-change: transform, opacity;
+}
+
+.animate-blob-slow-reverse {
+  animation: dreamscape-blob-reverse 22s ease-in-out infinite alternate;
+  will-change: transform, opacity;
+}
+
+.animate-sparkle-1 {
+  animation: dreamscape-twinkle 4s ease-in-out infinite;
+}
+
+.animate-sparkle-2 {
+  animation: dreamscape-twinkle 5.5s ease-in-out infinite 1.2s;
+}
+
+.animate-sparkle-3 {
+  animation: dreamscape-twinkle 6s ease-in-out infinite 2.5s;
+}
+
+.animate-sparkle-4 {
+  animation: dreamscape-twinkle 4.8s ease-in-out infinite 3.6s;
+}
+
+/* Glass Orb Styling */
+.dreamscape-glass-orb {
+  background: radial-gradient(circle at 32% 28%, rgba(255, 255, 255, 0.75) 0%, rgba(255, 240, 246, 0.35) 45%, rgba(212, 128, 158, 0.22) 80%, rgba(168, 23, 82, 0.28) 100%);
+  backdrop-filter: blur(12px) saturate(130%);
+  -webkit-backdrop-filter: blur(12px) saturate(130%);
+  border: 1px solid rgba(255, 255, 255, 0.65);
+  box-shadow: 
+    0 12px 32px -4px rgba(168, 23, 82, 0.16),
+    0 4px 12px 0 rgba(168, 23, 82, 0.08),
+    inset 0 2px 4px 0 rgba(255, 255, 255, 0.8),
+    inset 0 -3px 8px 0 rgba(168, 23, 82, 0.22);
+}
+
+/* Accessibility: Respects prefers-reduced-motion */
+@media (prefers-reduced-motion: reduce) {
+  .animate-float-slow-1,
+  .animate-float-slow-2,
+  .animate-float-slow-3,
+  .animate-blob-slow,
+  .animate-blob-slow-reverse,
+  .animate-sparkle-1,
+  .animate-sparkle-2,
+  .animate-sparkle-3,
+  .animate-sparkle-4 {
+    animation: none !important;
+    transform: none !important;
+  }
+}
+
+/* ========================================================
+   Company logos marquee (infinite, left -> right)
+   ======================================================== */
+.logo-marquee-viewport {
+  overflow: hidden;
+  width: 100%;
+  -webkit-mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent);
+  mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent);
+}
+
+.logo-marquee-track {
+  display: flex;
+  width: max-content;
+  animation: logo-marquee-ltr 30s linear infinite;
+}
+
+.logo-marquee-set {
+  display: flex;
+  align-items: center;
+  gap: 4rem;
+  padding-right: 4rem; /* keeps spacing identical across the loop seam */
+}
+
+.logo-marquee-viewport:hover .logo-marquee-track {
+  animation-play-state: paused;
+}
+
+@keyframes logo-marquee-ltr {
+  from { transform: translateX(-50%); }
+  to   { transform: translateX(0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .logo-marquee-track { animation-duration: 90s; }
+}
