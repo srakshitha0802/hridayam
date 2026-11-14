@@ -1,4 +1,4 @@
-# Hridayam by Belvo — Digital Learning Platform
+# Hridayam by Belvo — Digital Learning Platform:
 
 > **Practical learning. Real-world skills. Career growth.**  
 > Built and maintained by digital agency practitioners at **Belvo**.  
