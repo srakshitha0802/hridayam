@@ -1,229 +1,214 @@
 @import "tailwindcss";
+@custom-variant dark (&:where(.dark, .dark *));
 
-@theme {
-  --font-sans: "Plus Jakarta Sans", system-ui, -apple-system, sans-serif;
+@layer base {
+  :root {
+    --font-sans: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+    --font-display: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+    
+    /* Dark Pink / Wine Rose & Light Pastel Pink Palette */
+    --pink-dark-deep: #4A044E;
+    --pink-dark: #831843;
+    --pink-primary: #9D174D;
+    --pink-vibrant: #DB2777;
+    --pink-rose: #EC4899;
+    --pink-light: #FBCFE8;
+    --pink-pastel: #FDF2F8;
+    --pink-canvas: #FFF5F8;
+    
+    /* Neutral Text with Wine-Rose Hue */
+    --ink-title: #2B091B;
+    --ink-body: #4C1D38;
+    --ink-muted: #834768;
+    --ink-subtle: #A36A89;
+  }
 
-  /* Premium Gen Z Dark Rose Palette */
-  --color-primary-pink: #A81752;
-  --color-dark-pink: #A81752;
-  --color-dark-berry: #760D3B;
-  --color-accent-pink: #E83E8C;
-  --color-light-pink: #FCE7F3;
-  --color-blush-bg: #FFF7FA;
-  --color-brand-bg: #FFF7FA;
-  --color-dusty-rose: #D4809E;
-  --color-main-text: #21131B;
-  --color-secondary-text: #756572;
-  --color-border-pink: #F0D6E3;
+  body {
+    font-family: var(--font-sans);
+    background-color: #1A0213;
+    color: #FFFFFF;
+    font-weight: 400;
+    line-height: 1.6;
+    letter-spacing: -0.01em;
+  }
 
-  /* Harmonized mapping for teal shades to eliminate conflicting legacy teal */
-  --color-teal-50: #FFF5F9;
-  --color-teal-100: #FCE7F3;
-  --color-teal-200: #FBCFE8;
-  --color-teal-300: #F472B6;
-  --color-teal-400: #E83E8C;
-  --color-teal-500: #A81752;
-  --color-teal-600: #8A1041;
-  --color-teal-700: #760D3B;
-  --color-teal-800: #5C0A2E;
-  --color-teal-900: #430722;
-  --color-teal-950: #2E0517;
-
-  /* Harmonized mapping for cyan shades */
-  --color-cyan-50: #FFF5F9;
-  --color-cyan-100: #FCE7F3;
-  --color-cyan-200: #FBCFE8;
-  --color-cyan-300: #F472B6;
-  --color-cyan-400: #E83E8C;
-  --color-cyan-500: #A81752;
-  --color-cyan-600: #8A1041;
-  --color-cyan-700: #760D3B;
-  --color-cyan-800: #5C0A2E;
-  --color-cyan-900: #430722;
-  --color-cyan-950: #2E0517;
-
-  /* Harmonized mapping for navy shades */
-  --color-navy-950: #21131B;
-  --color-navy-900: #351525;
-  --color-navy-800: #4A1932;
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-display);
+    color: #FFFFFF;
+    letter-spacing: -0.02em;
+    font-weight: 700;
+  }
 }
 
-body {
-  font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
-  color: #21131B;
-  background-color: #FFF7FA;
-  -webkit-font-smoothing: antialiased;
-  overflow-x: hidden;
+/* Glassmorphism & Metallic Texture System (Darkest Transparent Pink with White Text) */
+.glass-panel {
+  background: linear-gradient(135deg, rgba(58, 3, 50, 0.90) 0%, rgba(88, 10, 58, 0.88) 50%, rgba(118, 15, 66, 0.86) 100%);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1.5px solid rgba(244, 114, 182, 0.45);
+  box-shadow: 0 20px 50px 0 rgba(40, 2, 38, 0.45), inset 0 1px 1.5px 0 rgba(255, 255, 255, 0.35), inset 0 -2px 4px 0 rgba(0, 0, 0, 0.3);
+  color: #FFFFFF;
+  transition: all 260ms cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
 }
 
-/* Custom scrollbar for sleek premium pink layout */
-::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
-}
-::-webkit-scrollbar-track {
-  background: #FFF7FA;
-}
-::-webkit-scrollbar-thumb {
-  background: #F0D6E3;
-  border-radius: 3px;
-}
-::-webkit-scrollbar-thumb:hover {
-  background: #A81752;
+.glass-panel:hover {
+  border-color: rgba(244, 114, 182, 0.7);
+  box-shadow: 0 25px 60px -4px rgba(190, 24, 93, 0.35), inset 0 1px 2px 0 rgba(255, 255, 255, 0.5);
 }
 
-::selection {
-  background-color: #A81752;
+.glass-card {
+  background: linear-gradient(135deg, rgba(74, 4, 78, 0.88) 0%, rgba(112, 16, 56, 0.85) 50%, rgba(136, 19, 66, 0.82) 100%);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border: 1.5px solid rgba(244, 114, 182, 0.4);
+  box-shadow: 0 12px 36px -2px rgba(40, 2, 38, 0.4), inset 0 1px 1.5px 0 rgba(255, 255, 255, 0.3);
+  color: #FFFFFF;
+  transition: transform 240ms cubic-bezier(0.16, 1, 0.3, 1), box-shadow 240ms cubic-bezier(0.16, 1, 0.3, 1), border-color 240ms ease;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Shiny Glass Hover Reflection Highlight */
+.glass-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 60%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+  transform: skewX(-20deg);
+  transition: left 0.6s ease;
+  pointer-events: none;
+}
+
+.glass-card:hover::before {
+  left: 150%;
+}
+
+.glass-card:hover {
+  transform: translateY(-5px);
+  border-color: rgba(244, 114, 182, 0.75);
+  box-shadow: 0 20px 42px -6px rgba(190, 24, 93, 0.35), inset 0 1px 2px 0 rgba(255, 255, 255, 0.5);
+}
+
+/* Metallic Dark Pink Frame (As used in Flagship Master Programs) */
+.glass-dark {
+  background: linear-gradient(135deg, rgba(74, 4, 78, 0.90) 0%, rgba(112, 16, 56, 0.86) 50%, rgba(136, 19, 66, 0.84) 100%);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1.5px solid rgba(244, 114, 182, 0.45);
+  box-shadow: 0 24px 60px rgba(40, 2, 38, 0.5), inset 0 1px 1.5px 0 rgba(255, 255, 255, 0.4), inset 0 -2px 4px 0 rgba(0, 0, 0, 0.4);
   color: #FFFFFF;
 }
 
-/* ========================================================
-   Gen Z Dark Rose Dreamscape Animation Keyframes
-   ======================================================== */
-@keyframes dreamscape-float-1 {
+/* Metallic Chrome Pink Ribbon/Badge */
+.metallic-pink-badge {
+  background: linear-gradient(135deg, #831843 0%, #BE185D 50%, #9D174D 100%);
+  border: 1px solid rgba(244, 114, 182, 0.5);
+  box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.4), 0 2px 8px rgba(74, 4, 78, 0.3);
+  color: #FFFFFF;
+}
+
+.metallic-dark-badge {
+  background: linear-gradient(135deg, #4A044E 0%, #831843 50%, #9D174D 100%);
+  border: 1px solid rgba(244, 114, 182, 0.5);
+  box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.35), 0 2px 10px rgba(74, 4, 78, 0.4);
+  color: #FFFFFF;
+}
+
+.glass-input {
+  background: rgba(45, 4, 38, 0.85);
+  backdrop-filter: blur(14px);
+  border: 1.5px solid rgba(244, 114, 182, 0.4);
+  color: #FFFFFF;
+  transition: all 180ms ease;
+}
+
+.glass-input::placeholder {
+  color: rgba(251, 207, 232, 0.65);
+}
+
+.glass-input:focus {
+  outline: none;
+  background: rgba(65, 6, 55, 0.95);
+  border-color: #F472B6;
+  box-shadow: 0 0 0 3px rgba(244, 114, 182, 0.25);
+  color: #FFFFFF;
+}
+
+/* Professional Pink Button Styles */
+.btn-pink-primary {
+  background: linear-gradient(135deg, #DB2777 0%, #9D174D 100%);
+  color: #FFFFFF;
+  font-weight: 600;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  box-shadow: 0 6px 20px -2px rgba(219, 39, 119, 0.45);
+  transition: all 220ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.btn-pink-primary:hover:not(:disabled) {
+  transform: translateY(-1px);
+  background: linear-gradient(135deg, #E11D48 0%, #831843 100%);
+  box-shadow: 0 10px 26px -2px rgba(219, 39, 119, 0.55);
+}
+
+.btn-pink-glass {
+  background: rgba(90, 10, 60, 0.8);
+  color: #FFFFFF;
+  font-weight: 600;
+  border: 1.5px solid rgba(244, 114, 182, 0.45);
+  backdrop-filter: blur(12px);
+  transition: all 200ms ease;
+}
+
+.btn-pink-glass:hover:not(:disabled) {
+  background: rgba(120, 15, 75, 0.9);
+  color: #FDF2F8;
+  border-color: #F472B6;
+  transform: translateY(-1px);
+}
+
+.btn-pink-dark {
+  background: linear-gradient(135deg, #4A044E 0%, #701A75 100%);
+  color: #FFFFFF;
+  font-weight: 600;
+  border: 1.5px solid rgba(244, 114, 182, 0.4);
+  transition: all 200ms ease;
+}
+
+.btn-pink-dark:hover:not(:disabled) {
+  background: #831843;
+  color: #FFFFFF;
+  border-color: #F472B6;
+}
+
+/* Infinite Sliding Marquee Animation */
+@keyframes slide-infinite {
   0% {
-    transform: translate3d(0, 0, 0) rotate(0deg);
-  }
-  50% {
-    transform: translate3d(14px, -24px, 0) rotate(8deg);
+    transform: translateX(0%);
   }
   100% {
-    transform: translate3d(-10px, 12px, 0) rotate(-6deg);
+    transform: translateX(-50%);
   }
 }
 
-@keyframes dreamscape-float-2 {
-  0% {
-    transform: translate3d(0, 0, 0) rotate(0deg);
-  }
-  50% {
-    transform: translate3d(-18px, 20px, 0) rotate(-10deg);
-  }
-  100% {
-    transform: translate3d(12px, -16px, 0) rotate(6deg);
-  }
+.animate-marquee-continuous {
+  display: flex;
+  width: max-content;
+  animation: slide-infinite 32s linear infinite;
 }
 
-@keyframes dreamscape-float-3 {
-  0% {
-    transform: translate3d(0, 0, 0) rotate(0deg);
-  }
-  50% {
-    transform: translate3d(18px, 16px, 0) rotate(6deg);
-  }
-  100% {
-    transform: translate3d(-14px, -20px, 0) rotate(-7deg);
-  }
+.marquee-wrapper:hover .animate-marquee-continuous {
+  animation-play-state: paused;
 }
 
-@keyframes dreamscape-blob-pulse {
-  0% {
-    transform: scale(1) translate(0, 0);
-    opacity: 0.85;
-  }
-  50% {
-    transform: scale(1.09) translate(14px, -10px);
-    opacity: 1;
-  }
-  100% {
-    transform: scale(1) translate(0, 0);
-    opacity: 0.85;
-  }
-}
-
-@keyframes dreamscape-blob-reverse {
-  0% {
-    transform: scale(1) translate(0, 0);
-    opacity: 0.8;
-  }
-  50% {
-    transform: scale(1.07) translate(-14px, 12px);
-    opacity: 0.98;
-  }
-  100% {
-    transform: scale(1) translate(0, 0);
-    opacity: 0.8;
-  }
-}
-
-@keyframes dreamscape-twinkle {
-  0%, 100% {
-    opacity: 0.25;
-    transform: scale(0.75) rotate(0deg);
-  }
-  50% {
-    opacity: 0.95;
-    transform: scale(1.15) rotate(15deg);
-  }
-}
-
-/* Hardware accelerated animation utility classes */
-.animate-float-slow-1 {
-  animation: dreamscape-float-1 15s ease-in-out infinite alternate;
-  will-change: transform;
-}
-
-.animate-float-slow-2 {
-  animation: dreamscape-float-2 19s ease-in-out infinite alternate;
-  will-change: transform;
-}
-
-.animate-float-slow-3 {
-  animation: dreamscape-float-3 23s ease-in-out infinite alternate;
-  will-change: transform;
-}
-
-.animate-blob-slow {
-  animation: dreamscape-blob-pulse 20s ease-in-out infinite alternate;
-  will-change: transform, opacity;
-}
-
-.animate-blob-slow-reverse {
-  animation: dreamscape-blob-reverse 22s ease-in-out infinite alternate;
-  will-change: transform, opacity;
-}
-
-.animate-sparkle-1 {
-  animation: dreamscape-twinkle 4s ease-in-out infinite;
-}
-
-.animate-sparkle-2 {
-  animation: dreamscape-twinkle 5.5s ease-in-out infinite 1.2s;
-}
-
-.animate-sparkle-3 {
-  animation: dreamscape-twinkle 6s ease-in-out infinite 2.5s;
-}
-
-.animate-sparkle-4 {
-  animation: dreamscape-twinkle 4.8s ease-in-out infinite 3.6s;
-}
-
-/* Glass Orb Styling */
-.dreamscape-glass-orb {
-  background: radial-gradient(circle at 32% 28%, rgba(255, 255, 255, 0.75) 0%, rgba(255, 240, 246, 0.35) 45%, rgba(212, 128, 158, 0.22) 80%, rgba(168, 23, 82, 0.28) 100%);
-  backdrop-filter: blur(12px) saturate(130%);
-  -webkit-backdrop-filter: blur(12px) saturate(130%);
-  border: 1px solid rgba(255, 255, 255, 0.65);
-  box-shadow: 
-    0 12px 32px -4px rgba(168, 23, 82, 0.16),
-    0 4px 12px 0 rgba(168, 23, 82, 0.08),
-    inset 0 2px 4px 0 rgba(255, 255, 255, 0.8),
-    inset 0 -3px 8px 0 rgba(168, 23, 82, 0.22);
-}
-
-/* Accessibility: Respects prefers-reduced-motion */
 @media (prefers-reduced-motion: reduce) {
-  .animate-float-slow-1,
-  .animate-float-slow-2,
-  .animate-float-slow-3,
-  .animate-blob-slow,
-  .animate-blob-slow-reverse,
-  .animate-sparkle-1,
-  .animate-sparkle-2,
-  .animate-sparkle-3,
-  .animate-sparkle-4 {
-    animation: none !important;
-    transform: none !important;
+  .animate-marquee-continuous {
+    animation: none;
+    flex-wrap: wrap;
+    width: 100%;
+    justify-content: center;
   }
 }

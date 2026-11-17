@@ -1,119 +1,160 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
-import { User, UserRole } from '../types';
-import { INITIAL_USERS } from '../data/initialData';
+import React, { createContext, useContext, useEffect, useState } from 'react';
+import {
+  onAuthStateChanged,
+  signInWithPopup,
+  signOut as firebaseSignOut,
+  User,
+} from 'firebase/auth';
+import {
+  doc,
+  getDoc,
+  onSnapshot,
+  serverTimestamp,
+  setDoc,
+} from 'firebase/firestore';
+import { auth, db, googleProvider, handleFirestoreError, OperationType } from '../lib/firebase';
+import { Subscription } from '../types';
 
-interface AuthContextType {
-  currentUser: User | null;
-  role: UserRole;
-  isAuthenticated: boolean;
+const BOOTSTRAP_ADMIN_EMAIL = 'srakshitha912@gmail.com';
+
+interface AuthContextValue {
+  user: User | null;
+  authReady: boolean;
   isAdmin: boolean;
-  isStudent: boolean;
-  login: (email: string) => boolean;
-  register: (name: string, email: string) => boolean;
-  logout: () => void;
-  switchRole: (role: UserRole) => void;
+  subscription: Subscription | null;
+  signInWithGoogle: () => Promise<User | null>;
+  signOut: () => Promise<void>;
 }
 
-const AuthContext = createContext<AuthContextType | undefined>(undefined);
+const AuthContext = createContext<AuthContextValue | undefined>(undefined);
 
-const AUTH_USER_KEY = 'hridayam_auth_user_v1';
-
-export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [currentUser, setCurrentUser] = useState<User | null>(() => {
-    try {
-      const stored = localStorage.getItem(AUTH_USER_KEY);
-      if (stored) {
-        return JSON.parse(stored);
-      }
-    } catch {
-      // fallback
-    }
-    // Default to the student user so learning dashboard and progress are immediately testable
-    return INITIAL_USERS[0];
-  });
+export function AuthProvider({ children }: { children: React.ReactNode }) {
+  const [user, setUser] = useState<User | null>(null);
+  const [authReady, setAuthReady] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(false);
+  const [subscription, setSubscription] = useState<Subscription | null>(null);
 
   useEffect(() => {
-    if (currentUser) {
-      localStorage.setItem(AUTH_USER_KEY, JSON.stringify(currentUser));
-    } else {
-      localStorage.removeItem(AUTH_USER_KEY);
-    }
-  }, [currentUser]);
+    let unsubSub: (() => void) | null = null;
 
-  const role: UserRole = currentUser ? currentUser.role : 'guest';
-  const isAuthenticated = !!currentUser;
-  const isAdmin = currentUser?.role === 'admin';
-  const isStudent = currentUser?.role === 'student';
+    const unsubAuth = onAuthStateChanged(auth, async (currentUser) => {
+      setUser(currentUser);
 
-  const login = (email: string): boolean => {
-    const normalized = email.trim().toLowerCase();
-    if (normalized.includes('admin') || normalized === 'admin@belvo.com') {
-      setCurrentUser(INITIAL_USERS[1]);
-      return true;
-    }
-    const student = INITIAL_USERS.find((u) => u.email.toLowerCase() === normalized) || {
-      id: `user-${Date.now()}`,
-      name: normalized.split('@')[0],
-      email: normalized,
-      role: 'student' as UserRole,
-      enrolledCourseIds: [],
-      createdAt: new Date().toISOString()
+      if (unsubSub) {
+        unsubSub();
+        unsubSub = null;
+      }
+
+      if (!currentUser) {
+        setIsAdmin(false);
+        setSubscription(null);
+        setAuthReady(true);
+        return;
+      }
+
+      // Check admin privilege safely
+      let adminFlag =
+        Boolean(currentUser.emailVerified) &&
+        currentUser.email?.toLowerCase() === BOOTSTRAP_ADMIN_EMAIL;
+
+      if (!adminFlag) {
+        try {
+          const adminDoc = await getDoc(doc(db, 'admins', currentUser.uid));
+          if (adminDoc.exists()) adminFlag = true;
+        } catch {
+          // Non-admin read denial expected if not in admins collection
+        }
+      }
+      setIsAdmin(adminFlag);
+
+      // Sync split public & private user profiles if verified
+      if (currentUser.emailVerified) {
+        try {
+          const publicRef = doc(db, 'users', currentUser.uid);
+          const publicSnap = await getDoc(publicRef);
+          if (!publicSnap.exists()) {
+            await setDoc(publicRef, {
+              uid: currentUser.uid,
+              displayName: (currentUser.displayName || 'Belvo Learner').slice(0, 100),
+              headline: 'Hridayam by Belvo Member',
+              photoURL: (currentUser.photoURL || '').slice(0, 500),
+              createdAt: serverTimestamp(),
+              updatedAt: serverTimestamp(),
+            });
+          }
+
+          const privateRef = doc(db, `users/${currentUser.uid}/private`, 'info');
+          const privateSnap = await getDoc(privateRef);
+          if (!privateSnap.exists() && currentUser.email) {
+            await setDoc(privateRef, {
+              uid: currentUser.uid,
+              email: currentUser.email.slice(0, 200),
+              phone: '',
+              organization: '',
+              createdAt: serverTimestamp(),
+              updatedAt: serverTimestamp(),
+            });
+          }
+        } catch (error) {
+          console.warn('Profile sync notice:', error);
+        }
+      }
+
+      // Subscribe to user's active membership subscription
+      const subRef = doc(db, 'subscriptions', `sub_${currentUser.uid}`);
+      unsubSub = onSnapshot(
+        subRef,
+        (snap) => {
+          if (snap.exists()) {
+            const data = snap.data() as Omit<Subscription, 'id'>;
+            setSubscription(data.status === 'active' ? { id: snap.id, ...data } : null);
+          } else {
+            setSubscription(null);
+          }
+        },
+        (error) => {
+          if (!error.message.includes('Missing or insufficient permissions')) {
+            handleFirestoreError(error, OperationType.GET, `subscriptions/sub_${currentUser.uid}`);
+          }
+        }
+      );
+
+      setAuthReady(true);
+    });
+
+    return () => {
+      unsubAuth();
+      if (unsubSub) unsubSub();
     };
-    setCurrentUser(student);
-    return true;
+  }, []);
+
+  const signInWithGoogle = async (): Promise<User | null> => {
+    const result = await signInWithPopup(auth, googleProvider);
+    return result.user;
   };
 
-  const register = (name: string, email: string): boolean => {
-    const newUser: User = {
-      id: `user-${Date.now()}`,
-      name,
-      email: email.trim().toLowerCase(),
-      role: 'student',
-      avatar: `https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=200&q=80`,
-      enrolledCourseIds: [],
-      createdAt: new Date().toISOString()
-    };
-    setCurrentUser(newUser);
-    return true;
-  };
-
-  const logout = () => {
-    setCurrentUser(null);
-  };
-
-  const switchRole = (newRole: UserRole) => {
-    if (newRole === 'guest') {
-      setCurrentUser(null);
-    } else if (newRole === 'student') {
-      setCurrentUser(INITIAL_USERS[0]);
-    } else if (newRole === 'admin') {
-      setCurrentUser(INITIAL_USERS[1]);
-    }
+  const signOut = async (): Promise<void> => {
+    await firebaseSignOut(auth);
   };
 
   return (
     <AuthContext.Provider
       value={{
-        currentUser,
-        role,
-        isAuthenticated,
+        user,
+        authReady,
         isAdmin,
-        isStudent,
-        login,
-        register,
-        logout,
-        switchRole
+        subscription,
+        signInWithGoogle,
+        signOut,
       }}
     >
       {children}
     </AuthContext.Provider>
   );
-};
+}
 
-export const useAuth = () => {
-  const context = useContext(AuthContext);
-  if (!context) {
-    throw new Error('useAuth must be used within an AuthProvider');
-  }
-  return context;
-};
+export function useAuth() {
+  const ctx = useContext(AuthContext);
+  if (!ctx) throw new Error('useAuth must be used inside AuthProvider');
+  return ctx;
+}

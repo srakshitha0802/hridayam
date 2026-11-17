@@ -1,0 +1,563 @@
+{
+  "entities": {
+    "UserPublicProfile": {
+      "title": "UserPublicProfile",
+      "description": "Public learner and instructor profile without PII.",
+      "type": "object",
+      "properties": {
+        "uid": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "displayName": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 100
+        },
+        "headline": {
+          "type": "string",
+          "maxLength": 160
+        },
+        "photoURL": {
+          "type": "string",
+          "maxLength": 500
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": ["uid", "displayName", "createdAt", "updatedAt"]
+    },
+    "UserPrivateInfo": {
+      "title": "UserPrivateInfo",
+      "description": "Isolated private PII for a user.",
+      "type": "object",
+      "properties": {
+        "uid": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "email": {
+          "type": "string",
+          "format": "email",
+          "maxLength": 200
+        },
+        "phone": {
+          "type": "string",
+          "maxLength": 40
+        },
+        "organization": {
+          "type": "string",
+          "maxLength": 120
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": ["uid", "email", "createdAt", "updatedAt"]
+    },
+    "Course": {
+      "title": "Course",
+      "description": "An educational course offered on Hridayam by Belvo.",
+      "type": "object",
+      "properties": {
+        "title": {
+          "type": "string",
+          "minLength": 3,
+          "maxLength": 140
+        },
+        "category": {
+          "type": "string",
+          "minLength": 2,
+          "maxLength": 100
+        },
+        "level": {
+          "type": "string",
+          "enum": ["Beginner", "Intermediate", "Advanced"]
+        },
+        "summary": {
+          "type": "string",
+          "minLength": 10,
+          "maxLength": 300
+        },
+        "description": {
+          "type": "string",
+          "minLength": 20,
+          "maxLength": 3000
+        },
+        "price": {
+          "type": "number"
+        },
+        "currency": {
+          "type": "string",
+          "enum": ["USD", "INR"]
+        },
+        "isFree": {
+          "type": "boolean"
+        },
+        "includedInSubscription": {
+          "type": "boolean"
+        },
+        "durationHours": {
+          "type": "number"
+        },
+        "thumbnailUrl": {
+          "type": "string",
+          "maxLength": 500
+        },
+        "instructorId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "instructorName": {
+          "type": "string",
+          "minLength": 2,
+          "maxLength": 100
+        },
+        "status": {
+          "type": "string",
+          "enum": ["draft", "published", "archived"]
+        },
+        "outcomes": {
+          "type": "array"
+        },
+        "modulesCount": {
+          "type": "number"
+        },
+        "enrolledCount": {
+          "type": "number"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": [
+        "title",
+        "category",
+        "level",
+        "summary",
+        "description",
+        "price",
+        "currency",
+        "isFree",
+        "includedInSubscription",
+        "durationHours",
+        "thumbnailUrl",
+        "instructorId",
+        "instructorName",
+        "status",
+        "outcomes",
+        "modulesCount",
+        "enrolledCount",
+        "createdAt",
+        "updatedAt"
+      ]
+    },
+    "Lesson": {
+      "title": "Lesson",
+      "description": "A lesson, video module, assignment, or quiz inside a course.",
+      "type": "object",
+      "properties": {
+        "courseId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "instructorId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "isPublished": {
+          "type": "boolean"
+        },
+        "orderIndex": {
+          "type": "number"
+        },
+        "title": {
+          "type": "string",
+          "minLength": 2,
+          "maxLength": 140
+        },
+        "type": {
+          "type": "string",
+          "enum": ["video", "reading", "assignment", "quiz"]
+        },
+        "durationMinutes": {
+          "type": "number"
+        },
+        "videoUrl": {
+          "type": "string",
+          "maxLength": 500
+        },
+        "materialUrl": {
+          "type": "string",
+          "maxLength": 500
+        },
+        "contentSummary": {
+          "type": "string",
+          "minLength": 5,
+          "maxLength": 2000
+        },
+        "quizQuestion": {
+          "type": "string",
+          "maxLength": 300
+        },
+        "quizOptions": {
+          "type": "array"
+        },
+        "quizCorrectIndex": {
+          "type": "number"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": [
+        "courseId",
+        "instructorId",
+        "isPublished",
+        "orderIndex",
+        "title",
+        "type",
+        "durationMinutes",
+        "contentSummary",
+        "createdAt",
+        "updatedAt"
+      ]
+    },
+    "Enrolment": {
+      "title": "Enrolment",
+      "description": "Student enrolment and progress record for a course.",
+      "type": "object",
+      "properties": {
+        "userId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "studentName": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 100
+        },
+        "courseId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "courseTitle": {
+          "type": "string",
+          "minLength": 2,
+          "maxLength": 140
+        },
+        "instructorId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "paymentType": {
+          "type": "string",
+          "enum": ["free", "one_time", "subscription"]
+        },
+        "amountPaid": {
+          "type": "number"
+        },
+        "paymentStatus": {
+          "type": "string",
+          "enum": ["completed", "pending"]
+        },
+        "completedLessonIds": {
+          "type": "array"
+        },
+        "progressPercent": {
+          "type": "number"
+        },
+        "status": {
+          "type": "string",
+          "enum": ["active", "completed"]
+        },
+        "certificateId": {
+          "type": "string",
+          "maxLength": 128
+        },
+        "enrolledAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": [
+        "userId",
+        "studentName",
+        "courseId",
+        "courseTitle",
+        "instructorId",
+        "paymentType",
+        "amountPaid",
+        "paymentStatus",
+        "completedLessonIds",
+        "progressPercent",
+        "status",
+        "enrolledAt",
+        "updatedAt"
+      ]
+    },
+    "Certificate": {
+      "title": "Certificate",
+      "description": "Course completion certificate issued to a student.",
+      "type": "object",
+      "properties": {
+        "certificateCode": {
+          "type": "string",
+          "minLength": 6,
+          "maxLength": 64,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "userId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "studentName": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 100
+        },
+        "courseId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "courseTitle": {
+          "type": "string",
+          "minLength": 2,
+          "maxLength": 140
+        },
+        "instructorName": {
+          "type": "string",
+          "minLength": 2,
+          "maxLength": 100
+        },
+        "issuedAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": [
+        "certificateCode",
+        "userId",
+        "studentName",
+        "courseId",
+        "courseTitle",
+        "instructorName",
+        "issuedAt",
+        "createdAt"
+      ]
+    },
+    "Subscription": {
+      "title": "Subscription",
+      "description": "All-access membership subscription record.",
+      "type": "object",
+      "properties": {
+        "userId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "planId": {
+          "type": "string",
+          "enum": ["starter_monthly", "pro_annual", "enterprise_team"]
+        },
+        "planName": {
+          "type": "string",
+          "minLength": 2,
+          "maxLength": 80
+        },
+        "billingCycle": {
+          "type": "string",
+          "enum": ["monthly", "annual"]
+        },
+        "amount": {
+          "type": "number"
+        },
+        "currency": {
+          "type": "string",
+          "enum": ["USD", "INR"]
+        },
+        "paymentMethodLast4": {
+          "type": "string",
+          "minLength": 4,
+          "maxLength": 4
+        },
+        "status": {
+          "type": "string",
+          "enum": ["active", "cancelled"]
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": [
+        "userId",
+        "planId",
+        "planName",
+        "billingCycle",
+        "amount",
+        "currency",
+        "paymentMethodLast4",
+        "status",
+        "createdAt",
+        "updatedAt"
+      ]
+    },
+    "Enquiry": {
+      "title": "Enquiry",
+      "description": "Submitted enquiry or partnership/admissions form.",
+      "type": "object",
+      "properties": {
+        "enquiryType": {
+          "type": "string",
+          "enum": [
+            "course_enquiry",
+            "corporate_training",
+            "university_partnership",
+            "instructor_application"
+          ]
+        },
+        "fullName": {
+          "type": "string",
+          "minLength": 2,
+          "maxLength": 100
+        },
+        "email": {
+          "type": "string",
+          "format": "email",
+          "maxLength": 200
+        },
+        "phone": {
+          "type": "string",
+          "maxLength": 40
+        },
+        "organization": {
+          "type": "string",
+          "maxLength": 120
+        },
+        "courseInterest": {
+          "type": "string",
+          "maxLength": 140
+        },
+        "message": {
+          "type": "string",
+          "minLength": 10,
+          "maxLength": 2000
+        },
+        "userId": {
+          "type": "string",
+          "maxLength": 128
+        },
+        "status": {
+          "type": "string",
+          "enum": ["new", "reviewed", "resolved"]
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": [
+        "enquiryType",
+        "fullName",
+        "email",
+        "message",
+        "status",
+        "createdAt",
+        "updatedAt"
+      ]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": { "$ref": "#/entities/UserPublicProfile" },
+      "description": "Public learner and instructor profile."
+    },
+    "/users/{userId}/private/{docId}": {
+      "schema": { "$ref": "#/entities/UserPrivateInfo" },
+      "description": "Isolated PII document for user email, phone, and organization."
+    },
+    "/courses/{courseId}": {
+      "schema": { "$ref": "#/entities/Course" },
+      "description": "Course catalogue items managed by instructors and admins."
+    },
+    "/courses/{courseId}/lessons/{lessonId}": {
+      "schema": { "$ref": "#/entities/Lesson" },
+      "description": "Curriculum modules, video lessons, materials, and quizzes."
+    },
+    "/enrolments/{enrolmentId}": {
+      "schema": { "$ref": "#/entities/Enrolment" },
+      "description": "Student enrolments, lesson completion tracking, and payment status."
+    },
+    "/certificates/{certificateId}": {
+      "schema": { "$ref": "#/entities/Certificate" },
+      "description": "Issued completion certificates."
+    },
+    "/subscriptions/{subscriptionId}": {
+      "schema": { "$ref": "#/entities/Subscription" },
+      "description": "Membership subscription records."
+    },
+    "/enquiries/{enquiryId}": {
+      "schema": { "$ref": "#/entities/Enquiry" },
+      "description": "Admissions, corporate training, university partnership, and instructor enquiries."
+    }
+  }
+}
