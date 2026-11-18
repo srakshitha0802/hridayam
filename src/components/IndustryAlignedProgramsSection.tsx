@@ -380,7 +380,7 @@ export const IndustryAlignedProgramsSection: React.FC<IndustryAlignedProgramsSec
 
             <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-[#1E428E] font-display tracking-tight leading-tight">
               Accelerate Your Career with Our{' '}
-              <span className="text-[#3869C3] underline decoration-[#84ADEB] decoration-wavy underline-offset-8">
+              <span className="text-[#3869C3]">
                 Industry-Aligned Courses
               </span>
             </h2>

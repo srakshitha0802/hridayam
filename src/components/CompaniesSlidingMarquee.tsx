@@ -414,7 +414,7 @@ export const CompaniesSlidingMarquee: React.FC = () => {
 
           <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-[#1E428E] font-display tracking-tight">
             3,500+ Learners Have Been Placed By Our{' '}
-            <span className="text-[#3869C3] underline decoration-[#84ADEB] decoration-wavy underline-offset-8">
+            <span className="text-[#3869C3]">
               India's Largest Placement Team
             </span>
           </h2>

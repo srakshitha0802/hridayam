@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { GoogleIcon } from './GoogleIcon';
 import { CompaniesSlidingMarquee } from './CompaniesSlidingMarquee';
 import { IndustryAlignedProgramsSection } from './IndustryAlignedProgramsSection';
+import { BelvoVerticalsInteractiveSection } from './BelvoVerticalsInteractiveSection';
 import {
   ITV_COURSES,
   CLASSROOM_CENTERS,
@@ -148,7 +149,7 @@ export const HomeView: React.FC<HomeViewProps> = ({
               {/* Main Headline (GenZ learning by a GenZ) */}
               <div className="space-y-3">
                 <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-[#1E428E] leading-[1.12] font-display tracking-tight">
-                  GenZ learning by a <span className="text-[#3869C3] underline decoration-[#84ADEB] decoration-wavy underline-offset-8">GenZ</span>
+                  GenZ learning by a <span className="text-[#3869C3]">GenZ</span>
                 </h1>
                 <p className="text-base sm:text-lg text-[#1E428E] font-bold max-w-xl leading-relaxed">
                   Fast-track your tech &amp; creative career with real-world agency projects, elite mentors, and guaranteed career placement.
@@ -442,150 +443,11 @@ export const HomeView: React.FC<HomeViewProps> = ({
         </div>
       </section>
 
-      {/* BELVO 11 COURSE CATEGORIES SHOWCASE GRID */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
-        <div className="max-w-3xl mx-auto text-center">
-          <div className="glass-panel rounded-3xl p-6 sm:p-8 space-y-3 border-2 border-white shadow-xl backdrop-blur-2xl">
-            <div className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-white border-2 border-[#D3E5FD] text-[#1E428E] text-xs font-extrabold uppercase tracking-wider shadow-sm">
-              <GoogleIcon name="hub" size={16} className="text-[#3869C3]" />
-              <span>Core Expertise Offered by Belvo</span>
-            </div>
-            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-[#1E428E] font-display tracking-tight">
-              Explore Programs Across All <span className="text-[#3869C3]">11 Belvo Verticals</span>
-            </h2>
-            <p className="text-sm sm:text-base text-[#1E428E] leading-relaxed font-bold">
-              From cutting-edge AI automation to high-margin e-commerce, software engineering, and creative media production — each vertical is taught by practicing industry leaders.
-            </p>
-          </div>
-        </div>
-
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 pt-2">
-          {[
-            {
-              title: 'Digital Marketing and Social Media Management',
-              icon: 'campaign',
-              desc: 'Full-funnel ads, creative testing matrices, viral Reels & Klaviyo retention.',
-              courseId: 'course_digital_marketing_growth',
-              badge: 'Growth Lab',
-            },
-            {
-              title: 'Web, App, and Software Development',
-              icon: 'terminal',
-              desc: 'React 19, TypeScript, Next.js, React Native mobile apps & Docker microservices.',
-              courseId: 'course_fullstack_typescript',
-              badge: 'Most Popular',
-            },
-            {
-              title: 'Graphic Design, Branding, and UI/UX',
-              icon: 'draw',
-              desc: 'Figma design tokens, WCAG 2.2 accessibility, interactive wireframes & brand kits.',
-              courseId: 'course_uiux_brand_systems',
-              badge: 'Design System',
-            },
-            {
-              title: 'Video Editing, Animation, and VFX',
-              icon: 'movie_filter',
-              desc: 'DaVinci Resolve Rec.709 color science, After Effects motion & 3D tracking.',
-              courseId: 'course_motion_vfx_story',
-              badge: 'Studio Suite',
-            },
-            {
-              title: 'Artificial Intelligence, Machine Learning, and Automation',
-              icon: 'smart_toy',
-              desc: 'Generative AI, Gemini API, LangChain RAG, fine-tuned models & autonomous multi-agents.',
-              courseId: 'course_ai_automation_workflows',
-              badge: 'Flagship #1',
-            },
-            {
-              title: 'E-commerce and Online Business',
-              icon: 'storefront',
-              desc: 'Shopify Plus architecture, Amazon Seller Central, CRO & supply chain sourcing.',
-              courseId: 'course_ecommerce_scale',
-              badge: 'D2C Scaling',
-            },
-            {
-              title: 'Photography and Content Creation',
-              icon: 'photo_camera',
-              desc: 'Studio strobes, commercial product shoots, editorial lighting & short-form video.',
-              courseId: 'course_photography_content',
-              badge: 'Hands-on Bay',
-            },
-            {
-              title: 'Business Development, Sales, and Entrepreneurship',
-              icon: 'trending_up',
-              desc: 'Enterprise B2B outreach, MEDDICC deal qualification, SaaS sales & VC pitch decks.',
-              courseId: 'course_b2b_sales_ventures',
-              badge: 'High Earning',
-            },
-            {
-              title: 'Copywriting, SEO, and Content Marketing',
-              icon: 'edit_note',
-              desc: 'Direct-response sales letters, Page 1 SEO rankings & automated email funnels.',
-              courseId: 'course_seo_copywriting',
-              badge: 'Search Domination',
-            },
-            {
-              title: 'Cloud Computing, IT, and Cybersecurity Awareness',
-              icon: 'shield',
-              desc: 'AWS & Azure infrastructure, Terraform automation & ethical hacking labs.',
-              courseId: 'course_cloud_cybersecurity',
-              badge: 'Cyber Defense',
-            },
-            {
-              title: 'Data Analytics and Business Intelligence',
-              icon: 'analytics',
-              desc: 'Executive Power BI & Tableau dashboards, advanced SQL & Snowflake pipelines.',
-              courseId: 'course_data_analytics_bi',
-              badge: 'Top Placement',
-            },
-            {
-              title: 'Custom Corporate & Emerging Technologies',
-              icon: 'add_circle',
-              desc: 'Additional courses may be introduced as the platform expands.',
-              courseId: 'course_ai_automation_workflows',
-              badge: 'Platform Expansion',
-              isExpansion: true,
-            },
-          ].map((cat, idx) => (
-            <div
-              key={idx}
-              onClick={() => {
-                onSelectCourse(cat.courseId);
-              }}
-              className="glass-card rounded-2xl p-5 hover:border-[#3869C3] shadow-md hover:shadow-2xl transition-all cursor-pointer flex flex-col justify-between group border-2 border-white text-[#1E428E]"
-            >
-              <div className="space-y-3">
-                <div className="flex items-center justify-between">
-                  <div className="w-10 h-10 rounded-xl bg-[#D3E5FD]/60 group-hover:bg-[#3869C3] text-[#1E428E] group-hover:text-white transition-all flex items-center justify-center shadow-2xs border border-[#D3E5FD]">
-                    <GoogleIcon name={cat.icon} size={20} />
-                  </div>
-                  <span className="text-[10px] font-bold text-[#1E428E] bg-[#D3E5FD] px-2.5 py-0.5 rounded-full border border-white">
-                    {cat.badge}
-                  </span>
-                </div>
-
-                <div>
-                  <h4 className="font-bold text-[#1E428E] text-sm group-hover:text-[#3869C3] transition-colors line-clamp-2 leading-snug">
-                    {cat.title}
-                  </h4>
-                  <p className="text-[11px] text-[#1E428E]/75 mt-1.5 leading-relaxed line-clamp-2">
-                    {cat.desc}
-                  </p>
-                </div>
-              </div>
-
-              <div className="pt-3 mt-3 border-t border-[#D3E5FD] flex items-center justify-between text-xs text-[#3869C3] font-bold group-hover:text-[#1E428E]">
-                <span>{cat.isExpansion ? 'Suggest Track' : 'View Curriculum'}</span>
-                <GoogleIcon
-                  name="arrow_forward"
-                  size={14}
-                  className="group-hover:translate-x-1 transition-transform"
-                />
-              </div>
-            </div>
-          ))}
-        </div>
-      </section>
+      {/* BELVO 11 COURSE CATEGORIES SHOWCASE (CREATIVE FLOW GRAPH, SLIDESHOW & GRID) */}
+      <BelvoVerticalsInteractiveSection
+        onSelectCourse={onSelectCourse}
+        onRequestCallback={onRequestCallback}
+      />
 
       {/* 5. INDUSTRY ALIGNED PROGRAMS & CAREER TRANSFORMATIONS */}
       <IndustryAlignedProgramsSection
