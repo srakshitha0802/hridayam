@@ -3,6 +3,7 @@ import { GoogleIcon } from './GoogleIcon';
 import { CompaniesSlidingMarquee } from './CompaniesSlidingMarquee';
 import { IndustryAlignedProgramsSection } from './IndustryAlignedProgramsSection';
 import { BelvoVerticalsInteractiveSection } from './BelvoVerticalsInteractiveSection';
+import { directDownloadCurriculumPdf } from '../utils/downloadBrochurePdf';
 import {
   ITV_COURSES,
   CLASSROOM_CENTERS,
@@ -194,11 +195,14 @@ export const HomeView: React.FC<HomeViewProps> = ({
               {/* Download Brochure Button & Quick Guidance */}
               <div className="flex flex-wrap items-center gap-4 pt-1">
                 <button
-                  onClick={() => onDownloadBrochure('Master in Data Science and Analytics with AI')}
+                  onClick={() => {
+                    directDownloadCurriculumPdf('Digital Marketing and Social Media Management');
+                    onDownloadBrochure('Digital Marketing and Social Media Management');
+                  }}
                   className="btn-blue-primary px-7 py-3.5 rounded-2xl text-xs font-semibold uppercase tracking-wider flex items-center gap-2 cursor-pointer shadow-lg text-white"
                 >
                   <GoogleIcon name="download" size={18} className="text-white" />
-                  <span>Download Brochure</span>
+                  <span>Download Curriculum PDF</span>
                   <GoogleIcon name="keyboard_arrow_down" size={18} className="text-white" />
                 </button>
 
@@ -401,7 +405,17 @@ export const HomeView: React.FC<HomeViewProps> = ({
       {/* 4. FOUNDER / MENTOR SPOTLIGHT ("Why Hridayam by Belvo?") */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="glass-blue-contrast rounded-3xl p-6 sm:p-10 border-2 border-white/80 flex flex-col md:flex-row items-center justify-between gap-8 relative overflow-hidden shadow-2xl">
-          <div className="flex items-center gap-6">
+          {/* User Provided Frame Background Texture */}
+          <div className="absolute inset-0 pointer-events-none overflow-hidden z-0">
+            <img
+              src="/frame-bg-sparkle.jpg"
+              alt="Sparkle Frame Texture"
+              className="w-full h-full object-cover opacity-35 filter contrast-125 scale-105"
+            />
+            <div className="absolute inset-0 bg-gradient-to-r from-[#1E428E]/90 via-[#3869C3]/80 to-[#1E428E]/90" />
+          </div>
+
+          <div className="flex items-center gap-6 relative z-10">
             <div className="w-24 h-24 sm:w-32 sm:h-32 rounded-2xl overflow-hidden border-2 border-white shadow-md shrink-0 bg-[#1E428E]">
               <img
                 src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&q=80"
@@ -572,6 +586,15 @@ export const HomeView: React.FC<HomeViewProps> = ({
 
       {/* 6. CLASSROOM CENTERS TABS & EXPLORER (HRIDAYAM BLUE-WHITE LAB FRAME) */}
       <section className="relative py-16 px-4 sm:px-6 lg:px-8 overflow-hidden rounded-3xl sm:rounded-[40px] border-2 border-white shadow-2xl my-8 glass-panel">
+        {/* User Provided Frame Background Texture */}
+        <div className="absolute inset-0 pointer-events-none overflow-hidden z-0">
+          <img
+            src="/frame-bg-sparkle.jpg"
+            alt="Campus Frame Sparkle"
+            className="w-full h-full object-cover opacity-20 filter contrast-125"
+          />
+        </div>
+
         <div className="max-w-7xl mx-auto space-y-8 relative z-10">
           <div className="text-center max-w-2xl mx-auto space-y-2">
             <span className="text-xs font-extrabold uppercase text-[#3869C3] tracking-widest">
@@ -700,45 +723,56 @@ export const HomeView: React.FC<HomeViewProps> = ({
 
       {/* 8. PRE-FOOTER CALLBACK FORM */}
       <section className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="glass-panel rounded-3xl p-8 border-2 border-white text-center space-y-4 shadow-xl text-[#1E428E]">
-          <h2 className="text-2xl sm:text-3xl font-extrabold text-[#1E428E] font-display">
-            Are You Confused About Which Course to Choose?
-          </h2>
-          <p className="text-sm text-[#1E428E] max-w-lg mx-auto font-bold">
-            Speak to our Senior Academic Advisors. We evaluate your qualification and recommend the optimal career program.
-          </p>
+        <div className="glass-panel rounded-3xl p-8 border-2 border-white text-center space-y-4 shadow-xl text-[#1E428E] relative overflow-hidden">
+          {/* User Provided Frame Border Background Texture */}
+          <div className="absolute inset-0 pointer-events-none overflow-hidden z-0">
+            <img
+              src="/frame-bg-border.jpg"
+              alt="Frame Border Texture"
+              className="w-full h-full object-cover opacity-20 filter contrast-125"
+            />
+          </div>
 
-          {bottomFormSubmitted ? (
-            <div className="bg-white/90 border-2 border-[#D3E5FD] rounded-2xl p-4 text-center max-w-md mx-auto space-y-1 shadow-xs">
-              <div className="text-sm font-semibold text-[#1E428E]">Thank You, {bottomForm.name}!</div>
-              <p className="text-xs text-[#1E428E]/80">Our advisor will reach out to you within 15 minutes.</p>
-            </div>
-          ) : (
-            <form onSubmit={handleBottomSubmit} className="flex flex-col sm:flex-row gap-3 max-w-xl mx-auto pt-2">
-              <input
-                type="text"
-                required
-                placeholder="Your Name"
-                value={bottomForm.name}
-                onChange={(e) => setBottomForm({ ...bottomForm, name: e.target.value })}
-                className="flex-1 px-4 py-2.5 rounded-xl glass-input text-xs font-medium"
-              />
-              <input
-                type="tel"
-                required
-                placeholder="Mobile Number"
-                value={bottomForm.phone}
-                onChange={(e) => setBottomForm({ ...bottomForm, phone: e.target.value })}
-                className="flex-1 px-4 py-2.5 rounded-xl glass-input text-xs font-medium"
-              />
-              <button
-                type="submit"
-                className="btn-blue-primary px-6 py-2.5 rounded-xl font-semibold text-xs uppercase tracking-wider shadow-md cursor-pointer whitespace-nowrap text-white"
-              >
-                Request Callback
-              </button>
-            </form>
-          )}
+          <div className="relative z-10 space-y-4">
+            <h2 className="text-2xl sm:text-3xl font-extrabold text-[#1E428E] font-display">
+              Are You Confused About Which Course to Choose?
+            </h2>
+            <p className="text-sm text-[#1E428E] max-w-lg mx-auto font-bold">
+              Speak to our Senior Academic Advisors. We evaluate your qualification and recommend the optimal career program.
+            </p>
+
+            {bottomFormSubmitted ? (
+              <div className="bg-white/90 border-2 border-[#D3E5FD] rounded-2xl p-4 text-center max-w-md mx-auto space-y-1 shadow-xs">
+                <div className="text-sm font-semibold text-[#1E428E]">Thank You, {bottomForm.name}!</div>
+                <p className="text-xs text-[#1E428E]/80">Our advisor will reach out to you within 15 minutes.</p>
+              </div>
+            ) : (
+              <form onSubmit={handleBottomSubmit} className="flex flex-col sm:flex-row gap-3 max-w-xl mx-auto pt-2">
+                <input
+                  type="text"
+                  required
+                  placeholder="Your Name"
+                  value={bottomForm.name}
+                  onChange={(e) => setBottomForm({ ...bottomForm, name: e.target.value })}
+                  className="flex-1 px-4 py-2.5 rounded-xl glass-input text-xs font-medium"
+                />
+                <input
+                  type="tel"
+                  required
+                  placeholder="Mobile Number"
+                  value={bottomForm.phone}
+                  onChange={(e) => setBottomForm({ ...bottomForm, phone: e.target.value })}
+                  className="flex-1 px-4 py-2.5 rounded-xl glass-input text-xs font-medium"
+                />
+                <button
+                  type="submit"
+                  className="btn-blue-primary px-6 py-2.5 rounded-xl font-semibold text-xs uppercase tracking-wider shadow-md cursor-pointer whitespace-nowrap text-white"
+                >
+                  Request Callback
+                </button>
+              </form>
+            )}
+          </div>
         </div>
       </section>
 

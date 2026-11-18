@@ -1,5 +1,6 @@
 import React, { useState, useRef } from 'react';
 import { GoogleIcon } from './GoogleIcon';
+import { directDownloadCurriculumPdf } from '../utils/downloadBrochurePdf';
 
 interface IndustryAlignedProgramsSectionProps {
   onSelectCourse: (courseId: string) => void;
@@ -96,7 +97,7 @@ export const MASTER_PROGRAMS_LIST: MasterProgramItem[] = [
     durationAndMax: '8 Months • Max ₹32 LPA',
     duration: '8 Months',
     highestPackage: '₹32 LPA',
-    imageUrl: 'https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&w=800&q=80',
+    imageUrl: 'https://images.unsplash.com/photo-1531482615713-2afd69097998?auto=format&fit=crop&w=800&q=80',
     description:
       'Engineer autonomous AI agents and intelligent production workflows. Build end-to-end Retrieval-Augmented Generation (RAG) copilots, fine-tune open-source LLMs, and automate complex enterprise workflows using the Gemini API and LangChain.',
     tools: ['Gemini API', 'LangChain', 'CrewAI', 'LlamaIndex', 'Python', 'FastAPI', 'Pinecone Vector DB', 'Make.com', 'Zapier Automation'],
@@ -321,11 +322,11 @@ export const IndustryAlignedProgramsSection: React.FC<IndustryAlignedProgramsSec
           {/* Ambient Studio Background Image Frame */}
           <div className="absolute inset-0 pointer-events-none overflow-hidden z-0">
             <img
-              src="/neon-studio-bg.jpg"
-              alt="Belvo Studio"
-              className="w-full h-full object-cover opacity-20 filter contrast-125 mix-blend-luminosity scale-110"
+              src="/frame-bg-waves.jpg"
+              alt="Hridayam Wave Frame Background"
+              className="w-full h-full object-cover opacity-35 filter contrast-125 scale-105"
             />
-            <div className="absolute inset-0 bg-gradient-to-r from-[#1E428E]/95 via-[#142B5C]/95 to-[#1E428E]/95 backdrop-blur-[2px]" />
+            <div className="absolute inset-0 bg-gradient-to-r from-[#1E428E]/90 via-[#142B5C]/80 to-[#1E428E]/90 backdrop-blur-[1px]" />
           </div>
 
           {/* Top Toolbar */}
@@ -594,11 +595,15 @@ export const IndustryAlignedProgramsSection: React.FC<IndustryAlignedProgramsSec
 
                 <button
                   type="button"
-                  onClick={() => onDownloadBrochure(selectedCourse.title)}
-                  title="Download Program Curriculum PDF"
-                  className="p-3 rounded-xl bg-white/10 hover:bg-white/20 border border-white/30 text-white cursor-pointer shrink-0 transition-all"
+                  onClick={() => {
+                    directDownloadCurriculumPdf(selectedCourse.title);
+                    onDownloadBrochure(selectedCourse.title);
+                  }}
+                  title="Direct Download Official Syllabus PDF"
+                  className="py-3 px-4 rounded-xl bg-white/20 hover:bg-white text-white hover:text-[#1E428E] border border-white/40 font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-1.5 cursor-pointer shrink-0 transition-all shadow-md"
                 >
-                  <GoogleIcon name="download" size={18} />
+                  <GoogleIcon name="file_download" size={17} />
+                  <span>Direct PDF</span>
                 </button>
               </div>
             </div>
