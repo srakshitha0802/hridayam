@@ -206,21 +206,21 @@ export const CounselorAdminView: React.FC<CounselorAdminViewProps> = ({ onToast,
   const totalRevenue = coursesList.reduce((sum, c) => sum + (c.fee || 0) * (c.reviewCount || 10), 0);
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8 relative z-10">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8 relative z-10 text-slate-900">
       {/* Admin Header */}
-      <div className="glass-dark rounded-3xl p-6 sm:p-8 shadow-2xl relative overflow-hidden">
+      <div className="bg-white/95 backdrop-blur-2xl rounded-3xl p-6 sm:p-8 shadow-xl relative overflow-hidden border-2 border-blue-200 text-slate-900">
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 relative z-10">
           <div className="space-y-2">
             <div className="flex items-center gap-2">
-              <span className="bg-gradient-to-r from-blue-500 to-rose-500 text-white text-[10px] font-bold uppercase px-3 py-1 rounded-full shadow-xs">
+              <span className="bg-gradient-to-r from-blue-600 to-sky-600 text-white text-[10px] font-bold uppercase px-3 py-1 rounded-full shadow-xs">
                 Executive Console
               </span>
-              <span className="text-xs text-sky-200 font-mono">Belvo Platform Admin v2.6</span>
+              <span className="text-xs text-blue-600 font-mono">Belvo Platform Admin v2.6</span>
             </div>
-            <h1 className="text-2xl sm:text-3xl font-bold font-display text-white">
+            <h1 className="text-2xl sm:text-3xl font-bold font-display text-slate-900">
               Hridayam by Belvo Admin &amp; Studio Dashboard
             </h1>
-            <p className="text-xs sm:text-sm text-sky-100">
+            <p className="text-xs sm:text-sm text-slate-600">
               Manage all 11 Belvo course tracks, upload video lessons, adjust pricing, and track platform performance.
             </p>
           </div>
@@ -228,14 +228,14 @@ export const CounselorAdminView: React.FC<CounselorAdminViewProps> = ({ onToast,
           <div className="flex items-center gap-3">
             <button
               onClick={() => setIsCreatingCourse(true)}
-              className="btn-pink-primary px-5 py-2.5 rounded-xl text-xs font-bold uppercase tracking-wider text-white shadow-md flex items-center gap-2 cursor-pointer"
+              className="btn-blue-primary px-5 py-2.5 rounded-xl text-xs font-bold uppercase tracking-wider text-white shadow-md flex items-center gap-2 cursor-pointer"
             >
               <GoogleIcon name="add" size={18} />
               <span>Create New Course</span>
             </button>
             <button
               onClick={onLogout}
-              className="px-4 py-2.5 rounded-xl bg-white/10 hover:bg-white/20 text-white text-xs font-semibold border border-white/20 transition-colors cursor-pointer"
+              className="px-4 py-2.5 rounded-xl bg-blue-50 hover:bg-blue-100 text-blue-700 text-xs font-semibold border border-blue-200 transition-colors cursor-pointer"
             >
               Exit Console
             </button>
@@ -243,29 +243,29 @@ export const CounselorAdminView: React.FC<CounselorAdminViewProps> = ({ onToast,
         </div>
 
         {/* Quick Metrics Bar */}
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mt-6 pt-6 border-t border-white/15 text-xs text-sky-100">
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mt-6 pt-6 border-t border-blue-100 text-xs text-slate-700">
           <div>
-            <span className="text-sky-300 block text-[10px] uppercase font-semibold">Total Revenue (Simulated)</span>
-            <span className="text-xl sm:text-2xl font-bold text-white font-mono">
+            <span className="text-blue-700 block text-[10px] uppercase font-semibold">Total Revenue (Simulated)</span>
+            <span className="text-xl sm:text-2xl font-bold text-slate-900 font-mono">
               ₹{(totalRevenue / 100000).toFixed(1)}L
             </span>
           </div>
           <div>
-            <span className="text-sky-300 block text-[10px] uppercase font-semibold">Live Belvo Courses</span>
-            <span className="text-xl sm:text-2xl font-bold text-sky-200 font-mono">
+            <span className="text-blue-700 block text-[10px] uppercase font-semibold">Live Belvo Courses</span>
+            <span className="text-xl sm:text-2xl font-bold text-blue-600 font-mono">
               {coursesList.length} Tracks
             </span>
           </div>
           <div>
-            <span className="text-sky-300 block text-[10px] uppercase font-semibold">Active Inquiries</span>
-            <span className="text-xl sm:text-2xl font-bold text-sky-200 font-mono">
+            <span className="text-blue-700 block text-[10px] uppercase font-semibold">Active Inquiries</span>
+            <span className="text-xl sm:text-2xl font-bold text-blue-600 font-mono">
               {leads.length} Leads
             </span>
           </div>
           <div>
-            <span className="text-sky-300 block text-[10px] uppercase font-semibold">Gateway Status</span>
-            <span className="text-xl sm:text-2xl font-bold text-sky-200 font-display flex items-center gap-1">
-              <span className="w-2.5 h-2.5 rounded-full bg-sky-400 animate-pulse" />
+            <span className="text-blue-700 block text-[10px] uppercase font-semibold">Gateway Status</span>
+            <span className="text-xl sm:text-2xl font-bold text-emerald-600 font-display flex items-center gap-1.5">
+              <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse" />
               UPI &amp; Cards Active
             </span>
           </div>

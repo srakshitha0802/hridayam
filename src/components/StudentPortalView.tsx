@@ -111,51 +111,51 @@ export const StudentPortalView: React.FC<StudentPortalViewProps> = ({
   };
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8 relative z-10 text-white">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8 relative z-10 text-slate-900">
       {/* Student Welcome & Profile Header Banner */}
-      <div className="glass-dark rounded-3xl p-6 sm:p-8 shadow-2xl relative overflow-hidden border-2 border-sky-400/40">
+      <div className="bg-white/95 backdrop-blur-2xl rounded-3xl p-6 sm:p-8 shadow-xl relative overflow-hidden border-2 border-blue-200 text-slate-900">
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 relative z-10">
           <div className="space-y-2">
             <div className="flex flex-wrap items-center gap-2">
-              <span className="bg-gradient-to-r from-blue-500 to-rose-500 text-white text-[10px] font-bold uppercase px-3 py-1 rounded-full shadow-xs">
+              <span className="bg-gradient-to-r from-blue-600 to-sky-600 text-white text-[10px] font-bold uppercase px-3 py-1 rounded-full shadow-xs">
                 Active Student
               </span>
-              <span className="text-xs text-sky-200 font-mono">Roll: {studentProfile.rollNo}</span>
-              <span className="text-xs text-sky-200 font-mono">• Enrolled: {studentProfile.enrolledAt}</span>
+              <span className="text-xs text-slate-500 font-mono">Roll: {studentProfile.rollNo}</span>
+              <span className="text-xs text-slate-500 font-mono">• Enrolled: {studentProfile.enrolledAt}</span>
             </div>
-            <h1 className="text-2xl sm:text-3xl font-bold font-display text-white">
+            <h1 className="text-2xl sm:text-3xl font-bold font-display text-slate-900">
               Welcome back, {studentProfile.name}
             </h1>
-            <p className="text-xs sm:text-sm text-sky-100">
-              Assigned Mentor: <strong>{studentProfile.mentor}</strong> • Attendance: <strong>{studentProfile.attendance}</strong>
+            <p className="text-xs sm:text-sm text-slate-600">
+              Assigned Mentor: <strong className="text-slate-900">{studentProfile.mentor}</strong> • Attendance: <strong className="text-slate-900">{studentProfile.attendance}</strong>
             </p>
           </div>
 
-          <div className="flex items-center gap-4 bg-black/35 border border-sky-400/30 rounded-2xl p-4 backdrop-blur-xl">
-            <div className="text-center pr-4 border-r border-sky-400/25">
-              <div className="text-2xl font-bold text-sky-300 font-display">
+          <div className="flex items-center gap-4 bg-blue-50/80 border border-blue-200 rounded-2xl p-4">
+            <div className="text-center pr-4 border-r border-blue-200">
+              <div className="text-2xl font-bold text-blue-600 font-display">
                 {progressPercent}%
               </div>
-              <div className="text-[10px] text-sky-200 uppercase font-semibold">Course Progress</div>
+              <div className="text-[10px] text-slate-500 uppercase font-semibold">Course Progress</div>
             </div>
             <div className="text-center">
-              <div className="text-2xl font-bold text-white font-display">
+              <div className="text-2xl font-bold text-slate-900 font-display">
                 {completedLessons.length} / {sampleLessons.length}
               </div>
-              <div className="text-[10px] text-sky-200 uppercase font-semibold">Modules Done</div>
+              <div className="text-[10px] text-slate-500 uppercase font-semibold">Modules Done</div>
             </div>
           </div>
         </div>
 
         {/* Course Progress Bar */}
-        <div className="mt-6 pt-4 border-t border-sky-400/30">
-          <div className="flex items-center justify-between text-xs text-sky-200 mb-1.5">
+        <div className="mt-6 pt-4 border-t border-blue-100">
+          <div className="flex items-center justify-between text-xs text-slate-600 mb-1.5">
             <span>Overall Curriculum Mastery: {currentCourse.title}</span>
-            <span className="font-bold text-white">{progressPercent}% Completed</span>
+            <span className="font-bold text-slate-900">{progressPercent}% Completed</span>
           </div>
-          <div className="w-full h-2.5 bg-black/40 rounded-full overflow-hidden border border-sky-400/25">
+          <div className="w-full h-2.5 bg-blue-100 rounded-full overflow-hidden border border-blue-200">
             <div
-              className="h-full bg-gradient-to-r from-blue-500 via-blue-400 to-sky-200 rounded-full transition-all duration-500"
+              className="h-full bg-gradient-to-r from-blue-600 via-blue-500 to-sky-400 rounded-full transition-all duration-500"
               style={{ width: `${progressPercent}%` }}
             />
           </div>
@@ -163,7 +163,7 @@ export const StudentPortalView: React.FC<StudentPortalViewProps> = ({
       </div>
 
       {/* Navigation Tabs */}
-      <div className="flex items-center gap-2 overflow-x-auto pb-2 border-b border-sky-400/30">
+      <div className="flex items-center gap-2 overflow-x-auto pb-2 border-b border-blue-100">
         {[
           { id: 'lms', label: '01. Video Lessons & Study Materials', icon: 'menu_book' },
           { id: 'assessments', label: '02. Quizzes & Assignments', icon: 'quiz' },
@@ -175,8 +175,8 @@ export const StudentPortalView: React.FC<StudentPortalViewProps> = ({
             onClick={() => setActiveTab(tab.id as any)}
             className={`px-4 py-2.5 rounded-xl text-xs font-bold transition-all whitespace-nowrap flex items-center gap-2 cursor-pointer ${
               activeTab === tab.id
-                ? 'bg-gradient-to-r from-blue-600 to-sky-600 text-white shadow-md border border-sky-300/40'
-                : 'glass-dark text-sky-200 hover:text-white border border-sky-400/30'
+                ? 'bg-blue-600 text-white shadow-md border border-blue-400'
+                : 'bg-white text-slate-700 hover:text-blue-600 border border-blue-200 shadow-xs'
             }`}
           >
             <GoogleIcon name={tab.icon} size={16} />
@@ -186,10 +186,10 @@ export const StudentPortalView: React.FC<StudentPortalViewProps> = ({
       </div>
 
       {/* Enrolled Course Selector (Belvo 11 Verticals) */}
-      <div className="glass-dark rounded-2xl p-4 flex flex-wrap items-center justify-between gap-4 border border-sky-400/40">
+      <div className="bg-white rounded-2xl p-4 flex flex-wrap items-center justify-between gap-4 border-2 border-blue-100 shadow-sm text-slate-900">
         <div className="flex items-center gap-2">
-          <GoogleIcon name="school" size={20} className="text-sky-300" />
-          <span className="text-xs font-bold text-white">Switch Enrolled Track:</span>
+          <GoogleIcon name="school" size={20} className="text-blue-600" />
+          <span className="text-xs font-bold text-slate-900">Switch Enrolled Track:</span>
         </div>
         <div className="flex-1 max-w-md">
           <select
@@ -200,10 +200,10 @@ export const StudentPortalView: React.FC<StudentPortalViewProps> = ({
               setQuizSubmitted(false);
               setSelectedQuizAnswer(null);
             }}
-            className="w-full px-3 py-2 text-xs rounded-xl glass-input font-semibold text-white focus:outline-none"
+            className="w-full px-3 py-2 text-xs rounded-xl glass-input font-semibold text-slate-900 bg-white border border-blue-200 focus:outline-none"
           >
             {ITV_COURSES.slice(0, 11).map((course, idx) => (
-              <option key={course.id} value={idx} className="bg-[#0A1633] text-white">
+              <option key={course.id} value={idx} className="bg-white text-slate-900">
                 {course.title}
               </option>
             ))}
@@ -211,7 +211,7 @@ export const StudentPortalView: React.FC<StudentPortalViewProps> = ({
         </div>
         <button
           onClick={onExploreCourses}
-          className="text-xs font-bold text-sky-300 hover:text-white underline flex items-center gap-1 cursor-pointer"
+          className="text-xs font-bold text-blue-600 hover:text-blue-800 underline flex items-center gap-1 cursor-pointer"
         >
           <span>Explore All 11 Belvo Courses</span>
           <GoogleIcon name="north_east" size={14} />

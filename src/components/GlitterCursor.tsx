@@ -17,12 +17,12 @@ interface Particle {
 }
 
 const GLITTER_COLORS = [
-  '#BAE6FD', // Pastel sky/ice
-  '#E0F2FE', // Lightest pastel azure
+  '#2563EB', // Royal blue
+  '#0284C7', // Deep sky
+  '#0EA5E9', // Azure
   '#38BDF8', // Cyan electric
-  '#60A5FA', // Pastel royal
-  '#FFFFFF', // Diamond white
-  '#93C5FD', // Soft blue
+  '#1D4ED8', // Sapphire
+  '#60A5FA', // Vibrant pastel blue
 ];
 
 export const GlitterCursor: React.FC = () => {
@@ -125,12 +125,10 @@ export const GlitterCursor: React.FC = () => {
     let currentAuraY = -100;
 
     const render = () => {
-      // Smooth interpolation
       currentAuraX += (mouseRef.current.x - currentAuraX) * 0.16;
       currentAuraY += (mouseRef.current.y - currentAuraY) * 0.16;
       setAuraPos({ x: currentAuraX, y: currentAuraY });
 
-      // Draw canvas particles
       const canvas = canvasRef.current;
       if (canvas) {
         if (canvas.width !== window.innerWidth || canvas.height !== window.innerHeight) {
@@ -160,10 +158,9 @@ export const GlitterCursor: React.FC = () => {
               ctx.globalAlpha = Math.max(0, p.opacity);
               ctx.fillStyle = p.color;
               ctx.shadowColor = p.color;
-              ctx.shadowBlur = 8;
+              ctx.shadowBlur = 6;
 
               if (p.shape === 'star') {
-                // Draw 4-point glittering star
                 const s = p.size;
                 ctx.beginPath();
                 ctx.moveTo(0, -s);
@@ -174,7 +171,6 @@ export const GlitterCursor: React.FC = () => {
                 ctx.closePath();
                 ctx.fill();
               } else if (p.shape === 'sparkle') {
-                // Draw 8-point tiny diamond
                 const s = p.size * 0.7;
                 ctx.beginPath();
                 ctx.moveTo(0, -s * 1.3);
@@ -223,20 +219,20 @@ export const GlitterCursor: React.FC = () => {
         aria-hidden="true"
       />
 
-      {/* Large Ambient Specular Glow Halo (Deep Ice Blue & Electric Azure) */}
+      {/* Large Ambient Specular Glow Halo (Soft Sky & Royal Tint) */}
       <div
-        className="pointer-events-none fixed -translate-x-1/2 -translate-y-1/2 rounded-full w-[460px] h-[460px] blur-3xl z-20 transition-opacity duration-300 ease-out"
+        className="pointer-events-none fixed -translate-x-1/2 -translate-y-1/2 rounded-full w-[440px] h-[440px] blur-3xl z-20 transition-opacity duration-300 ease-out"
         style={{
           left: `${auraPos.x}px`,
           top: `${auraPos.y}px`,
-          opacity: isVisible ? 0.45 : 0,
+          opacity: isVisible ? 0.35 : 0,
           background:
-            'radial-gradient(circle, rgba(56, 189, 248, 0.35) 0%, rgba(37, 99, 235, 0.22) 38%, rgba(10, 22, 51, 0.08) 65%, transparent 80%)',
+            'radial-gradient(circle, rgba(56, 189, 248, 0.25) 0%, rgba(37, 99, 235, 0.15) 38%, rgba(224, 242, 254, 0.08) 65%, transparent 80%)',
         }}
         aria-hidden="true"
       />
 
-      {/* Smooth Magnetic Follower Ring (Shiny Metallic Ice-Blue Glass Ring) */}
+      {/* Smooth Magnetic Follower Ring (Shiny Royal-Blue Glass Ring) */}
       <div
         className="pointer-events-none fixed -translate-x-1/2 -translate-y-1/2 rounded-full z-30 transition-all duration-75 ease-out"
         style={{
@@ -244,16 +240,16 @@ export const GlitterCursor: React.FC = () => {
           top: `${auraPos.y}px`,
           width: isClicking ? '44px' : '36px',
           height: isClicking ? '44px' : '36px',
-          opacity: isVisible ? 0.8 : 0,
-          border: '1.5px solid rgba(186, 230, 253, 0.75)',
-          boxShadow: '0 0 16px rgba(56, 189, 248, 0.6), inset 0 0 8px rgba(255, 255, 255, 0.4)',
-          background: 'rgba(56, 189, 248, 0.06)',
+          opacity: isVisible ? 0.85 : 0,
+          border: '2px solid rgba(37, 99, 235, 0.65)',
+          boxShadow: '0 0 14px rgba(56, 189, 248, 0.4), inset 0 0 8px rgba(37, 99, 235, 0.1)',
+          background: 'rgba(37, 99, 235, 0.04)',
           transform: `translate(-50%, -50%) scale(${isClicking ? 0.85 : 1})`,
         }}
         aria-hidden="true"
       />
 
-      {/* Diamond-Point Shiny Core Specular Glint */}
+      {/* Diamond-Point Shiny Core Glint */}
       <div
         className="pointer-events-none fixed -translate-x-1/2 -translate-y-1/2 rounded-full z-30 transition-transform duration-75"
         style={{
@@ -262,9 +258,9 @@ export const GlitterCursor: React.FC = () => {
           width: isClicking ? '10px' : '7px',
           height: isClicking ? '10px' : '7px',
           opacity: isVisible ? 1 : 0,
-          background: '#FFFFFF',
+          background: '#2563EB',
           boxShadow:
-            '0 0 8px 2px #38BDF8, 0 0 14px 4px rgba(59, 130, 246, 0.8), 0 0 20px 6px rgba(186, 230, 253, 0.5)',
+            '0 0 8px 2px #38BDF8, 0 0 14px 4px rgba(37, 99, 235, 0.6), 0 0 20px 6px rgba(186, 230, 253, 0.5)',
         }}
         aria-hidden="true"
       />

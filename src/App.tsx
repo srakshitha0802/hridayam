@@ -152,25 +152,25 @@ function PlatformShell() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col text-white relative selection:bg-blue-500/30 overflow-x-hidden bg-[#060D1E]">
+    <div className="min-h-screen flex flex-col text-slate-900 relative selection:bg-blue-500/20 overflow-x-hidden bg-[#FFFFFF]">
       {/* Shiny & Glittering Mouse Cursor with Particle Trails */}
       <GlitterCursor />
 
       {/* Suitable Education Theme Background with Animated Doodles & Blueprint Grid */}
       <BackgroundDoodles />
 
-      {/* Background Looping Education Media Canvas (100% Clearly Visible with Deep Blue Tint) */}
+      {/* Background Looping Education Media Canvas (Subtle High-Key Texture on White) */}
       <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden" aria-hidden="true">
         <video
           autoPlay
           loop
           muted
           playsInline
-          className="w-full h-full object-cover opacity-60 mix-blend-luminosity filter contrast-[1.1] brightness-[1.05] scale-105"
+          className="w-full h-full object-cover opacity-12 filter contrast-[1.2] brightness-[1.1] scale-105"
           src="/site-bg.mp4"
         />
-        {/* Deep Sapphire & Pastel Blue Gradient Overlay for High Readability and Elegance */}
-        <div className="absolute inset-0 bg-gradient-to-b from-[#060D1E]/70 via-[#0A1633]/60 to-[#060D1E]/85 pointer-events-none" />
+        {/* Soft Pristine White Gradient Overlay for High Readability and Blue-White Premium Aesthetic */}
+        <div className="absolute inset-0 bg-gradient-to-b from-white/95 via-white/88 to-white/98 pointer-events-none" />
       </div>
 
       {/* Main Navbar */}
@@ -317,13 +317,13 @@ function PlatformShell() {
         </a>
 
         {/* Sticky Mobile Quick Callback Bar */}
-        <div className="fixed bottom-0 left-0 right-0 z-30 lg:hidden bg-[#0A1633] text-white p-3 border-t border-sky-400/40 flex items-center justify-between gap-3 shadow-2xl backdrop-blur-md">
+        <div className="fixed bottom-0 left-0 right-0 z-30 lg:hidden bg-white/95 text-slate-900 p-3 border-t-2 border-blue-200 flex items-center justify-between gap-3 shadow-2xl backdrop-blur-md">
           <a
             href="tel:+918928466820"
-            className="flex-1 py-2.5 rounded-xl border border-sky-300/40 text-center font-bold text-xs flex items-center justify-center gap-1.5 text-sky-100"
+            className="flex-1 py-2.5 rounded-xl border border-blue-300 text-center font-bold text-xs flex items-center justify-center gap-1.5 text-blue-700 bg-blue-50/70"
             aria-label="Call Hridayam Admissions at +91 89284 66820"
           >
-            <GoogleIcon name="call" size={16} className="text-sky-300" />
+            <GoogleIcon name="call" size={16} className="text-blue-600" />
             Call Admissions
           </a>
           <button

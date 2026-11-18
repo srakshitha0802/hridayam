@@ -36,23 +36,20 @@ export const CatalogueView: React.FC<CatalogueViewProps> = ({
   });
 
   return (
-    <div className="space-y-12 pb-20 relative z-10 text-white">
+    <div className="space-y-12 pb-20 relative z-10 text-slate-900">
       {/* Hero */}
-      <section className="glass-dark text-white pt-12 pb-16 px-4 sm:px-6 lg:px-8 border-b border-sky-400/35 relative overflow-hidden backdrop-blur-2xl shadow-2xl">
-        <div className="absolute -top-24 -left-24 w-96 h-96 bg-blue-500/20 rounded-full blur-3xl pointer-events-none" />
-        <div className="absolute -bottom-24 -right-24 w-96 h-96 bg-rose-500/20 rounded-full blur-3xl pointer-events-none" />
-
-        <div className="max-w-7xl mx-auto text-center space-y-4 relative z-10">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-blue-950/80 border border-sky-400/40 text-sky-200 text-xs font-semibold backdrop-blur-md">
-            <GoogleIcon name="school" size={16} className="text-sky-300" />
+      <section className="pt-6 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto bg-white/95 backdrop-blur-2xl rounded-3xl p-8 sm:p-12 shadow-2xl relative overflow-hidden border-2 border-blue-200 text-center space-y-4">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-blue-50 border border-blue-200 text-blue-700 text-xs font-semibold">
+            <GoogleIcon name="school" size={16} className="text-blue-600" />
             <span>Belvo Services &amp; Industry Expertise Tracks</span>
           </div>
 
-          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold font-display text-white">
+          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold font-display text-slate-900">
             Explore Belvo Course Catalogue
           </h1>
 
-          <p className="text-sky-200 text-sm sm:text-base max-w-2xl mx-auto leading-relaxed">
+          <p className="text-slate-600 text-sm sm:text-base max-w-2xl mx-auto leading-relaxed">
             High-impact programs covering all 11 services and expertise tracks offered by Belvo — from AI &amp; Software Engineering to UI/UX, VFX, Growth Marketing, and Venture Sales.
           </p>
 
@@ -60,14 +57,14 @@ export const CatalogueView: React.FC<CatalogueViewProps> = ({
           <div className="max-w-xl mx-auto pt-2">
             <div className="relative">
               <span className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none">
-                <GoogleIcon name="search" size={20} className="text-sky-300" />
+                <GoogleIcon name="search" size={20} className="text-blue-500" />
               </span>
               <input
                 type="text"
                 placeholder="Search by topic, skill (React, Figma, AI, SEO, DaVinci, Python)..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full pl-11 pr-4 py-3.5 rounded-2xl glass-input text-white placeholder-sky-200/60 text-sm focus:outline-none focus:ring-2 focus:ring-pink-400 shadow-xl"
+                className="w-full pl-11 pr-4 py-3.5 rounded-2xl glass-input text-slate-900 bg-white placeholder-slate-400 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-md border border-blue-200"
               />
             </div>
           </div>
@@ -83,8 +80,8 @@ export const CatalogueView: React.FC<CatalogueViewProps> = ({
               onClick={() => setSelectedCategory(cat.id)}
               className={`px-3.5 py-2 rounded-xl text-xs font-semibold whitespace-nowrap transition-all cursor-pointer ${
                 selectedCategory === cat.id
-                  ? 'bg-gradient-to-r from-blue-600 to-sky-600 text-white shadow-md border border-sky-300/40'
-                  : 'glass-dark text-sky-200 hover:text-white border border-sky-400/30'
+                  ? 'bg-blue-600 text-white shadow-md border border-blue-400'
+                  : 'bg-white text-slate-700 hover:text-blue-600 border border-blue-200 shadow-xs'
               }`}
             >
               {cat.label}
@@ -96,11 +93,11 @@ export const CatalogueView: React.FC<CatalogueViewProps> = ({
       {/* Course Cards Grid */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex flex-wrap items-center justify-between pb-6 gap-2">
-          <span className="text-xs font-bold text-sky-200 uppercase tracking-wider">
+          <span className="text-xs font-bold text-slate-600 uppercase tracking-wider">
             Showing {filteredCourses.length} Comprehensive Career Programs
           </span>
-          <span className="text-xs text-sky-200 font-semibold flex items-center gap-1.5 bg-blue-950/80 px-3 py-1 rounded-full border border-sky-400/40">
-            <GoogleIcon name="verified" size={14} filled className="text-sky-300" />
+          <span className="text-xs text-blue-700 font-semibold flex items-center gap-1.5 bg-blue-50 px-3 py-1 rounded-full border border-blue-200">
+            <GoogleIcon name="verified" size={14} filled className="text-blue-600" />
             Dual Certified • 100% Placement Support
           </span>
         </div>
@@ -109,7 +106,7 @@ export const CatalogueView: React.FC<CatalogueViewProps> = ({
           {filteredCourses.map((course: ITvedantCourse) => (
             <div
               key={course.id}
-              className="glass-dark rounded-3xl overflow-hidden shadow-xl hover:shadow-2xl hover:border-sky-300 transition-all flex flex-col justify-between group border border-sky-400/40 text-white"
+              className="bg-white rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl hover:border-blue-500 transition-all flex flex-col justify-between group border-2 border-blue-100 text-slate-900"
             >
               <div>
                 {/* Course Header Banner */}
@@ -138,26 +135,26 @@ export const CatalogueView: React.FC<CatalogueViewProps> = ({
 
                 {/* Body Content */}
                 <div className="p-6 space-y-4">
-                  <p className="text-xs text-sky-100 line-clamp-3 leading-relaxed">
+                  <p className="text-xs text-slate-600 line-clamp-3 leading-relaxed">
                     {course.summary}
                   </p>
 
                   {/* Tools preview */}
                   <div>
-                    <span className="text-[10px] font-bold uppercase text-sky-300 tracking-wider block mb-1.5">
+                    <span className="text-[10px] font-bold uppercase text-blue-700 tracking-wider block mb-1.5">
                       Tools &amp; Technologies Mastered
                     </span>
                     <div className="flex flex-wrap gap-1.5">
                       {course.toolsCovered.slice(0, 5).map((tool, idx) => (
                         <span
                           key={idx}
-                          className="px-2 py-0.5 rounded-md bg-black/40 border border-sky-400/30 text-sky-100 text-[11px] font-semibold"
+                          className="px-2 py-0.5 rounded-md bg-blue-50 border border-blue-200 text-blue-800 text-[11px] font-semibold"
                         >
                           {tool}
                         </span>
                       ))}
                       {course.toolsCovered.length > 5 && (
-                        <span className="px-2 py-0.5 rounded-md bg-black/30 border border-sky-400/20 text-sky-300 text-[11px] font-semibold">
+                        <span className="px-2 py-0.5 rounded-md bg-blue-50/70 border border-blue-200 text-blue-600 text-[11px] font-semibold">
                           +{course.toolsCovered.length - 5} more
                         </span>
                       )}
@@ -165,26 +162,26 @@ export const CatalogueView: React.FC<CatalogueViewProps> = ({
                   </div>
 
                   {/* Key Stats */}
-                  <div className="grid grid-cols-2 gap-3 pt-2 border-t border-sky-400/30 text-xs text-sky-100">
+                  <div className="grid grid-cols-2 gap-3 pt-2 border-t border-blue-100 text-xs">
                     <div>
-                      <span className="text-[10px] text-sky-300 block font-semibold">Highest Package</span>
-                      <strong className="text-white font-bold">{course.highestPackage}</strong>
+                      <span className="text-[10px] text-slate-500 block font-semibold uppercase">Highest Package</span>
+                      <strong className="text-slate-900 font-bold">{course.highestPackage}</strong>
                     </div>
                     <div>
-                      <span className="text-[10px] text-sky-300 block font-semibold">Capstone Projects</span>
-                      <strong className="text-white font-bold">{course.projectsCount}+ Projects</strong>
+                      <span className="text-[10px] text-slate-500 block font-semibold uppercase">Capstone Projects</span>
+                      <strong className="text-slate-900 font-bold">{course.projectsCount}+ Projects</strong>
                     </div>
                   </div>
 
                   {/* Pricing info */}
                   <div className="flex items-center justify-between pt-1 text-xs">
                     <div>
-                      <span className="text-sky-300 text-[11px] block">Fee Investment</span>
-                      <span className="text-base font-bold text-white">
+                      <span className="text-slate-500 text-[11px] block">Fee Investment</span>
+                      <span className="text-base font-bold text-slate-900">
                         ₹{course.fee?.toLocaleString()}
                       </span>
                     </div>
-                    <span className="text-[11px] text-sky-200 font-bold bg-blue-900/60 px-2 py-0.5 rounded-md border border-sky-400/40">
+                    <span className="text-[11px] text-blue-700 font-bold bg-blue-50 px-2 py-0.5 rounded-md border border-blue-200">
                       EMI from {course.emiStartsAt}
                     </span>
                   </div>
@@ -195,7 +192,7 @@ export const CatalogueView: React.FC<CatalogueViewProps> = ({
               <div className="p-6 pt-0 space-y-2">
                 <button
                   onClick={() => onSelectCourse(course.id)}
-                  className="w-full py-3 rounded-xl btn-pink-primary font-bold text-xs uppercase tracking-wider text-white shadow-md flex items-center justify-center gap-1.5 cursor-pointer"
+                  className="w-full py-3 rounded-xl btn-blue-primary font-bold text-xs uppercase tracking-wider text-white shadow-md flex items-center justify-center gap-1.5 cursor-pointer"
                 >
                   <span>View Full Curriculum &amp; Labs</span>
                   <GoogleIcon name="arrow_forward" size={16} />
@@ -203,13 +200,13 @@ export const CatalogueView: React.FC<CatalogueViewProps> = ({
                 <div className="grid grid-cols-2 gap-2">
                   <button
                     onClick={() => onRequestCallback(course.title)}
-                    className="py-2.5 rounded-xl border border-sky-400/40 hover:border-sky-300 text-sky-100 text-xs font-semibold text-center block transition-colors bg-white/10 cursor-pointer"
+                    className="py-2.5 rounded-xl border border-blue-200 hover:border-blue-400 text-blue-700 text-xs font-semibold text-center block transition-colors bg-blue-50 hover:bg-blue-100 cursor-pointer"
                   >
                     Free Demo Class
                   </button>
                   <button
                     onClick={() => onEnrollCourse ? onEnrollCourse(course) : onRequestCallback(course.title)}
-                    className="py-2.5 rounded-xl bg-blue-900/80 hover:bg-blue-800 text-white text-xs font-bold text-center block transition-colors cursor-pointer border border-sky-400/40"
+                    className="py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold text-center block transition-colors cursor-pointer shadow-sm"
                   >
                     Quick Enrol
                   </button>
@@ -220,20 +217,20 @@ export const CatalogueView: React.FC<CatalogueViewProps> = ({
         </div>
 
         {/* Dynamic expansion banner as requested */}
-        <div className="mt-14 p-6 glass-dark rounded-3xl text-center space-y-2 border-2 border-sky-400/40 shadow-2xl">
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-blue-950/80 text-sky-200 text-xs font-semibold border border-sky-400/30">
-            <GoogleIcon name="auto_awesome" size={14} className="text-sky-300" />
+        <div className="mt-14 p-6 bg-white rounded-3xl text-center space-y-2 border-2 border-blue-200 shadow-xl text-slate-900">
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-blue-50 text-blue-700 text-xs font-semibold border border-blue-200">
+            <GoogleIcon name="auto_awesome" size={14} className="text-blue-600" />
             <span>Continuous Platform Expansion</span>
           </div>
-          <h3 className="text-lg font-bold text-white font-display">
+          <h3 className="text-lg font-bold text-slate-900 font-display">
             Additional courses may be introduced as the platform expands.
           </h3>
-          <p className="text-xs text-sky-200 max-w-lg mx-auto">
+          <p className="text-xs text-slate-600 max-w-lg mx-auto">
             Suggest a new track, request corporate cohort syllabi, or co-design specializations with Belvo faculty.
           </p>
           <button
             onClick={() => onRequestCallback('Suggest New Course Track')}
-            className="btn-pink-glass px-5 py-2.5 rounded-xl text-xs font-bold text-white hover:border-sky-300 mt-2 cursor-pointer"
+            className="btn-blue-primary px-5 py-2.5 rounded-xl text-xs font-bold text-white shadow-md mt-2 cursor-pointer inline-flex items-center gap-1"
           >
             Request Custom Specialization
           </button>

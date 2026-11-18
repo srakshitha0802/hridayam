@@ -6,86 +6,86 @@ export function BackgroundDoodles() {
       className="pointer-events-none fixed inset-0 z-0 overflow-hidden select-none"
       aria-hidden="true"
     >
-      {/* Ambient Glassy Radial Glow Orbs (Deep Sapphire, Electric Blue, Cyan) */}
+      {/* Ambient Glassy Radial Glow Orbs (Soft Ice Blue, Azure, Royal Tint on White) */}
       <div
-        className="absolute -top-32 -left-32 w-[550px] h-[550px] rounded-full blur-[100px] opacity-40 pointer-events-none"
+        className="absolute -top-32 -left-32 w-[550px] h-[550px] rounded-full blur-[100px] opacity-60 pointer-events-none"
         style={{
-          background: 'radial-gradient(circle, #2563EB 0%, #1D4ED8 45%, transparent 70%)',
+          background: 'radial-gradient(circle, #BAE6FD 0%, #E0F2FE 45%, transparent 70%)',
         }}
       />
       <div
-        className="absolute top-1/4 -right-32 w-[600px] h-[600px] rounded-full blur-[110px] opacity-35 pointer-events-none"
+        className="absolute top-1/4 -right-32 w-[600px] h-[600px] rounded-full blur-[110px] opacity-50 pointer-events-none"
         style={{
-          background: 'radial-gradient(circle, #0284C7 0%, #0369A1 50%, transparent 75%)',
+          background: 'radial-gradient(circle, #E0F2FE 0%, #BAE6FD 50%, transparent 75%)',
         }}
       />
       <div
-        className="absolute top-2/3 -left-40 w-[500px] h-[500px] rounded-full blur-[90px] opacity-30 pointer-events-none"
+        className="absolute top-2/3 -left-40 w-[500px] h-[500px] rounded-full blur-[90px] opacity-45 pointer-events-none"
         style={{
-          background: 'radial-gradient(circle, #38BDF8 0%, #1E40AF 60%, transparent 75%)',
+          background: 'radial-gradient(circle, #7DD3FC 0%, #E0F2FE 60%, transparent 75%)',
         }}
       />
       <div
-        className="absolute -bottom-40 right-1/4 w-[650px] h-[650px] rounded-full blur-[120px] opacity-35 pointer-events-none"
+        className="absolute -bottom-40 right-1/4 w-[650px] h-[650px] rounded-full blur-[120px] opacity-50 pointer-events-none"
         style={{
-          background: 'radial-gradient(circle, #1E3A8A 0%, #0F172A 60%, transparent 70%)',
+          background: 'radial-gradient(circle, #BAE6FD 0%, #F0F9FF 60%, transparent 70%)',
         }}
       />
 
-      {/* Subtle Blueprint & Math Grid Matrix */}
+      {/* Subtle Blueprint & Math Grid Matrix on White Canvas */}
       <div
-        className="absolute inset-0 opacity-25"
+        className="absolute inset-0 opacity-40"
         style={{
           backgroundImage:
-            'radial-gradient(#38BDF8 1px, transparent 1px), linear-gradient(to right, rgba(56, 189, 248, 0.05) 1px, transparent 1px), linear-gradient(to bottom, rgba(56, 189, 248, 0.05) 1px, transparent 1px)',
-          backgroundSize: '40px 40px, 120px 120px, 120px 120px',
+            'radial-gradient(rgba(37, 99, 235, 0.15) 1.2px, transparent 1.2px), linear-gradient(to right, rgba(37, 99, 235, 0.04) 1px, transparent 1px), linear-gradient(to bottom, rgba(37, 99, 235, 0.04) 1px, transparent 1px)',
+          backgroundSize: '36px 36px, 108px 108px, 108px 108px',
         }}
       />
 
-      {/* Floating Animated Education Doodles across the page */}
+      {/* Floating Animated Education Doodles across the page (Royal & Sky Blue on White) */}
 
       {/* 1. Graduation Cap (Top Left - Floating) */}
-      <div className="absolute top-24 left-10 w-28 h-28 text-cyan-400/30 hidden lg:block animate-doodle-float">
+      <div className="absolute top-24 left-10 w-28 h-28 text-blue-600/35 hidden lg:block animate-doodle-float">
         <DoodleGraduationCap className="w-full h-full" />
       </div>
 
       {/* 2. Open Learning Book (Top Right - Slow sway) */}
-      <div className="absolute top-28 right-16 w-24 h-24 text-sky-400/30 hidden lg:block animate-doodle-float-delayed">
+      <div className="absolute top-28 right-16 w-24 h-24 text-sky-600/35 hidden lg:block animate-doodle-float-delayed">
         <DoodleOpenBook className="w-full h-full" />
       </div>
 
       {/* 3. Atom / Science & AI Model (Mid-Top Center-Right - Slow Spin) */}
-      <div className="absolute top-96 right-24 w-28 h-28 text-blue-400/25 hidden xl:block animate-doodle-spin">
+      <div className="absolute top-96 right-24 w-28 h-28 text-blue-500/30 hidden xl:block animate-doodle-spin">
         <DoodleAtom className="w-full h-full" />
       </div>
 
       {/* 4. Code Terminal Window & Brackets (Mid Left - Float) */}
-      <div className="absolute top-[480px] left-8 w-24 h-24 text-cyan-300/30 hidden xl:block animate-doodle-float">
+      <div className="absolute top-[480px] left-8 w-24 h-24 text-blue-600/35 hidden xl:block animate-doodle-float">
         <DoodleCodeWindow className="w-full h-full" />
       </div>
 
       {/* 5. Paper Airplane (Learning Journey) (Mid Right - Delayed Float) */}
-      <div className="absolute top-[720px] right-12 w-24 h-24 text-sky-300/30 hidden lg:block animate-doodle-float-delayed -rotate-12">
+      <div className="absolute top-[720px] right-12 w-24 h-24 text-sky-600/35 hidden lg:block animate-doodle-float-delayed -rotate-12">
         <DoodlePaperAirplane className="w-full h-full" />
       </div>
 
       {/* 6. Lightbulb & Idea Sparks (Mid-Lower Left) */}
-      <div className="absolute top-[1050px] left-12 w-24 h-24 text-cyan-400/30 hidden xl:block animate-doodle-pulse">
+      <div className="absolute top-[1050px] left-12 w-24 h-24 text-blue-500/35 hidden xl:block animate-doodle-pulse">
         <DoodleLightbulb className="w-full h-full" />
       </div>
 
       {/* 7. Rocket / Career Launch (Mid-Lower Right) */}
-      <div className="absolute top-[1380px] right-14 w-24 h-24 text-blue-300/30 hidden lg:block animate-doodle-float">
+      <div className="absolute top-[1380px] right-14 w-24 h-24 text-sky-600/35 hidden lg:block animate-doodle-float">
         <DoodleRocket className="w-full h-full" />
       </div>
 
       {/* 8. Math & Analytics Formula (Lower Left) */}
-      <div className="absolute top-[1700px] left-10 w-28 h-28 text-sky-400/25 hidden xl:block animate-doodle-float-delayed">
+      <div className="absolute top-[1700px] left-10 w-28 h-28 text-blue-600/30 hidden xl:block animate-doodle-float-delayed">
         <DoodleMathFormula className="w-full h-full" />
       </div>
 
       {/* 9. Brain & Neural Synapse / AI (Lower Right) */}
-      <div className="absolute top-[2050px] right-16 w-28 h-28 text-cyan-400/30 hidden xl:block animate-doodle-pulse">
+      <div className="absolute top-[2050px] right-16 w-28 h-28 text-sky-600/35 hidden xl:block animate-doodle-pulse">
         <DoodleBrainSynapse className="w-full h-full" />
       </div>
 
