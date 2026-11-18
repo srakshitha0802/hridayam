@@ -218,7 +218,7 @@ export function CheckoutModal({
                 </p>
                 {target.kind === 'course' && (
                   <p className="text-[11px] text-sky-200 mt-1">
-                    {target.course.duration} • 100% Placement Support
+                    {target.course.durationHours ? `${target.course.durationHours} Hours` : '6 Months'} • 100% Placement Support
                   </p>
                 )}
               </div>

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { GoogleIcon } from './GoogleIcon';
 import { ITV_COURSES, ITvedantCourse } from '../data/itvedantData';
-import { BELVO_CATEGORIES, CallbackLead, ReferralSubmission } from '../types';
+import { BELVO_CATEGORIES, BelvoCategory, CallbackLead, ReferralSubmission } from '../types';
 
 interface CounselorAdminViewProps {
   onToast: (type: 'success' | 'error' | 'info', title: string, description?: string) => void;
@@ -19,7 +19,7 @@ export const CounselorAdminView: React.FC<CounselorAdminViewProps> = ({ onToast,
   // New Course Form state
   const [newCourse, setNewCourse] = useState({
     title: '',
-    category: BELVO_CATEGORIES[0],
+    category: BELVO_CATEGORIES[0] as BelvoCategory,
     level: 'Beginner to Advanced',
     duration: '6 Months',
     price: 48000,
