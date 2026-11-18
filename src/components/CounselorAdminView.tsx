@@ -212,15 +212,15 @@ export const CounselorAdminView: React.FC<CounselorAdminViewProps> = ({ onToast,
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 relative z-10">
           <div className="space-y-2">
             <div className="flex items-center gap-2">
-              <span className="bg-gradient-to-r from-pink-500 to-rose-500 text-white text-[10px] font-bold uppercase px-3 py-1 rounded-full shadow-xs">
+              <span className="bg-gradient-to-r from-blue-500 to-rose-500 text-white text-[10px] font-bold uppercase px-3 py-1 rounded-full shadow-xs">
                 Executive Console
               </span>
-              <span className="text-xs text-pink-200 font-mono">Belvo Platform Admin v2.6</span>
+              <span className="text-xs text-sky-200 font-mono">Belvo Platform Admin v2.6</span>
             </div>
             <h1 className="text-2xl sm:text-3xl font-bold font-display text-white">
               Hridayam by Belvo Admin &amp; Studio Dashboard
             </h1>
-            <p className="text-xs sm:text-sm text-pink-100">
+            <p className="text-xs sm:text-sm text-sky-100">
               Manage all 11 Belvo course tracks, upload video lessons, adjust pricing, and track platform performance.
             </p>
           </div>
@@ -243,29 +243,29 @@ export const CounselorAdminView: React.FC<CounselorAdminViewProps> = ({ onToast,
         </div>
 
         {/* Quick Metrics Bar */}
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mt-6 pt-6 border-t border-white/15 text-xs text-pink-100">
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mt-6 pt-6 border-t border-white/15 text-xs text-sky-100">
           <div>
-            <span className="text-pink-300 block text-[10px] uppercase font-semibold">Total Revenue (Simulated)</span>
+            <span className="text-sky-300 block text-[10px] uppercase font-semibold">Total Revenue (Simulated)</span>
             <span className="text-xl sm:text-2xl font-bold text-white font-mono">
               ₹{(totalRevenue / 100000).toFixed(1)}L
             </span>
           </div>
           <div>
-            <span className="text-pink-300 block text-[10px] uppercase font-semibold">Live Belvo Courses</span>
-            <span className="text-xl sm:text-2xl font-bold text-pink-200 font-mono">
+            <span className="text-sky-300 block text-[10px] uppercase font-semibold">Live Belvo Courses</span>
+            <span className="text-xl sm:text-2xl font-bold text-sky-200 font-mono">
               {coursesList.length} Tracks
             </span>
           </div>
           <div>
-            <span className="text-pink-300 block text-[10px] uppercase font-semibold">Active Inquiries</span>
-            <span className="text-xl sm:text-2xl font-bold text-pink-200 font-mono">
+            <span className="text-sky-300 block text-[10px] uppercase font-semibold">Active Inquiries</span>
+            <span className="text-xl sm:text-2xl font-bold text-sky-200 font-mono">
               {leads.length} Leads
             </span>
           </div>
           <div>
-            <span className="text-pink-300 block text-[10px] uppercase font-semibold">Gateway Status</span>
-            <span className="text-xl sm:text-2xl font-bold text-pink-200 font-display flex items-center gap-1">
-              <span className="w-2.5 h-2.5 rounded-full bg-pink-400 animate-pulse" />
+            <span className="text-sky-300 block text-[10px] uppercase font-semibold">Gateway Status</span>
+            <span className="text-xl sm:text-2xl font-bold text-sky-200 font-display flex items-center gap-1">
+              <span className="w-2.5 h-2.5 rounded-full bg-sky-400 animate-pulse" />
               UPI &amp; Cards Active
             </span>
           </div>
@@ -273,7 +273,7 @@ export const CounselorAdminView: React.FC<CounselorAdminViewProps> = ({ onToast,
       </div>
 
       {/* Tabs */}
-      <div className="flex items-center gap-2 overflow-x-auto pb-2 border-b border-pink-200/80">
+      <div className="flex items-center gap-2 overflow-x-auto pb-2 border-b border-sky-200/80">
         {[
           { id: 'analytics', label: '01. Live Analytics & Overview', icon: 'monitoring' },
           { id: 'courses', label: '02. Manage Courses & Pricing', icon: 'menu_book' },
@@ -286,8 +286,8 @@ export const CounselorAdminView: React.FC<CounselorAdminViewProps> = ({ onToast,
             onClick={() => setActiveTab(tab.id as any)}
             className={`px-4 py-2.5 rounded-xl text-xs font-bold transition-all whitespace-nowrap flex items-center gap-2 cursor-pointer ${
               activeTab === tab.id
-                ? 'bg-gradient-to-r from-pink-600 to-rose-600 text-white shadow-md'
-                : 'glass-card text-slate-700 hover:border-pink-300'
+                ? 'bg-gradient-to-r from-blue-600 to-sky-600 text-white shadow-md'
+                : 'glass-card text-slate-700 hover:border-sky-300'
             }`}
           >
             <GoogleIcon name={tab.icon} size={16} />
@@ -299,10 +299,10 @@ export const CounselorAdminView: React.FC<CounselorAdminViewProps> = ({ onToast,
       {/* MODAL: CREATE COURSE */}
       {isCreatingCourse && (
         <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-md flex items-center justify-center p-4 animate-in fade-in duration-200">
-          <div className="glass-panel rounded-3xl max-w-xl w-full p-6 sm:p-8 shadow-2xl border-2 border-pink-300 bg-white/95 max-h-[90vh] overflow-y-auto space-y-4">
-            <div className="flex items-center justify-between pb-3 border-b border-pink-100">
+          <div className="glass-panel rounded-3xl max-w-xl w-full p-6 sm:p-8 shadow-2xl border-2 border-sky-300 bg-white/95 max-h-[90vh] overflow-y-auto space-y-4">
+            <div className="flex items-center justify-between pb-3 border-b border-sky-100">
               <h3 className="font-bold text-lg text-slate-900 font-display flex items-center gap-2">
-                <GoogleIcon name="add_circle" size={20} className="text-pink-600" />
+                <GoogleIcon name="add_circle" size={20} className="text-blue-400" />
                 <span>Publish New Course Track</span>
               </h3>
               <button
@@ -322,7 +322,7 @@ export const CounselorAdminView: React.FC<CounselorAdminViewProps> = ({ onToast,
                   placeholder="e.g. Advanced Spatial Computing & Vision Pro Architecture"
                   value={newCourse.title}
                   onChange={(e) => setNewCourse({ ...newCourse, title: e.target.value })}
-                  className="w-full px-3.5 py-2.5 rounded-xl border border-pink-200 bg-white text-xs focus:outline-none focus:border-pink-500"
+                  className="w-full px-3.5 py-2.5 rounded-xl border border-sky-200 bg-white text-xs focus:outline-none focus:border-sky-500"
                 />
               </div>
 
@@ -332,7 +332,7 @@ export const CounselorAdminView: React.FC<CounselorAdminViewProps> = ({ onToast,
                   <select
                     value={newCourse.category}
                     onChange={(e) => setNewCourse({ ...newCourse, category: e.target.value })}
-                    className="w-full px-3.5 py-2.5 rounded-xl border border-pink-200 bg-white text-xs focus:outline-none focus:border-pink-500 font-medium"
+                    className="w-full px-3.5 py-2.5 rounded-xl border border-sky-200 bg-white text-xs focus:outline-none focus:border-sky-500 font-medium"
                   >
                     {BELVO_CATEGORIES.map((cat) => (
                       <option key={cat} value={cat}>
@@ -348,7 +348,7 @@ export const CounselorAdminView: React.FC<CounselorAdminViewProps> = ({ onToast,
                     type="text"
                     value={newCourse.duration}
                     onChange={(e) => setNewCourse({ ...newCourse, duration: e.target.value })}
-                    className="w-full px-3.5 py-2.5 rounded-xl border border-pink-200 bg-white text-xs focus:outline-none focus:border-pink-500"
+                    className="w-full px-3.5 py-2.5 rounded-xl border border-sky-200 bg-white text-xs focus:outline-none focus:border-sky-500"
                   />
                 </div>
               </div>
@@ -361,7 +361,7 @@ export const CounselorAdminView: React.FC<CounselorAdminViewProps> = ({ onToast,
                     value={newCourse.price}
                     onChange={(e) => setNewCourse({ ...newCourse, price: Number(e.target.value) })}
                     disabled={newCourse.isFree}
-                    className="w-full px-3.5 py-2.5 rounded-xl border border-pink-200 bg-white text-xs focus:outline-none focus:border-pink-500 disabled:opacity-50"
+                    className="w-full px-3.5 py-2.5 rounded-xl border border-sky-200 bg-white text-xs focus:outline-none focus:border-sky-500 disabled:opacity-50"
                   />
                 </div>
 
@@ -373,7 +373,7 @@ export const CounselorAdminView: React.FC<CounselorAdminViewProps> = ({ onToast,
                       onChange={(e) => setNewCourse({ ...newCourse, isFree: e.target.checked })}
                       className="rounded accent-pink-600 cursor-pointer"
                     />
-                    <span className="font-semibold text-pink-700">Make Free / Scholarship Access</span>
+                    <span className="font-semibold text-sky-300">Make Free / Scholarship Access</span>
                   </label>
                 </div>
               </div>
@@ -384,7 +384,7 @@ export const CounselorAdminView: React.FC<CounselorAdminViewProps> = ({ onToast,
                   type="text"
                   value={newCourse.tools}
                   onChange={(e) => setNewCourse({ ...newCourse, tools: e.target.value })}
-                  className="w-full px-3.5 py-2.5 rounded-xl border border-pink-200 bg-white text-xs focus:outline-none focus:border-pink-500"
+                  className="w-full px-3.5 py-2.5 rounded-xl border border-sky-200 bg-white text-xs focus:outline-none focus:border-sky-500"
                 />
               </div>
 
@@ -395,7 +395,7 @@ export const CounselorAdminView: React.FC<CounselorAdminViewProps> = ({ onToast,
                   value={newCourse.summary}
                   onChange={(e) => setNewCourse({ ...newCourse, summary: e.target.value })}
                   placeholder="Summary of skills, outcomes and who this program is for..."
-                  className="w-full px-3.5 py-2.5 rounded-xl border border-pink-200 bg-white text-xs focus:outline-none focus:border-pink-500"
+                  className="w-full px-3.5 py-2.5 rounded-xl border border-sky-200 bg-white text-xs focus:outline-none focus:border-sky-500"
                 />
               </div>
 
@@ -403,7 +403,7 @@ export const CounselorAdminView: React.FC<CounselorAdminViewProps> = ({ onToast,
                 <button
                   type="button"
                   onClick={() => setIsCreatingCourse(false)}
-                  className="px-4 py-2.5 rounded-xl border border-pink-200 text-slate-600 font-semibold"
+                  className="px-4 py-2.5 rounded-xl border border-sky-200 text-slate-600 font-semibold"
                 >
                   Cancel
                 </button>
@@ -423,48 +423,48 @@ export const CounselorAdminView: React.FC<CounselorAdminViewProps> = ({ onToast,
       {activeTab === 'analytics' && (
         <div className="space-y-6">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div className="glass-card rounded-2xl p-6 space-y-2 border-pink-200">
+            <div className="glass-card rounded-2xl p-6 space-y-2 border-sky-200">
               <div className="flex items-center justify-between">
                 <span className="text-xs font-bold text-slate-500 uppercase tracking-wider">Gross Platform Enrolments</span>
-                <GoogleIcon name="school" size={20} className="text-pink-600" />
+                <GoogleIcon name="school" size={20} className="text-blue-400" />
               </div>
               <div className="text-3xl font-bold text-slate-900 font-display">18,490</div>
-              <p className="text-xs text-pink-700 font-semibold">+14.2% increase this month across 11 tracks</p>
+              <p className="text-xs text-sky-300 font-semibold">+14.2% increase this month across 11 tracks</p>
             </div>
 
-            <div className="glass-card rounded-2xl p-6 space-y-2 border-pink-200">
+            <div className="glass-card rounded-2xl p-6 space-y-2 border-sky-200">
               <div className="flex items-center justify-between">
                 <span className="text-xs font-bold text-slate-500 uppercase tracking-wider">Average Course Completion</span>
-                <GoogleIcon name="fact_check" size={20} className="text-pink-600" />
+                <GoogleIcon name="fact_check" size={20} className="text-blue-400" />
               </div>
-              <div className="text-3xl font-bold text-pink-700 font-display">89.4%</div>
+              <div className="text-3xl font-bold text-sky-300 font-display">89.4%</div>
               <p className="text-xs text-slate-500">Highest completion in AI Automation &amp; UI/UX</p>
             </div>
 
-            <div className="glass-card rounded-2xl p-6 space-y-2 border-pink-200">
+            <div className="glass-card rounded-2xl p-6 space-y-2 border-sky-200">
               <div className="flex items-center justify-between">
                 <span className="text-xs font-bold text-slate-500 uppercase tracking-wider">Placement Drive Conversion</span>
-                <GoogleIcon name="trending_up" size={20} className="text-pink-600" />
+                <GoogleIcon name="trending_up" size={20} className="text-blue-400" />
               </div>
               <div className="text-3xl font-bold text-slate-900 font-display">98.4%</div>
-              <p className="text-xs text-pink-600 font-semibold">Average salary: ₹7.6 LPA across cohorts</p>
+              <p className="text-xs text-blue-400 font-semibold">Average salary: ₹7.6 LPA across cohorts</p>
             </div>
           </div>
 
           {/* Integrations & Notification Settings */}
-          <div className="glass-panel rounded-3xl p-6 space-y-4 border-pink-200">
+          <div className="glass-panel rounded-3xl p-6 space-y-4 border-sky-200">
             <div className="flex items-center justify-between">
               <div>
                 <h3 className="font-bold text-slate-900 text-base font-display">Platform Integrations &amp; Automated Webhooks</h3>
                 <p className="text-xs text-slate-500">Essential platform automations, email dispatches, and payment gateways.</p>
               </div>
-              <span className="text-[10px] font-bold bg-pink-100 text-pink-800 border border-pink-200 px-3 py-1 rounded-full uppercase">
+              <span className="text-[10px] font-bold bg-blue-950 text-sky-200 border border-sky-200 px-3 py-1 rounded-full uppercase">
                 All Systems Operational
               </span>
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-2">
-              <div className="p-4 glass-card rounded-2xl border-pink-100 flex items-center justify-between">
+              <div className="p-4 glass-card rounded-2xl border-sky-100 flex items-center justify-between">
                 <div>
                   <div className="text-xs font-bold text-slate-900">Email Notifications</div>
                   <div className="text-[10px] text-slate-500">Enrolment receipts &amp; certificate alerts</div>
@@ -480,7 +480,7 @@ export const CounselorAdminView: React.FC<CounselorAdminViewProps> = ({ onToast,
                 />
               </div>
 
-              <div className="p-4 glass-card rounded-2xl border-pink-100 flex items-center justify-between">
+              <div className="p-4 glass-card rounded-2xl border-sky-100 flex items-center justify-between">
                 <div>
                   <div className="text-xs font-bold text-slate-900">Payment Gateway</div>
                   <div className="text-[10px] text-slate-500">UPI, Cards, and NetBanking</div>
@@ -496,12 +496,12 @@ export const CounselorAdminView: React.FC<CounselorAdminViewProps> = ({ onToast,
                 />
               </div>
 
-              <div className="p-4 glass-card rounded-2xl border-pink-100 flex items-center justify-between">
+              <div className="p-4 glass-card rounded-2xl border-sky-100 flex items-center justify-between">
                 <div>
                   <div className="text-xs font-bold text-slate-900">Cloud CDN Storage</div>
                   <div className="text-[10px] text-slate-500">High-speed video &amp; PDF delivery</div>
                 </div>
-                <span className="text-[11px] font-bold text-pink-600">Active</span>
+                <span className="text-[11px] font-bold text-blue-400">Active</span>
               </div>
             </div>
           </div>
@@ -515,7 +515,7 @@ export const CounselorAdminView: React.FC<CounselorAdminViewProps> = ({ onToast,
             <h3 className="font-bold text-slate-900 text-lg font-display">
               All {coursesList.length} Active Courses &amp; Pricing Overrides
             </h3>
-            <span className="text-xs text-pink-700 font-semibold">
+            <span className="text-xs text-sky-300 font-semibold">
               Changes reflect instantly across the student catalogue.
             </span>
           </div>
@@ -524,11 +524,11 @@ export const CounselorAdminView: React.FC<CounselorAdminViewProps> = ({ onToast,
             {coursesList.map((course) => (
               <div
                 key={course.id}
-                className="glass-card rounded-2xl p-5 hover:border-pink-300 transition-all flex flex-col md:flex-row md:items-center justify-between gap-4"
+                className="glass-card rounded-2xl p-5 hover:border-sky-300 transition-all flex flex-col md:flex-row md:items-center justify-between gap-4"
               >
                 <div className="space-y-1 min-w-0 flex-1">
                   <div className="flex flex-wrap items-center gap-2">
-                    <span className="text-[10px] font-bold text-pink-700 bg-pink-100 px-2 py-0.5 rounded-full uppercase">
+                    <span className="text-[10px] font-bold text-sky-300 bg-blue-950 px-2 py-0.5 rounded-full uppercase">
                       {course.category}
                     </span>
                     <span className="text-xs text-slate-400">• {course.duration}</span>
@@ -546,7 +546,7 @@ export const CounselorAdminView: React.FC<CounselorAdminViewProps> = ({ onToast,
                         type="number"
                         defaultValue={course.fee}
                         onBlur={(e) => handlePriceUpdate(course.id, Number(e.target.value))}
-                        className="w-24 px-2 py-1 text-xs font-bold rounded-lg border border-pink-200 bg-white text-right focus:outline-none focus:border-pink-500"
+                        className="w-24 px-2 py-1 text-xs font-bold rounded-lg border border-sky-200 bg-white text-right focus:outline-none focus:border-sky-500"
                       />
                     </div>
                   </div>
@@ -556,7 +556,7 @@ export const CounselorAdminView: React.FC<CounselorAdminViewProps> = ({ onToast,
                       setSelectedCourseForLesson(course.id);
                       setActiveTab('materials');
                     }}
-                    className="btn-pink-glass px-3.5 py-2 rounded-xl text-xs font-bold text-pink-700 flex items-center gap-1.5 cursor-pointer"
+                    className="btn-pink-glass px-3.5 py-2 rounded-xl text-xs font-bold text-sky-300 flex items-center gap-1.5 cursor-pointer"
                   >
                     <GoogleIcon name="cloud_upload" size={16} />
                     <span>Upload Materials</span>
@@ -571,9 +571,9 @@ export const CounselorAdminView: React.FC<CounselorAdminViewProps> = ({ onToast,
       {/* TAB 3: UPLOAD LESSONS, VIDEOS & QUIZZES */}
       {activeTab === 'materials' && (
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-          <div className="lg:col-span-6 glass-panel rounded-3xl p-6 sm:p-8 space-y-4 border-pink-200">
+          <div className="lg:col-span-6 glass-panel rounded-3xl p-6 sm:p-8 space-y-4 border-sky-200">
             <div>
-              <span className="text-[10px] font-bold text-pink-700 bg-pink-100 px-3 py-1 rounded-full uppercase tracking-wider">
+              <span className="text-[10px] font-bold text-sky-300 bg-blue-950 px-3 py-1 rounded-full uppercase tracking-wider">
                 Curriculum Uploader
               </span>
               <h3 className="text-xl font-bold text-slate-900 font-display mt-2">
@@ -590,7 +590,7 @@ export const CounselorAdminView: React.FC<CounselorAdminViewProps> = ({ onToast,
                 <select
                   value={selectedCourseForLesson}
                   onChange={(e) => setSelectedCourseForLesson(e.target.value)}
-                  className="w-full px-3.5 py-2.5 rounded-xl border border-pink-200 bg-white text-xs font-semibold text-slate-800 focus:outline-none focus:border-pink-500"
+                  className="w-full px-3.5 py-2.5 rounded-xl border border-sky-200 bg-white text-xs font-semibold text-slate-800 focus:outline-none focus:border-sky-500"
                 >
                   {coursesList.map((c) => (
                     <option key={c.id} value={c.id}>
@@ -608,7 +608,7 @@ export const CounselorAdminView: React.FC<CounselorAdminViewProps> = ({ onToast,
                   placeholder="e.g. Masterclass: Fine-Tuning Open Source LLMs on GPU"
                   value={newLesson.title}
                   onChange={(e) => setNewLesson({ ...newLesson, title: e.target.value })}
-                  className="w-full px-3.5 py-2.5 rounded-xl border border-pink-200 bg-white text-xs focus:outline-none focus:border-pink-500"
+                  className="w-full px-3.5 py-2.5 rounded-xl border border-sky-200 bg-white text-xs focus:outline-none focus:border-sky-500"
                 />
               </div>
 
@@ -618,7 +618,7 @@ export const CounselorAdminView: React.FC<CounselorAdminViewProps> = ({ onToast,
                   <select
                     value={newLesson.type}
                     onChange={(e) => setNewLesson({ ...newLesson, type: e.target.value as any })}
-                    className="w-full px-3.5 py-2.5 rounded-xl border border-pink-200 bg-white text-xs font-medium focus:outline-none focus:border-pink-500"
+                    className="w-full px-3.5 py-2.5 rounded-xl border border-sky-200 bg-white text-xs font-medium focus:outline-none focus:border-sky-500"
                   >
                     <option value="video">Interactive Video</option>
                     <option value="reading">Reading / Cheatsheet</option>
@@ -633,7 +633,7 @@ export const CounselorAdminView: React.FC<CounselorAdminViewProps> = ({ onToast,
                     type="text"
                     value={newLesson.duration}
                     onChange={(e) => setNewLesson({ ...newLesson, duration: e.target.value })}
-                    className="w-full px-3.5 py-2.5 rounded-xl border border-pink-200 bg-white text-xs focus:outline-none focus:border-pink-500"
+                    className="w-full px-3.5 py-2.5 rounded-xl border border-sky-200 bg-white text-xs focus:outline-none focus:border-sky-500"
                   />
                 </div>
               </div>
@@ -646,7 +646,7 @@ export const CounselorAdminView: React.FC<CounselorAdminViewProps> = ({ onToast,
                     placeholder="https://..."
                     value={newLesson.videoUrl}
                     onChange={(e) => setNewLesson({ ...newLesson, videoUrl: e.target.value })}
-                    className="w-full px-3.5 py-2.5 rounded-xl border border-pink-200 bg-white text-xs font-mono focus:outline-none focus:border-pink-500"
+                    className="w-full px-3.5 py-2.5 rounded-xl border border-sky-200 bg-white text-xs font-mono focus:outline-none focus:border-sky-500"
                   />
                 </div>
               )}
@@ -658,7 +658,7 @@ export const CounselorAdminView: React.FC<CounselorAdminViewProps> = ({ onToast,
                   placeholder="https://..."
                   value={newLesson.materialUrl}
                   onChange={(e) => setNewLesson({ ...newLesson, materialUrl: e.target.value })}
-                  className="w-full px-3.5 py-2.5 rounded-xl border border-pink-200 bg-white text-xs font-mono focus:outline-none focus:border-pink-500"
+                  className="w-full px-3.5 py-2.5 rounded-xl border border-sky-200 bg-white text-xs font-mono focus:outline-none focus:border-sky-500"
                 />
               </div>
 
@@ -669,7 +669,7 @@ export const CounselorAdminView: React.FC<CounselorAdminViewProps> = ({ onToast,
                   value={newLesson.summary}
                   onChange={(e) => setNewLesson({ ...newLesson, summary: e.target.value })}
                   placeholder="Brief description of skills acquired in this module..."
-                  className="w-full px-3.5 py-2.5 rounded-xl border border-pink-200 bg-white text-xs focus:outline-none focus:border-pink-500"
+                  className="w-full px-3.5 py-2.5 rounded-xl border border-sky-200 bg-white text-xs focus:outline-none focus:border-sky-500"
                 />
               </div>
 
@@ -683,29 +683,29 @@ export const CounselorAdminView: React.FC<CounselorAdminViewProps> = ({ onToast,
             </form>
           </div>
 
-          <div className="lg:col-span-6 glass-panel rounded-3xl p-6 sm:p-8 space-y-4 border-pink-200">
+          <div className="lg:col-span-6 glass-panel rounded-3xl p-6 sm:p-8 space-y-4 border-sky-200">
             <h4 className="font-bold text-slate-900 text-base font-display">
               Curriculum Upload Guidelines
             </h4>
             <div className="space-y-3 text-xs text-slate-600 leading-relaxed">
-              <div className="p-3.5 bg-pink-50/70 rounded-xl border border-pink-100 flex items-start gap-2.5">
-                <GoogleIcon name="videocam" size={18} className="text-pink-600 shrink-0 mt-0.5" />
+              <div className="p-3.5 bg-blue-950/60/70 rounded-xl border border-sky-100 flex items-start gap-2.5">
+                <GoogleIcon name="videocam" size={18} className="text-blue-400 shrink-0 mt-0.5" />
                 <div>
                   <strong className="text-slate-900 block">Video Format:</strong>
                   Upload 1080p MP4 or WebM encoded at 60fps with clear audio commentary.
                 </div>
               </div>
 
-              <div className="p-3.5 bg-pink-50/70 rounded-xl border border-pink-100 flex items-start gap-2.5">
-                <GoogleIcon name="quiz" size={18} className="text-pink-600 shrink-0 mt-0.5" />
+              <div className="p-3.5 bg-blue-950/60/70 rounded-xl border border-sky-100 flex items-start gap-2.5">
+                <GoogleIcon name="quiz" size={18} className="text-blue-400 shrink-0 mt-0.5" />
                 <div>
                   <strong className="text-slate-900 block">Assessment Rubrics:</strong>
                   Every core module must feature a 4-option multiple-choice check and real coding or design assignment.
                 </div>
               </div>
 
-              <div className="p-3.5 bg-pink-50/70 rounded-xl border border-pink-100 flex items-start gap-2.5">
-                <GoogleIcon name="description" size={18} className="text-pink-600 shrink-0 mt-0.5" />
+              <div className="p-3.5 bg-blue-950/60/70 rounded-xl border border-sky-100 flex items-start gap-2.5">
+                <GoogleIcon name="description" size={18} className="text-blue-400 shrink-0 mt-0.5" />
                 <div>
                   <strong className="text-slate-900 block">Templates &amp; Workbooks:</strong>
                   Attach downloadable Figma files, SQL schemas, or ad spreadsheets to maximize hands-on engagement.
@@ -723,13 +723,13 @@ export const CounselorAdminView: React.FC<CounselorAdminViewProps> = ({ onToast,
             <h3 className="font-bold text-slate-900 text-lg font-display">
               Student Directory &amp; Progress Auditing
             </h3>
-            <span className="text-xs text-pink-700 font-semibold">18,490 Active Learners</span>
+            <span className="text-xs text-sky-300 font-semibold">18,490 Active Learners</span>
           </div>
 
-          <div className="glass-panel rounded-2xl overflow-hidden border-pink-200">
+          <div className="glass-panel rounded-2xl overflow-hidden border-sky-200">
             <div className="overflow-x-auto">
               <table className="w-full text-left text-xs">
-                <thead className="bg-pink-50/70 text-slate-700 font-bold uppercase tracking-wider text-[10px] border-b border-pink-100">
+                <thead className="bg-blue-950/60/70 text-slate-700 font-bold uppercase tracking-wider text-[10px] border-b border-sky-100">
                   <tr>
                     <th className="p-3.5">Student</th>
                     <th className="p-3.5">Course Track</th>
@@ -745,24 +745,24 @@ export const CounselorAdminView: React.FC<CounselorAdminViewProps> = ({ onToast,
                     { name: 'Sneha Rao', roll: 'BELVO-2026-1189', course: 'Graphic Design, Branding, and UI/UX', progress: '100%', status: 'Graduated' },
                     { name: 'Amit Verma', roll: 'BELVO-2026-7731', course: 'Digital Marketing & Social Media', progress: '74%', status: 'Active' },
                   ].map((s, idx) => (
-                    <tr key={idx} className="hover:bg-pink-50/40">
+                    <tr key={idx} className="hover:bg-blue-950/60/40">
                       <td className="p-3.5">
                         <div className="font-bold text-slate-900">{s.name}</div>
                         <div className="text-[10px] text-slate-400 font-mono">{s.roll}</div>
                       </td>
                       <td className="p-3.5 font-medium">{s.course}</td>
                       <td className="p-3.5">
-                        <span className="font-bold text-pink-700">{s.progress}</span>
+                        <span className="font-bold text-sky-300">{s.progress}</span>
                       </td>
                       <td className="p-3.5">
-                        <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-pink-100 text-pink-800 border border-pink-200">
+                        <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-blue-950 text-sky-200 border border-sky-200">
                           {s.status}
                         </span>
                       </td>
                       <td className="p-3.5">
                         <button
                           onClick={() => onToast('info', 'Certificate Ready', `BELVO-CERT-2026 verified for ${s.name}.`)}
-                          className="text-pink-700 hover:text-pink-900 font-semibold underline"
+                          className="text-sky-300 hover:text-pink-900 font-semibold underline"
                         >
                           View Credential
                         </button>
@@ -783,15 +783,15 @@ export const CounselorAdminView: React.FC<CounselorAdminViewProps> = ({ onToast,
             <h3 className="font-bold text-slate-900 text-lg font-display">
               Incoming Callback Inquiries &amp; Referral Payouts
             </h3>
-            <span className="text-xs text-pink-700 font-semibold">15-Minute Response SLA</span>
+            <span className="text-xs text-sky-300 font-semibold">15-Minute Response SLA</span>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {leads.map((lead) => (
-              <div key={lead.id} className="glass-card rounded-2xl p-5 border-pink-200 space-y-2">
+              <div key={lead.id} className="glass-card rounded-2xl p-5 border-sky-200 space-y-2">
                 <div className="flex items-center justify-between">
                   <h4 className="font-bold text-slate-900 text-sm">{lead.name}</h4>
-                  <span className="text-[10px] font-bold uppercase px-2 py-0.5 rounded bg-pink-100 text-pink-700">
+                  <span className="text-[10px] font-bold uppercase px-2 py-0.5 rounded bg-blue-950 text-sky-300">
                     {lead.status || 'New'}
                   </span>
                 </div>
@@ -804,7 +804,7 @@ export const CounselorAdminView: React.FC<CounselorAdminViewProps> = ({ onToast,
                 <div className="pt-2 flex justify-end">
                   <a
                     href={`tel:${lead.phone}`}
-                    className="btn-pink-glass px-3 py-1.5 rounded-lg text-xs font-bold text-pink-700 flex items-center gap-1"
+                    className="btn-pink-glass px-3 py-1.5 rounded-lg text-xs font-bold text-sky-300 flex items-center gap-1"
                   >
                     <GoogleIcon name="call" size={14} />
                     <span>Call Back Now</span>

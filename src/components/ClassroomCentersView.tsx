@@ -19,13 +19,13 @@ export const ClassroomCentersView: React.FC<ClassroomCentersViewProps> = ({ onRe
   return (
     <div className="space-y-16 pb-20 relative z-10 text-white">
       {/* Hero Section */}
-      <section className="glass-dark text-white pt-12 pb-16 px-4 sm:px-6 lg:px-8 border-b border-pink-400/35 relative overflow-hidden backdrop-blur-2xl shadow-2xl">
-        <div className="absolute -top-24 -left-24 w-96 h-96 bg-pink-500/20 rounded-full blur-3xl pointer-events-none" />
+      <section className="glass-dark text-white pt-12 pb-16 px-4 sm:px-6 lg:px-8 border-b border-sky-400/35 relative overflow-hidden backdrop-blur-2xl shadow-2xl">
+        <div className="absolute -top-24 -left-24 w-96 h-96 bg-blue-500/20 rounded-full blur-3xl pointer-events-none" />
         <div className="absolute -bottom-24 -right-24 w-96 h-96 bg-rose-500/20 rounded-full blur-3xl pointer-events-none" />
 
         <div className="max-w-7xl mx-auto text-center space-y-4 relative z-10">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-pink-950/80 border border-pink-400/40 text-pink-200 text-xs font-semibold backdrop-blur-md">
-            <GoogleIcon name="apartment" size={16} className="text-pink-300" />
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-blue-950/80 border border-sky-400/40 text-sky-200 text-xs font-semibold backdrop-blur-md">
+            <GoogleIcon name="apartment" size={16} className="text-sky-300" />
             <span>State-of-the-Art Physical Classrooms</span>
           </div>
 
@@ -33,7 +33,7 @@ export const ClassroomCentersView: React.FC<ClassroomCentersViewProps> = ({ onRe
             Hridayam by Belvo Campus Locations
           </h1>
 
-          <p className="text-pink-200 text-sm sm:text-base max-w-2xl mx-auto leading-relaxed">
+          <p className="text-sky-200 text-sm sm:text-base max-w-2xl mx-auto leading-relaxed">
             Experience high-performance computing labs, 1-on-1 mentor guidance, and daily interactive practice across Mumbai, Pune, Nagpur, or connect via our Live Online classrooms.
           </p>
 
@@ -58,8 +58,8 @@ export const ClassroomCentersView: React.FC<ClassroomCentersViewProps> = ({ onRe
               onClick={() => setSelectedCity(city)}
               className={`px-4 py-2 rounded-xl text-xs font-semibold transition-all cursor-pointer whitespace-nowrap ${
                 selectedCity === city
-                  ? 'bg-gradient-to-r from-pink-600 to-rose-600 text-white shadow-md border border-pink-300/40'
-                  : 'glass-dark text-pink-200 hover:text-white border border-pink-400/30'
+                  ? 'bg-gradient-to-r from-blue-600 to-sky-600 text-white shadow-md border border-sky-300/40'
+                  : 'glass-dark text-sky-200 hover:text-white border border-sky-400/30'
               }`}
             >
               {city}
@@ -74,7 +74,7 @@ export const ClassroomCentersView: React.FC<ClassroomCentersViewProps> = ({ onRe
           {filteredCenters.map((center) => (
             <div
               key={center.id}
-              className="glass-dark rounded-3xl overflow-hidden shadow-xl hover:shadow-2xl hover:border-pink-300 transition-all flex flex-col justify-between group border border-pink-400/40 text-white"
+              className="glass-dark rounded-3xl overflow-hidden shadow-xl hover:shadow-2xl hover:border-sky-300 transition-all flex flex-col justify-between group border border-sky-400/40 text-white"
             >
               <div>
                 {/* Center Image */}
@@ -85,11 +85,11 @@ export const ClassroomCentersView: React.FC<ClassroomCentersViewProps> = ({ onRe
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                   />
                   {center.isHeadOffice && (
-                    <span className="absolute top-3 left-3 bg-gradient-to-r from-pink-600 to-rose-600 text-white font-bold text-[10px] uppercase px-2.5 py-1 rounded-md shadow-md border border-pink-300/40">
+                    <span className="absolute top-3 left-3 bg-gradient-to-r from-blue-600 to-sky-600 text-white font-bold text-[10px] uppercase px-2.5 py-1 rounded-md shadow-md border border-sky-300/40">
                       Headquarters & Placement Hub
                     </span>
                   )}
-                  <span className="absolute bottom-3 right-3 bg-black/75 text-pink-100 font-semibold text-xs px-2.5 py-1 rounded-md backdrop-blur-md border border-pink-400/30">
+                  <span className="absolute bottom-3 right-3 bg-black/75 text-sky-100 font-semibold text-xs px-2.5 py-1 rounded-md backdrop-blur-md border border-sky-400/30">
                     {center.city}
                   </span>
                 </div>
@@ -97,29 +97,29 @@ export const ClassroomCentersView: React.FC<ClassroomCentersViewProps> = ({ onRe
                 {/* Center Details */}
                 <div className="p-6 space-y-4">
                   <div>
-                    <h3 className="font-bold text-white text-lg group-hover:text-pink-200 transition-colors leading-snug">
+                    <h3 className="font-bold text-white text-lg group-hover:text-sky-200 transition-colors leading-snug">
                       {center.name}
                     </h3>
-                    <p className="text-xs text-pink-200 mt-1 leading-relaxed">
+                    <p className="text-xs text-sky-200 mt-1 leading-relaxed">
                       {center.address}
                     </p>
                   </div>
 
-                  <div className="space-y-2 text-xs text-pink-100 bg-black/35 p-3.5 rounded-2xl border border-pink-400/30">
+                  <div className="space-y-2 text-xs text-sky-100 bg-black/35 p-3.5 rounded-2xl border border-sky-400/30">
                     <div className="flex items-start gap-2">
-                      <GoogleIcon name="near_me" size={16} className="text-pink-300 shrink-0 mt-0.5" />
+                      <GoogleIcon name="near_me" size={16} className="text-sky-300 shrink-0 mt-0.5" />
                       <div>
                         <strong>Metro / Transit:</strong> {center.metroStation}
                       </div>
                     </div>
                     <div className="flex items-start gap-2">
-                      <GoogleIcon name="schedule" size={16} className="text-pink-300 shrink-0 mt-0.5" />
+                      <GoogleIcon name="schedule" size={16} className="text-sky-300 shrink-0 mt-0.5" />
                       <div>
                         <strong>Hours:</strong> {center.timing}
                       </div>
                     </div>
                     <div className="flex items-start gap-2">
-                      <GoogleIcon name="call" size={16} className="text-pink-300 shrink-0 mt-0.5" />
+                      <GoogleIcon name="call" size={16} className="text-sky-300 shrink-0 mt-0.5" />
                       <div>
                         <strong>Counselor Desk:</strong> {center.contactNumber}
                       </div>
@@ -128,13 +128,13 @@ export const ClassroomCentersView: React.FC<ClassroomCentersViewProps> = ({ onRe
 
                   {/* Campus Features / Amenities */}
                   <div className="space-y-1.5 pt-1">
-                    <span className="text-[10px] font-bold uppercase text-pink-300 tracking-wider">
+                    <span className="text-[10px] font-bold uppercase text-sky-300 tracking-wider">
                       Campus Amenities
                     </span>
-                    <div className="grid grid-cols-1 gap-1 text-xs text-pink-200">
+                    <div className="grid grid-cols-1 gap-1 text-xs text-sky-200">
                       {center.features.map((feature, idx) => (
                         <div key={idx} className="flex items-center gap-1.5">
-                          <GoogleIcon name="check_circle" size={14} className="text-pink-400 shrink-0" filled />
+                          <GoogleIcon name="check_circle" size={14} className="text-sky-400 shrink-0" filled />
                           <span>{feature}</span>
                         </div>
                       ))}
@@ -156,7 +156,7 @@ export const ClassroomCentersView: React.FC<ClassroomCentersViewProps> = ({ onRe
                   href={`https://maps.google.com/?q=${encodeURIComponent(center.address)}`}
                   target="_blank"
                   rel="noreferrer"
-                  className="w-full py-2.5 rounded-xl border border-pink-400/30 hover:border-pink-300 text-pink-200 text-xs font-semibold text-center block transition-colors bg-white/10"
+                  className="w-full py-2.5 rounded-xl border border-sky-400/30 hover:border-sky-300 text-sky-200 text-xs font-semibold text-center block transition-colors bg-white/10"
                 >
                   Get Directions on Google Maps ↗
                 </a>

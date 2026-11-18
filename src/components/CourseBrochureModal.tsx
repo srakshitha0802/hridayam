@@ -139,16 +139,16 @@ export function CourseBrochureModal({
             <button
               type="button"
               onClick={() => window.print()}
-              className="glass-card hidden sm:inline-flex px-3.5 py-2 text-xs font-semibold rounded-xl items-center gap-1.5 whitespace-nowrap min-h-[38px] text-pink-700 hover:border-pink-300 cursor-pointer"
+              className="glass-card hidden sm:inline-flex px-3.5 py-2 text-xs font-semibold rounded-xl items-center gap-1.5 whitespace-nowrap min-h-[38px] text-sky-300 hover:border-sky-300 cursor-pointer"
             >
-              <GoogleIcon name="print" size={16} className="text-pink-600" />
+              <GoogleIcon name="print" size={16} className="text-blue-400" />
               Print / Save PDF
             </button>
             <button
               type="button"
               onClick={onClose}
               aria-label="Close brochure"
-              className="p-2 text-slate-500 hover:text-slate-900 hover:bg-pink-100/60 rounded-xl transition-colors cursor-pointer"
+              className="p-2 text-slate-500 hover:text-slate-900 hover:bg-blue-950/60 rounded-xl transition-colors cursor-pointer"
             >
               <GoogleIcon name="close" size={20} />
             </button>
@@ -190,7 +190,7 @@ export function CourseBrochureModal({
             <div className="space-y-6">
               <div className="rounded-2xl p-6 edu-panel grid grid-cols-1 md:grid-cols-12 gap-6 items-center">
                 <div className="md:col-span-8">
-                  <p className="text-xs font-semibold text-pink-700 inline-flex items-center gap-1.5">
+                  <p className="text-xs font-semibold text-sky-300 inline-flex items-center gap-1.5">
                     <GoogleIcon name="school" size={16} />
                     GenZ learning By a GenZ · Why Hridayam by Belvo
                   </p>
@@ -203,19 +203,19 @@ export function CourseBrochureModal({
                 </div>
                 <div className="md:col-span-4 grid grid-cols-2 gap-3">
                   <div className="p-3.5 rounded-xl edu-subpanel">
-                    <p className="font-mono-tabular text-xl font-bold text-pink-700">11</p>
+                    <p className="font-mono-tabular text-xl font-bold text-sky-300">11</p>
                     <p className="text-[11px] font-medium text-[#475569] mt-0.5">Core Disciplines</p>
                   </div>
                   <div className="p-3.5 rounded-xl edu-subpanel">
-                    <p className="font-mono-tabular text-xl font-bold text-pink-700">{totalHours}h+</p>
+                    <p className="font-mono-tabular text-xl font-bold text-sky-300">{totalHours}h+</p>
                     <p className="text-[11px] font-medium text-[#475569] mt-0.5">Studio Runtime</p>
                   </div>
                   <div className="p-3.5 rounded-xl edu-subpanel">
-                    <p className="font-mono-tabular text-xl font-bold text-pink-700">80%</p>
+                    <p className="font-mono-tabular text-xl font-bold text-sky-300">80%</p>
                     <p className="text-[11px] font-medium text-[#475569] mt-0.5">Practical Ratio</p>
                   </div>
                   <div className="p-3.5 rounded-xl edu-subpanel">
-                    <p className="font-mono-tabular text-xl font-bold text-pink-700">8</p>
+                    <p className="font-mono-tabular text-xl font-bold text-sky-300">8</p>
                     <p className="text-[11px] font-medium text-[#475569] mt-0.5">Uni Alliances</p>
                   </div>
                 </div>
@@ -223,7 +223,7 @@ export function CourseBrochureModal({
 
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 <div className="p-5 rounded-2xl glass-card">
-                  <GoogleIcon name="menu_book" size={20} className="text-pink-600" />
+                  <GoogleIcon name="menu_book" size={20} className="text-blue-400" />
                   <h4 className="font-display text-base font-semibold text-[#0F172A] mt-2.5">
                     01. Studio Video &amp; Workbooks
                   </h4>
@@ -232,7 +232,7 @@ export function CourseBrochureModal({
                   </p>
                 </div>
                 <div className="p-5 rounded-2xl glass-card">
-                  <GoogleIcon name="calendar_month" size={20} className="text-pink-600" />
+                  <GoogleIcon name="calendar_month" size={20} className="text-blue-400" />
                   <h4 className="font-display text-base font-semibold text-[#0F172A] mt-2.5">
                     02. Weekly Office Hours
                   </h4>
@@ -241,7 +241,7 @@ export function CourseBrochureModal({
                   </p>
                 </div>
                 <div className="p-5 rounded-2xl glass-card">
-                  <GoogleIcon name="verified" size={20} className="text-pink-600" />
+                  <GoogleIcon name="verified" size={20} className="text-blue-400" />
                   <h4 className="font-display text-base font-semibold text-[#0F172A] mt-2.5">
                     03. Verifiable Credentials
                   </h4>
@@ -267,12 +267,12 @@ export function CourseBrochureModal({
                       className="text-left px-3.5 py-2.5 rounded-xl edu-card flex items-center justify-between gap-2"
                     >
                       <span className="text-xs font-medium text-[#0F172A] truncate">
-                        <span className="font-mono-tabular text-pink-700 mr-1.5">
+                        <span className="font-mono-tabular text-sky-300 mr-1.5">
                           {String(idx + 1).padStart(2, '0')}
                         </span>
                         {cat}
                       </span>
-                      <GoogleIcon name="arrow_forward" size={14} className="text-pink-600 shrink-0" />
+                      <GoogleIcon name="arrow_forward" size={14} className="text-blue-400 shrink-0" />
                     </button>
                   ))}
                 </div>
@@ -284,7 +284,7 @@ export function CourseBrochureModal({
             <div className="space-y-4">
               <div className="grid grid-cols-1 sm:grid-cols-12 gap-3">
                 <div className="sm:col-span-7 relative">
-                  <GoogleIcon name="search" size={18} className="text-pink-600 absolute left-3.5 top-1/2 -translate-y-1/2" />
+                  <GoogleIcon name="search" size={18} className="text-blue-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
                   <input
                     type="search"
                     value={searchTerm}
@@ -388,19 +388,19 @@ export function CourseBrochureModal({
                       </p>
                       <ul className="mt-4 space-y-2 text-xs text-[#475569]">
                         <li className="flex items-start gap-2">
-                          <GoogleIcon name="check" size={14} className="text-pink-600 shrink-0 mt-0.5" />
+                          <GoogleIcon name="check" size={14} className="text-blue-400 shrink-0 mt-0.5" />
                           <span>{plan.limits.courseAccess}</span>
                         </li>
                         <li className="flex items-start gap-2">
-                          <GoogleIcon name="check" size={14} className="text-pink-600 shrink-0 mt-0.5" />
+                          <GoogleIcon name="check" size={14} className="text-blue-400 shrink-0 mt-0.5" />
                           <span>{plan.limits.assessments}</span>
                         </li>
                         <li className="flex items-start gap-2">
-                          <GoogleIcon name="check" size={14} className="text-pink-600 shrink-0 mt-0.5" />
+                          <GoogleIcon name="check" size={14} className="text-blue-400 shrink-0 mt-0.5" />
                           <span>{plan.limits.certificates}</span>
                         </li>
                         <li className="flex items-start gap-2">
-                          <GoogleIcon name="check" size={14} className="text-pink-600 shrink-0 mt-0.5" />
+                          <GoogleIcon name="check" size={14} className="text-blue-400 shrink-0 mt-0.5" />
                           <span>{plan.limits.mentorship}</span>
                         </li>
                       </ul>
@@ -418,9 +418,9 @@ export function CourseBrochureModal({
                 </p>
                 <div className="mt-3 grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
                   {PARTNER_UNIVERSITIES.map((uni) => (
-                    <div key={uni.id} className="flex items-center justify-between py-1.5 border-b border-pink-100">
+                    <div key={uni.id} className="flex items-center justify-between py-1.5 border-b border-sky-100">
                       <span className="font-medium text-[#0F172A]">{uni.name}</span>
-                      <span className="font-mono-tabular text-pink-700">
+                      <span className="font-mono-tabular text-sky-300">
                         {uni.shortCode} · {uni.location}
                       </span>
                     </div>
@@ -434,7 +434,7 @@ export function CourseBrochureModal({
         {/* Brochure Footer Actions */}
         <div className="px-6 py-4 border-t border-slate-200 bg-white flex flex-wrap items-center justify-between gap-3">
           <p className="text-xs text-[#475569]">
-            Admissions Desk: <span className="font-semibold text-pink-700">admissions@hridayam.belvo.edu</span>
+            Admissions Desk: <span className="font-semibold text-sky-300">admissions@hridayam.belvo.edu</span>
           </p>
           <div className="flex flex-wrap items-center gap-3">
             <button
@@ -443,7 +443,7 @@ export function CourseBrochureModal({
                 onClose();
                 onExploreCatalogue();
               }}
-              className="glass-card px-4 py-2 text-xs font-semibold rounded-xl text-slate-700 hover:border-pink-300 cursor-pointer"
+              className="glass-card px-4 py-2 text-xs font-semibold rounded-xl text-slate-700 hover:border-sky-300 cursor-pointer"
             >
               Browse Full Catalogue
             </button>

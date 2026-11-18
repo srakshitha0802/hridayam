@@ -43,17 +43,17 @@ export function CourseCard({
       }}
       tabIndex={0}
       role="button"
-      className="group glass-card rounded-2xl overflow-hidden flex flex-col justify-between focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-pink-500 cursor-pointer text-left hover:border-pink-300 transition-all shadow-xl border border-pink-400/40 text-white"
+      className="group glass-card rounded-2xl overflow-hidden flex flex-col justify-between focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-400 cursor-pointer text-left hover:border-sky-300 transition-all shadow-xl border-2 border-sky-400/40 text-white"
     >
       <div>
-        <div className="aspect-[4/3] w-full overflow-hidden bg-black/40 border-b border-pink-400/30 relative">
+        <div className="aspect-[4/3] w-full overflow-hidden bg-black/40 border-b border-sky-400/30 relative">
           <ResilientImage
             src={course.thumbnailUrl}
             alt={course.title}
             fallbackTitle={course.title}
             className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-[1.03]"
           />
-          <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#200318]/70 via-transparent to-transparent" />
+          <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#060D1E]/75 via-transparent to-transparent" />
 
           <div className="absolute top-3 right-3 flex items-center gap-2">
             {onToggleCompare && (
@@ -67,8 +67,8 @@ export function CourseCard({
                 title={isCompared ? 'Selected for comparison' : 'Compare course'}
                 className={`w-9 h-9 rounded-xl border flex items-center justify-center transition-all shadow-md ${
                   isCompared
-                    ? 'bg-gradient-to-r from-pink-600 to-rose-600 text-white border-pink-400'
-                    : 'bg-black/60 backdrop-blur-md text-white border-pink-400/40 hover:border-pink-300'
+                    ? 'bg-gradient-to-r from-blue-600 to-sky-600 text-white border-sky-300'
+                    : 'bg-black/60 backdrop-blur-md text-white border-sky-400/40 hover:border-sky-300'
                 }`}
               >
                 <GoogleIcon name="compare_arrows" size={18} />
@@ -85,8 +85,8 @@ export function CourseCard({
                 title={isSaved ? 'Saved to shortlist' : 'Save to shortlist'}
                 className={`w-9 h-9 rounded-xl border flex items-center justify-center transition-all shadow-md ${
                   isSaved
-                    ? 'bg-gradient-to-r from-pink-600 to-rose-600 text-white border-pink-400'
-                    : 'bg-black/60 backdrop-blur-md text-white border-pink-400/40 hover:border-pink-300'
+                    ? 'bg-gradient-to-r from-blue-600 to-sky-600 text-white border-sky-300'
+                    : 'bg-black/60 backdrop-blur-md text-white border-sky-400/40 hover:border-sky-300'
                 }`}
               >
                 <GoogleIcon name="bookmark" size={18} filled={isSaved} />
@@ -96,8 +96,8 @@ export function CourseCard({
         </div>
 
         <div className="p-5">
-          <div className="flex flex-wrap items-center gap-x-2 gap-y-1 text-xs text-pink-200">
-            <span className="font-semibold text-pink-300 truncate max-w-[195px]">{course.category}</span>
+          <div className="flex flex-wrap items-center gap-x-2 gap-y-1 text-xs text-sky-200">
+            <span className="font-semibold text-sky-300 truncate max-w-[195px]">{course.category}</span>
             <span aria-hidden="true">·</span>
             <span>{course.level}</span>
             <span aria-hidden="true">·</span>
@@ -106,42 +106,40 @@ export function CourseCard({
               <>
                 <span aria-hidden="true">·</span>
                 <span className="inline-flex items-center gap-1 font-mono-tabular font-semibold text-white">
-                  <GoogleIcon name="star" size={14} filled className="text-pink-300" />
+                  <GoogleIcon name="star" size={14} filled className="text-sky-300" />
                   {extra.rating}
                 </span>
               </>
             )}
           </div>
 
-          <h3 className="font-display text-lg font-bold text-white mt-2 leading-snug group-hover:text-pink-200 transition-colors">
+          <h3 className="font-display text-lg font-bold text-white mt-2 leading-snug group-hover:text-sky-200 transition-colors">
             {course.title}
           </h3>
-          <p className="text-sm text-pink-100 mt-2 line-clamp-2 leading-relaxed">
+          <p className="text-sm text-sky-100 mt-2 line-clamp-2 leading-relaxed">
             {course.summary}
           </p>
           {extra && (
-            <p className="text-[11px] text-pink-200 mt-2.5 truncate">
+            <p className="text-[11px] text-sky-200 mt-2.5 truncate">
               Tools: <span className="font-semibold text-white">{extra.toolsCovered.join(' · ')}</span>
             </p>
           )}
         </div>
       </div>
 
-      <div className="px-5 py-3.5 border-t border-pink-400/30 flex items-center justify-between gap-4 bg-black/30 backdrop-blur-md">
+      <div className="px-5 py-3.5 border-t border-sky-400/30 flex items-center justify-between gap-4 bg-black/40 backdrop-blur-md">
         <div className="min-w-0">
-          <p className="text-xs font-semibold text-pink-100 truncate">Instructor: {course.instructorName}</p>
-          <p className="font-mono-tabular text-xs text-pink-200 mt-0.5">
+          <p className="text-xs font-semibold text-sky-100 truncate">Instructor: {course.instructorName}</p>
+          <p className="font-mono-tabular text-xs text-sky-200 mt-0.5">
             {course.modulesCount} modules · {course.enrolledCount} learners
           </p>
         </div>
 
         <div className="flex items-center gap-2 shrink-0">
-          <span
-            className="font-mono-tabular text-sm font-bold text-pink-300"
-          >
+          <span className="font-mono-tabular text-sm font-bold text-sky-300">
             {isEnrolled ? 'Enrolled' : priceLabel}
           </span>
-          <GoogleIcon name="north_east" size={16} className="text-pink-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+          <GoogleIcon name="north_east" size={16} className="text-sky-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
         </div>
       </div>
     </article>

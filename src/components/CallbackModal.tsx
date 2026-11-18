@@ -44,28 +44,28 @@ export const CallbackModal: React.FC<CallbackModalProps> = ({
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-md animate-in fade-in duration-200">
-      <div className="glass-dark rounded-3xl max-w-md w-full p-6 sm:p-8 shadow-2xl border-2 border-pink-400/40 relative text-white">
+      <div className="glass-dark rounded-3xl max-w-md w-full p-6 sm:p-8 shadow-2xl border-2 border-sky-400/40 relative text-white">
         <button
           onClick={onClose}
-          className="absolute top-4 right-4 p-2 rounded-full text-pink-300 hover:text-white hover:bg-white/10 transition-colors cursor-pointer"
+          className="absolute top-4 right-4 p-2 rounded-full text-sky-300 hover:text-white hover:bg-white/10 transition-colors cursor-pointer"
         >
           <GoogleIcon name="close" size={20} />
         </button>
 
         {submitted ? (
           <div className="text-center space-y-4 py-4">
-            <div className="w-14 h-14 bg-gradient-to-r from-pink-600 to-rose-600 text-white rounded-2xl flex items-center justify-center mx-auto shadow-md">
+            <div className="w-14 h-14 bg-gradient-to-r from-blue-600 to-sky-600 text-white rounded-2xl flex items-center justify-center mx-auto shadow-md">
               <GoogleIcon name="check" size={28} />
             </div>
             <h3 className="text-2xl font-bold text-white font-display">
               Callback Requested!
             </h3>
-            <p className="text-xs text-pink-200 leading-relaxed">
+            <p className="text-xs text-sky-200 leading-relaxed">
               Thank you, <strong>{formData.name}</strong>. A senior academic counselor from <strong>Hridayam by Belvo</strong> will call you at <strong>{formData.phone}</strong> within 15 minutes to guide you on syllabus, fee discounts, and upcoming batches.
             </p>
-            <div className="p-4 bg-black/35 rounded-2xl border border-pink-400/30 text-xs text-left space-y-1">
+            <div className="p-4 bg-black/35 rounded-2xl border border-sky-400/30 text-xs text-left space-y-1">
               <div className="font-bold text-white">What to expect on the call:</div>
-              <ul className="text-pink-200 list-disc pl-4 space-y-0.5 text-[11px]">
+              <ul className="text-sky-200 list-disc pl-4 space-y-0.5 text-[11px]">
                 <li>Detailed course curriculum and 35+ project walkthrough</li>
                 <li>Hiring partner placement eligibility test details</li>
                 <li>0% Interest monthly EMI fee structure breakdown</li>
@@ -82,22 +82,22 @@ export const CallbackModal: React.FC<CallbackModalProps> = ({
         ) : (
           <div className="space-y-4">
             <div className="space-y-1 text-center sm:text-left">
-              <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-pink-950/80 text-pink-200 text-[10px] font-bold uppercase tracking-wider border border-pink-400/30">
-                <GoogleIcon name="auto_awesome" size={14} className="text-pink-300" />
+              <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-blue-950/80 text-sky-200 text-[10px] font-bold uppercase tracking-wider border border-sky-400/30">
+                <GoogleIcon name="auto_awesome" size={14} className="text-sky-300" />
                 Free Career Consultation
               </div>
               <h3 className="text-2xl font-bold text-white font-display">
                 Request a Callback
               </h3>
-              <p className="text-xs text-pink-200">
+              <p className="text-xs text-sky-200">
                 Talk to our academic career counselors to select the right track and claim scholarships up to ₹25,000.
               </p>
             </div>
 
             <form onSubmit={handleSubmit} className="space-y-3.5 text-xs">
               <div>
-                <label className="block font-semibold text-pink-200 mb-1">
-                  Full Name <span className="text-pink-400 font-bold">*</span>
+                <label className="block font-semibold text-sky-200 mb-1">
+                  Full Name <span className="text-sky-400 font-bold">*</span>
                 </label>
                 <input
                   type="text"
@@ -110,8 +110,8 @@ export const CallbackModal: React.FC<CallbackModalProps> = ({
               </div>
 
               <div>
-                <label className="block font-semibold text-pink-200 mb-1">
-                  Mobile Number (for SMS & WhatsApp) <span className="text-pink-400 font-bold">*</span>
+                <label className="block font-semibold text-sky-200 mb-1">
+                  Mobile Number (for SMS & WhatsApp) <span className="text-sky-400 font-bold">*</span>
                 </label>
                 <input
                   type="tel"
@@ -124,7 +124,7 @@ export const CallbackModal: React.FC<CallbackModalProps> = ({
               </div>
 
               <div>
-                <label className="block font-semibold text-pink-200 mb-1">Email Address</label>
+                <label className="block font-semibold text-sky-200 mb-1">Email Address</label>
                 <input
                   type="email"
                   placeholder="rahul@example.com"
@@ -135,14 +135,14 @@ export const CallbackModal: React.FC<CallbackModalProps> = ({
               </div>
 
               <div>
-                <label className="block font-semibold text-pink-200 mb-1">Program of Interest</label>
+                <label className="block font-semibold text-sky-200 mb-1">Program of Interest</label>
                 <select
                   value={formData.course}
                   onChange={(e) => setFormData({ ...formData, course: e.target.value })}
                   className="w-full px-3.5 py-2.5 rounded-xl glass-input text-xs"
                 >
                   {ITV_COURSES.map((c) => (
-                    <option key={c.id} value={c.title} className="bg-[#24031B] text-white">
+                    <option key={c.id} value={c.title} className="bg-[#0A1633] text-white">
                       {c.shortTitle}
                     </option>
                   ))}
@@ -150,19 +150,19 @@ export const CallbackModal: React.FC<CallbackModalProps> = ({
               </div>
 
               <div>
-                <label className="block font-semibold text-pink-200 mb-1">Preferred Learning Center</label>
+                <label className="block font-semibold text-sky-200 mb-1">Preferred Learning Center</label>
                 <select
                   value={formData.center}
                   onChange={(e) => setFormData({ ...formData, center: e.target.value })}
                   className="w-full px-3.5 py-2.5 rounded-xl glass-input text-xs"
                 >
-                  <option value="Thane Head Office (Classroom)" className="bg-[#24031B] text-white">Thane Head Office (Classroom)</option>
-                  <option value="Andheri Campus (Mumbai)" className="bg-[#24031B] text-white">Andheri Campus (Mumbai)</option>
-                  <option value="Navi Mumbai - Vashi Campus" className="bg-[#24031B] text-white">Navi Mumbai - Vashi Campus</option>
-                  <option value="Pune - FC Road Campus" className="bg-[#24031B] text-white">Pune - FC Road Campus</option>
-                  <option value="Pune - Pimpri Campus" className="bg-[#24031B] text-white">Pune - Pimpri Campus</option>
-                  <option value="Nagpur Campus" className="bg-[#24031B] text-white">Nagpur Campus</option>
-                  <option value="Online Live Interactive Batch" className="bg-[#24031B] text-white">Online Live Interactive Batch</option>
+                  <option value="Thane Head Office (Classroom)" className="bg-[#0A1633] text-white">Thane Head Office (Classroom)</option>
+                  <option value="Andheri Campus (Mumbai)" className="bg-[#0A1633] text-white">Andheri Campus (Mumbai)</option>
+                  <option value="Navi Mumbai - Vashi Campus" className="bg-[#0A1633] text-white">Navi Mumbai - Vashi Campus</option>
+                  <option value="Pune - FC Road Campus" className="bg-[#0A1633] text-white">Pune - FC Road Campus</option>
+                  <option value="Pune - Pimpri Campus" className="bg-[#0A1633] text-white">Pune - Pimpri Campus</option>
+                  <option value="Nagpur Campus" className="bg-[#0A1633] text-white">Nagpur Campus</option>
+                  <option value="Online Live Interactive Batch" className="bg-[#0A1633] text-white">Online Live Interactive Batch</option>
                 </select>
               </div>
 
@@ -176,8 +176,8 @@ export const CallbackModal: React.FC<CallbackModalProps> = ({
                 </button>
               </div>
 
-              <div className="flex items-center justify-center gap-1.5 text-[10px] text-pink-200 text-center pt-1 font-semibold">
-                <GoogleIcon name="verified_user" size={14} className="text-pink-400" />
+              <div className="flex items-center justify-center gap-1.5 text-[10px] text-sky-200 text-center pt-1 font-semibold">
+                <GoogleIcon name="verified_user" size={14} className="text-sky-400" />
                 <span>100% Privacy Guaranteed. Zero Spam Calls.</span>
               </div>
             </form>

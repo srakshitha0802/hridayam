@@ -25,15 +25,15 @@ export function ToastStack({
       {toasts.map((toast) => (
         <div
           key={toast.id}
-          className="pointer-events-auto glass-panel rounded-2xl px-4 py-3.5 flex items-start gap-3 transition-all duration-150 shadow-xl border-pink-200/80 bg-white/95"
+          className="pointer-events-auto glass-panel rounded-2xl px-4 py-3.5 flex items-start gap-3 transition-all duration-150 shadow-xl border-sky-200/80 bg-white/95"
           role="status"
         >
           {toast.type === 'error' ? (
-            <GoogleIcon name="error" size={18} className="text-pink-600 shrink-0 mt-0.5" filled />
+            <GoogleIcon name="error" size={18} className="text-blue-400 shrink-0 mt-0.5" filled />
           ) : toast.type === 'info' ? (
-            <GoogleIcon name="info" size={18} className="text-pink-600 shrink-0 mt-0.5" filled />
+            <GoogleIcon name="info" size={18} className="text-blue-400 shrink-0 mt-0.5" filled />
           ) : (
-            <GoogleIcon name="check_circle" size={18} className="text-pink-600 shrink-0 mt-0.5" filled />
+            <GoogleIcon name="check_circle" size={18} className="text-blue-400 shrink-0 mt-0.5" filled />
           )}
           <div className="flex-1 min-w-0">
             <p className="text-sm font-bold text-slate-900 leading-snug">{toast.title}</p>

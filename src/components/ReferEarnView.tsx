@@ -74,10 +74,10 @@ export const ReferEarnView: React.FC<ReferEarnViewProps> = ({ onReferralSuccess 
     <div className="space-y-16 pb-20 relative z-10 text-white">
       {/* Breadcrumb Strip */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6">
-        <div className="text-xs text-pink-200 font-semibold flex items-center gap-1.5 uppercase tracking-wider">
+        <div className="text-xs text-sky-200 font-semibold flex items-center gap-1.5 uppercase tracking-wider">
           <span>Home</span>
           <span>&gt;</span>
-          <span className="text-pink-300">Refer and Earn</span>
+          <span className="text-sky-300">Refer and Earn</span>
         </div>
       </div>
 
@@ -87,19 +87,19 @@ export const ReferEarnView: React.FC<ReferEarnViewProps> = ({ onReferralSuccess 
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
             {/* Left Copy */}
             <div className="lg:col-span-7 space-y-6">
-              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-pink-950/80 text-pink-200 border border-pink-400/40 text-xs font-semibold backdrop-blur-md">
-                <GoogleIcon name="redeem" size={17} className="text-pink-300" />
+              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-blue-950/80 text-sky-200 border border-sky-400/40 text-xs font-semibold backdrop-blur-md">
+                <GoogleIcon name="redeem" size={17} className="text-sky-300" />
                 <span>Share Knowledge & Get Rewarded</span>
               </div>
 
               <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white font-display leading-tight">
                 Refer your friend and someone you know and earn an{' '}
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-pink-200 via-rose-300 to-pink-100">
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-sky-200 via-blue-300 to-white">
                   Amazon Gift voucher upto 5000 !!
                 </span>
               </h1>
 
-              <p className="text-pink-100 text-sm sm:text-base leading-relaxed max-w-xl">
+              <p className="text-sky-100 text-sm sm:text-base leading-relaxed max-w-xl">
                 Share the gift of education with your friends and get a chance of earning upto ₹5000 Amazon vouchers on every successful enrollment!
               </p>
 
@@ -124,32 +124,32 @@ export const ReferEarnView: React.FC<ReferEarnViewProps> = ({ onReferralSuccess 
 
             {/* Right Graphic: Amazon Voucher & Graphic Mockup */}
             <div className="lg:col-span-5 flex justify-center">
-              <div className="relative w-full max-w-md glass-dark rounded-3xl p-6 sm:p-8 border-2 border-pink-400/40 shadow-2xl text-center space-y-4 text-white">
-                <div className="w-16 h-16 bg-gradient-to-tr from-pink-500 to-rose-600 text-white rounded-2xl flex items-center justify-center mx-auto shadow-md">
+              <div className="relative w-full max-w-md glass-dark rounded-3xl p-6 sm:p-8 border-2 border-sky-400/40 shadow-2xl text-center space-y-4 text-white">
+                <div className="w-16 h-16 bg-gradient-to-tr from-blue-500 to-sky-600 text-white rounded-2xl flex items-center justify-center mx-auto shadow-md">
                   <GoogleIcon name="featured_seasonal_and_gifts" size={32} filled />
                 </div>
                 <div>
-                  <span className="text-[11px] font-semibold uppercase text-pink-300 tracking-wider">
+                  <span className="text-[11px] font-semibold uppercase text-sky-300 tracking-wider">
                     Official Referral Reward
                   </span>
                   <div className="text-3xl sm:text-4xl font-bold text-white font-display mt-1">
                     Amazon Voucher
                   </div>
-                  <div className="text-2xl font-bold text-pink-300 font-display mt-0.5">
+                  <div className="text-2xl font-bold text-sky-300 font-display mt-0.5">
                     Upto ₹5,000 / Referral
                   </div>
                 </div>
-                <div className="bg-black/35 rounded-2xl p-4 border border-pink-400/30 text-xs text-pink-100 space-y-1.5 text-left">
+                <div className="bg-black/35 rounded-2xl p-4 border border-sky-400/30 text-xs text-sky-100 space-y-1.5 text-left">
                   <div className="flex items-center gap-2 font-semibold text-white">
-                    <GoogleIcon name="check_circle" size={16} className="text-pink-300" filled />
+                    <GoogleIcon name="check_circle" size={16} className="text-sky-300" filled />
                     <span>Instant Amazon e-Voucher Dispatch</span>
                   </div>
                   <div className="flex items-center gap-2 font-semibold text-white">
-                    <GoogleIcon name="check_circle" size={16} className="text-pink-300" filled />
+                    <GoogleIcon name="check_circle" size={16} className="text-sky-300" filled />
                     <span>No Upper Limit on Referrals</span>
                   </div>
                   <div className="flex items-center gap-2 font-semibold text-white">
-                    <GoogleIcon name="check_circle" size={16} className="text-pink-300" filled />
+                    <GoogleIcon name="check_circle" size={16} className="text-sky-300" filled />
                     <span>Valid for All Classroom & Online Batches</span>
                   </div>
                 </div>
@@ -162,40 +162,40 @@ export const ReferEarnView: React.FC<ReferEarnViewProps> = ({ onReferralSuccess 
       {/* 2. IT TAKES ONLY 2 STEPS TO UNLOCK THE BENEFIT */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
         <div className="text-center max-w-2xl mx-auto space-y-2">
-          <span className="text-xs font-semibold uppercase text-pink-300 tracking-widest">
+          <span className="text-xs font-semibold uppercase text-sky-300 tracking-widest">
             Simple Process
           </span>
           <h2 className="text-2xl sm:text-3xl font-bold text-white font-display">
             It takes only 2 steps to unlock the benefit
           </h2>
-          <p className="text-xs sm:text-sm text-pink-200">
+          <p className="text-xs sm:text-sm text-sky-200">
             No complex hurdles or prolonged waiting. Transparent and direct rewards.
           </p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
           {/* Step 01 */}
-          <div className="glass-dark rounded-3xl p-8 border border-pink-400/40 shadow-xl space-y-4 text-center text-white">
-            <div className="w-14 h-14 bg-pink-900/90 border border-pink-400/40 text-white rounded-2xl font-bold text-xl flex items-center justify-center mx-auto shadow-md font-display">
+          <div className="glass-dark rounded-3xl p-8 border border-sky-400/40 shadow-xl space-y-4 text-center text-white">
+            <div className="w-14 h-14 bg-blue-900/90 border border-sky-400/40 text-white rounded-2xl font-bold text-xl flex items-center justify-center mx-auto shadow-md font-display">
               01
             </div>
             <h3 className="text-xl font-bold text-white font-display">
               Step 01: Fill up a Form
             </h3>
-            <p className="text-xs text-pink-200 leading-relaxed">
+            <p className="text-xs text-sky-200 leading-relaxed">
               Fill our Refer & Earn Form mentioned below. Add all the mandatory details of your referred friend (Name, Contact No, Course interest, and preferred learning center).
             </p>
           </div>
 
           {/* Step 02 */}
-          <div className="glass-dark rounded-3xl p-8 border border-pink-400/40 shadow-xl space-y-4 text-center text-white">
-            <div className="w-14 h-14 bg-gradient-to-tr from-pink-600 to-rose-600 text-white rounded-2xl font-bold text-xl flex items-center justify-center mx-auto shadow-md font-display border border-pink-300/40">
+          <div className="glass-dark rounded-3xl p-8 border border-sky-400/40 shadow-xl space-y-4 text-center text-white">
+            <div className="w-14 h-14 bg-gradient-to-tr from-blue-600 to-sky-600 text-white rounded-2xl font-bold text-xl flex items-center justify-center mx-auto shadow-md font-display border border-sky-300/40">
               02
             </div>
             <h3 className="text-xl font-bold text-white font-display">
               Step 02: Reward Received
             </h3>
-            <p className="text-xs text-pink-200 leading-relaxed">
+            <p className="text-xs text-sky-200 leading-relaxed">
               You will receive a referral reward/voucher once your referee completes their admission and pays the first 20% of their course fees! Voucher sent to WhatsApp & Email.
             </p>
           </div>
@@ -204,9 +204,9 @@ export const ReferEarnView: React.FC<ReferEarnViewProps> = ({ onReferralSuccess 
 
       {/* 3. PROGRAM-WISE REWARD BREAKDOWN */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="glass-dark rounded-3xl p-8 sm:p-12 shadow-2xl space-y-8 border-2 border-pink-400/40">
+        <div className="glass-dark rounded-3xl p-8 sm:p-12 shadow-2xl space-y-8 border-2 border-sky-400/40">
           <div className="text-center max-w-3xl mx-auto space-y-2">
-            <span className="text-xs font-semibold uppercase text-pink-300 tracking-widest">
+            <span className="text-xs font-semibold uppercase text-sky-300 tracking-widest">
               Reward Matrix
             </span>
             <h2 className="text-2xl sm:text-3xl font-bold text-white font-display">
@@ -215,10 +215,10 @@ export const ReferEarnView: React.FC<ReferEarnViewProps> = ({ onReferralSuccess 
           </div>
 
           {/* Amazon Voucher Visual Mockup in Metallic Pink */}
-          <div className="max-w-md mx-auto bg-gradient-to-r from-pink-600 via-rose-500 to-pink-700 rounded-3xl p-6 text-white shadow-2xl border-4 border-pink-300/40 text-center space-y-1.5">
-            <div className="text-xs font-bold tracking-widest uppercase text-pink-100">amazon.com Gift Voucher</div>
+          <div className="max-w-md mx-auto bg-gradient-to-r from-blue-600 via-blue-500 to-pink-700 rounded-3xl p-6 text-white shadow-2xl border-4 border-sky-300/40 text-center space-y-1.5">
+            <div className="text-xs font-bold tracking-widest uppercase text-sky-100">amazon.com Gift Voucher</div>
             <div className="text-4xl sm:text-5xl font-bold font-display text-white">₹5000</div>
-            <div className="text-[11px] font-medium text-pink-100">
+            <div className="text-[11px] font-medium text-sky-100">
               Redeemable for any product on Amazon India
             </div>
           </div>
@@ -228,24 +228,24 @@ export const ReferEarnView: React.FC<ReferEarnViewProps> = ({ onReferralSuccess 
             {REFER_EARN_PROGRAMS.map((item, index) => (
               <div
                 key={index}
-                className="bg-black/35 backdrop-blur-md border border-pink-400/30 rounded-2xl p-5 flex flex-col justify-between group hover:border-pink-300 transition-all shadow-md"
+                className="bg-black/35 backdrop-blur-md border border-sky-400/30 rounded-2xl p-5 flex flex-col justify-between group hover:border-sky-300 transition-all shadow-md"
               >
                 <div className="space-y-2">
                   <div className="flex items-center justify-between">
-                    <span className="text-[10px] font-bold uppercase text-pink-200 bg-pink-900/80 px-2 py-0.5 rounded border border-pink-400/30">
+                    <span className="text-[10px] font-bold uppercase text-sky-200 bg-blue-900/80 px-2 py-0.5 rounded border border-sky-400/30">
                       {item.badge}
                     </span>
-                    <span className="text-xs text-pink-200 font-medium">{item.courseDuration}</span>
+                    <span className="text-xs text-sky-200 font-medium">{item.courseDuration}</span>
                   </div>
-                  <h4 className="font-semibold text-white text-sm group-hover:text-pink-200 transition-colors leading-snug">
+                  <h4 className="font-semibold text-white text-sm group-hover:text-sky-200 transition-colors leading-snug">
                     {item.courseName}
                   </h4>
-                  <p className="text-xs text-pink-300">{item.category}</p>
+                  <p className="text-xs text-sky-300">{item.category}</p>
                 </div>
 
-                <div className="pt-4 mt-4 border-t border-pink-400/25 flex items-center justify-between">
-                  <span className="text-xs text-pink-200 font-medium">Voucher:</span>
-                  <span className="text-base font-bold text-pink-200 font-display">
+                <div className="pt-4 mt-4 border-t border-sky-400/25 flex items-center justify-between">
+                  <span className="text-xs text-sky-200 font-medium">Voucher:</span>
+                  <span className="text-base font-bold text-sky-200 font-display">
                     ₹{item.voucherAmount.toLocaleString()}
                   </span>
                 </div>
@@ -258,35 +258,35 @@ export const ReferEarnView: React.FC<ReferEarnViewProps> = ({ onReferralSuccess 
       {/* 4. THE INTERACTIVE REFER & EARN FORM */}
       <section id="refer-form" className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
         <div className="text-center space-y-2">
-          <span className="text-xs font-semibold uppercase text-pink-300 tracking-widest">
+          <span className="text-xs font-semibold uppercase text-sky-300 tracking-widest">
             Enter Details
           </span>
           <h2 className="text-3xl font-bold text-white font-display">
             Refer & Earn
           </h2>
-          <p className="text-xs sm:text-sm text-pink-200">
+          <p className="text-xs sm:text-sm text-sky-200">
             Fill all the mandatory details in the below form to ensure correct credit of your Amazon Gift Voucher.
           </p>
         </div>
 
-        <div className="glass-dark rounded-3xl p-6 sm:p-10 border-2 border-pink-400/40 shadow-2xl backdrop-blur-2xl text-white">
+        <div className="glass-dark rounded-3xl p-6 sm:p-10 border-2 border-sky-400/40 shadow-2xl backdrop-blur-2xl text-white">
           {formSubmitted ? (
             <div className="text-center space-y-5 py-4">
-              <div className="w-16 h-16 bg-gradient-to-tr from-pink-500 to-rose-600 text-white rounded-2xl flex items-center justify-center mx-auto shadow-md">
+              <div className="w-16 h-16 bg-gradient-to-tr from-blue-500 to-sky-600 text-white rounded-2xl flex items-center justify-center mx-auto shadow-md">
                 <GoogleIcon name="check" size={32} weight={600} />
               </div>
               <div>
                 <h3 className="text-2xl font-bold text-white font-display">
                   Referral Successfully Registered!
                 </h3>
-                <p className="text-xs sm:text-sm text-pink-200 mt-1 max-w-md mx-auto">
+                <p className="text-xs sm:text-sm text-sky-200 mt-1 max-w-md mx-auto">
                   We have logged your recommendation for <strong>{formData.friendName}</strong>. Our counselors will reach out to them within 2 hours.
                 </p>
               </div>
 
               {/* Unique Referral Code Badge */}
-              <div className="bg-black/40 border border-pink-400/40 rounded-2xl p-5 max-w-md mx-auto space-y-3">
-                <span className="text-xs font-semibold text-pink-300 uppercase tracking-wider">
+              <div className="bg-black/40 border border-sky-400/40 rounded-2xl p-5 max-w-md mx-auto space-y-3">
+                <span className="text-xs font-semibold text-sky-300 uppercase tracking-wider">
                   Your Unique Referral Code
                 </span>
                 <div className="text-2xl font-bold text-white font-mono tracking-wider">
@@ -307,7 +307,7 @@ export const ReferEarnView: React.FC<ReferEarnViewProps> = ({ onReferralSuccess 
                     )}`}
                     target="_blank"
                     rel="noreferrer"
-                    className="px-4 py-2.5 rounded-xl bg-gradient-to-r from-pink-600 to-rose-600 hover:from-pink-700 hover:to-rose-700 text-white text-xs font-semibold flex items-center justify-center gap-1.5 transition-all shadow-md"
+                    className="px-4 py-2.5 rounded-xl bg-gradient-to-r from-blue-600 to-sky-600 hover:from-pink-700 hover:to-sky-700 text-white text-xs font-semibold flex items-center justify-center gap-1.5 transition-all shadow-md"
                   >
                     <span>WhatsApp</span>
                   </a>
@@ -324,7 +324,7 @@ export const ReferEarnView: React.FC<ReferEarnViewProps> = ({ onReferralSuccess 
                     friendEmail: '',
                   });
                 }}
-                className="text-xs font-semibold text-pink-300 underline cursor-pointer hover:text-white"
+                className="text-xs font-semibold text-sky-300 underline cursor-pointer hover:text-white"
               >
                 Refer another friend now
               </button>
@@ -333,8 +333,8 @@ export const ReferEarnView: React.FC<ReferEarnViewProps> = ({ onReferralSuccess 
             <form onSubmit={handleSubmit} className="space-y-8">
               {/* Part 1: Your Details */}
               <div className="space-y-4">
-                <div className="flex items-center gap-2 pb-2 border-b border-pink-400/30">
-                  <GoogleIcon name="person" size={20} className="text-pink-300" />
+                <div className="flex items-center gap-2 pb-2 border-b border-sky-400/30">
+                  <GoogleIcon name="person" size={20} className="text-sky-300" />
                   <h3 className="font-bold text-white text-base font-display">
                     Your Details (Referrer)
                   </h3>
@@ -342,8 +342,8 @@ export const ReferEarnView: React.FC<ReferEarnViewProps> = ({ onReferralSuccess 
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
                   <div>
-                    <label className="block font-semibold text-pink-200 mb-1">
-                      Your Full Name <span className="text-pink-400">*</span>
+                    <label className="block font-semibold text-sky-200 mb-1">
+                      Your Full Name <span className="text-sky-400">*</span>
                     </label>
                     <input
                       type="text"
@@ -355,8 +355,8 @@ export const ReferEarnView: React.FC<ReferEarnViewProps> = ({ onReferralSuccess 
                     />
                   </div>
                   <div>
-                    <label className="block font-semibold text-pink-200 mb-1">
-                      Your Contact Number (for Voucher Delivery) <span className="text-pink-400">*</span>
+                    <label className="block font-semibold text-sky-200 mb-1">
+                      Your Contact Number (for Voucher Delivery) <span className="text-sky-400">*</span>
                     </label>
                     <input
                       type="tel"
@@ -371,7 +371,7 @@ export const ReferEarnView: React.FC<ReferEarnViewProps> = ({ onReferralSuccess 
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
                   <div>
-                    <label className="block font-semibold text-pink-200 mb-1">Your Email Address *</label>
+                    <label className="block font-semibold text-sky-200 mb-1">Your Email Address *</label>
                     <input
                       type="email"
                       required
@@ -382,15 +382,15 @@ export const ReferEarnView: React.FC<ReferEarnViewProps> = ({ onReferralSuccess 
                     />
                   </div>
                   <div>
-                    <label className="block font-semibold text-pink-200 mb-1">Are you an enrolled learner?</label>
+                    <label className="block font-semibold text-sky-200 mb-1">Are you an enrolled learner?</label>
                     <select
                       value={formData.referrerRole}
                       onChange={(e) => setFormData({ ...formData, referrerRole: e.target.value })}
                       className="w-full px-3.5 py-2.5 rounded-xl glass-input text-xs font-medium"
                     >
-                      <option value="Current Student" className="bg-[#24031B] text-white">Current Enrolled Student</option>
-                      <option value="Placed Alumni" className="bg-[#24031B] text-white">Placed Alumni</option>
-                      <option value="External Advocate" className="bg-[#24031B] text-white">External Friend / Advocate</option>
+                      <option value="Current Student" className="bg-[#0A1633] text-white">Current Enrolled Student</option>
+                      <option value="Placed Alumni" className="bg-[#0A1633] text-white">Placed Alumni</option>
+                      <option value="External Advocate" className="bg-[#0A1633] text-white">External Friend / Advocate</option>
                     </select>
                   </div>
                 </div>
@@ -398,8 +398,8 @@ export const ReferEarnView: React.FC<ReferEarnViewProps> = ({ onReferralSuccess 
 
               {/* Part 2: Your Friend's Details */}
               <div className="space-y-4">
-                <div className="flex items-center gap-2 pb-2 border-b border-pink-400/30">
-                  <GoogleIcon name="redeem" size={20} className="text-pink-300" />
+                <div className="flex items-center gap-2 pb-2 border-b border-sky-400/30">
+                  <GoogleIcon name="redeem" size={20} className="text-sky-300" />
                   <h3 className="font-bold text-white text-base font-display">
                     Your Friend's Details (Referee)
                   </h3>
@@ -407,8 +407,8 @@ export const ReferEarnView: React.FC<ReferEarnViewProps> = ({ onReferralSuccess 
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
                   <div>
-                    <label className="block font-semibold text-pink-200 mb-1">
-                      Friend's Full Name <span className="text-pink-400">*</span>
+                    <label className="block font-semibold text-sky-200 mb-1">
+                      Friend's Full Name <span className="text-sky-400">*</span>
                     </label>
                     <input
                       type="text"
@@ -420,8 +420,8 @@ export const ReferEarnView: React.FC<ReferEarnViewProps> = ({ onReferralSuccess 
                     />
                   </div>
                   <div>
-                    <label className="block font-semibold text-pink-200 mb-1">
-                      Friend's Contact Number <span className="text-pink-400">*</span>
+                    <label className="block font-semibold text-sky-200 mb-1">
+                      Friend's Contact Number <span className="text-sky-400">*</span>
                     </label>
                     <input
                       type="tel"
@@ -436,7 +436,7 @@ export const ReferEarnView: React.FC<ReferEarnViewProps> = ({ onReferralSuccess 
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
                   <div>
-                    <label className="block font-semibold text-pink-200 mb-1">Friend's Email (Optional)</label>
+                    <label className="block font-semibold text-sky-200 mb-1">Friend's Email (Optional)</label>
                     <input
                       type="email"
                       placeholder="friend@example.com"
@@ -446,14 +446,14 @@ export const ReferEarnView: React.FC<ReferEarnViewProps> = ({ onReferralSuccess 
                     />
                   </div>
                   <div>
-                    <label className="block font-semibold text-pink-200 mb-1">Course Friend is Interested In</label>
+                    <label className="block font-semibold text-sky-200 mb-1">Course Friend is Interested In</label>
                     <select
                       value={formData.interestedCourse}
                       onChange={(e) => setFormData({ ...formData, interestedCourse: e.target.value })}
                       className="w-full px-3.5 py-2.5 rounded-xl glass-input text-xs font-medium"
                     >
                       {ITV_COURSES.map((course) => (
-                        <option key={course.id} value={course.title} className="bg-[#24031B] text-white">
+                        <option key={course.id} value={course.title} className="bg-[#0A1633] text-white">
                           {course.shortTitle}
                         </option>
                       ))}
@@ -477,7 +477,7 @@ export const ReferEarnView: React.FC<ReferEarnViewProps> = ({ onReferralSuccess 
       {/* 5. REFER & EARN FAQ ACCORDION */}
       <section id="refer-policy" className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
         <div className="text-center space-y-2">
-          <span className="text-xs font-semibold uppercase text-pink-300 tracking-widest">
+          <span className="text-xs font-semibold uppercase text-sky-300 tracking-widest">
             Policy Guidelines
           </span>
           <h2 className="text-2xl sm:text-3xl font-bold text-white font-display">
@@ -491,14 +491,14 @@ export const ReferEarnView: React.FC<ReferEarnViewProps> = ({ onReferralSuccess 
             return (
               <div
                 key={index}
-                className="glass-dark rounded-2xl overflow-hidden transition-all shadow-xl border border-pink-400/35"
+                className="glass-dark rounded-2xl overflow-hidden transition-all shadow-xl border border-sky-400/35"
               >
                 <button
                   onClick={() => setOpenFaqIndex(isOpen ? null : index)}
                   className="w-full px-5 py-4 text-left font-semibold text-white text-sm flex items-center justify-between gap-4 hover:bg-white/10 transition-colors"
                 >
                   <span className="flex items-center gap-3">
-                    <span className="text-xs font-bold text-pink-300">
+                    <span className="text-xs font-bold text-sky-300">
                       {String(index + 1).padStart(2, '0')}
                     </span>
                     <span>{faq.question}</span>
@@ -506,13 +506,13 @@ export const ReferEarnView: React.FC<ReferEarnViewProps> = ({ onReferralSuccess 
                   <GoogleIcon
                     name="keyboard_arrow_down"
                     size={20}
-                    className={`text-pink-300 transition-transform duration-200 ${
+                    className={`text-sky-300 transition-transform duration-200 ${
                       isOpen ? 'rotate-180 text-white' : ''
                     }`}
                   />
                 </button>
                 {isOpen && (
-                  <div className="px-5 pb-4 text-xs text-pink-200 leading-relaxed border-t border-pink-400/30 pt-3">
+                  <div className="px-5 pb-4 text-xs text-sky-200 leading-relaxed border-t border-sky-400/30 pt-3">
                     {faq.answer}
                   </div>
                 )}

@@ -20,6 +20,8 @@ import { CheckoutModal, CheckoutTarget } from './components/CheckoutModal';
 import { ToastMessage, ToastStack } from './components/Toast';
 import { Footer } from './components/Footer';
 import { GoogleIcon } from './components/GoogleIcon';
+import { GlitterCursor } from './components/GlitterCursor';
+import { BackgroundDoodles } from './components/ThemeDoodles';
 import { ITV_COURSES, ITvedantCourse } from './data/itvedantData';
 
 class AppErrorBoundary extends Component<
@@ -38,18 +40,18 @@ class AppErrorBoundary extends Component<
   render() {
     if (this.state.hasError) {
       return (
-        <div className="min-h-screen bg-pink-50/50 text-[#0F172A] flex items-center justify-center p-6">
+        <div className="min-h-screen bg-[#060D1E] text-white flex items-center justify-center p-6">
           <div className="max-w-md w-full glass-panel rounded-3xl p-8 text-center shadow-xl">
-            <h1 className="font-display text-xl font-bold text-[#0F172A]">
+            <h1 className="font-display text-xl font-bold text-white">
               Something interrupted the session
             </h1>
-            <p className="text-sm text-[#475569] mt-2">
+            <p className="text-sm text-sky-200 mt-2">
               Please reload the page to restore your Hridayam by Belvo session.
             </p>
             <button
               type="button"
               onClick={() => window.location.reload()}
-              className="btn-pink-primary mt-5 px-5 py-2.5 text-xs font-bold rounded-xl text-white shadow-md cursor-pointer"
+              className="btn-blue-primary mt-5 px-5 py-2.5 text-xs font-bold rounded-xl text-white shadow-md cursor-pointer"
             >
               Reload Platform
             </button>
@@ -149,64 +151,26 @@ function PlatformShell() {
     );
   };
 
-  // Shiny Metallic Mouse Movement Interaction (Premium Pink Specular Glow)
-  const [mousePos, setMousePos] = useState({ x: -500, y: -500 });
-  const [isHovering, setIsHovering] = useState(false);
-
-  useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
-      setMousePos({ x: e.clientX, y: e.clientY });
-      setIsHovering(true);
-    };
-    const handleMouseLeave = () => setIsHovering(false);
-
-    window.addEventListener('mousemove', handleMouseMove, { passive: true });
-    document.addEventListener('mouseleave', handleMouseLeave);
-    return () => {
-      window.removeEventListener('mousemove', handleMouseMove);
-      document.removeEventListener('mouseleave', handleMouseLeave);
-    };
-  }, []);
-
   return (
-    <div className="min-h-screen flex flex-col text-white relative selection:bg-pink-500/30 overflow-x-hidden bg-[#180212]">
-      {/* Shiny Metallic Mouse Specular Follower (Pink Radiance & Sparkle Core) */}
-      <div
-        className="pointer-events-none fixed -translate-x-1/2 -translate-y-1/2 rounded-full w-[500px] h-[500px] blur-3xl z-20 transition-opacity duration-300 ease-out"
-        style={{
-          left: `${mousePos.x}px`,
-          top: `${mousePos.y}px`,
-          opacity: isHovering ? 0.55 : 0,
-          background:
-            'radial-gradient(circle, rgba(244, 114, 182, 0.45) 0%, rgba(219, 39, 119, 0.28) 35%, rgba(131, 24, 67, 0.12) 60%, transparent 80%)',
-        }}
-        aria-hidden="true"
-      />
-      {/* Inner Pinpoint Shiny Hot Pink Glint */}
-      <div
-        className="pointer-events-none fixed -translate-x-1/2 -translate-y-1/2 rounded-full w-20 h-20 blur-md z-20 transition-opacity duration-150 ease-out"
-        style={{
-          left: `${mousePos.x}px`,
-          top: `${mousePos.y}px`,
-          opacity: isHovering ? 0.6 : 0,
-          background:
-            'radial-gradient(circle, rgba(255, 255, 255, 0.95) 0%, rgba(244, 114, 182, 0.7) 40%, transparent 70%)',
-        }}
-        aria-hidden="true"
-      />
+    <div className="min-h-screen flex flex-col text-white relative selection:bg-blue-500/30 overflow-x-hidden bg-[#060D1E]">
+      {/* Shiny & Glittering Mouse Cursor with Particle Trails */}
+      <GlitterCursor />
 
-      {/* Background Looping Video for Entire Website (100% Clearly Visible) */}
+      {/* Suitable Education Theme Background with Animated Doodles & Blueprint Grid */}
+      <BackgroundDoodles />
+
+      {/* Background Looping Education Media Canvas (100% Clearly Visible with Deep Blue Tint) */}
       <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden" aria-hidden="true">
         <video
           autoPlay
           loop
           muted
           playsInline
-          className="w-full h-full object-cover opacity-95 filter contrast-[1.05] brightness-[1.02] scale-105"
+          className="w-full h-full object-cover opacity-60 mix-blend-luminosity filter contrast-[1.1] brightness-[1.05] scale-105"
           src="/site-bg.mp4"
         />
-        {/* Subtle, ultra-translucent sheen to maintain 100% video appearance while keeping text sharp */}
-        <div className="absolute inset-0 bg-gradient-to-b from-white/10 via-transparent to-pink-50/15 pointer-events-none" />
+        {/* Deep Sapphire & Pastel Blue Gradient Overlay for High Readability and Elegance */}
+        <div className="absolute inset-0 bg-gradient-to-b from-[#060D1E]/70 via-[#0A1633]/60 to-[#060D1E]/85 pointer-events-none" />
       </div>
 
       {/* Main Navbar */}
@@ -353,18 +317,18 @@ function PlatformShell() {
         </a>
 
         {/* Sticky Mobile Quick Callback Bar */}
-        <div className="fixed bottom-0 left-0 right-0 z-30 lg:hidden bg-[#4A044E] text-white p-3 border-t border-pink-900/40 flex items-center justify-between gap-3 shadow-2xl backdrop-blur-md">
+        <div className="fixed bottom-0 left-0 right-0 z-30 lg:hidden bg-[#0A1633] text-white p-3 border-t border-sky-400/40 flex items-center justify-between gap-3 shadow-2xl backdrop-blur-md">
           <a
             href="tel:+918928466820"
-            className="flex-1 py-2.5 rounded-xl border border-pink-300/40 text-center font-bold text-xs flex items-center justify-center gap-1.5 text-pink-100"
+            className="flex-1 py-2.5 rounded-xl border border-sky-300/40 text-center font-bold text-xs flex items-center justify-center gap-1.5 text-sky-100"
             aria-label="Call Hridayam Admissions at +91 89284 66820"
           >
-            <GoogleIcon name="call" size={16} className="text-pink-300" />
+            <GoogleIcon name="call" size={16} className="text-sky-300" />
             Call Admissions
           </a>
           <button
             onClick={() => handleOpenCallback()}
-            className="flex-1 py-2.5 rounded-xl btn-pink-primary text-white text-center font-bold text-xs uppercase tracking-wider shadow-md"
+            className="flex-1 py-2.5 rounded-xl btn-blue-primary text-white text-center font-bold text-xs uppercase tracking-wider shadow-md"
           >
             Book Free Demo
           </button>
