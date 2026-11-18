@@ -373,33 +373,33 @@ export const IndustryAlignedProgramsSection: React.FC<IndustryAlignedProgramsSec
   };
 
   return (
-    <section className="space-y-16 relative z-10 text-slate-900">
+    <section className="space-y-16 relative z-10 text-[#1E428E]">
       {/* ========================================================================= */}
       {/* 1. SECTION HEADER WITH METALLIC GLASS BADGES & DOODLES                    */}
       {/* ========================================================================= */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center space-y-3 relative max-w-4xl mx-auto">
           {/* Decorative Sparkle Doodles */}
-          <div className="absolute -top-6 left-4 text-blue-600 animate-doodle-float hidden sm:block">
-            <DoodleSparkle className="w-8 h-8 text-blue-600" />
+          <div className="absolute -top-6 left-4 text-[#3869C3] animate-doodle-float hidden sm:block">
+            <DoodleSparkle className="w-8 h-8 text-[#3869C3]" />
           </div>
-          <div className="absolute -top-4 right-6 text-sky-600 animate-doodle-float-delayed hidden sm:block">
-            <DoodleSparkle className="w-6 h-6 text-sky-600" />
+          <div className="absolute -top-4 right-6 text-[#5A87D7] animate-doodle-float-delayed hidden sm:block">
+            <DoodleSparkle className="w-6 h-6 text-[#5A87D7]" />
           </div>
 
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-blue-50 border-2 border-blue-200 text-blue-800 text-xs font-bold uppercase tracking-widest backdrop-blur-md shadow-xs">
-            <GoogleIcon name="workspace_premium" size={16} className="text-blue-600" filled />
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/90 border-2 border-[#D3E5FD] text-[#1E428E] text-xs font-bold uppercase tracking-widest backdrop-blur-md shadow-xs">
+            <GoogleIcon name="workspace_premium" size={16} className="text-[#3869C3]" filled />
             <span>Industry Aligned Programs</span>
           </div>
 
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-slate-900 font-display tracking-tight leading-tight">
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-[#1E428E] font-display tracking-tight leading-tight">
             Accelerate Your Career with Our{' '}
-            <span className="bg-gradient-to-r from-blue-700 via-blue-600 to-indigo-600 bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-[#1E428E] via-[#3869C3] to-[#5A87D7] bg-clip-text text-transparent">
               Industry-Aligned Courses
             </span>
           </h2>
 
-          <p className="text-sm sm:text-base text-slate-600 max-w-2xl mx-auto leading-relaxed">
+          <p className="text-sm sm:text-base text-[#1E428E]/80 max-w-2xl mx-auto leading-relaxed font-medium">
             Curriculum co-designed with top hiring partners to bridge real-world engineering and analytics skill gaps.
           </p>
         </div>
@@ -410,7 +410,7 @@ export const IndustryAlignedProgramsSection: React.FC<IndustryAlignedProgramsSec
       {/* ========================================================================= */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Contrast Blue Console Frame with Ambient Glowing Studio Background */}
-        <div className="glass-blue-contrast rounded-[36px] p-5 sm:p-8 lg:p-10 shadow-2xl space-y-6 relative overflow-hidden border-2 border-blue-400/40 text-white">
+        <div className="glass-blue-contrast rounded-[36px] p-5 sm:p-8 lg:p-10 shadow-2xl space-y-6 relative overflow-hidden border-2 border-white/80 text-white">
           {/* Ambient Studio Background Image Frame */}
           <div className="absolute inset-0 pointer-events-none overflow-hidden z-0">
             <img
@@ -418,34 +418,34 @@ export const IndustryAlignedProgramsSection: React.FC<IndustryAlignedProgramsSec
               alt="Belvo Studio"
               className="w-full h-full object-cover opacity-20 filter contrast-125 mix-blend-luminosity scale-110"
             />
-            <div className="absolute inset-0 bg-gradient-to-r from-[#060D1E]/95 via-[#0A1633]/90 to-[#060D1E]/95 backdrop-blur-[2px]" />
+            <div className="absolute inset-0 bg-gradient-to-r from-[#1E428E]/95 via-[#142B5C]/95 to-[#1E428E]/95 backdrop-blur-[2px]" />
           </div>
 
           {/* Top Toolbar */}
-          <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4 pb-5 border-b border-sky-400/25 relative z-10">
+          <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4 pb-5 border-b border-white/25 relative z-10">
             <div className="flex items-center gap-3.5">
-              <div className="w-12 h-12 rounded-2xl bg-gradient-to-tr from-blue-600 to-sky-500 text-white flex items-center justify-center shrink-0 shadow-md">
+              <div className="w-12 h-12 rounded-2xl bg-gradient-to-tr from-[#1E428E] via-[#3869C3] to-[#5A87D7] text-white flex items-center justify-center shrink-0 shadow-md border border-white/40">
                 <GoogleIcon name="school" size={24} />
               </div>
               <div>
                 <h3 className="font-display font-extrabold text-white text-xl sm:text-2xl">
                   Flagship Master Programs
                 </h3>
-                <p className="text-xs sm:text-sm text-sky-200 mt-0.5">
+                <p className="text-xs sm:text-sm text-[#D3E5FD] mt-0.5">
                   Select any program below to inspect duration, tools, live budgets, and syllabus.
                 </p>
               </div>
             </div>
 
             {/* Filter Tabs: All (19), Belvo Tracks (11), Tech Masters (8) */}
-            <div className="flex items-center gap-1.5 p-1.5 rounded-2xl bg-black/40 border border-sky-400/30 backdrop-blur-md self-start sm:self-center">
+            <div className="flex items-center gap-1.5 p-1.5 rounded-2xl bg-black/25 border border-white/40 backdrop-blur-md self-start sm:self-center">
               <button
                 type="button"
                 onClick={() => setActiveCategoryTab('all')}
                 className={`px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${
                   activeCategoryTab === 'all'
-                    ? 'bg-gradient-to-r from-blue-600 to-sky-600 text-white shadow-md'
-                    : 'text-sky-200 hover:text-white hover:bg-white/10'
+                    ? 'bg-gradient-to-r from-[#3869C3] to-[#5A87D7] text-white shadow-md'
+                    : 'text-[#D3E5FD] hover:text-white hover:bg-white/10'
                 }`}
               >
                 All (19)
@@ -455,8 +455,8 @@ export const IndustryAlignedProgramsSection: React.FC<IndustryAlignedProgramsSec
                 onClick={() => setActiveCategoryTab('belvo')}
                 className={`px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${
                   activeCategoryTab === 'belvo'
-                    ? 'bg-gradient-to-r from-blue-600 to-sky-600 text-white shadow-md'
-                    : 'text-sky-200 hover:text-white hover:bg-white/10'
+                    ? 'bg-gradient-to-r from-[#3869C3] to-[#5A87D7] text-white shadow-md'
+                    : 'text-[#D3E5FD] hover:text-white hover:bg-white/10'
                 }`}
               >
                 Belvo Tracks (11)
@@ -466,8 +466,8 @@ export const IndustryAlignedProgramsSection: React.FC<IndustryAlignedProgramsSec
                 onClick={() => setActiveCategoryTab('tech')}
                 className={`px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${
                   activeCategoryTab === 'tech'
-                    ? 'bg-gradient-to-r from-blue-600 to-sky-600 text-white shadow-md'
-                    : 'text-sky-200 hover:text-white hover:bg-white/10'
+                    ? 'bg-gradient-to-r from-[#3869C3] to-[#5A87D7] text-white shadow-md'
+                    : 'text-[#D3E5FD] hover:text-white hover:bg-white/10'
                 }`}
               >
                 Tech Masters (8)
@@ -478,25 +478,25 @@ export const IndustryAlignedProgramsSection: React.FC<IndustryAlignedProgramsSec
           {/* Split Screen Grid */}
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-start relative z-10">
             {/* Left Column: 19 Master Programs List */}
-            <div className="lg:col-span-5 bg-black/40 rounded-3xl p-3.5 border border-sky-400/25 space-y-3 backdrop-blur-md">
+            <div className="lg:col-span-5 bg-black/25 rounded-3xl p-3.5 border border-white/20 space-y-3 backdrop-blur-md">
               {/* Search Bar */}
               <div className="relative">
                 <GoogleIcon
                   name="search"
                   size={16}
-                  className="absolute left-3.5 top-1/2 -translate-y-1/2 text-sky-300"
+                  className="absolute left-3.5 top-1/2 -translate-y-1/2 text-[#D3E5FD]"
                 />
                 <input
                   type="text"
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   placeholder="Search 19 flagship courses or tools..."
-                  className="w-full pl-10 pr-3.5 py-2.5 rounded-xl bg-white/10 text-white placeholder-sky-300/60 text-xs border border-sky-400/30 focus:outline-none focus:border-sky-300 font-medium"
+                  className="w-full pl-10 pr-3.5 py-2.5 rounded-xl bg-white/10 text-white placeholder-[#D3E5FD]/70 text-xs border border-white/30 focus:outline-none focus:border-white font-medium"
                 />
               </div>
 
               {/* Scrollable Course Cards Deck with Real Images & Content Visible */}
-              <div className="max-h-[580px] overflow-y-auto space-y-2 pr-1.5 scrollbar-thin scrollbar-thumb-blue-600/60">
+              <div className="max-h-[580px] overflow-y-auto space-y-2 pr-1.5 scrollbar-thin scrollbar-thumb-[#3869C3]/60">
                 {filteredCourses.map((course) => {
                   const isActive = course.id === activeCourseId;
                   return (
@@ -506,12 +506,12 @@ export const IndustryAlignedProgramsSection: React.FC<IndustryAlignedProgramsSec
                       onClick={() => setActiveCourseId(course.id)}
                       className={`w-full text-left p-3.5 rounded-2xl transition-all cursor-pointer flex items-center gap-3.5 group relative overflow-hidden ${
                         isActive
-                          ? 'bg-gradient-to-r from-[#2563EB]/95 via-[#1D4ED8]/95 to-[#1E40AF]/95 text-white shadow-xl border-2 border-sky-200/90 translate-x-1'
-                          : 'bg-white/5 hover:bg-white/15 text-sky-100 border border-white/10 hover:border-sky-300/40'
+                          ? 'bg-gradient-to-r from-[#3869C3] via-[#1E428E] to-[#142B5C] text-white shadow-xl border-2 border-white translate-x-1'
+                          : 'bg-white/10 hover:bg-white/20 text-[#D3E5FD] border border-white/15 hover:border-white/40'
                       }`}
                     >
                       {/* Course Thumbnail Image */}
-                      <div className="w-13 h-13 rounded-xl overflow-hidden shrink-0 border border-white/20 shadow-xs relative">
+                      <div className="w-13 h-13 rounded-xl overflow-hidden shrink-0 border border-white/30 shadow-xs relative">
                         <img
                           src={course.imageUrl}
                           alt={course.title}
@@ -523,25 +523,25 @@ export const IndustryAlignedProgramsSection: React.FC<IndustryAlignedProgramsSec
                       {/* Course Content Details */}
                       <div className="min-w-0 flex-1 space-y-1">
                         <div className="flex items-center justify-between gap-1.5">
-                          <span className="text-[10px] font-bold uppercase tracking-wider text-sky-200 truncate">
+                          <span className="text-[10px] font-bold uppercase tracking-wider text-[#D3E5FD] truncate">
                             {course.category}
                           </span>
                           <span
                             className={`text-[9px] px-2 py-0.5 rounded-full font-bold whitespace-nowrap shadow-xs ${
                               isActive
-                                ? 'bg-white text-blue-900 font-extrabold'
-                                : 'bg-blue-500/30 text-sky-100 border border-sky-300/30'
+                                ? 'bg-white text-[#1E428E] font-extrabold'
+                                : 'bg-white/20 text-white border border-white/30'
                             }`}
                           >
                             {course.badge}
                           </span>
                         </div>
 
-                        <h4 className="font-bold text-xs sm:text-sm text-white line-clamp-1 leading-snug group-hover:text-sky-200 transition-colors">
+                        <h4 className="font-bold text-xs sm:text-sm text-white line-clamp-1 leading-snug group-hover:text-[#D3E5FD] transition-colors">
                           {course.title}
                         </h4>
 
-                        <div className="flex items-center justify-between text-[11px] text-sky-200/90 font-medium">
+                        <div className="flex items-center justify-between text-[11px] text-[#D3E5FD]/90 font-medium">
                           <span>{course.durationAndMax}</span>
                         </div>
                       </div>
@@ -551,7 +551,7 @@ export const IndustryAlignedProgramsSection: React.FC<IndustryAlignedProgramsSec
                         name="chevron_right"
                         size={18}
                         className={`shrink-0 transition-transform ${
-                          isActive ? 'translate-x-1 text-white' : 'text-sky-300/50 group-hover:text-white'
+                          isActive ? 'translate-x-1 text-white' : 'text-[#D3E5FD]/60 group-hover:text-white'
                         }`}
                       />
                     </button>
@@ -561,9 +561,9 @@ export const IndustryAlignedProgramsSection: React.FC<IndustryAlignedProgramsSec
             </div>
 
             {/* Right Column: Active Program Spotlight Card with Image & Full Content */}
-            <div className="lg:col-span-7 bg-blue-950/60 backdrop-blur-2xl rounded-3xl p-6 sm:p-8 border-2 border-sky-400/40 space-y-6 shadow-2xl relative overflow-hidden">
+            <div className="lg:col-span-7 bg-[#142B5C]/85 backdrop-blur-2xl rounded-3xl p-6 sm:p-8 border-2 border-white/60 space-y-6 shadow-2xl relative overflow-hidden text-white">
               {/* Top Hero Image Banner */}
-              <div className="h-44 sm:h-52 rounded-2xl overflow-hidden relative shadow-lg border border-sky-400/30">
+              <div className="h-44 sm:h-52 rounded-2xl overflow-hidden relative shadow-lg border border-white/30">
                 <img
                   src={selectedCourse.imageUrl}
                   alt={selectedCourse.title}
@@ -574,23 +574,23 @@ export const IndustryAlignedProgramsSection: React.FC<IndustryAlignedProgramsSec
                 {/* Floating Tags on Image */}
                 <div className="absolute bottom-3 left-4 right-4 flex items-end justify-between gap-2">
                   <div>
-                    <span className="bg-blue-600/90 text-white text-[10px] font-extrabold uppercase px-2.5 py-0.5 rounded-md shadow-xs border border-sky-300/40">
+                    <span className="bg-[#3869C3]/90 text-white text-[10px] font-extrabold uppercase px-2.5 py-0.5 rounded-md shadow-xs border border-white/40">
                       {selectedCourse.category}
                     </span>
                     <h3 className="text-lg sm:text-xl font-bold text-white font-display mt-1 drop-shadow-md">
                       {selectedCourse.title}
                     </h3>
                   </div>
-                  <span className="bg-white/95 text-blue-900 text-xs font-mono font-extrabold px-2.5 py-1 rounded-lg shrink-0 shadow-md">
+                  <span className="bg-white/95 text-[#1E428E] text-xs font-mono font-extrabold px-2.5 py-1 rounded-lg shrink-0 shadow-md">
                     {selectedCourse.highestPackage}
                   </span>
                 </div>
               </div>
 
               {/* Duration & Mode Header */}
-              <div className="flex flex-wrap items-center justify-between gap-3 pb-3 border-b border-sky-400/20">
+              <div className="flex flex-wrap items-center justify-between gap-3 pb-3 border-b border-white/20">
                 <div>
-                  <span className="text-[10px] text-sky-300 font-semibold uppercase block">
+                  <span className="text-[10px] text-[#D3E5FD] font-semibold uppercase block">
                     Duration &amp; Mode
                   </span>
                   <span className="text-xs sm:text-sm font-bold text-white">
@@ -599,29 +599,29 @@ export const IndustryAlignedProgramsSection: React.FC<IndustryAlignedProgramsSec
                 </div>
 
                 <div className="text-right">
-                  <span className="text-[10px] text-sky-300 font-semibold uppercase block">
+                  <span className="text-[10px] text-[#D3E5FD] font-semibold uppercase block">
                     Track Level
                   </span>
-                  <span className="text-xs sm:text-sm font-bold text-sky-200 flex items-center gap-1">
-                    <GoogleIcon name="verified" size={14} className="text-sky-400" />
+                  <span className="text-xs sm:text-sm font-bold text-[#D3E5FD] flex items-center gap-1">
+                    <GoogleIcon name="verified" size={14} className="text-[#84ADEB]" />
                     <span>Dual (ITvedant + NSDC)</span>
                   </span>
                 </div>
               </div>
 
               {/* Description */}
-              <p className="text-xs sm:text-sm text-sky-100 leading-relaxed font-normal">
+              <p className="text-xs sm:text-sm text-[#D3E5FD] leading-relaxed font-normal">
                 {selectedCourse.description}
               </p>
 
               {/* Tools & Technologies */}
               <div className="space-y-2.5">
                 <div className="flex items-center justify-between">
-                  <span className="text-xs font-bold text-sky-200 uppercase tracking-wider flex items-center gap-1.5">
-                    <GoogleIcon name="build" size={14} className="text-sky-400" />
+                  <span className="text-xs font-bold text-white uppercase tracking-wider flex items-center gap-1.5">
+                    <GoogleIcon name="build" size={14} className="text-[#84ADEB]" />
                     <span>Tools &amp; Technologies:</span>
                   </span>
-                  <span className="text-[11px] text-sky-300">
+                  <span className="text-[11px] text-[#D3E5FD]">
                     {selectedCourse.tools.length} Stacks
                   </span>
                 </div>
@@ -630,7 +630,7 @@ export const IndustryAlignedProgramsSection: React.FC<IndustryAlignedProgramsSec
                   {selectedCourse.tools.map((tool, idx) => (
                     <span
                       key={idx}
-                      className="px-3 py-1.5 bg-blue-900/50 hover:bg-blue-800/60 border border-sky-400/35 text-white rounded-xl text-xs font-semibold backdrop-blur-md transition-all shadow-xs"
+                      className="px-3 py-1.5 bg-white/15 hover:bg-white/25 border border-white/30 text-white rounded-xl text-xs font-semibold backdrop-blur-md transition-all shadow-xs"
                     >
                       {tool}
                     </span>
@@ -639,27 +639,27 @@ export const IndustryAlignedProgramsSection: React.FC<IndustryAlignedProgramsSec
               </div>
 
               {/* Metric Stats Grid */}
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs bg-black/40 p-4 rounded-2xl border border-sky-400/20">
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs bg-[#0D1D3D]/60 p-4 rounded-2xl border border-white/20">
                 <div className="space-y-1">
-                  <span className="text-sky-300 block text-[11px] font-semibold">Projects:</span>
+                  <span className="text-[#D3E5FD] block text-[11px] font-semibold">Projects:</span>
                   <span className="font-bold text-sm sm:text-base text-white flex items-center gap-1.5">
-                    <GoogleIcon name="assignment" size={16} className="text-sky-400" />
+                    <GoogleIcon name="assignment" size={16} className="text-[#84ADEB]" />
                     <span>{selectedCourse.projectsCount}+ Real-World</span>
                   </span>
                 </div>
 
                 <div className="space-y-1">
-                  <span className="text-sky-300 block text-[11px] font-semibold">Max Package:</span>
-                  <span className="font-bold text-sm sm:text-base text-sky-300 flex items-center gap-1.5">
-                    <GoogleIcon name="payments" size={16} className="text-sky-400" />
+                  <span className="text-[#D3E5FD] block text-[11px] font-semibold">Max Package:</span>
+                  <span className="font-bold text-sm sm:text-base text-[#D3E5FD] flex items-center gap-1.5">
+                    <GoogleIcon name="payments" size={16} className="text-[#84ADEB]" />
                     <span>{selectedCourse.highestPackage}</span>
                   </span>
                 </div>
 
                 <div className="space-y-1">
-                  <span className="text-sky-300 block text-[11px] font-semibold">Certification:</span>
+                  <span className="text-[#D3E5FD] block text-[11px] font-semibold">Certification:</span>
                   <span className="font-bold text-xs sm:text-sm text-white flex items-center gap-1">
-                    <GoogleIcon name="verified" size={15} className="text-sky-400" />
+                    <GoogleIcon name="verified" size={15} className="text-[#84ADEB]" />
                     <span>Dual (ITvedant + NSDC)</span>
                   </span>
                 </div>
@@ -670,7 +670,7 @@ export const IndustryAlignedProgramsSection: React.FC<IndustryAlignedProgramsSec
                 <button
                   type="button"
                   onClick={() => onSelectCourse(selectedCourse.id)}
-                  className="w-full sm:w-auto flex-1 py-3 px-6 rounded-xl btn-blue-primary font-bold text-xs uppercase tracking-wider shadow-lg flex items-center justify-center gap-2 cursor-pointer transition-all"
+                  className="w-full sm:w-auto flex-1 py-3 px-6 rounded-xl btn-blue-primary font-bold text-xs uppercase tracking-wider shadow-lg flex items-center justify-center gap-2 cursor-pointer transition-all border border-white"
                 >
                   <span>View Full Syllabus</span>
                   <GoogleIcon name="arrow_forward" size={16} />
@@ -689,7 +689,7 @@ export const IndustryAlignedProgramsSection: React.FC<IndustryAlignedProgramsSec
                   type="button"
                   onClick={() => onDownloadBrochure(selectedCourse.title)}
                   title="Download Program Curriculum PDF"
-                  className="p-3 rounded-xl bg-white/10 hover:bg-white/20 border border-sky-400/30 text-white cursor-pointer shrink-0 transition-all"
+                  className="p-3 rounded-xl bg-white/10 hover:bg-white/20 border border-white/30 text-white cursor-pointer shrink-0 transition-all"
                 >
                   <GoogleIcon name="download" size={18} />
                 </button>
@@ -705,14 +705,14 @@ export const IndustryAlignedProgramsSection: React.FC<IndustryAlignedProgramsSec
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
         <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
           <div className="space-y-2">
-            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-blue-50 border-2 border-blue-200 text-blue-800 text-xs font-bold uppercase tracking-wider backdrop-blur-md">
-              <DoodleBadgeCheck className="w-4 h-4 text-blue-600" />
+            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/90 border-2 border-[#D3E5FD] text-[#1E428E] text-xs font-bold uppercase tracking-wider backdrop-blur-md shadow-xs">
+              <DoodleBadgeCheck className="w-4 h-4 text-[#3869C3]" />
               <span>Real Outcomes &amp; Proof</span>
             </div>
-            <h3 className="font-display text-2xl sm:text-3xl lg:text-4xl font-extrabold text-slate-900 tracking-tight">
+            <h3 className="font-display text-2xl sm:text-3xl lg:text-4xl font-extrabold text-[#1E428E] tracking-tight">
               Career Transformations
             </h3>
-            <p className="text-xs sm:text-sm text-slate-600 max-w-2xl leading-relaxed">
+            <p className="text-xs sm:text-sm text-[#1E428E]/80 max-w-2xl leading-relaxed font-medium">
               Real journeys of freshers and working professionals who shifted into high-growth product companies and performance agencies.
             </p>
           </div>
@@ -722,7 +722,7 @@ export const IndustryAlignedProgramsSection: React.FC<IndustryAlignedProgramsSec
             <button
               type="button"
               onClick={() => scrollTransformations('left')}
-              className="w-10 h-10 rounded-full bg-white border-2 border-blue-200 shadow-sm hover:border-blue-500 text-blue-700 flex items-center justify-center cursor-pointer transition-all"
+              className="w-10 h-10 rounded-full bg-white border-2 border-[#D3E5FD] shadow-sm hover:border-[#3869C3] text-[#3869C3] flex items-center justify-center cursor-pointer transition-all"
               aria-label="Previous story"
             >
               <GoogleIcon name="arrow_back" size={18} />
@@ -730,7 +730,7 @@ export const IndustryAlignedProgramsSection: React.FC<IndustryAlignedProgramsSec
             <button
               type="button"
               onClick={() => scrollTransformations('right')}
-              className="w-10 h-10 rounded-full bg-white border-2 border-blue-200 shadow-sm hover:border-blue-500 text-blue-700 flex items-center justify-center cursor-pointer transition-all"
+              className="w-10 h-10 rounded-full bg-white border-2 border-[#D3E5FD] shadow-sm hover:border-[#3869C3] text-[#3869C3] flex items-center justify-center cursor-pointer transition-all"
               aria-label="Next story"
             >
               <GoogleIcon name="arrow_forward" size={18} />
@@ -741,7 +741,7 @@ export const IndustryAlignedProgramsSection: React.FC<IndustryAlignedProgramsSec
         {/* Horizontal Sliding Cards of Career Transformations */}
         <div
           ref={transformationsSliderRef}
-          className="flex gap-5 overflow-x-auto pb-4 scrollbar-thin scrollbar-thumb-blue-300 scroll-smooth snap-x snap-mandatory"
+          className="flex gap-5 overflow-x-auto pb-4 scrollbar-thin scrollbar-thumb-[#3869C3]/50 scroll-smooth snap-x snap-mandatory"
         >
           {[
             {
@@ -817,46 +817,46 @@ export const IndustryAlignedProgramsSection: React.FC<IndustryAlignedProgramsSec
           ].map((story) => (
             <div
               key={story.id}
-              className="w-[340px] sm:w-[380px] shrink-0 snap-start bg-white rounded-3xl p-6 border-2 border-blue-100 hover:border-blue-400 shadow-md hover:shadow-lg transition-all flex flex-col justify-between relative overflow-hidden group text-slate-900"
+              className="w-[340px] sm:w-[380px] shrink-0 snap-start bg-white/95 rounded-3xl p-6 border-2 border-white/90 hover:border-[#3869C3] shadow-md hover:shadow-xl transition-all flex flex-col justify-between relative overflow-hidden group text-[#1E428E]"
             >
               <div className="space-y-4">
                 <div className="flex items-center gap-3.5">
                   <img
                     src={story.photoUrl}
                     alt={story.name}
-                    className="w-14 h-14 rounded-2xl object-cover border-2 border-blue-200 shadow-xs shrink-0"
+                    className="w-14 h-14 rounded-2xl object-cover border-2 border-[#D3E5FD] shadow-xs shrink-0"
                   />
                   <div className="min-w-0">
-                    <h4 className="font-bold text-slate-900 text-base leading-snug">{story.name}</h4>
-                    <p className="text-xs font-semibold text-blue-600 truncate">{story.newRole}</p>
-                    <span className="text-[11px] text-slate-500 font-medium block">
-                      Hired by: <strong className="text-slate-800">{story.hiringPartner}</strong>
+                    <h4 className="font-bold text-[#1E428E] text-base leading-snug">{story.name}</h4>
+                    <p className="text-xs font-semibold text-[#3869C3] truncate">{story.newRole}</p>
+                    <span className="text-[11px] text-[#1E428E]/70 font-medium block">
+                      Hired by: <strong className="text-[#1E428E]">{story.hiringPartner}</strong>
                     </span>
                   </div>
                 </div>
 
-                <div className="p-3 rounded-2xl bg-blue-50 border border-blue-100 flex items-center justify-between">
+                <div className="p-3 rounded-2xl bg-[#D3E5FD]/50 border border-[#84ADEB]/30 flex items-center justify-between">
                   <div>
-                    <span className="text-[10px] text-slate-500 block uppercase font-semibold">Trajectory</span>
-                    <span className="text-xs font-bold text-slate-800">
-                      {story.previousSalary} ➔ <span className="text-blue-700 font-extrabold">{story.newSalary}</span>
+                    <span className="text-[10px] text-[#1E428E]/70 block uppercase font-semibold">Trajectory</span>
+                    <span className="text-xs font-bold text-[#1E428E]">
+                      {story.previousSalary} ➔ <span className="text-[#3869C3] font-extrabold">{story.newSalary}</span>
                     </span>
                   </div>
-                  <span className="px-2.5 py-1 rounded-full bg-gradient-to-r from-blue-600 to-sky-600 text-white font-mono font-bold text-xs shadow-xs">
+                  <span className="px-2.5 py-1 rounded-full bg-gradient-to-r from-[#1E428E] via-[#3869C3] to-[#5A87D7] text-white font-mono font-bold text-xs shadow-xs">
                     {story.salaryHike}
                   </span>
                 </div>
 
-                <p className="text-xs text-slate-600 italic leading-relaxed">
+                <p className="text-xs text-[#1E428E]/85 italic leading-relaxed">
                   "{story.quote}"
                 </p>
               </div>
 
-              <div className="pt-4 mt-4 border-t border-slate-100 flex items-center justify-between text-[11px]">
-                <span className="text-slate-500 font-medium truncate max-w-[200px]">
+              <div className="pt-4 mt-4 border-t border-[#D3E5FD] flex items-center justify-between text-[11px]">
+                <span className="text-[#1E428E]/70 font-medium truncate max-w-[200px]">
                   {story.courseCompleted}
                 </span>
-                <span className="font-bold text-blue-800 bg-blue-50 px-2 py-0.5 rounded-full border border-blue-200">
+                <span className="font-bold text-[#1E428E] bg-[#D3E5FD] px-2 py-0.5 rounded-full border border-white">
                   {story.verifiedYear}
                 </span>
               </div>
@@ -874,13 +874,13 @@ export const IndustryAlignedProgramsSection: React.FC<IndustryAlignedProgramsSec
           ].map((metric, idx) => (
             <div
               key={idx}
-              className="bg-white rounded-2xl p-4 text-center border-2 border-blue-100 hover:border-blue-400 shadow-sm hover:shadow-md transition-all text-slate-900"
+              className="bg-white/95 rounded-2xl p-4 text-center border-2 border-white/90 hover:border-[#3869C3] shadow-sm hover:shadow-md transition-all text-[#1E428E]"
             >
-              <div className="text-xl sm:text-2xl font-extrabold text-blue-600 font-display">
+              <div className="text-xl sm:text-2xl font-extrabold text-[#3869C3] font-display">
                 {metric.value}
               </div>
-              <div className="text-xs font-bold text-slate-900 mt-0.5">{metric.label}</div>
-              <div className="text-[11px] text-slate-500 mt-0.5">{metric.desc}</div>
+              <div className="text-xs font-bold text-[#1E428E] mt-0.5">{metric.label}</div>
+              <div className="text-[11px] text-[#1E428E]/70 mt-0.5">{metric.desc}</div>
             </div>
           ))}
         </div>

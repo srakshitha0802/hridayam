@@ -131,7 +131,7 @@ export function CourseBrochureModal({
             <button
               type="button"
               onClick={handleDownloadProspectus}
-              className="btn-pink-primary px-4 py-2 text-xs font-bold rounded-xl inline-flex items-center gap-1.5 whitespace-nowrap min-h-[38px] text-white shadow-xs cursor-pointer"
+              className="btn-blue-primary px-4 py-2 text-xs font-bold rounded-xl inline-flex items-center gap-1.5 whitespace-nowrap min-h-[38px] text-white shadow-xs cursor-pointer"
             >
               <GoogleIcon name="download" size={16} />
               Download Brochure
@@ -453,7 +453,7 @@ export function CourseBrochureModal({
                 onClose();
                 onRequestAdmissions();
               }}
-              className="btn-pink-primary px-5 py-2 text-xs font-bold rounded-xl inline-flex items-center gap-1.5 text-white shadow-xs cursor-pointer"
+              className="btn-blue-primary px-5 py-2 text-xs font-bold rounded-xl inline-flex items-center gap-1.5 text-white shadow-xs cursor-pointer"
             >
               Speak with Admissions
               <GoogleIcon name="arrow_forward" size={14} />

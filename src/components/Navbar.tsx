@@ -42,22 +42,22 @@ export const Navbar: React.FC<NavbarProps> = ({
       <aside aria-label="Student review highlights">
         <button
           onClick={() => onNavigate('reviews')}
-          className="fixed right-0 top-1/2 -translate-y-1/2 z-40 bg-white/95 text-slate-900 rounded-l-2xl py-3.5 px-2.5 flex flex-col items-center gap-1.5 cursor-pointer hover:border-blue-500 transition-all shadow-xl group border-2 border-r-0 border-blue-200 backdrop-blur-md"
+          className="fixed right-0 top-1/2 -translate-y-1/2 z-40 bg-[#D3E5FD]/95 text-[#1E428E] rounded-l-2xl py-3.5 px-2.5 flex flex-col items-center gap-1.5 cursor-pointer hover:border-[#3869C3] transition-all shadow-xl group border-2 border-r-0 border-white backdrop-blur-md"
           style={{ writingMode: 'vertical-rl', textOrientation: 'mixed' }}
           title="Google Reviews 4.9 Rating"
           aria-label="View Google Reviews with 4.9 rating"
         >
-          <span className="text-[11px] font-bold text-slate-800 tracking-wide group-hover:text-blue-600">
+          <span className="text-[11px] font-bold text-[#1E428E] tracking-wide group-hover:text-[#3869C3]">
             Google Reviews
           </span>
-          <span className="flex items-center text-blue-600 text-[11px] font-extrabold">
+          <span className="flex items-center text-[#3869C3] text-[11px] font-extrabold">
             ★ 4.9
           </span>
         </button>
       </aside>
 
-      {/* Fixed Modern Bold Frame Header (Frosted White Glass & Blue Texture) */}
-      <header className="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-2xl border-b-2 border-blue-100 shadow-sm text-slate-900">
+      {/* Fixed Modern Bold Frame Header (Frosted Ice Blue Glass & Royal Blue Theme) */}
+      <header className="fixed top-0 left-0 right-0 z-50 bg-[#D3E5FD]/85 backdrop-blur-2xl border-b-2 border-white/80 shadow-md text-[#1E428E]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-20 gap-4">
             {/* Left: Official Hridayam by Belvo Logo */}
@@ -66,7 +66,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                 onClick={() => handleNavClick('home')}
                 className="flex items-center gap-3 cursor-pointer text-left shrink-0 group"
               >
-                <div className="p-1.5 sm:p-2 rounded-2xl bg-blue-50/80 backdrop-blur-md border border-blue-200 group-hover:border-blue-400 transition-all shadow-xs">
+                <div className="p-1.5 sm:p-2 rounded-2xl bg-white/85 backdrop-blur-md border border-white group-hover:border-[#3869C3] transition-all shadow-xs">
                   <img
                     src="/logo.png"
                     alt="Hridayam by Belvo"
@@ -83,23 +83,23 @@ export const Navbar: React.FC<NavbarProps> = ({
               >
                 <button
                   onClick={() => setCoursesDropdownOpen(!coursesDropdownOpen)}
-                  className="bg-blue-50 hover:bg-blue-100/80 text-blue-800 text-xs font-semibold px-4 py-2 rounded-full flex items-center gap-1.5 cursor-pointer shadow-xs border-2 border-blue-200/80 hover:border-blue-400 transition-all"
+                  className="bg-white/80 hover:bg-white text-[#1E428E] text-xs font-semibold px-4 py-2 rounded-full flex items-center gap-1.5 cursor-pointer shadow-xs border-2 border-white hover:border-[#3869C3] transition-all"
                 >
-                  <GoogleIcon name="menu_book" size={16} className="text-blue-600" />
+                  <GoogleIcon name="menu_book" size={16} className="text-[#3869C3]" />
                   <span className="font-bold">Explore Courses</span>
                   <GoogleIcon
                     name="keyboard_arrow_down"
                     size={16}
-                    className={`transition-transform duration-200 text-blue-600 ${
-                      coursesDropdownOpen ? 'rotate-180 text-blue-800' : ''
+                    className={`transition-transform duration-200 text-[#3869C3] ${
+                      coursesDropdownOpen ? 'rotate-180 text-[#1E428E]' : ''
                     }`}
                   />
                 </button>
 
                 {/* Glass Dropdown Menu */}
                 {coursesDropdownOpen && (
-                  <div className="absolute top-full left-0 w-80 bg-white rounded-2xl shadow-2xl p-3 z-50 animate-in fade-in slide-in-from-top-1 duration-150 border-2 border-blue-200">
-                    <div className="text-[10px] font-bold text-blue-800 uppercase tracking-wider px-3 py-1.5 border-b border-blue-100">
+                  <div className="absolute top-full left-0 w-80 bg-[#D3E5FD]/95 backdrop-blur-2xl rounded-2xl shadow-2xl p-3 z-50 animate-in fade-in slide-in-from-top-1 duration-150 border-2 border-white text-[#1E428E]">
+                    <div className="text-[10px] font-bold text-[#1E428E] uppercase tracking-wider px-3 py-1.5 border-b border-white/60">
                       All Career Programs
                     </div>
                     <div className="space-y-1 mt-1 max-h-80 overflow-y-auto pr-1">
@@ -107,20 +107,20 @@ export const Navbar: React.FC<NavbarProps> = ({
                         <button
                           key={course.id}
                           onClick={() => handleCourseClick(course.id)}
-                          className="w-full text-left p-2.5 rounded-xl hover:bg-blue-50 transition-colors flex items-center justify-between group"
+                          className="w-full text-left p-2.5 rounded-xl hover:bg-white/80 transition-colors flex items-center justify-between group"
                         >
                           <div>
-                            <div className="text-xs font-semibold text-slate-800 group-hover:text-blue-600">
+                            <div className="text-xs font-semibold text-[#1E428E] group-hover:text-[#3869C3]">
                               {course.title}
                             </div>
-                            <div className="text-[10px] text-slate-500 font-medium">
+                            <div className="text-[10px] text-[#5A87D7] font-medium">
                               {course.duration} • 100% Placement
                             </div>
                           </div>
                           <GoogleIcon
                             name="chevron_right"
                             size={16}
-                            className="text-blue-500 group-hover:translate-x-0.5 transition-transform"
+                            className="text-[#3869C3] group-hover:translate-x-0.5 transition-transform"
                           />
                         </button>
                       ))}
@@ -135,20 +135,20 @@ export const Navbar: React.FC<NavbarProps> = ({
               {/* Student Portal Quick Access */}
               <button
                 onClick={() => handleNavClick('student')}
-                className="btn-blue-glass hidden md:inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-semibold text-blue-700 hover:border-blue-500 cursor-pointer shadow-xs"
+                className="hidden md:inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-semibold text-[#1E428E] bg-white/70 hover:bg-white border border-white hover:border-[#3869C3] cursor-pointer shadow-xs transition-all"
                 title="Student Dashboard"
               >
-                <GoogleIcon name="school" size={16} className="text-blue-600" />
+                <GoogleIcon name="school" size={16} className="text-[#3869C3]" />
                 <span>Student Hub</span>
               </button>
 
               {/* Admin Portal Quick Access */}
               <button
                 onClick={() => handleNavClick('instructor')}
-                className="hidden lg:inline-flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-semibold text-slate-700 bg-slate-100 hover:bg-slate-200 hover:text-slate-900 cursor-pointer border border-slate-300"
+                className="hidden lg:inline-flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-semibold text-[#1E428E] bg-white/60 hover:bg-white border border-white hover:border-[#3869C3] cursor-pointer transition-all shadow-xs"
                 title="Admin Console"
               >
-                <GoogleIcon name="admin_panel_settings" size={16} className="text-slate-600" />
+                <GoogleIcon name="admin_panel_settings" size={16} className="text-[#3869C3]" />
                 <span>Admin</span>
               </button>
 
@@ -164,24 +164,24 @@ export const Navbar: React.FC<NavbarProps> = ({
               {/* Hamburger Button that opens the right drawer */}
               <button
                 onClick={() => setDrawerOpen(true)}
-                className="p-2.5 rounded-xl bg-blue-50 hover:bg-blue-100 text-blue-700 transition-colors cursor-pointer border-2 border-blue-200"
+                className="p-2.5 rounded-xl bg-white/70 hover:bg-white text-[#1E428E] transition-colors cursor-pointer border-2 border-white shadow-xs"
                 title="Open Navigation Menu"
               >
-                <GoogleIcon name="menu" size={22} weight={500} className="text-blue-700" />
+                <GoogleIcon name="menu" size={22} weight={500} className="text-[#1E428E]" />
               </button>
             </div>
           </div>
         </div>
       </header>
 
-      {/* Slide-Over Right Drawer Menu (Clean White & Blue Accents) */}
+      {/* Slide-Over Right Drawer Menu */}
       {drawerOpen && (
-        <div className="fixed inset-0 z-50 flex justify-end bg-slate-900/50 backdrop-blur-xs animate-in fade-in duration-200">
-          <div className="w-full max-w-sm sm:max-w-md bg-white text-slate-900 h-full shadow-2xl flex flex-col justify-between overflow-y-auto animate-in slide-in-from-right duration-200 border-l-2 border-blue-200">
+        <div className="fixed inset-0 z-50 flex justify-end bg-slate-900/40 backdrop-blur-xs animate-in fade-in duration-200">
+          <div className="w-full max-w-sm sm:max-w-md bg-[#D3E5FD]/95 backdrop-blur-2xl text-[#1E428E] h-full shadow-2xl flex flex-col justify-between overflow-y-auto animate-in slide-in-from-right duration-200 border-l-2 border-white">
             {/* Drawer Header with Logo */}
             <div>
-              <div className="flex items-center justify-between p-5 border-b border-blue-100 bg-blue-50/50">
-                <div className="p-1 rounded-xl bg-white border border-blue-200">
+              <div className="flex items-center justify-between p-5 border-b border-white/60 bg-white/40">
+                <div className="p-1 rounded-xl bg-white border border-white">
                   <img
                     src="/logo.png"
                     alt="Hridayam by Belvo"
@@ -190,41 +190,41 @@ export const Navbar: React.FC<NavbarProps> = ({
                 </div>
                 <button
                   onClick={() => setDrawerOpen(false)}
-                  className="p-2 rounded-full hover:bg-blue-100 text-slate-600 transition-colors cursor-pointer"
+                  className="p-2 rounded-full hover:bg-white/60 text-[#1E428E] transition-colors cursor-pointer"
                   title="Close Menu"
                 >
-                  <GoogleIcon name="close" size={20} className="text-slate-800" />
+                  <GoogleIcon name="close" size={20} className="text-[#1E428E]" />
                 </button>
               </div>
 
               {/* Drawer Menu Links */}
-              <nav className="p-4 space-y-1 text-sm font-medium text-slate-800">
+              <nav className="p-4 space-y-1 text-sm font-medium text-[#1E428E]">
                 {/* All Courses Accordion */}
                 <div>
                   <button
                     onClick={() => setDrawerCoursesExpanded(!drawerCoursesExpanded)}
-                    className="w-full flex items-center justify-between p-3 rounded-xl hover:bg-blue-50 transition-colors text-left"
+                    className="w-full flex items-center justify-between p-3 rounded-xl hover:bg-white/60 transition-colors text-left"
                   >
-                    <span className="font-semibold text-slate-900 flex items-center gap-2">
-                      <GoogleIcon name="school" size={18} className="text-blue-600" />
+                    <span className="font-semibold text-[#1E428E] flex items-center gap-2">
+                      <GoogleIcon name="school" size={18} className="text-[#3869C3]" />
                       All Courses
                     </span>
                     <GoogleIcon
                       name="keyboard_arrow_down"
                       size={18}
-                      className={`transition-transform text-blue-600 ${
-                        drawerCoursesExpanded ? 'rotate-180 text-blue-800' : ''
+                      className={`transition-transform text-[#3869C3] ${
+                        drawerCoursesExpanded ? 'rotate-180 text-[#1E428E]' : ''
                       }`}
                     />
                   </button>
 
                   {drawerCoursesExpanded && (
-                    <div className="pl-4 pr-2 py-1 space-y-1 text-xs border-l-2 border-blue-200 ml-4 mt-1 max-h-60 overflow-y-auto">
+                    <div className="pl-4 pr-2 py-1 space-y-1 text-xs border-l-2 border-[#3869C3]/40 ml-4 mt-1 max-h-60 overflow-y-auto">
                       {ITV_COURSES.map((course) => (
                         <button
                           key={course.id}
                           onClick={() => handleCourseClick(course.id)}
-                          className="w-full text-left py-2 px-3 rounded-lg hover:bg-blue-50 text-slate-700 hover:text-blue-600 transition-colors block font-medium"
+                          className="w-full text-left py-2 px-3 rounded-lg hover:bg-white/80 text-[#1E428E] hover:text-[#3869C3] transition-colors block font-medium"
                         >
                           {course.title}
                         </button>
@@ -235,7 +235,7 @@ export const Navbar: React.FC<NavbarProps> = ({
 
                 <button
                   onClick={() => handleNavClick('placements')}
-                  className="w-full text-left p-3 rounded-xl hover:bg-blue-50 transition-colors flex items-center justify-between text-slate-800"
+                  className="w-full text-left p-3 rounded-xl hover:bg-white/60 transition-colors flex items-center justify-between text-[#1E428E]"
                 >
                   <span className="flex items-center gap-2">
                     <GoogleIcon name="workspace_premium" size={18} className="text-blue-600" />

@@ -17,12 +17,13 @@ interface Particle {
 }
 
 const GLITTER_COLORS = [
-  '#2563EB', // Royal blue
-  '#0284C7', // Deep sky
-  '#0EA5E9', // Azure
-  '#38BDF8', // Cyan electric
-  '#1D4ED8', // Sapphire
-  '#60A5FA', // Vibrant pastel blue
+  '#FFFFFF', // Pure White
+  '#D3E5FD', // Ice Blue
+  '#94BCF1', // Light Blue
+  '#84ADEB', // Soft Sky Blue
+  '#5A87D7', // Periwinkle Blue
+  '#3869C3', // Royal Blue
+  '#1E428E', // Deep Navy
 ];
 
 export const GlitterCursor: React.FC = () => {

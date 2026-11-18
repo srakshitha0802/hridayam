@@ -152,25 +152,32 @@ function PlatformShell() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col text-slate-900 relative selection:bg-blue-500/20 overflow-x-hidden bg-[#FFFFFF]">
+    <div className="min-h-screen flex flex-col text-[#1E428E] relative selection:bg-[#3869C3]/25 overflow-x-hidden bg-[#94BCF1]">
       {/* Shiny & Glittering Mouse Cursor with Particle Trails */}
       <GlitterCursor />
 
       {/* Suitable Education Theme Background with Animated Doodles & Blueprint Grid */}
       <BackgroundDoodles />
 
-      {/* Background Looping Education Media Canvas (Subtle High-Key Texture on White) */}
+      {/* Dreamy Hridayam Theme Background Art Layer & Looping Education Media */}
       <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden" aria-hidden="true">
+        {/* Hridayam Theme Background Art Image */}
+        <img
+          src="/hridayam-theme-bg.jpg"
+          alt=""
+          className="absolute inset-0 w-full h-full object-cover object-top opacity-35 filter brightness-[1.08] contrast-[1.05]"
+        />
+        {/* Subtle Video Loop */}
         <video
           autoPlay
           loop
           muted
           playsInline
-          className="w-full h-full object-cover opacity-12 filter contrast-[1.2] brightness-[1.1] scale-105"
+          className="w-full h-full object-cover opacity-15 filter contrast-[1.2] brightness-[1.1] scale-105"
           src="/site-bg.mp4"
         />
-        {/* Soft Pristine White Gradient Overlay for High Readability and Blue-White Premium Aesthetic */}
-        <div className="absolute inset-0 bg-gradient-to-b from-white/95 via-white/88 to-white/98 pointer-events-none" />
+        {/* Hridayam Official Soft Sky & Light Blue Gradient Overlay */}
+        <div className="absolute inset-0 bg-gradient-to-b from-[#84ADEB]/75 via-[#94BCF1]/65 to-[#84ADEB]/85 pointer-events-none" />
       </div>
 
       {/* Main Navbar */}
@@ -317,13 +324,13 @@ function PlatformShell() {
         </a>
 
         {/* Sticky Mobile Quick Callback Bar */}
-        <div className="fixed bottom-0 left-0 right-0 z-30 lg:hidden bg-white/95 text-slate-900 p-3 border-t-2 border-blue-200 flex items-center justify-between gap-3 shadow-2xl backdrop-blur-md">
+        <div className="fixed bottom-0 left-0 right-0 z-30 lg:hidden bg-[#D3E5FD]/95 text-[#1E428E] p-3 border-t-2 border-white flex items-center justify-between gap-3 shadow-2xl backdrop-blur-md">
           <a
             href="tel:+918928466820"
-            className="flex-1 py-2.5 rounded-xl border border-blue-300 text-center font-bold text-xs flex items-center justify-center gap-1.5 text-blue-700 bg-blue-50/70"
+            className="flex-1 py-2.5 rounded-xl border border-white text-center font-bold text-xs flex items-center justify-center gap-1.5 text-[#1E428E] bg-white/80 shadow-xs"
             aria-label="Call Hridayam Admissions at +91 89284 66820"
           >
-            <GoogleIcon name="call" size={16} className="text-blue-600" />
+            <GoogleIcon name="call" size={16} className="text-[#3869C3]" />
             Call Admissions
           </a>
           <button

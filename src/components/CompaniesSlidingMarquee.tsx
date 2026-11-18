@@ -198,56 +198,56 @@ export const CompaniesSlidingMarquee: React.FC = () => {
 
   return (
     <section className="py-12 sm:py-16 relative overflow-hidden">
-      {/* Section Header with Blue-White Badge */}
+      {/* Section Header with Hridayam Palette Badge */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-3 mb-8 relative z-10">
-        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-blue-50 border-2 border-blue-200 text-blue-800 text-xs font-bold uppercase tracking-wider backdrop-blur-md shadow-xs">
-          <GoogleIcon name="verified" size={16} className="text-blue-600" filled />
+        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/85 border-2 border-white text-[#1E428E] text-xs font-bold uppercase tracking-wider backdrop-blur-md shadow-xs">
+          <GoogleIcon name="verified" size={16} className="text-[#3869C3]" filled />
           <span>3,500+ Learners Have Been Placed By Our India's Largest Placement Team</span>
-          <DoodleSparkle className="w-4 h-4 text-blue-500" />
+          <DoodleSparkle className="w-4 h-4 text-[#3869C3]" />
         </div>
 
-        <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-slate-900 font-display tracking-tight">
+        <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-[#1E428E] font-display tracking-tight">
           3,500+ Learners Have Been Placed By Our{' '}
-          <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-700 via-blue-600 to-sky-600">
+          <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#1E428E] via-[#3869C3] to-[#5A87D7]">
             India's Largest Placement Team
           </span>
         </h2>
 
-        <p className="text-xs sm:text-sm text-slate-600 max-w-2xl mx-auto leading-relaxed">
+        <p className="text-xs sm:text-sm text-[#1E428E]/85 max-w-2xl mx-auto leading-relaxed">
           From global product giants to premier tech consultancies, our students launch their careers across 2,000+ top enterprises.
         </p>
       </div>
 
       {/* Glassy Sliding Track Wrapper */}
       <div className="marquee-wrapper relative w-full overflow-hidden py-4">
-        {/* Soft edge blur gradient masks in crisp white */}
-        <div className="absolute left-0 top-0 bottom-0 w-20 sm:w-36 bg-gradient-to-r from-white to-transparent z-10 pointer-events-none" />
-        <div className="absolute right-0 top-0 bottom-0 w-20 sm:w-36 bg-gradient-to-l from-white to-transparent z-10 pointer-events-none" />
+        {/* Soft edge blur gradient masks in matching background light blue */}
+        <div className="absolute left-0 top-0 bottom-0 w-20 sm:w-36 bg-gradient-to-r from-[#94BCF1] to-transparent z-10 pointer-events-none" />
+        <div className="absolute right-0 top-0 bottom-0 w-20 sm:w-36 bg-gradient-to-l from-[#94BCF1] to-transparent z-10 pointer-events-none" />
 
         <div className="animate-marquee-continuous flex items-center gap-4 sm:gap-6">
           {duplicatedPartners.map((company, index) => (
             <div
               key={`${company.name}-${index}`}
-              className="bg-white rounded-[24px] px-5 py-3.5 flex items-center gap-3.5 shrink-0 cursor-default border-2 border-blue-100 hover:border-blue-400 transition-all shadow-sm hover:shadow-md group backdrop-blur-xl"
+              className="glass-card rounded-[24px] px-5 py-3.5 flex items-center gap-3.5 shrink-0 cursor-default border-2 border-white hover:border-[#3869C3] transition-all shadow-sm hover:shadow-md group backdrop-blur-xl text-[#1E428E]"
             >
               {/* Company Logo Icon */}
-              <div className="w-10 h-10 rounded-2xl bg-blue-50 border border-blue-200 flex items-center justify-center shrink-0 shadow-2xs group-hover:scale-105 transition-transform">
+              <div className="w-10 h-10 rounded-2xl bg-white/80 border border-[#D3E5FD] flex items-center justify-center shrink-0 shadow-2xs group-hover:scale-105 transition-transform">
                 {company.svgIcon}
               </div>
 
               {/* Company Info */}
               <div className="text-left space-y-0.5">
                 <div className="flex items-center gap-2">
-                  <span className="text-xs sm:text-sm font-bold text-slate-900 group-hover:text-blue-600 transition-colors leading-snug">
+                  <span className="text-xs sm:text-sm font-bold text-[#1E428E] group-hover:text-[#3869C3] transition-colors leading-snug">
                     {company.name}
                   </span>
                   {company.badgeText && (
-                    <span className="text-[9px] font-mono font-bold bg-blue-100 text-blue-800 px-1.5 py-0.2 rounded border border-blue-200">
+                    <span className="text-[9px] font-mono font-bold bg-[#D3E5FD] text-[#1E428E] px-1.5 py-0.2 rounded border border-white">
                       {company.badgeText}
                     </span>
                   )}
                 </div>
-                <div className="text-[10px] font-semibold text-slate-600 bg-slate-100 px-2 py-0.5 rounded-full inline-block border border-slate-200">
+                <div className="text-[10px] font-semibold text-[#1E428E] bg-white/70 px-2 py-0.5 rounded-full inline-block border border-[#D3E5FD]">
                   {company.category}
                 </div>
               </div>

@@ -190,14 +190,14 @@ export function CheckoutModal({
               <button
                 type="button"
                 onClick={onClose}
-                className="w-full py-3.5 rounded-xl btn-pink-primary font-bold text-xs uppercase tracking-wider text-white shadow-xl cursor-pointer"
+                className="w-full py-3.5 rounded-xl btn-blue-primary font-bold text-xs uppercase tracking-wider text-white shadow-xl cursor-pointer"
               >
                 Go to Student Learning Dashboard
               </button>
               <button
                 type="button"
                 onClick={() => window.print()}
-                className="w-full py-2.5 rounded-xl btn-pink-glass text-white hover:border-sky-300 font-semibold text-xs transition-colors cursor-pointer"
+                className="w-full py-2.5 rounded-xl btn-blue-glass text-white hover:border-sky-300 font-semibold text-xs transition-colors cursor-pointer"
               >
                 Print / Save Tax Invoice
               </button>
@@ -362,7 +362,7 @@ export function CheckoutModal({
                 type="checkbox"
                 checked={sendEmailReceipt}
                 onChange={(e) => setSendEmailReceipt(e.target.checked)}
-                className="rounded accent-pink-500 cursor-pointer"
+                className="rounded accent-[#3869C3] cursor-pointer"
               />
               <GoogleIcon name="mail" size={16} className="text-sky-300" />
               <span>Send payment receipt, tax invoice &amp; syllabus to email</span>
@@ -376,7 +376,7 @@ export function CheckoutModal({
               <button
                 type="submit"
                 disabled={processing}
-                className="btn-pink-primary px-6 py-3 text-xs font-bold disabled:opacity-60 rounded-xl cursor-pointer shadow-xl flex items-center gap-1.5 uppercase tracking-wider text-white"
+                className="btn-blue-primary px-6 py-3 text-xs font-bold disabled:opacity-60 rounded-xl cursor-pointer shadow-xl flex items-center gap-1.5 uppercase tracking-wider text-white"
               >
                 {processing ? (
                   <>

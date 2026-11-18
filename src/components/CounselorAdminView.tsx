@@ -371,7 +371,7 @@ export const CounselorAdminView: React.FC<CounselorAdminViewProps> = ({ onToast,
                       type="checkbox"
                       checked={newCourse.isFree}
                       onChange={(e) => setNewCourse({ ...newCourse, isFree: e.target.checked })}
-                      className="rounded accent-pink-600 cursor-pointer"
+                      className="rounded accent-[#3869C3] cursor-pointer"
                     />
                     <span className="font-semibold text-sky-300">Make Free / Scholarship Access</span>
                   </label>
@@ -409,7 +409,7 @@ export const CounselorAdminView: React.FC<CounselorAdminViewProps> = ({ onToast,
                 </button>
                 <button
                   type="submit"
-                  className="btn-pink-primary px-6 py-2.5 rounded-xl text-white font-bold uppercase tracking-wider shadow-md"
+                  className="btn-blue-primary px-6 py-2.5 rounded-xl text-white font-bold uppercase tracking-wider shadow-md"
                 >
                   Publish Course Now
                 </button>
@@ -476,7 +476,7 @@ export const CounselorAdminView: React.FC<CounselorAdminViewProps> = ({ onToast,
                     setEmailNotificationsEnabled(e.target.checked);
                     onToast('info', 'Settings Saved', 'Email notification preference updated.');
                   }}
-                  className="rounded accent-pink-600 cursor-pointer w-4 h-4"
+                  className="rounded accent-[#3869C3] cursor-pointer w-4 h-4"
                 />
               </div>
 
@@ -492,7 +492,7 @@ export const CounselorAdminView: React.FC<CounselorAdminViewProps> = ({ onToast,
                     setPaymentGatewayActive(e.target.checked);
                     onToast('info', 'Gateway Updated', 'Payment processing status modified.');
                   }}
-                  className="rounded accent-pink-600 cursor-pointer w-4 h-4"
+                  className="rounded accent-[#3869C3] cursor-pointer w-4 h-4"
                 />
               </div>
 
@@ -556,7 +556,7 @@ export const CounselorAdminView: React.FC<CounselorAdminViewProps> = ({ onToast,
                       setSelectedCourseForLesson(course.id);
                       setActiveTab('materials');
                     }}
-                    className="btn-pink-glass px-3.5 py-2 rounded-xl text-xs font-bold text-sky-300 flex items-center gap-1.5 cursor-pointer"
+                    className="btn-blue-glass px-3.5 py-2 rounded-xl text-xs font-bold text-sky-300 flex items-center gap-1.5 cursor-pointer"
                   >
                     <GoogleIcon name="cloud_upload" size={16} />
                     <span>Upload Materials</span>
@@ -675,7 +675,7 @@ export const CounselorAdminView: React.FC<CounselorAdminViewProps> = ({ onToast,
 
               <button
                 type="submit"
-                className="w-full py-3 rounded-xl btn-pink-primary font-bold text-xs uppercase tracking-wider text-white shadow-md cursor-pointer flex items-center justify-center gap-2"
+                className="w-full py-3 rounded-xl btn-blue-primary font-bold text-xs uppercase tracking-wider text-white shadow-md cursor-pointer flex items-center justify-center gap-2"
               >
                 <GoogleIcon name="cloud_upload" size={16} />
                 <span>Upload Lesson &amp; Publish</span>
@@ -738,7 +738,7 @@ export const CounselorAdminView: React.FC<CounselorAdminViewProps> = ({ onToast,
                     <th className="p-3.5">Certificate</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-pink-100 text-slate-700">
+                <tbody className="divide-y divide-[#D3E5FD] text-slate-700">
                   {[
                     { name: 'Priya Sharma', roll: 'BELVO-2026-8942', course: 'Artificial Intelligence, Machine Learning', progress: '85%', status: 'Active' },
                     { name: 'Rahul Joshi', roll: 'BELVO-2026-4412', course: 'Web, App, and Software Development', progress: '92%', status: 'Active' },
@@ -762,7 +762,7 @@ export const CounselorAdminView: React.FC<CounselorAdminViewProps> = ({ onToast,
                       <td className="p-3.5">
                         <button
                           onClick={() => onToast('info', 'Certificate Ready', `BELVO-CERT-2026 verified for ${s.name}.`)}
-                          className="text-sky-300 hover:text-pink-900 font-semibold underline"
+                          className="text-sky-300 hover:text-[#1E428E] font-semibold underline"
                         >
                           View Credential
                         </button>
@@ -804,7 +804,7 @@ export const CounselorAdminView: React.FC<CounselorAdminViewProps> = ({ onToast,
                 <div className="pt-2 flex justify-end">
                   <a
                     href={`tel:${lead.phone}`}
-                    className="btn-pink-glass px-3 py-1.5 rounded-lg text-xs font-bold text-sky-300 flex items-center gap-1"
+                    className="btn-blue-glass px-3 py-1.5 rounded-lg text-xs font-bold text-sky-300 flex items-center gap-1"
                   >
                     <GoogleIcon name="call" size={14} />
                     <span>Call Back Now</span>

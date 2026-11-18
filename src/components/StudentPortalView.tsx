@@ -262,7 +262,7 @@ export const StudentPortalView: React.FC<StudentPortalViewProps> = ({
                     className={`px-4 py-2 rounded-xl text-xs font-bold flex items-center gap-1.5 transition-all cursor-pointer ${
                       completedLessons.includes(activeLessonIndex)
                         ? 'bg-blue-900/80 text-sky-200 border border-sky-400/40'
-                        : 'btn-pink-primary text-white shadow-xs'
+                        : 'btn-blue-primary text-white shadow-xs'
                     }`}
                   >
                     <GoogleIcon
@@ -399,7 +399,7 @@ export const StudentPortalView: React.FC<StudentPortalViewProps> = ({
                       name="quiz"
                       checked={selectedQuizAnswer === idx}
                       onChange={() => setSelectedQuizAnswer(idx)}
-                      className="accent-pink-400"
+                      className="accent-[#3869C3]"
                     />
                     <span>{option}</span>
                   </label>
@@ -431,7 +431,7 @@ export const StudentPortalView: React.FC<StudentPortalViewProps> = ({
 
               <button
                 type="submit"
-                className="w-full py-3 rounded-xl btn-pink-primary font-bold text-xs uppercase tracking-wider text-white shadow-xl cursor-pointer"
+                className="w-full py-3 rounded-xl btn-blue-primary font-bold text-xs uppercase tracking-wider text-white shadow-xl cursor-pointer"
               >
                 Submit Quiz for Grading
               </button>
@@ -498,7 +498,7 @@ export const StudentPortalView: React.FC<StudentPortalViewProps> = ({
 
                 <button
                   type="submit"
-                  className="w-full py-3 rounded-xl btn-pink-primary font-bold text-xs uppercase tracking-wider text-white shadow-xl cursor-pointer flex items-center justify-center gap-1.5"
+                  className="w-full py-3 rounded-xl btn-blue-primary font-bold text-xs uppercase tracking-wider text-white shadow-xl cursor-pointer flex items-center justify-center gap-1.5"
                 >
                   <GoogleIcon name="cloud_upload" size={16} />
                   <span>Submit Assignment for Faculty Audit</span>
@@ -566,7 +566,7 @@ export const StudentPortalView: React.FC<StudentPortalViewProps> = ({
           <div className="flex flex-wrap items-center justify-center gap-3">
             <button
               onClick={() => window.print()}
-              className="btn-pink-primary px-6 py-3 rounded-xl text-xs font-bold uppercase tracking-wider text-white shadow-xl flex items-center gap-2 cursor-pointer"
+              className="btn-blue-primary px-6 py-3 rounded-xl text-xs font-bold uppercase tracking-wider text-white shadow-xl flex items-center gap-2 cursor-pointer"
             >
               <GoogleIcon name="print" size={16} />
               Print / Save Official Certificate PDF
@@ -575,7 +575,7 @@ export const StudentPortalView: React.FC<StudentPortalViewProps> = ({
               onClick={() =>
                 onToast('success', 'Credential Link Copied', 'Share this on LinkedIn or add to your resume.')
               }
-              className="px-6 py-3 rounded-xl btn-pink-glass text-white hover:border-sky-300 text-xs font-bold flex items-center gap-2 transition-colors cursor-pointer"
+              className="px-6 py-3 rounded-xl btn-blue-glass text-white hover:border-sky-300 text-xs font-bold flex items-center gap-2 transition-colors cursor-pointer"
             >
               <GoogleIcon name="share" size={16} />
               Share Credential on LinkedIn
@@ -666,7 +666,7 @@ export const StudentPortalView: React.FC<StudentPortalViewProps> = ({
                       className={`px-4 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer ${
                         hasApplied
                           ? 'bg-black/40 text-sky-300/60 cursor-not-allowed border border-sky-400/20'
-                          : 'btn-pink-primary text-white shadow-md'
+                          : 'btn-blue-primary text-white shadow-md'
                       }`}
                     >
                       {hasApplied ? 'Applied ✓' : 'One-Click Apply'}
