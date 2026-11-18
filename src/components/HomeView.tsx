@@ -449,6 +449,120 @@ export const HomeView: React.FC<HomeViewProps> = ({
         onRequestCallback={onRequestCallback}
       />
 
+      {/* 4.5 MEET YOUR REAL INDUSTRY MENTORS (HUMANIZED ACADEMY PRESENCE) */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
+        <div className="max-w-3xl mx-auto text-center">
+          <div className="glass-panel rounded-3xl p-6 sm:p-8 space-y-3 border-2 border-white shadow-xl backdrop-blur-2xl">
+            <div className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-white border-2 border-[#D3E5FD] text-[#1E428E] text-xs font-extrabold uppercase tracking-wider shadow-sm">
+              <GoogleIcon name="groups" size={16} className="text-[#3869C3]" />
+              <span>Real Practitioners • Not Just Lecturers</span>
+            </div>
+            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-[#1E428E] font-display tracking-tight">
+              Meet Your Real <span className="text-[#3869C3]">Industry Mentors</span>
+            </h2>
+            <p className="text-sm sm:text-base text-[#1E428E] leading-relaxed font-bold">
+              Every week, our senior practitioners conduct live 1-on-1 portfolio audits, technical code clinics, and commercial pitch simulations.
+            </p>
+          </div>
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          {[
+            {
+              name: 'Aarav Singhania',
+              role: 'Principal AI & Cloud Architect',
+              background: 'Ex-Amazon & Microsoft • 12+ Yrs Experience',
+              track: 'Artificial Intelligence, Machine Learning & Cloud',
+              photoUrl: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=400&q=80',
+              rating: '4.95 ★ (1,240+ Mentored)',
+              quote: 'We teach you the exact production workflows used in high-scale tech teams — zero fluff, pure implementation.',
+              courseId: 'course_ai_automation_workflows',
+            },
+            {
+              name: 'Pooja Iyer',
+              role: 'Lead Product Marketing Manager (PMM)',
+              background: 'Ex-Swiggy & Freshworks • GTM Strategist',
+              track: 'Product Marketing Management (PMM)',
+              photoUrl: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=400&q=80',
+              rating: '4.92 ★ (940+ Mentored)',
+              quote: 'Positioning and market launch strategy are superpowers. I help you build battlecards and GTM playbooks that recruiters notice immediately.',
+              courseId: 'course_product_marketing_management',
+            },
+            {
+              name: 'Arjun Malhotra',
+              role: 'Lead Interior Architect & Spatial Director',
+              background: 'SPA Delhi Alum • 10+ Yrs Architectural Practice',
+              track: 'Interior Design and Spatial Architecture',
+              photoUrl: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=400&q=80',
+              rating: '4.96 ★ (880+ Mentored)',
+              quote: 'From AutoCAD structural blueprints to cinema-quality 3D V-Ray renders, we prepare you for high-ticket residential and commercial clients.',
+              courseId: 'course_interior_design',
+            },
+            {
+              name: 'Tanya Kapoor',
+              role: 'Marketing Design & Creative Art Director',
+              background: 'Ex-Ogilvy & Schbang • Performance Brand Lead',
+              track: 'Marketing Design and Visual Communication',
+              photoUrl: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&w=400&q=80',
+              rating: '4.94 ★ (1,150+ Mentored)',
+              quote: 'Design that does not convert is just art. We train you to create visual campaign assets that drive verifiable business results.',
+              courseId: 'course_marketing_design',
+            },
+          ].map((mentor, idx) => (
+            <div
+              key={idx}
+              className="glass-card rounded-3xl p-6 border-2 border-white hover:border-[#3869C3] shadow-lg hover:shadow-2xl transition-all flex flex-col justify-between group text-[#1E428E]"
+            >
+              <div className="space-y-4">
+                <div className="relative">
+                  <div className="w-24 h-24 sm:w-28 sm:h-28 mx-auto rounded-2xl overflow-hidden border-2 border-white shadow-md relative">
+                    <img
+                      src={mentor.photoUrl}
+                      alt={mentor.name}
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                    />
+                  </div>
+                  <span className="absolute -bottom-2.5 left-1/2 -translate-x-1/2 bg-[#1E428E] text-white text-[10px] font-bold px-2.5 py-0.5 rounded-full border border-white whitespace-nowrap shadow-xs">
+                    {mentor.rating}
+                  </span>
+                </div>
+
+                <div className="text-center pt-2 space-y-1">
+                  <h4 className="font-extrabold text-base text-[#1E428E] group-hover:text-[#3869C3] transition-colors">
+                    {mentor.name}
+                  </h4>
+                  <p className="text-xs font-bold text-[#3869C3]">{mentor.role}</p>
+                  <p className="text-[11px] text-[#1E428E]/75 font-semibold">{mentor.background}</p>
+                </div>
+
+                <div className="p-3 rounded-2xl bg-[#D3E5FD]/50 border border-white text-xs text-[#1E428E] italic leading-relaxed">
+                  "{mentor.quote}"
+                </div>
+              </div>
+
+              <div className="pt-4 mt-4 border-t border-[#D3E5FD] space-y-2">
+                <button
+                  type="button"
+                  onClick={() => onRequestCallback(`1-on-1 Mentorship with ${mentor.name} (${mentor.track})`)}
+                  className="w-full py-2.5 rounded-xl btn-blue-primary font-bold text-xs uppercase tracking-wider text-white shadow-md flex items-center justify-center gap-1.5 cursor-pointer border border-white"
+                >
+                  <GoogleIcon name="calendar_month" size={14} />
+                  <span>Book 1-on-1 Session</span>
+                </button>
+
+                <button
+                  type="button"
+                  onClick={() => onSelectCourse(mentor.courseId)}
+                  className="w-full py-2 rounded-xl text-xs font-bold text-[#3869C3] hover:text-[#1E428E] text-center block cursor-pointer transition-colors"
+                >
+                  View {mentor.name.split(' ')[0]}'s Track →
+                </button>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
       {/* 5. INDUSTRY ALIGNED PROGRAMS & CAREER TRANSFORMATIONS */}
       <IndustryAlignedProgramsSection
         onSelectCourse={onSelectCourse}

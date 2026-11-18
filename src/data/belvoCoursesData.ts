@@ -837,5 +837,233 @@ export const BELVO_MAIN_COURSES: ITvedantCourse[] = [
     fee: 54000,
     originalFee: 78000,
     nextBatch: 'Every Monday'
+  },
+  {
+    id: 'course_interior_design',
+    slug: 'interior-design-spatial-architecture',
+    title: 'Interior Design and Spatial Architecture',
+    shortTitle: 'Interior & Spatial Design',
+    category: 'Interior Design and Spatial Architecture',
+    categoryLabel: 'Interior & Architecture',
+    duration: '6 Months',
+    mode: 'Classroom & Studio Labs',
+    level: 'Beginner to Advanced',
+    certification: 'Dual Certification (Hridayam by Belvo + Autodesk & NSDC Partner)',
+    rating: 4.9,
+    reviewCount: 920,
+    projectsCount: 24,
+    highestPackage: '₹16 LPA',
+    avgPackage: '₹6.8 LPA',
+    badge: 'Studio Practical',
+    summary: 'Master residential & commercial interior planning, 3D photorealistic rendering, AutoCAD technical drafting, SketchUp modeling, V-Ray lighting, and material sourcing with physical studio visits.',
+    description: 'Learn from practicing interior architects and spatial designers. From concept mood boards and anthropometric space planning to full photorealistic 3D architectural walk-throughs, you will design luxury residential villas, co-working studios, and retail boutiques.',
+    toolsCovered: ['AutoCAD', 'SketchUp Pro', '3ds Max', 'V-Ray', 'Revit Architecture', 'Photoshop', 'Lumion', 'Enscape'],
+    keyHighlights: [
+      '100% Placement Assurance with Top Architectural & Interior Design Firms',
+      'Hands-on Material Library & Site Visits in Mumbai and Pune',
+      'Autodesk Certified Professional Curriculum Integration',
+      'Live Commercial & Residential Client Briefs',
+      'Portfolio Mentorship by Senior Interior Architects'
+    ],
+    careerRoles: ['Interior Designer', '3D Visualizer & Spatial Artist', 'BIM Interior Drafter', 'Residential Stylist', 'Commercial Space Planner'],
+    eligibility: 'Open to freshers, civil/architectural diploma holders, and creative enthusiasts. No prior drafting knowledge needed.',
+    curriculum: [
+      {
+        moduleNumber: 1,
+        title: 'Design Fundamentals, Anthropometrics & Space Planning',
+        duration: '4 Weeks',
+        topics: ['History of Spatial Styles', 'Ergonomics & Circulation', 'Color Psychology', 'Concept Mood Boards & Material Boards'],
+        skillsGained: 'Spatial organization, client brief synthesis, and layout planning.'
+      },
+      {
+        moduleNumber: 2,
+        title: 'Technical Drafting with AutoCAD (2D Floor Plans & Elevations)',
+        duration: '5 Weeks',
+        topics: ['Architectural Symbols', 'Dimensioning Standards', 'Electrical & Plumbing Layouts', 'Custom Joinery Details'],
+        skillsGained: 'Working drawings and construction documentation.'
+      },
+      {
+        moduleNumber: 3,
+        title: '3D Spatial Modeling & Photorealistic V-Ray Rendering',
+        duration: '6 Weeks',
+        topics: ['SketchUp Pro Modeling', '3ds Max Polygonal Modeling', 'V-Ray & Lumion Global Illumination', 'PBR Realistic Textures'],
+        skillsGained: 'Cinema-grade interior rendering and architectural camera staging.'
+      },
+      {
+        moduleNumber: 4,
+        title: 'BIM with Revit, BOQ Estimation & Professional Portfolio',
+        duration: '5 Weeks',
+        topics: ['Revit Interior Components', 'Bill of Quantities (BOQ)', 'Vendor Negotiation', 'Final Portfolio Presentation'],
+        skillsGained: 'Cost estimation, project site management, and placement readiness.'
+      }
+    ],
+    capstoneProjects: [
+      {
+        title: 'Luxury 3BHK Penthouse Turnkey Interior Project',
+        description: 'Complete interior design package with CAD execution drawings, V-Ray renders, material specifications, and ₹45 Lakh BOQ estimate.',
+        tools: ['AutoCAD', 'SketchUp', 'V-Ray', 'Photoshop']
+      },
+      {
+        title: 'Flagship Sustainable Coffee Bar & Co-Working Hub',
+        description: 'Commercial interior scheme with acoustic zoning, ergonomic seating layouts, ambient architectural lighting, and VR walkthrough.',
+        tools: ['3ds Max', 'Lumion', 'AutoCAD', 'Revit']
+      }
+    ],
+    emiStartsAt: '₹4,499/mo',
+    fee: 58000,
+    originalFee: 82000,
+    nextBatch: 'Starting this Monday'
+  },
+  {
+    id: 'course_product_marketing_management',
+    slug: 'product-marketing-management',
+    title: 'Product Marketing Management (PMM)',
+    shortTitle: 'Product Marketing (PMM)',
+    category: 'Product Marketing Management',
+    categoryLabel: 'Product & GTM Strategy',
+    duration: '5 Months',
+    mode: 'Classroom & Online Live',
+    level: 'Intermediate to Advanced',
+    certification: 'Executive Dual Certification (Hridayam by Belvo + Product Marketing Alliance Certified)',
+    rating: 4.9,
+    reviewCount: 780,
+    projectsCount: 22,
+    highestPackage: '₹24 LPA',
+    avgPackage: '₹9.5 LPA',
+    badge: 'Executive Leadership',
+    summary: 'Lead Go-To-Market (GTM) launches, customer persona research, competitive battlecards, product pricing matrices, feature positioning, and cross-functional product-led growth (PLG).',
+    description: 'Product Marketing Managers are the bridge between product engineering, sales teams, and customers. Co-designed with senior PMMs from high-growth tech unicorns, this program teaches positioning frameworks, user telemetry, customer advisory boards, and tiered feature rollouts.',
+    toolsCovered: ['Notion GTM', 'Mixpanel', 'Amplitude', 'Crayon Compete', 'HubSpot PMM', 'Figma', 'Gong.io', 'Hotjar'],
+    keyHighlights: [
+      '100% Placement Support with Tech Unicorns & SaaS Platforms',
+      'Real Product GTM Launch Simulation with Tiered Pricing',
+      'Competitive Intelligence Battlecard Construction',
+      '1-on-1 Mentorship from Senior Product Leaders',
+      'Product-Led Growth (PLG) and Retention Metrics Mastery'
+    ],
+    careerRoles: ['Product Marketing Manager (PMM)', 'GTM Strategy Lead', 'Product Growth Specialist', 'Portfolio Marketing Director', 'Tech Evangelist'],
+    eligibility: 'Ideal for marketing professionals, business analysts, product managers, or tech graduates seeking strategic leadership roles.',
+    curriculum: [
+      {
+        moduleNumber: 1,
+        title: 'Customer Discovery, Segmentation & Persona Archetypes',
+        duration: '4 Weeks',
+        topics: ['Jobs-To-Be-Done (JTBD)', 'B2B vs B2C User Interviews', 'Persona Archetyping', 'Willingness-to-Pay Analysis'],
+        skillsGained: 'Market validation and customer insight extraction.'
+      },
+      {
+        moduleNumber: 2,
+        title: 'Positioning, Messaging Frameworks & Competitive Battlecards',
+        duration: '4 Weeks',
+        topics: ['April Dunford Positioning Canvas', 'Value Propositions', 'Competitive Intelligence with Crayon', 'Objection Handling Playbooks'],
+        skillsGained: 'Distinctive brand positioning and enterprise sales enablement.'
+      },
+      {
+        moduleNumber: 3,
+        title: 'Go-To-Market (GTM) Orchestration & Pricing Strategies',
+        duration: '5 Weeks',
+        topics: ['Alpha/Beta Feature Rollouts', 'Freemium vs Usage-Based Pricing', 'Product Hunt & PR Launch Kits', 'Sales Enablement Collateral'],
+        skillsGained: 'Coordinated cross-functional product releases and monetization modeling.'
+      },
+      {
+        moduleNumber: 4,
+        title: 'Product-Led Growth (PLG), Telemetry & Adoption Metrics',
+        duration: '4 Weeks',
+        topics: ['Onboarding Time-To-Value (TTV)', 'Mixpanel & Amplitude Funnels', 'Product Churn Analysis', 'Executive Capstone Defense'],
+        skillsGained: 'User adoption analytics and customer expansion loops.'
+      }
+    ],
+    capstoneProjects: [
+      {
+        title: 'Global GTM Launch Plan for AI Workflow Platform',
+        description: 'Design complete launch strategy including positioning statement, competitive battlecards, tier pricing model, and customer adoption funnel.',
+        tools: ['Notion GTM', 'Mixpanel', 'Figma', 'HubSpot']
+      },
+      {
+        title: 'SaaS Churn Reduction & Activation Overhaul',
+        description: 'Audit 50,000 user behavioral telemetry sessions, identify onboarding drop-offs, and implement in-app product tour redesign.',
+        tools: ['Amplitude', 'Hotjar', 'Mixpanel']
+      }
+    ],
+    emiStartsAt: '₹4,999/mo',
+    fee: 64000,
+    originalFee: 92000,
+    nextBatch: 'Every Alternate Monday'
+  },
+  {
+    id: 'course_marketing_design',
+    slug: 'marketing-design-visual-communication',
+    title: 'Marketing Design and Visual Communication',
+    shortTitle: 'Marketing Design & Ad Creatives',
+    category: 'Marketing Design and Visual Communication',
+    categoryLabel: 'Design & Growth Creatives',
+    duration: '5 Months',
+    mode: 'Classroom & Studio Labs',
+    level: 'Beginner to Advanced',
+    certification: 'Dual Certification (Hridayam by Belvo + Creative Agency Council)',
+    rating: 4.8,
+    reviewCount: 860,
+    projectsCount: 26,
+    highestPackage: '₹18 LPA',
+    avgPackage: '₹7.2 LPA',
+    badge: 'High Conversion',
+    summary: 'Design high-converting performance ad creatives, landing pages, motion graphics for social ads, email newsletter visual systems, and brand pitch decks tailored for measurable business ROI.',
+    description: 'Marketing designers are among the highest-paid creative specialists today because their visuals directly generate sales. This program trains you to craft high-CTR social ads, responsive landing pages, typography hierarchies, kinetic typography reels, and omnichannel creative variations for Meta, Google, and LinkedIn.',
+    toolsCovered: ['Figma', 'Adobe Illustrator', 'Photoshop', 'After Effects', 'Webflow', 'Midjourney Pro', 'Canva Enterprise', 'Unbounce'],
+    keyHighlights: [
+      '100% Placement Support with Performance Marketing Agencies & Top Brands',
+      'Over 200+ Live Creative Variations Produced in Class',
+      'Data-Driven Design: Translating CTR & ROAS into Better Creatives',
+      'Motion Design for TikTok, Reels & YouTube Shorts',
+      'Portfolio Website Development on Webflow'
+    ],
+    careerRoles: ['Performance Creative Designer', 'Marketing Art Director', 'Visual Communications Lead', 'Conversion Rate Optimization (CRO) Designer', 'Brand Campaign Stylist'],
+    eligibility: 'Open to freshers, graphic designers, marketers, and visual storytellers. No prior coding required.',
+    curriculum: [
+      {
+        moduleNumber: 1,
+        title: 'Visual Hierarchy, Typography Psychology & Conversion Design',
+        duration: '4 Weeks',
+        topics: ['F-Pattern & Z-Pattern Eye Tracking', 'Color Harmonies for Action', 'Microcopy Staging', 'Ad Spec Guidelines'],
+        skillsGained: 'Visual persuasion and conversion-focused graphic layouts.'
+      },
+      {
+        moduleNumber: 2,
+        title: 'Static & Carousel Performance Ad Creatives (Meta & Google)',
+        duration: '4 Weeks',
+        topics: ['Figma Modular Component Systems', 'Hook Variations (3-Second Rule)', 'UGC Creative Framing', 'Vector Iconography'],
+        skillsGained: 'Rapid creative testing matrices and automated brand asset scaling.'
+      },
+      {
+        moduleNumber: 3,
+        title: 'Motion Design for Performance Ads & Kinetic Typography',
+        duration: '5 Weeks',
+        topics: ['After Effects Motion Graphics', 'Dynamic Product Transitions', 'Sound Design & Audio Cues', 'Vertical Video Packaging'],
+        skillsGained: 'High-impact short-form ad video production.'
+      },
+      {
+        moduleNumber: 4,
+        title: 'Responsive High-Converting Landing Pages & Webflow Portfolio',
+        duration: '4 Weeks',
+        topics: ['Hero Section Wireframes', 'Social Proof Sections', 'Webflow Visual Development', 'Personal Agency Portfolio Launch'],
+        skillsGained: 'Complete marketing funnels and responsive digital presentation.'
+      }
+    ],
+    capstoneProjects: [
+      {
+        title: 'Complete 30-Day Multi-Variant Ad Campaign System for D2C Brand',
+        description: 'Produce 40 static ad creatives, 10 motion reels, and 3 high-converting landing page variants with audited 3.8x CTR improvements.',
+        tools: ['Figma', 'After Effects', 'Photoshop', 'Webflow']
+      },
+      {
+        title: 'B2B Enterprise Brand Visual Identity & Pitch Deck Overhaul',
+        description: 'Create a 25-slide executive investor pitch deck, brand guidelines document, and LinkedIn organic thought-leadership carousel series.',
+        tools: ['Figma', 'Illustrator', 'Photoshop']
+      }
+    ],
+    emiStartsAt: '₹4,299/mo',
+    fee: 55000,
+    originalFee: 79000,
+    nextBatch: 'Starting this Monday'
   }
 ];

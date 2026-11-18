@@ -10,6 +10,9 @@ export const BELVO_CATEGORIES = [
   'Copywriting, SEO, and Content Marketing',
   'Cloud Computing, IT, and Cybersecurity Awareness',
   'Data Analytics and Business Intelligence',
+  'Interior Design and Spatial Architecture',
+  'Product Marketing Management',
+  'Marketing Design and Visual Communication',
 ] as const;
 
 export type BelvoCategory = (typeof BELVO_CATEGORIES)[number] | string;

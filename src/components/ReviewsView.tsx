@@ -98,9 +98,17 @@ export const ReviewsView: React.FC<ReviewsViewProps> = ({ onRequestCallback }) =
               <div className="space-y-3">
                 <div className="flex items-start justify-between">
                   <div className="flex items-center gap-3">
-                    <div className="w-11 h-11 rounded-full bg-gradient-to-tr from-[#1E428E] to-[#3869C3] text-white flex items-center justify-center font-bold text-base shadow-xs shrink-0">
-                      {rev.author.charAt(0)}
-                    </div>
+                    {rev.avatarUrl ? (
+                      <img
+                        src={rev.avatarUrl}
+                        alt={rev.author}
+                        className="w-12 h-12 rounded-full object-cover border-2 border-white shadow-xs shrink-0"
+                      />
+                    ) : (
+                      <div className="w-12 h-12 rounded-full bg-gradient-to-tr from-[#1E428E] to-[#3869C3] text-white flex items-center justify-center font-bold text-base shadow-xs shrink-0">
+                        {rev.author.charAt(0)}
+                      </div>
+                    )}
                     <div>
                       <h4 className="font-bold text-[#1E428E] text-sm">{rev.author}</h4>
                       <p className="text-[11px] text-[#3869C3] font-medium">{rev.course}</p>
