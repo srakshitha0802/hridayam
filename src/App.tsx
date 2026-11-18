@@ -21,7 +21,6 @@ import { ToastMessage, ToastStack } from './components/Toast';
 import { Footer } from './components/Footer';
 import { GoogleIcon } from './components/GoogleIcon';
 import { GlitterCursor } from './components/GlitterCursor';
-import { BackgroundDoodles } from './components/ThemeDoodles';
 import { ITV_COURSES, ITvedantCourse } from './data/itvedantData';
 
 class AppErrorBoundary extends Component<
@@ -156,19 +155,13 @@ function PlatformShell() {
       {/* Shiny & Glittering Mouse Cursor with Particle Trails */}
       <GlitterCursor />
 
-      {/* Suitable Education Theme Background with Animated Doodles & Blueprint Grid */}
-      <BackgroundDoodles />
-
-      {/* Dreamy Hridayam Theme Background Art Layer */}
+      {/* Official Hridayam Background Art Image (100% Crisp & Fully Visible) */}
       <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden" aria-hidden="true">
-        {/* Hridayam Theme Background Art Image */}
         <img
           src="/hridayam-theme-bg.jpg"
-          alt=""
-          className="absolute inset-0 w-full h-full object-cover object-top opacity-40 filter brightness-[1.05] contrast-[1.05]"
+          alt="Hridayam Background"
+          className="w-full h-full object-cover object-top sm:object-center opacity-100"
         />
-        {/* Hridayam Official Soft Sky & Light Blue Gradient Overlay */}
-        <div className="absolute inset-0 bg-gradient-to-b from-[#84ADEB]/70 via-[#94BCF1]/60 to-[#84ADEB]/80 pointer-events-none" />
       </div>
 
       {/* Main Navbar */}

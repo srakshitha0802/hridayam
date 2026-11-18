@@ -1,19 +1,6 @@
 import React, { useState } from 'react';
 import { GoogleIcon } from './GoogleIcon';
 import { CompaniesSlidingMarquee } from './CompaniesSlidingMarquee';
-import {
-  DoodleSparkle,
-  DoodleGraduationCap,
-  DoodleOpenBook,
-  DoodleAtom,
-  DoodleCodeWindow,
-  DoodlePaperAirplane,
-  DoodleRocket,
-  DoodleLightbulb,
-  DoodleMathFormula,
-  DoodleBrainSynapse,
-  DoodleCompass,
-} from './ThemeDoodles';
 import { IndustryAlignedProgramsSection } from './IndustryAlignedProgramsSection';
 import {
   ITV_COURSES,
@@ -119,18 +106,7 @@ export const HomeView: React.FC<HomeViewProps> = ({
   return (
     <div className="space-y-16 pb-20 relative z-10 text-[#1E428E]">
       {/* 1. HERO SECTION (HRIDAYAM OFFICIAL PALETTE - DREAMY GLASS & HERO ART) */}
-      <section className="relative pt-6 pb-16 sm:pt-10 sm:pb-20 px-4 sm:px-6 lg:px-8 overflow-hidden rounded-b-[40px] sm:rounded-b-[56px] border-b-2 border-white/70 bg-gradient-to-b from-[#84ADEB]/45 via-[#94BCF1]/30 to-transparent">
-        {/* Dreamy Animated Educational Doodles in Hero Background */}
-        <div className="absolute top-12 left-6 w-20 h-20 text-white/70 drop-shadow-sm hidden md:block animate-doodle-float pointer-events-none">
-          <DoodleGraduationCap className="w-full h-full" />
-        </div>
-        <div className="absolute top-16 right-10 w-16 h-16 text-white/70 drop-shadow-sm hidden md:block animate-doodle-float-delayed pointer-events-none">
-          <DoodleOpenBook className="w-full h-full" />
-        </div>
-        <div className="absolute bottom-10 left-1/3 w-14 h-14 text-[#3869C3]/40 hidden lg:block animate-doodle-spin pointer-events-none">
-          <DoodleAtom className="w-full h-full" />
-        </div>
-
+      <section className="relative pt-6 pb-16 sm:pt-10 sm:pb-20 px-4 sm:px-6 lg:px-8 overflow-hidden rounded-b-[40px] sm:rounded-b-[56px] border-b-2 border-white/60">
         {/* 3 Dreamy Floating Pills from Official Reference Image */}
         <div className="max-w-7xl mx-auto mb-6 flex flex-wrap items-center justify-center sm:justify-between gap-3 relative z-10">
           <div className="hridayam-pill px-4 py-1.5 rounded-full text-xs font-bold flex items-center gap-2 cursor-pointer shadow-xs">
@@ -161,9 +137,9 @@ export const HomeView: React.FC<HomeViewProps> = ({
               {/* Subtle ambient light blue flare */}
               <div className="absolute top-0 right-0 w-72 h-72 bg-[#D3E5FD]/40 rounded-full blur-3xl pointer-events-none" />
 
-              {/* Trust Badge with Google Icon & Sparkle Doodle */}
+              {/* Trust Badge with Google Icon */}
               <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/80 border-2 border-[#D3E5FD] text-[#1E428E] text-xs font-bold shadow-xs">
-                <DoodleSparkle className="text-[#3869C3]" />
+                <GoogleIcon name="auto_awesome" size={14} className="text-[#3869C3]" />
                 <span>Next-Gen Career EdTech • Hridayam by Belvo</span>
                 <span className="w-1.5 h-1.5 rounded-full bg-[#3869C3]" />
                 <span className="text-[#3869C3] font-bold">100% Placement</span>
@@ -249,7 +225,7 @@ export const HomeView: React.FC<HomeViewProps> = ({
                     <h3 className="text-xl font-bold text-[#1E428E] font-display">
                       Let's talk about your career growth!
                     </h3>
-                    <DoodleSparkle className="text-[#3869C3]" />
+                    <GoogleIcon name="auto_awesome" size={20} className="text-[#3869C3]" />
                   </div>
                   <p className="text-xs text-[#1E428E]/80 font-medium">
                     Get a tailored curriculum roadmap and 100% placement assurance details.

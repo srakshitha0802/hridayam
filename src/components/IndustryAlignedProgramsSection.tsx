@@ -1,12 +1,5 @@
 import React, { useState, useRef } from 'react';
 import { GoogleIcon } from './GoogleIcon';
-import {
-  DoodleSparkle,
-  DoodleCurvedArrow,
-  DoodleRocket,
-  DoodleLightbulb,
-  DoodleBadgeCheck,
-} from './ThemeDoodles';
 
 interface IndustryAlignedProgramsSectionProps {
   onSelectCourse: (courseId: string) => void;
@@ -379,14 +372,6 @@ export const IndustryAlignedProgramsSection: React.FC<IndustryAlignedProgramsSec
       {/* ========================================================================= */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center space-y-3 relative max-w-4xl mx-auto">
-          {/* Decorative Sparkle Doodles */}
-          <div className="absolute -top-6 left-4 text-[#3869C3] animate-doodle-float hidden sm:block">
-            <DoodleSparkle className="w-8 h-8 text-[#3869C3]" />
-          </div>
-          <div className="absolute -top-4 right-6 text-[#5A87D7] animate-doodle-float-delayed hidden sm:block">
-            <DoodleSparkle className="w-6 h-6 text-[#5A87D7]" />
-          </div>
-
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/90 border-2 border-[#D3E5FD] text-[#1E428E] text-xs font-bold uppercase tracking-widest backdrop-blur-md shadow-xs">
             <GoogleIcon name="workspace_premium" size={16} className="text-[#3869C3]" filled />
             <span>Industry Aligned Programs</span>
@@ -706,7 +691,7 @@ export const IndustryAlignedProgramsSection: React.FC<IndustryAlignedProgramsSec
         <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
           <div className="space-y-2">
             <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/90 border-2 border-[#D3E5FD] text-[#1E428E] text-xs font-bold uppercase tracking-wider backdrop-blur-md shadow-xs">
-              <DoodleBadgeCheck className="w-4 h-4 text-[#3869C3]" />
+              <GoogleIcon name="verified" size={16} className="text-[#3869C3]" filled />
               <span>Real Outcomes &amp; Proof</span>
             </div>
             <h3 className="font-display text-2xl sm:text-3xl lg:text-4xl font-extrabold text-[#1E428E] tracking-tight">

@@ -1,6 +1,5 @@
 import React from 'react';
 import { GoogleIcon } from './GoogleIcon';
-import { DoodleSparkle } from './ThemeDoodles';
 
 export interface CompanyPartner {
   name: string;
@@ -410,7 +409,6 @@ export const CompaniesSlidingMarquee: React.FC = () => {
         <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/85 border-2 border-white text-[#1E428E] text-xs font-bold uppercase tracking-wider backdrop-blur-md shadow-xs">
           <GoogleIcon name="verified" size={16} className="text-[#3869C3]" filled />
           <span>3,500+ Learners Have Been Placed By Our India's Largest Placement Team</span>
-          <DoodleSparkle className="w-4 h-4 text-[#3869C3]" />
         </div>
 
         <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-[#1E428E] font-display tracking-tight">
