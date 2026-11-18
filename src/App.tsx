@@ -159,25 +159,16 @@ function PlatformShell() {
       {/* Suitable Education Theme Background with Animated Doodles & Blueprint Grid */}
       <BackgroundDoodles />
 
-      {/* Dreamy Hridayam Theme Background Art Layer & Looping Education Media */}
+      {/* Dreamy Hridayam Theme Background Art Layer */}
       <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden" aria-hidden="true">
         {/* Hridayam Theme Background Art Image */}
         <img
           src="/hridayam-theme-bg.jpg"
           alt=""
-          className="absolute inset-0 w-full h-full object-cover object-top opacity-35 filter brightness-[1.08] contrast-[1.05]"
-        />
-        {/* Subtle Video Loop */}
-        <video
-          autoPlay
-          loop
-          muted
-          playsInline
-          className="w-full h-full object-cover opacity-15 filter contrast-[1.2] brightness-[1.1] scale-105"
-          src="/site-bg.mp4"
+          className="absolute inset-0 w-full h-full object-cover object-top opacity-40 filter brightness-[1.05] contrast-[1.05]"
         />
         {/* Hridayam Official Soft Sky & Light Blue Gradient Overlay */}
-        <div className="absolute inset-0 bg-gradient-to-b from-[#84ADEB]/75 via-[#94BCF1]/65 to-[#84ADEB]/85 pointer-events-none" />
+        <div className="absolute inset-0 bg-gradient-to-b from-[#84ADEB]/70 via-[#94BCF1]/60 to-[#84ADEB]/80 pointer-events-none" />
       </div>
 
       {/* Main Navbar */}
