@@ -802,7 +802,7 @@ export const IndustryAlignedProgramsSection: React.FC<IndustryAlignedProgramsSec
           ].map((story) => (
             <div
               key={story.id}
-              className="w-[340px] sm:w-[380px] shrink-0 snap-start bg-white/95 rounded-3xl p-6 border-2 border-white/90 hover:border-[#3869C3] shadow-md hover:shadow-xl transition-all flex flex-col justify-between relative overflow-hidden group text-[#1E428E]"
+              className="w-[340px] sm:w-[380px] shrink-0 snap-start glass-card rounded-3xl p-6 border-2 border-white hover:border-[#3869C3] shadow-lg hover:shadow-2xl transition-all flex flex-col justify-between relative overflow-hidden group text-[#1E428E]"
             >
               <div className="space-y-4">
                 <div className="flex items-center gap-3.5">
@@ -859,7 +859,7 @@ export const IndustryAlignedProgramsSection: React.FC<IndustryAlignedProgramsSec
           ].map((metric, idx) => (
             <div
               key={idx}
-              className="bg-white/95 rounded-2xl p-4 text-center border-2 border-white/90 hover:border-[#3869C3] shadow-sm hover:shadow-md transition-all text-[#1E428E]"
+              className="glass-card rounded-2xl p-4 text-center border-2 border-white hover:border-[#3869C3] shadow-md hover:shadow-xl transition-all text-[#1E428E]"
             >
               <div className="text-xl sm:text-2xl font-extrabold text-[#3869C3] font-display">
                 {metric.value}

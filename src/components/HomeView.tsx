@@ -109,21 +109,21 @@ export const HomeView: React.FC<HomeViewProps> = ({
       <section className="relative pt-6 pb-16 sm:pt-10 sm:pb-20 px-4 sm:px-6 lg:px-8 overflow-hidden rounded-b-[40px] sm:rounded-b-[56px] border-b-2 border-white/60">
         {/* 3 Dreamy Floating Pills from Official Reference Image */}
         <div className="max-w-7xl mx-auto mb-6 flex flex-wrap items-center justify-center sm:justify-between gap-3 relative z-10">
-          <div className="hridayam-pill px-4 py-1.5 rounded-full text-xs font-bold flex items-center gap-2 cursor-pointer shadow-xs">
+          <div className="hridayam-pill px-4 py-1.5 rounded-full text-xs font-bold flex items-center gap-2 cursor-pointer shadow-xs animate-smooth-float">
             <span className="text-base">💡</span>
             <span>Explore Knowledge</span>
           </div>
 
-          <div className="text-2xl sm:text-3xl font-extrabold tracking-widest text-white/80 drop-shadow-sm font-display select-none">
+          <div className="text-2xl sm:text-3xl font-extrabold tracking-widest text-white drop-shadow-md font-display select-none">
             HRID<span className="text-[#D3E5FD]">♡</span>YAM
           </div>
 
           <div className="flex items-center gap-3">
-            <div className="hridayam-pill px-4 py-1.5 rounded-full text-xs font-bold flex items-center gap-2 cursor-pointer shadow-xs">
+            <div className="hridayam-pill px-4 py-1.5 rounded-full text-xs font-bold flex items-center gap-2 cursor-pointer shadow-xs animate-smooth-float-delayed">
               <span className="text-base">📖</span>
               <span>Learn &amp; Grow</span>
             </div>
-            <div className="hridayam-pill px-4 py-1.5 rounded-full text-xs font-bold hidden md:flex items-center gap-2 cursor-pointer shadow-xs">
+            <div className="hridayam-pill px-4 py-1.5 rounded-full text-xs font-bold hidden md:flex items-center gap-2 cursor-pointer shadow-xs animate-smooth-float">
               <span className="text-base">📈</span>
               <span>Achieve More</span>
             </div>
@@ -378,7 +378,7 @@ export const HomeView: React.FC<HomeViewProps> = ({
           {campusPhotos.map((photo, idx) => (
             <div
               key={idx}
-              className="bg-white/90 rounded-2xl overflow-hidden group border-2 border-white hover:border-[#3869C3] shadow-md hover:shadow-xl transition-all"
+              className="glass-card rounded-2xl overflow-hidden group border-2 border-white hover:border-[#3869C3] shadow-lg hover:shadow-2xl transition-all"
             >
               <div className="h-44 bg-[#D3E5FD]/30 relative overflow-hidden">
                 <img
@@ -388,9 +388,9 @@ export const HomeView: React.FC<HomeViewProps> = ({
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-[#1E428E]/70 via-transparent to-transparent opacity-60 group-hover:opacity-80 transition-opacity" />
               </div>
-              <div className="p-4 space-y-1 text-center bg-white">
+              <div className="p-4 space-y-1 text-center bg-white/70 backdrop-blur-md">
                 <h4 className="font-semibold text-[#1E428E] text-xs truncate">{photo.title}</h4>
-                <p className="text-[11px] text-[#1E428E]/70 truncate">{photo.subtitle}</p>
+                <p className="text-[11px] text-[#1E428E]/75 truncate font-medium">{photo.subtitle}</p>
               </div>
             </div>
           ))}
@@ -550,7 +550,7 @@ export const HomeView: React.FC<HomeViewProps> = ({
               onClick={() => {
                 onSelectCourse(cat.courseId);
               }}
-              className="bg-white/95 rounded-2xl p-5 hover:border-[#3869C3] hover:shadow-xl transition-all cursor-pointer flex flex-col justify-between group border-2 border-white/90 shadow-sm text-[#1E428E]"
+              className="glass-card rounded-2xl p-5 hover:border-[#3869C3] shadow-md hover:shadow-2xl transition-all cursor-pointer flex flex-col justify-between group border-2 border-white text-[#1E428E]"
             >
               <div className="space-y-3">
                 <div className="flex items-center justify-between">
@@ -593,7 +593,7 @@ export const HomeView: React.FC<HomeViewProps> = ({
       />
 
       {/* 6. CLASSROOM CENTERS TABS & EXPLORER (HRIDAYAM BLUE-WHITE LAB FRAME) */}
-      <section className="relative py-16 px-4 sm:px-6 lg:px-8 overflow-hidden rounded-3xl sm:rounded-[40px] border-2 border-white/90 shadow-xl my-8 bg-gradient-to-b from-white/95 via-[#D3E5FD]/30 to-white/90">
+      <section className="relative py-16 px-4 sm:px-6 lg:px-8 overflow-hidden rounded-3xl sm:rounded-[40px] border-2 border-white shadow-2xl my-8 glass-panel">
         <div className="max-w-7xl mx-auto space-y-8 relative z-10">
           <div className="text-center max-w-2xl mx-auto space-y-2">
             <span className="text-xs font-bold uppercase text-[#3869C3] tracking-widest">
@@ -602,7 +602,7 @@ export const HomeView: React.FC<HomeViewProps> = ({
             <h2 className="text-2xl sm:text-3xl font-bold text-[#1E428E] font-display">
               Our Training Centers in Mumbai, Pune &amp; Nagpur
             </h2>
-            <p className="text-xs sm:text-sm text-[#1E428E]/80 font-medium">
+            <p className="text-xs sm:text-sm text-[#1E428E]/85 font-medium">
               Walk in for a 1-on-1 counseling session and experience live classroom labs.
             </p>
           </div>
@@ -616,7 +616,7 @@ export const HomeView: React.FC<HomeViewProps> = ({
                 className={`px-4 py-2 rounded-xl text-xs font-semibold transition-all cursor-pointer whitespace-nowrap ${
                   selectedCenterTab === idx
                     ? 'btn-blue-primary shadow-md border-2 border-white text-white'
-                    : 'bg-white/90 text-[#1E428E] border-2 border-[#D3E5FD] hover:border-[#3869C3]'
+                    : 'glass-card text-[#1E428E] border-2 border-white hover:border-[#3869C3]'
                 }`}
               >
                 {c.name.split(' ')[0]} {c.name.split(' ')[1] || ''}
@@ -626,7 +626,7 @@ export const HomeView: React.FC<HomeViewProps> = ({
 
           {/* Active Center Card */}
           {CLASSROOM_CENTERS[selectedCenterTab] && (
-            <div className="bg-white/95 rounded-3xl p-6 sm:p-8 border-2 border-white grid grid-cols-1 md:grid-cols-12 gap-8 items-center max-w-5xl mx-auto shadow-xl">
+            <div className="glass-panel rounded-3xl p-6 sm:p-8 border-2 border-white grid grid-cols-1 md:grid-cols-12 gap-8 items-center max-w-5xl mx-auto shadow-2xl">
               <div className="md:col-span-5 h-64 rounded-2xl overflow-hidden bg-slate-100 border border-[#D3E5FD]">
                 <img
                   src={CLASSROOM_CENTERS[selectedCenterTab].imageUrl}

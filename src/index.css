@@ -37,29 +37,29 @@
 
 /* Glassmorphism & Modern Bold Frames System (Hridayam Official Palette) */
 .glass-panel {
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.84) 0%, rgba(211, 229, 253, 0.72) 50%, rgba(255, 255, 255, 0.62) 100%);
-  backdrop-filter: blur(24px);
-  -webkit-backdrop-filter: blur(24px);
-  border: 2px solid rgba(255, 255, 255, 0.85);
-  box-shadow: 0 18px 45px -4px rgba(30, 66, 142, 0.16), 0 8px 16px -2px rgba(30, 66, 142, 0.08), inset 0 1.5px 2px 0 #FFFFFF;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.78) 0%, rgba(211, 229, 253, 0.62) 50%, rgba(255, 255, 255, 0.68) 100%);
+  backdrop-filter: blur(28px) saturate(190%);
+  -webkit-backdrop-filter: blur(28px) saturate(190%);
+  border: 2px solid rgba(255, 255, 255, 0.90);
+  box-shadow: 0 20px 50px -6px rgba(30, 66, 142, 0.18), 0 8px 18px -2px rgba(30, 66, 142, 0.08), inset 0 1.5px 2px 0 #FFFFFF;
   color: #1E428E;
-  transition: all 280ms cubic-bezier(0.16, 1, 0.3, 1);
+  transition: all 350ms cubic-bezier(0.16, 1, 0.3, 1);
   position: relative;
 }
 
 .glass-panel:hover {
   border-color: #FFFFFF;
-  box-shadow: 0 26px 60px -4px rgba(30, 66, 142, 0.22), 0 0 24px 0 rgba(211, 229, 253, 0.8), inset 0 2px 3px 0 #FFFFFF;
+  box-shadow: 0 30px 70px -4px rgba(30, 66, 142, 0.24), 0 0 28px 0 rgba(211, 229, 253, 0.9), inset 0 2px 3px 0 #FFFFFF;
 }
 
 .glass-card {
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.85) 0%, rgba(211, 229, 253, 0.70) 55%, rgba(255, 255, 255, 0.62) 100%);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 2px solid rgba(255, 255, 255, 0.85);
-  box-shadow: 0 14px 34px -4px rgba(30, 66, 142, 0.14), inset 0 1.5px 2px 0 #FFFFFF;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.78) 0%, rgba(211, 229, 253, 0.60) 55%, rgba(255, 255, 255, 0.68) 100%);
+  backdrop-filter: blur(26px) saturate(190%);
+  -webkit-backdrop-filter: blur(26px) saturate(190%);
+  border: 2px solid rgba(255, 255, 255, 0.88);
+  box-shadow: 0 16px 38px -4px rgba(30, 66, 142, 0.16), inset 0 1.5px 2px 0 #FFFFFF;
   color: #1E428E;
-  transition: transform 260ms cubic-bezier(0.16, 1, 0.3, 1), box-shadow 260ms cubic-bezier(0.16, 1, 0.3, 1), border-color 260ms ease;
+  transition: transform 350ms cubic-bezier(0.16, 1, 0.3, 1), box-shadow 350ms cubic-bezier(0.16, 1, 0.3, 1), border-color 300ms ease;
   position: relative;
   overflow: hidden;
 }
@@ -74,7 +74,7 @@
   height: 100%;
   background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.85), transparent);
   transform: skewX(-20deg);
-  transition: left 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: left 0.8s cubic-bezier(0.16, 1, 0.3, 1);
   pointer-events: none;
 }
 
@@ -83,47 +83,49 @@
 }
 
 .glass-card:hover {
-  transform: translateY(-5px);
+  transform: translateY(-6px) scale(1.008);
   border-color: #FFFFFF;
-  box-shadow: 0 22px 50px -4px rgba(30, 66, 142, 0.22), 0 0 20px 0 rgba(211, 229, 253, 0.8), inset 0 1.5px 2.5px 0 #FFFFFF;
+  box-shadow: 0 26px 56px -4px rgba(30, 66, 142, 0.24), 0 0 24px 0 rgba(211, 229, 253, 0.9), inset 0 2px 2.5px 0 #FFFFFF;
 }
 
 /* Modern Bold Frame (Hridayam Glass) */
 .glass-dark {
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.88) 0%, rgba(211, 229, 253, 0.75) 50%, rgba(255, 255, 255, 0.65) 100%);
-  backdrop-filter: blur(24px);
-  -webkit-backdrop-filter: blur(24px);
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.82) 0%, rgba(211, 229, 253, 0.68) 50%, rgba(255, 255, 255, 0.72) 100%);
+  backdrop-filter: blur(28px) saturate(190%);
+  -webkit-backdrop-filter: blur(28px) saturate(190%);
   border: 2px solid rgba(255, 255, 255, 0.90);
   box-shadow: 0 24px 60px -6px rgba(30, 66, 142, 0.18), inset 0 1.5px 2px 0 #FFFFFF;
   color: #1E428E;
+  transition: all 350ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 /* Hridayam High-Contrast Executive Navy Console */
 .glass-blue-contrast {
-  background: linear-gradient(135deg, #1E428E 0%, #3869C3 55%, #5A87D7 100%);
-  backdrop-filter: blur(24px);
-  -webkit-backdrop-filter: blur(24px);
-  border: 2px solid rgba(211, 229, 253, 0.65);
-  box-shadow: 0 28px 70px rgba(30, 66, 142, 0.35), inset 0 1.5px 2px 0 rgba(255, 255, 255, 0.5);
+  background: linear-gradient(135deg, rgba(30, 66, 142, 0.90) 0%, rgba(56, 105, 195, 0.86) 55%, rgba(90, 135, 215, 0.82) 100%);
+  backdrop-filter: blur(30px) saturate(190%);
+  -webkit-backdrop-filter: blur(30px) saturate(190%);
+  border: 2px solid rgba(255, 255, 255, 0.75);
+  box-shadow: 0 30px 80px rgba(30, 66, 142, 0.40), inset 0 1.5px 2px 0 rgba(255, 255, 255, 0.6);
   color: #FFFFFF;
+  transition: all 350ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 /* Hridayam Floating Dreamy Glass Pill (from reference image) */
 .hridayam-pill {
-  background: rgba(211, 229, 253, 0.60);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1.5px solid rgba(255, 255, 255, 0.85);
-  box-shadow: 0 8px 24px rgba(30, 66, 142, 0.12), inset 0 1px 2px rgba(255, 255, 255, 0.8);
+  background: rgba(211, 229, 253, 0.55);
+  backdrop-filter: blur(20px) saturate(190%);
+  -webkit-backdrop-filter: blur(20px) saturate(190%);
+  border: 2px solid rgba(255, 255, 255, 0.90);
+  box-shadow: 0 10px 28px rgba(30, 66, 142, 0.15), inset 0 1px 2px rgba(255, 255, 255, 0.85);
   color: #1E428E;
-  transition: all 220ms ease;
+  transition: all 300ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .hridayam-pill:hover {
-  background: rgba(255, 255, 255, 0.85);
+  background: rgba(255, 255, 255, 0.88);
   border-color: #FFFFFF;
-  box-shadow: 0 12px 30px rgba(30, 66, 142, 0.18), 0 0 16px rgba(211, 229, 253, 0.9);
-  transform: translateY(-2px);
+  box-shadow: 0 14px 34px rgba(30, 66, 142, 0.22), 0 0 20px rgba(211, 229, 253, 0.95);
+  transform: translateY(-3px) scale(1.02);
 }
 
 /* Metallic Badges & Pills */
@@ -170,37 +172,38 @@
   background: linear-gradient(135deg, #1E428E 0%, #3869C3 55%, #5A87D7 100%);
   color: #FFFFFF;
   font-weight: 600;
-  border: 1.5px solid rgba(255, 255, 255, 0.6);
-  box-shadow: 0 8px 24px -2px rgba(30, 66, 142, 0.35), inset 0 1px 2px rgba(255, 255, 255, 0.4);
-  transition: all 220ms cubic-bezier(0.16, 1, 0.3, 1);
+  border: 2px solid rgba(255, 255, 255, 0.8);
+  box-shadow: 0 10px 28px -2px rgba(30, 66, 142, 0.38), inset 0 1px 2px rgba(255, 255, 255, 0.5);
+  transition: all 350ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .btn-blue-primary:hover:not(:disabled),
 .btn-pink-primary:hover:not(:disabled) {
-  transform: translateY(-2px);
+  transform: translateY(-3px) scale(1.015);
   background: linear-gradient(135deg, #3869C3 0%, #5A87D7 55%, #84ADEB 100%);
   border-color: #FFFFFF;
-  box-shadow: 0 12px 30px -2px rgba(30, 66, 142, 0.45), inset 0 1px 3px rgba(255, 255, 255, 0.6);
+  box-shadow: 0 16px 36px -2px rgba(30, 66, 142, 0.48), 0 0 22px rgba(211, 229, 253, 0.8), inset 0 1px 3px rgba(255, 255, 255, 0.7);
 }
 
 .btn-blue-glass,
 .btn-pink-glass {
-  background: rgba(211, 229, 253, 0.7);
+  background: rgba(211, 229, 253, 0.65);
   color: #1E428E;
   font-weight: 600;
   border: 2px solid #FFFFFF;
-  backdrop-filter: blur(14px);
-  box-shadow: 0 4px 14px rgba(30, 66, 142, 0.12);
-  transition: all 200ms ease;
+  backdrop-filter: blur(18px) saturate(180%);
+  -webkit-backdrop-filter: blur(18px) saturate(180%);
+  box-shadow: 0 6px 18px rgba(30, 66, 142, 0.14), inset 0 1px 2px rgba(255, 255, 255, 0.6);
+  transition: all 300ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .btn-blue-glass:hover:not(:disabled),
 .btn-pink-glass:hover:not(:disabled) {
-  background: #FFFFFF;
-  color: #3869C3;
-  border-color: #D3E5FD;
-  box-shadow: 0 8px 20px rgba(30, 66, 142, 0.18);
   transform: translateY(-2px);
+  background: rgba(255, 255, 255, 0.95);
+  color: #3869C3;
+  border-color: #FFFFFF;
+  box-shadow: 0 10px 24px rgba(30, 66, 142, 0.20), 0 0 16px rgba(211, 229, 253, 0.8);
 }
 
 .btn-blue-dark,
@@ -295,4 +298,22 @@
 
 .animate-doodle-pulse {
   animation: pulse-glow 4s ease-in-out infinite;
+}
+
+/* Smooth Floating Animations for Glass Elements */
+@keyframes smooth-float-y {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-7px);
+  }
+}
+
+.animate-smooth-float {
+  animation: smooth-float-y 4.5s ease-in-out infinite;
+}
+
+.animate-smooth-float-delayed {
+  animation: smooth-float-y 5s ease-in-out 1.8s infinite;
 }

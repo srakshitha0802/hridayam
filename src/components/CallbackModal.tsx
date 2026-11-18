@@ -43,11 +43,11 @@ export const CallbackModal: React.FC<CallbackModalProps> = ({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-md animate-in fade-in duration-200">
-      <div className="bg-white/95 backdrop-blur-2xl rounded-3xl max-w-md w-full p-6 sm:p-8 shadow-2xl border-2 border-blue-200 relative text-slate-900">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[#1E428E]/40 backdrop-blur-md animate-in fade-in duration-200">
+      <div className="glass-panel rounded-3xl max-w-md w-full p-6 sm:p-8 shadow-2xl border-2 border-white relative text-[#1E428E]">
         <button
           onClick={onClose}
-          className="absolute top-4 right-4 p-2 rounded-full text-slate-400 hover:text-slate-900 hover:bg-blue-50 transition-colors cursor-pointer"
+          className="absolute top-4 right-4 p-2 rounded-full text-[#1E428E]/60 hover:text-[#1E428E] hover:bg-white/50 transition-colors cursor-pointer"
         >
           <GoogleIcon name="close" size={20} />
         </button>

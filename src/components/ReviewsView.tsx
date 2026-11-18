@@ -17,20 +17,20 @@ export const ReviewsView: React.FC<ReviewsViewProps> = ({ onRequestCallback }) =
       : GOOGLE_REVIEWS_LIST.filter((r) => r.branch === selectedBranch);
 
   return (
-    <div className="space-y-16 pb-20 relative z-10 text-slate-900">
+    <div className="space-y-16 pb-20 relative z-10 text-[#1E428E]">
       {/* Hero Section */}
       <section className="pt-6 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-7xl mx-auto bg-white/95 backdrop-blur-2xl rounded-3xl p-8 sm:p-12 shadow-2xl relative overflow-hidden border-2 border-blue-200 text-center space-y-4">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-blue-50 border border-blue-200 text-blue-700 text-xs font-semibold">
+        <div className="max-w-7xl mx-auto glass-panel rounded-3xl p-8 sm:p-12 shadow-2xl relative overflow-hidden border-2 border-white text-center space-y-4">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/90 border border-white text-[#1E428E] text-xs font-bold shadow-xs">
             <GoogleIcon name="star" size={16} filled className="text-amber-500" />
             <span>4.8 / 5 Rating from 5,280+ Verified Google Reviews</span>
           </div>
 
-          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold font-display text-slate-900">
-            What Our Students & Alumni Say
+          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold font-display text-[#1E428E] tracking-tight">
+            What Our Students &amp; Alumni Say
           </h1>
 
-          <p className="text-slate-600 text-sm sm:text-base max-w-2xl mx-auto leading-relaxed">
+          <p className="text-[#1E428E]/80 text-sm sm:text-base max-w-2xl mx-auto leading-relaxed font-medium">
             Real feedback from freshers, non-IT graduates, and experienced engineers who accelerated their careers through Hridayam by Belvo.
           </p>
         </div>
@@ -38,9 +38,9 @@ export const ReviewsView: React.FC<ReviewsViewProps> = ({ onRequestCallback }) =
 
       {/* Review Metrics Bar */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="bg-white/95 backdrop-blur-2xl rounded-3xl p-6 sm:p-8 grid grid-cols-1 md:grid-cols-4 gap-6 text-center border-2 border-blue-200 shadow-xl text-slate-900">
+        <div className="glass-card rounded-3xl p-6 sm:p-8 grid grid-cols-1 md:grid-cols-4 gap-6 text-center border-2 border-white shadow-xl text-[#1E428E]">
           <div className="space-y-1">
-            <div className="text-4xl font-bold text-slate-900 font-display flex items-center justify-center gap-2">
+            <div className="text-4xl font-extrabold text-[#1E428E] font-display flex items-center justify-center gap-2">
               <span>4.8</span>
               <div className="flex text-amber-400">
                 {[...Array(5)].map((_, i) => (
@@ -48,22 +48,22 @@ export const ReviewsView: React.FC<ReviewsViewProps> = ({ onRequestCallback }) =
                 ))}
               </div>
             </div>
-            <p className="text-xs text-slate-500 font-semibold">Overall Rating on Google</p>
+            <p className="text-xs text-[#1E428E]/75 font-semibold">Overall Rating on Google</p>
           </div>
 
-          <div className="space-y-1 border-t md:border-t-0 md:border-l border-blue-100 pt-4 md:pt-0">
-            <div className="text-4xl font-bold text-blue-600 font-display">5,280+</div>
-            <p className="text-xs text-slate-500 font-semibold">Total Google Reviews</p>
+          <div className="space-y-1 border-t md:border-t-0 md:border-l border-[#84ADEB]/30 pt-4 md:pt-0">
+            <div className="text-4xl font-extrabold text-[#3869C3] font-display">5,280+</div>
+            <p className="text-xs text-[#1E428E]/75 font-semibold">Total Google Reviews</p>
           </div>
 
-          <div className="space-y-1 border-t md:border-t-0 md:border-l border-blue-100 pt-4 md:pt-0">
-            <div className="text-4xl font-bold text-slate-900 font-display">94.6%</div>
-            <p className="text-xs text-slate-500 font-semibold">Recommended Placement Rate</p>
+          <div className="space-y-1 border-t md:border-t-0 md:border-l border-[#84ADEB]/30 pt-4 md:pt-0">
+            <div className="text-4xl font-extrabold text-[#1E428E] font-display">94.6%</div>
+            <p className="text-xs text-[#1E428E]/75 font-semibold">Recommended Placement Rate</p>
           </div>
 
-          <div className="space-y-1 border-t md:border-t-0 md:border-l border-blue-100 pt-4 md:pt-0">
-            <div className="text-4xl font-bold text-blue-600 font-display">4.9 / 5</div>
-            <p className="text-xs text-slate-500 font-semibold">Mentor & Lab Support Rating</p>
+          <div className="space-y-1 border-t md:border-t-0 md:border-l border-[#84ADEB]/30 pt-4 md:pt-0">
+            <div className="text-4xl font-extrabold text-[#3869C3] font-display">4.9 / 5</div>
+            <p className="text-xs text-[#1E428E]/75 font-semibold">Mentor &amp; Lab Support Rating</p>
           </div>
         </div>
       </div>
@@ -77,8 +77,8 @@ export const ReviewsView: React.FC<ReviewsViewProps> = ({ onRequestCallback }) =
               onClick={() => setSelectedBranch(b)}
               className={`px-4 py-2 rounded-xl text-xs font-semibold whitespace-nowrap transition-all cursor-pointer ${
                 selectedBranch === b
-                  ? 'bg-blue-600 text-white shadow-md border border-blue-400'
-                  : 'bg-white text-slate-700 hover:text-blue-600 border border-blue-200 shadow-xs'
+                  ? 'btn-blue-primary text-white shadow-md'
+                  : 'glass-card text-[#1E428E] hover:text-[#3869C3] border border-white shadow-xs'
               }`}
             >
               {b}
@@ -93,7 +93,7 @@ export const ReviewsView: React.FC<ReviewsViewProps> = ({ onRequestCallback }) =
           {filteredReviews.map((rev) => (
             <div
               key={rev.id}
-              className="bg-white rounded-2xl p-6 space-y-4 hover:border-blue-400 transition-all flex flex-col justify-between border-2 border-blue-100 shadow-md text-slate-900"
+              className="glass-card rounded-2xl p-6 space-y-4 hover:border-[#3869C3] transition-all flex flex-col justify-between border-2 border-white shadow-lg hover:shadow-2xl text-[#1E428E]"
             >
               <div className="space-y-3">
                 <div className="flex items-start justify-between">
@@ -118,12 +118,12 @@ export const ReviewsView: React.FC<ReviewsViewProps> = ({ onRequestCallback }) =
                 </p>
               </div>
 
-              <div className="pt-3 border-t border-blue-100 flex items-center justify-between text-[11px] text-slate-500">
-                <span className="flex items-center gap-1 font-semibold text-blue-600">
+              <div className="pt-3 border-t border-[#84ADEB]/30 flex items-center justify-between text-[11px] text-[#1E428E]/75">
+                <span className="flex items-center gap-1 font-semibold text-[#3869C3]">
                   <GoogleIcon name="location_on" size={14} />
                   {rev.branch}
                 </span>
-                <span>{rev.date}</span>
+                <span className="font-medium">{rev.date}</span>
               </div>
             </div>
           ))}

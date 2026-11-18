@@ -56,7 +56,7 @@ export const ClassroomCentersView: React.FC<ClassroomCentersViewProps> = ({ onRe
               className={`px-4 py-2 rounded-xl text-xs font-semibold transition-all cursor-pointer whitespace-nowrap ${
                 selectedCity === city
                   ? 'btn-blue-primary text-white shadow-md border-2 border-white'
-                  : 'bg-white/90 text-[#1E428E] hover:border-[#3869C3] border-2 border-[#D3E5FD] shadow-xs'
+                  : 'glass-card text-[#1E428E] hover:border-[#3869C3] border-2 border-white shadow-xs'
               }`}
             >
               {city}
@@ -71,7 +71,7 @@ export const ClassroomCentersView: React.FC<ClassroomCentersViewProps> = ({ onRe
           {filteredCenters.map((center) => (
             <div
               key={center.id}
-              className="glass-card bg-white/95 rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl hover:border-[#3869C3] transition-all flex flex-col justify-between group border-2 border-white text-[#1E428E]"
+              className="glass-card rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl hover:border-[#3869C3] transition-all flex flex-col justify-between group border-2 border-white text-[#1E428E]"
             >
               <div>
                 {/* Center Image */}
