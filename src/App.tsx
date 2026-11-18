@@ -155,12 +155,15 @@ function PlatformShell() {
       {/* Shiny & Glittering Mouse Cursor with Particle Trails */}
       <GlitterCursor />
 
-      {/* Official Hridayam Background Art Image (100% Crisp & Fully Visible) */}
+      {/* Official Hridayam Background Video Layer (100% Crisp & Fully Visible) */}
       <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden" aria-hidden="true">
-        <img
-          src="/hridayam-theme-bg.jpg"
-          alt="Hridayam Background"
-          className="w-full h-full object-cover object-top sm:object-center opacity-100"
+        <video
+          autoPlay
+          loop
+          muted
+          playsInline
+          className="w-full h-full object-cover object-center opacity-100"
+          src="/site-bg.mp4"
         />
       </div>
 
