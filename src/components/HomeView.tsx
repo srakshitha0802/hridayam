@@ -142,18 +142,16 @@ export const HomeView: React.FC<HomeViewProps> = ({
                 <GoogleIcon name="auto_awesome" size={14} className="text-[#3869C3]" />
                 <span>Next-Gen Career EdTech • Hridayam by Belvo</span>
                 <span className="w-1.5 h-1.5 rounded-full bg-[#3869C3]" />
-                <span className="text-[#3869C3] font-bold">100% Placement</span>
+                <span className="text-[#3869C3] font-extrabold">100% Placement</span>
               </div>
 
               {/* Main Headline (GenZ learning by a GenZ) */}
-              <div className="space-y-2">
+              <div className="space-y-3">
                 <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-[#1E428E] leading-[1.12] font-display tracking-tight">
-                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#1E428E] via-[#3869C3] to-[#5A87D7]">
-                    GenZ learning by a GenZ
-                  </span>
+                  GenZ learning by a <span className="text-[#3869C3] underline decoration-[#84ADEB] decoration-wavy underline-offset-8">GenZ</span>
                 </h1>
-                <p className="text-sm sm:text-base text-[#1E428E]/85 font-medium max-w-xl leading-relaxed">
-                  Fast-track your tech & creative career with real-world agency projects, elite mentors, and guaranteed career placement.
+                <p className="text-base sm:text-lg text-[#1E428E] font-bold max-w-xl leading-relaxed">
+                  Fast-track your tech &amp; creative career with real-world agency projects, elite mentors, and guaranteed career placement.
                 </p>
               </div>
 
@@ -332,14 +330,16 @@ export const HomeView: React.FC<HomeViewProps> = ({
 
       {/* 3. A HIRING CALL EVERY 12 HOURS & STATS (MODERN BOLD HRIDAYAM FRAMES) */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
-        <div className="text-center space-y-2">
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/80 text-[#1E428E] border-2 border-[#D3E5FD] text-xs font-semibold shadow-xs">
-            <GoogleIcon name="schedule" size={16} className="text-[#3869C3]" />
-            <span>Consistent Placement Momentum</span>
+        <div className="max-w-3xl mx-auto text-center">
+          <div className="glass-panel rounded-3xl p-5 sm:p-7 space-y-2.5 border-2 border-white shadow-xl backdrop-blur-2xl">
+            <div className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-white text-[#1E428E] border-2 border-[#D3E5FD] text-xs font-extrabold shadow-sm">
+              <GoogleIcon name="schedule" size={16} className="text-[#3869C3]" />
+              <span>Consistent Placement Momentum</span>
+            </div>
+            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-[#1E428E] font-display">
+              A Hiring Call Every 12 Hours. <span className="text-[#3869C3]">Your Turn Next.</span>
+            </h2>
           </div>
-          <h2 className="text-2xl sm:text-3xl font-bold text-[#1E428E] font-display">
-            A Hiring Call Every 12 Hours. Your Turn Next.
-          </h2>
         </div>
 
         {/* 4 Stat Boxes with Hridayam Blue-White Glass Aesthetics */}
@@ -444,17 +444,19 @@ export const HomeView: React.FC<HomeViewProps> = ({
 
       {/* BELVO 11 COURSE CATEGORIES SHOWCASE GRID */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
-        <div className="text-center space-y-2 max-w-3xl mx-auto">
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/80 border-2 border-[#D3E5FD] text-[#1E428E] text-xs font-bold uppercase tracking-wider shadow-xs">
-            <GoogleIcon name="hub" size={16} className="text-[#3869C3]" />
-            <span>Core Expertise Offered by Belvo</span>
+        <div className="max-w-3xl mx-auto text-center">
+          <div className="glass-panel rounded-3xl p-6 sm:p-8 space-y-3 border-2 border-white shadow-xl backdrop-blur-2xl">
+            <div className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-white border-2 border-[#D3E5FD] text-[#1E428E] text-xs font-extrabold uppercase tracking-wider shadow-sm">
+              <GoogleIcon name="hub" size={16} className="text-[#3869C3]" />
+              <span>Core Expertise Offered by Belvo</span>
+            </div>
+            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-[#1E428E] font-display tracking-tight">
+              Explore Programs Across All <span className="text-[#3869C3]">11 Belvo Verticals</span>
+            </h2>
+            <p className="text-sm sm:text-base text-[#1E428E] leading-relaxed font-bold">
+              From cutting-edge AI automation to high-margin e-commerce, software engineering, and creative media production — each vertical is taught by practicing industry leaders.
+            </p>
           </div>
-          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-[#1E428E] font-display">
-            Explore Programs Across All 11 Belvo Verticals
-          </h2>
-          <p className="text-xs sm:text-sm text-[#1E428E]/80 leading-relaxed font-medium">
-            From cutting-edge AI automation to high-margin e-commerce, software engineering, and creative media production — each vertical is taught by practicing industry leaders.
-          </p>
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 pt-2">
@@ -596,13 +598,13 @@ export const HomeView: React.FC<HomeViewProps> = ({
       <section className="relative py-16 px-4 sm:px-6 lg:px-8 overflow-hidden rounded-3xl sm:rounded-[40px] border-2 border-white shadow-2xl my-8 glass-panel">
         <div className="max-w-7xl mx-auto space-y-8 relative z-10">
           <div className="text-center max-w-2xl mx-auto space-y-2">
-            <span className="text-xs font-bold uppercase text-[#3869C3] tracking-widest">
+            <span className="text-xs font-extrabold uppercase text-[#3869C3] tracking-widest">
               Campus Locations
             </span>
-            <h2 className="text-2xl sm:text-3xl font-bold text-[#1E428E] font-display">
+            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-[#1E428E] font-display">
               Our Training Centers in Mumbai, Pune &amp; Nagpur
             </h2>
-            <p className="text-xs sm:text-sm text-[#1E428E]/85 font-medium">
+            <p className="text-sm text-[#1E428E] font-bold">
               Walk in for a 1-on-1 counseling session and experience live classroom labs.
             </p>
           </div>
@@ -723,10 +725,10 @@ export const HomeView: React.FC<HomeViewProps> = ({
       {/* 8. PRE-FOOTER CALLBACK FORM */}
       <section className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="glass-panel rounded-3xl p-8 border-2 border-white text-center space-y-4 shadow-xl text-[#1E428E]">
-          <h2 className="text-2xl font-bold text-[#1E428E] font-display">
+          <h2 className="text-2xl sm:text-3xl font-extrabold text-[#1E428E] font-display">
             Are You Confused About Which Course to Choose?
           </h2>
-          <p className="text-xs text-[#1E428E]/80 max-w-lg mx-auto font-medium">
+          <p className="text-sm text-[#1E428E] max-w-lg mx-auto font-bold">
             Speak to our Senior Academic Advisors. We evaluate your qualification and recommend the optimal career program.
           </p>
 
@@ -766,13 +768,15 @@ export const HomeView: React.FC<HomeViewProps> = ({
 
       {/* 9. FAQS */}
       <section className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
-        <div className="text-center space-y-1">
-          <span className="text-xs font-bold uppercase text-[#3869C3] tracking-widest">
-            Frequently Asked Questions
-          </span>
-          <h2 className="text-2xl sm:text-3xl font-bold text-[#1E428E] font-display">
-            Got Questions About Hridayam by Belvo?
-          </h2>
+        <div className="max-w-2xl mx-auto text-center">
+          <div className="glass-panel rounded-3xl p-5 sm:p-6 space-y-2 border-2 border-white shadow-xl backdrop-blur-2xl">
+            <span className="text-xs font-extrabold uppercase text-[#3869C3] tracking-widest">
+              Frequently Asked Questions
+            </span>
+            <h2 className="text-2xl sm:text-3xl font-extrabold text-[#1E428E] font-display">
+              Got Questions About Hridayam by Belvo?
+            </h2>
+          </div>
         </div>
 
         <div className="space-y-3">

@@ -368,25 +368,27 @@ export const IndustryAlignedProgramsSection: React.FC<IndustryAlignedProgramsSec
   return (
     <section className="space-y-16 relative z-10 text-[#1E428E]">
       {/* ========================================================================= */}
-      {/* 1. SECTION HEADER WITH METALLIC GLASS BADGES & DOODLES                    */}
+      {/* 1. SECTION HEADER WITH METALLIC GLASS BADGES                              */}
       {/* ========================================================================= */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center space-y-3 relative max-w-4xl mx-auto">
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/90 border-2 border-[#D3E5FD] text-[#1E428E] text-xs font-bold uppercase tracking-widest backdrop-blur-md shadow-xs">
-            <GoogleIcon name="workspace_premium" size={16} className="text-[#3869C3]" filled />
-            <span>Industry Aligned Programs</span>
+        <div className="max-w-4xl mx-auto text-center">
+          <div className="glass-panel rounded-3xl p-6 sm:p-8 space-y-3 border-2 border-white shadow-xl backdrop-blur-2xl">
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white border-2 border-[#D3E5FD] text-[#1E428E] text-xs font-extrabold uppercase tracking-widest shadow-xs">
+              <GoogleIcon name="workspace_premium" size={16} className="text-[#3869C3]" filled />
+              <span>Industry Aligned Programs</span>
+            </div>
+
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-[#1E428E] font-display tracking-tight leading-tight">
+              Accelerate Your Career with Our{' '}
+              <span className="text-[#3869C3] underline decoration-[#84ADEB] decoration-wavy underline-offset-8">
+                Industry-Aligned Courses
+              </span>
+            </h2>
+
+            <p className="text-sm sm:text-base text-[#1E428E] max-w-2xl mx-auto leading-relaxed font-bold">
+              Curriculum co-designed with top hiring partners to bridge real-world engineering and analytics skill gaps.
+            </p>
           </div>
-
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-[#1E428E] font-display tracking-tight leading-tight">
-            Accelerate Your Career with Our{' '}
-            <span className="bg-gradient-to-r from-[#1E428E] via-[#3869C3] to-[#5A87D7] bg-clip-text text-transparent">
-              Industry-Aligned Courses
-            </span>
-          </h2>
-
-          <p className="text-sm sm:text-base text-[#1E428E]/80 max-w-2xl mx-auto leading-relaxed font-medium">
-            Curriculum co-designed with top hiring partners to bridge real-world engineering and analytics skill gaps.
-          </p>
         </div>
       </div>
 
@@ -688,16 +690,16 @@ export const IndustryAlignedProgramsSection: React.FC<IndustryAlignedProgramsSec
       {/* 3. CAREER TRANSFORMATIONS SHOWCASE (USER REQUESTED SECTION)               */}
       {/* ========================================================================= */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
-        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
+        <div className="glass-panel rounded-3xl p-6 sm:p-8 border-2 border-white shadow-xl backdrop-blur-2xl flex flex-col sm:flex-row sm:items-end justify-between gap-4">
           <div className="space-y-2">
-            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/90 border-2 border-[#D3E5FD] text-[#1E428E] text-xs font-bold uppercase tracking-wider backdrop-blur-md shadow-xs">
+            <div className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-white border-2 border-[#D3E5FD] text-[#1E428E] text-xs font-extrabold uppercase tracking-wider shadow-xs">
               <GoogleIcon name="verified" size={16} className="text-[#3869C3]" filled />
               <span>Real Outcomes &amp; Proof</span>
             </div>
             <h3 className="font-display text-2xl sm:text-3xl lg:text-4xl font-extrabold text-[#1E428E] tracking-tight">
               Career Transformations
             </h3>
-            <p className="text-xs sm:text-sm text-[#1E428E]/80 max-w-2xl leading-relaxed font-medium">
+            <p className="text-xs sm:text-sm text-[#1E428E] max-w-2xl leading-relaxed font-bold">
               Real journeys of freshers and working professionals who shifted into high-growth product companies and performance agencies.
             </p>
           </div>

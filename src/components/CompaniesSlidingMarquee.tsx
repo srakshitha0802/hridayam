@@ -404,23 +404,25 @@ export const CompaniesSlidingMarquee: React.FC = () => {
 
   return (
     <section className="py-12 sm:py-16 relative overflow-hidden">
-      {/* Section Header with Hridayam Palette Badge */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-3 mb-8 relative z-10">
-        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/85 border-2 border-white text-[#1E428E] text-xs font-bold uppercase tracking-wider backdrop-blur-md shadow-xs">
-          <GoogleIcon name="verified" size={16} className="text-[#3869C3]" filled />
-          <span>3,500+ Learners Have Been Placed By Our India's Largest Placement Team</span>
+      {/* Section Header with High-Clarity Frosted Glass Frame */}
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 mb-8 relative z-10 text-center">
+        <div className="glass-panel rounded-3xl p-6 sm:p-8 space-y-3 border-2 border-white shadow-xl backdrop-blur-2xl">
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white border-2 border-[#D3E5FD] text-[#1E428E] text-xs font-extrabold uppercase tracking-wider shadow-sm">
+            <GoogleIcon name="verified" size={16} className="text-[#3869C3]" filled />
+            <span>3,500+ Placements Across India</span>
+          </div>
+
+          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-[#1E428E] font-display tracking-tight">
+            3,500+ Learners Have Been Placed By Our{' '}
+            <span className="text-[#3869C3] underline decoration-[#84ADEB] decoration-wavy underline-offset-8">
+              India's Largest Placement Team
+            </span>
+          </h2>
+
+          <p className="text-sm sm:text-base text-[#1E428E] font-bold max-w-2xl mx-auto leading-relaxed">
+            From global product giants to premier tech consultancies, our students launch their careers across 2,000+ top enterprises.
+          </p>
         </div>
-
-        <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-[#1E428E] font-display tracking-tight">
-          3,500+ Learners Have Been Placed By Our{' '}
-          <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#1E428E] via-[#3869C3] to-[#5A87D7]">
-            India's Largest Placement Team
-          </span>
-        </h2>
-
-        <p className="text-xs sm:text-sm text-[#1E428E]/85 max-w-2xl mx-auto leading-relaxed font-medium">
-          From global product giants to premier tech consultancies, our students launch their careers across 2,000+ top enterprises.
-        </p>
       </div>
 
       {/* Glassy Sliding Track Wrapper */}
