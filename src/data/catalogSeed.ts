@@ -1,22 +1,24 @@
 import { BELVO_CATEGORIES, Course, Lesson } from '../types';
 
-export const ASSETS = {
-  heroStudio: '/src/assets/images/hero_hridayam_academy_1794840082084.jpg',
-  marketingAnalytics: '/src/assets/images/course_marketing_analytics_1794847114972.jpg',
-  digitalAi: '/src/assets/images/course_digital_ai_1794840081518.jpg',
-  designMedia: '/src/assets/images/course_design_media_1794840081729.jpg',
-  videoVfx: '/src/assets/images/course_video_vfx_suite_1794847113046.jpg',
-  aiEngineering: '/src/assets/images/course_ai_engineering_lab_1794847116491.jpg',
-  ecommerceStudio: '/src/assets/images/course_ecommerce_studio_1794847115102.jpg',
-  photographySet: '/src/assets/images/course_photography_set_1794847114088.jpg',
-  b2bVenture: '/src/assets/images/course_b2b_venture_table_1794847116663.jpg',
-  copySeo: '/src/assets/images/course_copy_seo_desk_1794847115848.jpg',
-  cloudBusiness: '/src/assets/images/course_cloud_business_1794840082120.jpg',
-  dataBi: '/src/assets/images/course_data_bi_desk_1794847116028.jpg',
-  instructorLead: '/src/assets/images/instructor_portrait_lead_1794840082220.jpg',
-  mentorArjun: '/src/assets/images/mentor_portrait_arjun_1794847117600.jpg',
-  mentorAnanya: '/src/assets/images/mentor_portrait_ananya_1794847118309.jpg',
-  alumniPriya: '/src/assets/images/alumni_portrait_priya_1794847118830.jpg',
+import { PROVIDED_IMAGES } from './mediaAssets';
+
+export const ASSETS: Record<string, string> = {
+  heroStudio: PROVIDED_IMAGES.indianLibraryGroup,
+  marketingAnalytics: PROVIDED_IMAGES.indianStudentLaptop,
+  digitalAi: PROVIDED_IMAGES.codeScreenLaptop,
+  designMedia: PROVIDED_IMAGES.indianClassroomTeam,
+  videoVfx: PROVIDED_IMAGES.eveningStudyPair,
+  aiEngineering: PROVIDED_IMAGES.codeScreenLaptop,
+  ecommerceStudio: PROVIDED_IMAGES.studyDeskMinimal,
+  photographySet: PROVIDED_IMAGES.loveToLearnSign,
+  b2bVenture: PROVIDED_IMAGES.indianCampusSteps,
+  copySeo: PROVIDED_IMAGES.studyDeskMinimal,
+  cloudBusiness: PROVIDED_IMAGES.codeScreenLaptop,
+  dataBi: PROVIDED_IMAGES.indianStudentLaptop,
+  instructorLead: PROVIDED_IMAGES.indianLibraryGroup,
+  mentorArjun: PROVIDED_IMAGES.indianCampusSteps,
+  mentorAnanya: PROVIDED_IMAGES.indianStudentLaptop,
+  alumniPriya: PROVIDED_IMAGES.indianClassroomTeam,
 };
 
 export interface CourseRichMeta {
@@ -846,7 +848,7 @@ export const SEED_COURSES: (Omit<Course, 'createdAt' | 'updatedAt'> & {
   {
     id: 'course_photography_content',
     title: 'Commercial Photography & Visual Storytelling',
-    category: BELVO_CATEGORIES[6],
+    category: BELVO_CATEGORIES[1],
     level: 'Beginner',
     summary: 'Master natural & studio lighting, composition, tethering, and editorial retouching for brand shoots.',
     description:
@@ -915,7 +917,7 @@ export const SEED_COURSES: (Omit<Course, 'createdAt' | 'updatedAt'> & {
   {
     id: 'course_b2b_sales_ventures',
     title: 'B2B Sales Strategy, Partnerships & Entrepreneurship',
-    category: BELVO_CATEGORIES[7],
+    category: BELVO_CATEGORIES[3],
     level: 'Intermediate',
     summary: 'Structure outbound pipelines, run consultative discovery calls, and close enterprise retainers.',
     description:
@@ -984,7 +986,7 @@ export const SEED_COURSES: (Omit<Course, 'createdAt' | 'updatedAt'> & {
   {
     id: 'course_seo_copywriting',
     title: 'Technical SEO, Conversion Copywriting & Editorial Strategy',
-    category: BELVO_CATEGORIES[8],
+    category: BELVO_CATEGORIES[2],
     level: 'Beginner',
     summary: 'Write persuasive landing copy and build search-backed content clusters that capture high-intent traffic.',
     description:
@@ -1053,7 +1055,7 @@ export const SEED_COURSES: (Omit<Course, 'createdAt' | 'updatedAt'> & {
   {
     id: 'course_cloud_cybersecurity',
     title: 'Cloud Infrastructure, DevOps & Cybersecurity Foundations',
-    category: BELVO_CATEGORIES[9],
+    category: BELVO_CATEGORIES[0],
     level: 'Intermediate',
     summary: 'Harden cloud deployments, enforce IAM least privilege, and implement automated backup & incident playbooks.',
     description:
@@ -1122,7 +1124,7 @@ export const SEED_COURSES: (Omit<Course, 'createdAt' | 'updatedAt'> & {
   {
     id: 'course_data_analytics_bi',
     title: 'Data Analytics, SQL Modeling & Business Intelligence',
-    category: BELVO_CATEGORIES[10],
+    category: BELVO_CATEGORIES[0],
     level: 'Intermediate',
     summary: 'Transform raw operational data into executive KPI models, cohort retention tables, and decision dashboards.',
     description:

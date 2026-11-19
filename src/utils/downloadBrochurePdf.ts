@@ -14,15 +14,19 @@ export function directDownloadCurriculumPdf(courseTitle?: string) {
 <head>
   <meta charset="UTF-8">
   <title>${course.title} - Official 2026 Curriculum & Placement Roadmap</title>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,700&family=Manrope:wght@400;600;700&display=swap" rel="stylesheet">
   <style>
     @page { size: A4; margin: 18mm; }
     body {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      font-family: 'Manrope', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
       color: #1E428E;
       background: #FFFFFF;
-      line-height: 1.5;
+      line-height: 1.55;
       margin: 0;
       padding: 24px;
+    }
+    h1, h2, h3, .brand-title {
+      font-family: 'Fraunces', Georgia, serif;
     }
     .header {
       border-bottom: 3px solid #3869C3;
@@ -34,9 +38,9 @@ export function directDownloadCurriculumPdf(courseTitle?: string) {
     }
     .brand-title {
       font-size: 26px;
-      font-weight: 800;
+      font-weight: 700;
       color: #1E428E;
-      letter-spacing: -0.5px;
+      letter-spacing: -0.4px;
     }
     .brand-sub {
       font-size: 12px;

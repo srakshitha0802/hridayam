@@ -1,13 +1,34 @@
-import React, { useState } from 'react';
-import { GoogleIcon } from './GoogleIcon';
+import React, { useState, useRef, useEffect } from 'react';
+import {
+  ChevronDown,
+  ChevronUp,
+  Menu,
+  X,
+  LogOut,
+  GraduationCap,
+  Users,
+  Briefcase,
+  ShieldCheck,
+  Gift,
+  Lock,
+  ArrowUpRight,
+  Award,
+  Building2,
+  Star,
+  PhoneCall,
+  MessageCircle,
+  Compass,
+  Contact,
+} from 'lucide-react';
 import { AppView } from '../types';
+import { useAuth } from '../context/AuthContext';
 import { ITV_COURSES } from '../data/itvedantData';
 
 interface NavbarProps {
   currentView: AppView;
   onNavigate: (view: AppView) => void;
   onRequestCallback: (courseInterest?: string) => void;
-  onSelectCourse?: (courseId: string) => void;
+  onSelectCourse: (courseId: string) => void;
 }
 
 export const Navbar: React.FC<NavbarProps> = ({
@@ -16,344 +37,578 @@ export const Navbar: React.FC<NavbarProps> = ({
   onRequestCallback,
   onSelectCourse,
 }) => {
-  const [coursesDropdownOpen, setCoursesDropdownOpen] = useState(false);
+  const { user, signOutUser } = useAuth();
+  const [coursesMenuOpen, setCoursesMenuOpen] = useState(false);
+  const [portalsMenuOpen, setPortalsMenuOpen] = useState(false);
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [drawerCoursesExpanded, setDrawerCoursesExpanded] = useState(true);
+  const [scrolled, setScrolled] = useState(false);
+  const [scrollProgress, setScrollProgress] = useState(0);
 
-  const handleNavClick = (view: AppView) => {
-    setDrawerOpen(false);
-    setCoursesDropdownOpen(false);
+  const coursesRef = useRef<HTMLDivElement>(null);
+  const portalsRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (coursesRef.current && !coursesRef.current.contains(event.target as Node)) {
+        setCoursesMenuOpen(false);
+      }
+      if (portalsRef.current && !portalsRef.current.contains(event.target as Node)) {
+        setPortalsMenuOpen(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
+
+  useEffect(() => {
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        setDrawerOpen(false);
+        setCoursesMenuOpen(false);
+        setPortalsMenuOpen(false);
+      }
+    };
+    window.addEventListener('keydown', onKeyDown);
+    return () => window.removeEventListener('keydown', onKeyDown);
+  }, []);
+
+  useEffect(() => {
+    const onScroll = () => {
+      const y = window.scrollY;
+      setScrolled(y > 24);
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      setScrollProgress(docHeight > 0 ? Math.min(100, Math.max(0, (y / docHeight) * 100)) : 0);
+    };
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
+
+  const handleNav = (view: AppView) => {
     onNavigate(view);
+    setCoursesMenuOpen(false);
+    setPortalsMenuOpen(false);
+    setDrawerOpen(false);
   };
 
-  const handleCourseClick = (courseId: string) => {
+  const handlePickCourse = (courseId: string) => {
+    onSelectCourse(courseId);
+    setCoursesMenuOpen(false);
     setDrawerOpen(false);
-    setCoursesDropdownOpen(false);
-    if (onSelectCourse) {
-      onSelectCourse(courseId);
-    } else {
-      onNavigate('catalogue');
-    }
   };
 
   return (
     <>
-      {/* Sticky Floating Google Reviews Tab at Right Edge */}
-      <aside aria-label="Student review highlights">
-        <button
-          onClick={() => onNavigate('reviews')}
-          className="fixed right-0 top-1/2 -translate-y-1/2 z-40 bg-[#D3E5FD]/95 text-[#1E428E] rounded-l-2xl py-3.5 px-2.5 flex flex-col items-center gap-1.5 cursor-pointer hover:border-[#3869C3] transition-all shadow-xl group border-2 border-r-0 border-white backdrop-blur-md"
-          style={{ writingMode: 'vertical-rl', textOrientation: 'mixed' }}
-          title="Google Reviews 4.9 Rating"
-          aria-label="View Google Reviews with 4.9 rating"
-        >
-          <span className="text-[11px] font-bold text-[#1E428E] tracking-wide group-hover:text-[#3869C3]">
-            Google Reviews
-          </span>
-          <span className="flex items-center text-[#3869C3] text-[11px] font-extrabold">
-            ★ 4.9
-          </span>
-        </button>
-      </aside>
+      <header
+        className={`fixed top-0 left-0 right-0 z-40 transition-all duration-300 ${
+          scrolled ? 'nav-pastel-glass-scrolled' : 'nav-pastel-glass'
+        }`}
+      >
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 sm:h-[72px] flex items-center justify-between gap-4">
+          {/* Left Zone: Logo Tile + Explore Courses Dropdown */}
+          <div className="flex items-center gap-3 sm:gap-4 min-w-0">
+            <button
+              type="button"
+              onClick={() => handleNav('home')}
+              className="flex items-center gap-2.5 shrink-0 cursor-pointer group"
+              aria-label="Hridayam by Belvo Home"
+            >
+              <span className="w-11 h-11 rounded-2xl bg-white/95 border-2 border-white flex items-center justify-center p-1.5 shadow-md group-hover:scale-105 transition-transform duration-200 shrink-0">
+                <img
+                  src="/logo.png"
+                  alt="Hridayam by Belvo"
+                  className="h-full w-full object-contain"
+                />
+              </span>
+            </button>
 
-      {/* Fixed Modern Bold Frame Header (Frosted Ice Blue Glass & Royal Blue Theme) */}
-      <header className="fixed top-0 left-0 right-0 z-50 bg-[#D3E5FD]/85 backdrop-blur-2xl border-b-2 border-white/80 shadow-md text-[#1E428E]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-20 gap-4">
-            {/* Left: Official Hridayam by Belvo Logo */}
-            <div className="flex items-center gap-4 sm:gap-6">
+            {/* Explore Courses Pill Dropdown (matches screenshot exactly) */}
+            <div className="relative" ref={coursesRef}>
               <button
-                onClick={() => handleNavClick('home')}
-                className="flex items-center gap-3 cursor-pointer text-left shrink-0 group"
+                type="button"
+                onClick={() => {
+                  setCoursesMenuOpen((prev) => !prev);
+                  setPortalsMenuOpen(false);
+                }}
+                aria-expanded={coursesMenuOpen}
+                className="metallic-btn-ice px-4 py-2.5 rounded-xl text-xs sm:text-[13px] font-bold inline-flex items-center gap-2 cursor-pointer whitespace-nowrap"
               >
-                <div className="p-1.5 sm:p-2 rounded-2xl bg-white/85 backdrop-blur-md border border-white group-hover:border-[#3869C3] transition-all shadow-xs">
-                  <img
-                    src="/logo.png"
-                    alt="Hridayam by Belvo"
-                    className="h-8 sm:h-10 w-auto object-contain transition-transform duration-200 group-hover:scale-102"
-                  />
-                </div>
+                <Compass className="w-4 h-4 text-[#2B59B5]" />
+                <span>Explore Courses</span>
+                <ChevronDown
+                  className={`w-3.5 h-3.5 text-[#3869C3] transition-transform duration-200 ${
+                    coursesMenuOpen ? 'rotate-180' : ''
+                  }`}
+                />
               </button>
 
-              {/* "Explore Courses ▼" Glass Pill Button */}
-              <div
-                className="relative hidden sm:block"
-                onMouseEnter={() => setCoursesDropdownOpen(true)}
-                onMouseLeave={() => setCoursesDropdownOpen(false)}
-              >
-                <button
-                  onClick={() => setCoursesDropdownOpen(!coursesDropdownOpen)}
-                  className="bg-white/80 hover:bg-white text-[#1E428E] text-xs font-semibold px-4 py-2 rounded-full flex items-center gap-1.5 cursor-pointer shadow-xs border-2 border-white hover:border-[#3869C3] transition-all"
-                >
-                  <GoogleIcon name="menu_book" size={16} className="text-[#3869C3]" />
-                  <span className="font-bold">Explore Courses</span>
-                  <GoogleIcon
-                    name="keyboard_arrow_down"
-                    size={16}
-                    className={`transition-transform duration-200 text-[#3869C3] ${
-                      coursesDropdownOpen ? 'rotate-180 text-[#1E428E]' : ''
-                    }`}
-                  />
-                </button>
-
-                {/* Glass Dropdown Menu */}
-                {coursesDropdownOpen && (
-                  <div className="absolute top-full left-0 w-80 bg-[#D3E5FD]/95 backdrop-blur-2xl rounded-2xl shadow-2xl p-3 z-50 animate-in fade-in slide-in-from-top-1 duration-150 border-2 border-white text-[#1E428E]">
-                    <div className="text-[10px] font-bold text-[#1E428E] uppercase tracking-wider px-3 py-1.5 border-b border-white/60">
-                      All Career Programs
+              {coursesMenuOpen && (
+                <div className="absolute left-0 mt-3 w-[340px] sm:w-[390px] pastel-glass-panel rounded-3xl p-3 z-50 shadow-2xl animate-fade-up-soft">
+                  <div className="px-3 py-2 border-b border-[#BFD6F6]/80 flex items-center justify-between">
+                    <div>
+                      <p className="text-xs font-extrabold text-[#1E428E]">
+                        All {ITV_COURSES.length} Creative &amp; Career Programs
+                      </p>
+                      <p className="text-[11px] text-[#4C6B9E]">
+                        6 Schools · Dual Certified · 100% Placement Support
+                      </p>
                     </div>
-                    <div className="space-y-1 mt-1 max-h-80 overflow-y-auto pr-1">
-                      {ITV_COURSES.map((course) => (
-                        <button
-                          key={course.id}
-                          onClick={() => handleCourseClick(course.id)}
-                          className="w-full text-left p-2.5 rounded-xl hover:bg-white/80 transition-colors flex items-center justify-between group"
-                        >
-                          <div>
-                            <div className="text-xs font-semibold text-[#1E428E] group-hover:text-[#3869C3]">
-                              {course.title}
-                            </div>
-                            <div className="text-[10px] text-[#5A87D7] font-medium">
-                              {course.duration} • 100% Placement
-                            </div>
-                          </div>
-                          <GoogleIcon
-                            name="chevron_right"
-                            size={16}
-                            className="text-[#3869C3] group-hover:translate-x-0.5 transition-transform"
-                          />
-                        </button>
-                      ))}
-                    </div>
+                    <button
+                      type="button"
+                      onClick={() => handleNav('catalogue')}
+                      className="text-[11px] font-extrabold text-[#2B59B5] hover:text-[#132C63] inline-flex items-center gap-1 cursor-pointer whitespace-nowrap"
+                    >
+                      <span>Catalogue</span>
+                      <ArrowUpRight className="w-3 h-3" />
+                    </button>
                   </div>
-                )}
-              </div>
-            </div>
 
-            {/* Right: Portal Access + Guidance Button + Hamburger Menu */}
-            <div className="flex items-center gap-2.5 sm:gap-3">
-              {/* Student Portal Quick Access */}
-              <button
-                onClick={() => handleNavClick('student')}
-                className="hidden md:inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-semibold text-[#1E428E] bg-white/70 hover:bg-white border border-white hover:border-[#3869C3] cursor-pointer shadow-xs transition-all"
-                title="Student Dashboard"
-              >
-                <GoogleIcon name="school" size={16} className="text-[#3869C3]" />
-                <span>Student Hub</span>
-              </button>
-
-              {/* Admin Portal Quick Access */}
-              <button
-                onClick={() => handleNavClick('instructor')}
-                className="hidden lg:inline-flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-semibold text-[#1E428E] bg-white/60 hover:bg-white border border-white hover:border-[#3869C3] cursor-pointer transition-all shadow-xs"
-                title="Admin Console"
-              >
-                <GoogleIcon name="admin_panel_settings" size={16} className="text-[#3869C3]" />
-                <span>Admin</span>
-              </button>
-
-              <button
-                onClick={() => onRequestCallback()}
-                className="btn-blue-primary px-4 sm:px-5 py-2.5 rounded-xl text-xs sm:text-sm font-semibold flex items-center gap-2 cursor-pointer shadow-md text-white"
-              >
-                <GoogleIcon name="headset_mic" size={17} className="text-white" />
-                <span className="hidden sm:inline text-white">Get Career Guidance</span>
-                <span className="sm:hidden text-white">Guidance</span>
-              </button>
-
-              {/* Hamburger Button that opens the right drawer */}
-              <button
-                onClick={() => setDrawerOpen(true)}
-                className="p-2.5 rounded-xl bg-white/70 hover:bg-white text-[#1E428E] transition-colors cursor-pointer border-2 border-white shadow-xs"
-                title="Open Navigation Menu"
-              >
-                <GoogleIcon name="menu" size={22} weight={500} className="text-[#1E428E]" />
-              </button>
+                  <div className="max-h-80 overflow-y-auto pastel-scrollbar py-1.5 space-y-1 pr-1">
+                    {ITV_COURSES.map((course) => (
+                      <button
+                        key={course.id}
+                        type="button"
+                        onClick={() => handlePickCourse(course.id)}
+                        className="w-full text-left px-3 py-2.5 rounded-xl hover:bg-white/90 border border-transparent hover:border-[#BFD6F6] transition-all flex items-center justify-between gap-2 cursor-pointer group"
+                      >
+                        <div className="min-w-0">
+                          <div className="text-xs font-bold text-[#132C63] group-hover:text-[#1E428E] truncate">
+                            {course.title}
+                          </div>
+                          <div className="text-[10px] font-semibold text-[#5A79AD] truncate">
+                            {course.duration} · Max {course.highestPackage}
+                          </div>
+                        </div>
+                        <ArrowUpRight className="w-3.5 h-3.5 text-[#3869C3] opacity-60 group-hover:opacity-100 shrink-0" />
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              )}
             </div>
           </div>
+
+          {/* Right Zone: Student Hub, Portals/Admin, Get Career Guidance CTA, Slide-Out Drawer Toggle */}
+          <div className="flex items-center gap-2 sm:gap-2.5 shrink-0">
+            {/* Student Hub */}
+            <button
+              type="button"
+              onClick={() => handleNav('student')}
+              className={`hidden md:inline-flex items-center gap-1.5 px-3.5 py-2.5 rounded-xl text-xs font-bold whitespace-nowrap cursor-pointer transition-all ${
+                currentView === 'student'
+                  ? 'metallic-btn-primary'
+                  : 'metallic-btn-ice'
+              }`}
+            >
+              <GraduationCap className="w-4 h-4" />
+              <span>Student Hub</span>
+            </button>
+
+            {/* Portals / Admin Dropdown */}
+            <div className="relative hidden md:block" ref={portalsRef}>
+              <button
+                type="button"
+                onClick={() => {
+                  setPortalsMenuOpen((prev) => !prev);
+                  setCoursesMenuOpen(false);
+                }}
+                aria-expanded={portalsMenuOpen}
+                className={`inline-flex items-center gap-1.5 px-3.5 py-2.5 rounded-xl text-xs font-bold whitespace-nowrap cursor-pointer transition-all ${
+                  ['instructor', 'mentor-portal', 'recruiter-portal', 'portal-login'].includes(
+                    currentView
+                  )
+                    ? 'metallic-btn-primary'
+                    : 'metallic-btn-ice'
+                }`}
+              >
+                <ShieldCheck className="w-4 h-4" />
+                <span>{user ? user.roleLabel.split(' ')[0] : 'Admin & Portals'}</span>
+                <ChevronDown
+                  className={`w-3.5 h-3.5 transition-transform duration-200 ${
+                    portalsMenuOpen ? 'rotate-180' : ''
+                  }`}
+                />
+              </button>
+
+              {portalsMenuOpen && (
+                <div className="absolute right-0 mt-3 w-[340px] pastel-glass-panel rounded-3xl p-3 space-y-1.5 z-50 shadow-2xl animate-fade-up-soft">
+                  <div className="px-3 py-2 border-b border-[#BFD6F6]/80 flex items-center justify-between">
+                    <div>
+                      <p className="text-xs font-extrabold text-[#1E428E]">
+                        Role-Protected Workspaces
+                      </p>
+                      <p className="text-[11px] text-[#4C6B9E]">
+                        Fixed demo auth · Left-sidebar suites
+                      </p>
+                    </div>
+                    {user ? (
+                      <button
+                        type="button"
+                        onClick={() => {
+                          signOutUser();
+                          handleNav('home');
+                        }}
+                        className="text-[11px] font-extrabold text-rose-600 hover:text-rose-700 inline-flex items-center gap-1 cursor-pointer"
+                      >
+                        <LogOut className="w-3 h-3" />
+                        <span>Sign Out</span>
+                      </button>
+                    ) : (
+                      <button
+                        type="button"
+                        onClick={() => handleNav('portal-login')}
+                        className="text-[11px] font-extrabold text-[#2B59B5] hover:text-[#132C63] inline-flex items-center gap-1 cursor-pointer"
+                      >
+                        <Lock className="w-3 h-3" />
+                        <span>Login</span>
+                      </button>
+                    )}
+                  </div>
+
+                  {[
+                    {
+                      view: 'student' as AppView,
+                      title: 'Student LMS Portal',
+                      email: 'student@hridayam.in',
+                      desc: '10 Modules · Sandbox · ATS Resume · Drives',
+                      icon: <GraduationCap className="w-4 h-4 text-[#2B59B5] mt-0.5 shrink-0" />,
+                      badge: 'Portal',
+                    },
+                    {
+                      view: 'mentor-portal' as AppView,
+                      title: 'Faculty & Mentor Hub',
+                      email: 'mentor@hridayam.in',
+                      desc: '8 Modules · Code Audits · Lab Authoring',
+                      icon: <Users className="w-4 h-4 text-indigo-600 mt-0.5 shrink-0" />,
+                      badge: 'Mentor',
+                    },
+                    {
+                      view: 'recruiter-portal' as AppView,
+                      title: 'Recruiter & Hiring Desk',
+                      email: 'recruiter@hridayam.in',
+                      desc: '7 Modules · ATS Pipeline · Campus Drives',
+                      icon: <Briefcase className="w-4 h-4 text-emerald-600 mt-0.5 shrink-0" />,
+                      badge: 'Hire',
+                    },
+                    {
+                      view: 'instructor' as AppView,
+                      title: 'Admin Management Console',
+                      email: 'admin@hridayam.in',
+                      desc: '8 Modules · Batches · Grants · GST Ledger',
+                      icon: <ShieldCheck className="w-4 h-4 text-rose-600 mt-0.5 shrink-0" />,
+                      badge: 'Admin',
+                    },
+                    {
+                      view: 'refer-earn' as AppView,
+                      title: 'Refer & Earn (₹5,000)',
+                      email: 'student@hridayam.in',
+                      desc: '5 Modules · Voucher Tracker & Referral Code',
+                      icon: <Gift className="w-4 h-4 text-amber-600 mt-0.5 shrink-0" />,
+                      badge: '₹5000',
+                    },
+                  ].map((item) => (
+                    <button
+                      key={item.view}
+                      type="button"
+                      onClick={() => handleNav(item.view)}
+                      className="w-full text-left px-3 py-2.5 rounded-2xl bg-white/60 hover:bg-white border border-white/80 hover:border-[#94BCF1] flex items-start gap-3 transition-all cursor-pointer"
+                    >
+                      {item.icon}
+                      <div className="min-w-0 flex-1">
+                        <div className="flex items-center justify-between gap-2">
+                          <span className="text-xs font-extrabold text-[#132C63] truncate">
+                            {item.title}
+                          </span>
+                          <span className="text-[10px] font-extrabold px-2 py-0.5 rounded-full bg-[#E8F1FD] text-[#1E428E] shrink-0">
+                            {item.badge}
+                          </span>
+                        </div>
+                        <div className="text-[11px] font-mono-tabular text-[#2B59B5]">
+                          {item.email}
+                        </div>
+                        <div className="text-[10px] text-[#5A79AD] truncate">{item.desc}</div>
+                      </div>
+                    </button>
+                  ))}
+                </div>
+              )}
+            </div>
+
+            {/* Primary Metallic CTA: Get Career Guidance */}
+            <button
+              type="button"
+              onClick={() => onRequestCallback('Navbar Career Guidance')}
+              className="hidden sm:inline-flex items-center gap-1.5 px-4 sm:px-5 py-2.5 rounded-xl metallic-btn-primary text-xs font-extrabold whitespace-nowrap cursor-pointer"
+            >
+              <PhoneCall className="w-3.5 h-3.5" />
+              <span>Get Career Guidance</span>
+            </button>
+
+            {/* Hamburger Slide-Out Drawer Toggle (Desktop & Mobile — matches screenshot) */}
+            <button
+              type="button"
+              onClick={() => setDrawerOpen(true)}
+              className="w-10 h-10 rounded-xl metallic-btn-ice flex items-center justify-center cursor-pointer shrink-0"
+              aria-label="Open full navigation drawer"
+              title="Open Menu"
+            >
+              <Menu className="w-5 h-5 text-[#1E428E]" />
+            </button>
+          </div>
+        </div>
+
+        {/* Metallic Sapphire Scroll Progress Hairline */}
+        <div className="h-[2px] w-full bg-white/40 overflow-hidden pointer-events-none">
+          <div
+            className="h-full bg-gradient-to-r from-[#2B59B5] via-[#60A5FA] to-[#1E428E] transition-[transform] duration-100 ease-out origin-left"
+            style={{ transform: `scaleX(${scrollProgress / 100})` }}
+          />
         </div>
       </header>
 
-      {/* Slide-Over Right Drawer Menu */}
+      {/* RIGHT SLIDE-OUT PASTEL-BLUE GLASS NAVIGATION DRAWER (exact match to screenshot) */}
       {drawerOpen && (
-        <div className="fixed inset-0 z-50 flex justify-end bg-slate-900/40 backdrop-blur-xs animate-in fade-in duration-200">
-          <div className="w-full max-w-sm sm:max-w-md bg-[#D3E5FD]/95 backdrop-blur-2xl text-[#1E428E] h-full shadow-2xl flex flex-col justify-between overflow-y-auto animate-in slide-in-from-right duration-200 border-l-2 border-white">
-            {/* Drawer Header with Logo */}
-            <div>
-              <div className="flex items-center justify-between p-5 border-b border-white/60 bg-white/40">
-                <div className="p-1 rounded-xl bg-white border border-white">
+        <div className="fixed inset-0 z-50 flex justify-end" role="dialog" aria-modal="true">
+          {/* Frosted Backdrop Blur */}
+          <div
+            className="fixed inset-0 bg-[#0B1B3D]/35 backdrop-blur-md transition-opacity"
+            onClick={() => setDrawerOpen(false)}
+          />
+
+          {/* Right Pastel-Blue Glass Drawer Panel */}
+          <aside className="relative z-10 w-full max-w-[380px] h-full drawer-pastel-blue flex flex-col justify-between animate-drawer-in">
+            {/* Drawer Header */}
+            <div className="px-6 py-4 bg-white/65 border-b border-white/90 flex items-center justify-between shrink-0">
+              <button
+                type="button"
+                onClick={() => handleNav('home')}
+                className="flex items-center gap-2.5 cursor-pointer"
+              >
+                <span className="w-11 h-11 rounded-2xl bg-white border border-[#D3E5FD] p-1.5 shadow-sm flex items-center justify-center">
                   <img
                     src="/logo.png"
                     alt="Hridayam by Belvo"
-                    className="h-9 w-auto object-contain"
+                    className="w-full h-full object-contain"
                   />
+                </span>
+                <div className="text-left leading-tight">
+                  <span className="block font-display text-sm font-extrabold text-[#1E428E]">
+                    Hridayam by Belvo
+                  </span>
+                  <span className="block text-[10px] font-semibold text-[#5273A8]">
+                    Next-Gen Career EdTech
+                  </span>
                 </div>
+              </button>
+
+              <button
+                type="button"
+                onClick={() => setDrawerOpen(false)}
+                className="w-9 h-9 rounded-xl bg-white/80 hover:bg-white border border-white text-[#1E428E] flex items-center justify-center cursor-pointer transition-colors"
+                aria-label="Close navigation menu"
+              >
+                <X className="w-4 h-4" />
+              </button>
+            </div>
+
+            {/* Scrollable Body */}
+            <div className="flex-1 overflow-y-auto pastel-scrollbar px-5 py-5 space-y-2.5">
+              {/* Collapsible All Courses Section */}
+              <div className="space-y-2">
                 <button
-                  onClick={() => setDrawerOpen(false)}
-                  className="p-2 rounded-full hover:bg-white/60 text-[#1E428E] transition-colors cursor-pointer"
-                  title="Close Menu"
+                  type="button"
+                  onClick={() => setDrawerCoursesExpanded((prev) => !prev)}
+                  className="w-full flex items-center justify-between px-3 py-2 rounded-xl hover:bg-white/50 text-[#1E428E] font-bold text-sm cursor-pointer transition-colors"
                 >
-                  <GoogleIcon name="close" size={20} className="text-[#1E428E]" />
+                  <span className="inline-flex items-center gap-2.5">
+                    <GraduationCap className="w-4 h-4 text-[#2B59B5]" />
+                    <span>All Courses</span>
+                  </span>
+                  {drawerCoursesExpanded ? (
+                    <ChevronUp className="w-4 h-4 text-[#3869C3]" />
+                  ) : (
+                    <ChevronDown className="w-4 h-4 text-[#3869C3]" />
+                  )}
                 </button>
+
+                {drawerCoursesExpanded && (
+                  <div className="ml-4 pl-4 border-l-2 border-[#3869C3]/45 max-h-52 overflow-y-auto pastel-scrollbar space-y-1 pr-2">
+                    {ITV_COURSES.map((course) => (
+                      <button
+                        key={course.id}
+                        type="button"
+                        onClick={() => handlePickCourse(course.id)}
+                        className="w-full text-left py-2 px-2.5 rounded-lg text-[13px] font-semibold text-[#1E428E] hover:bg-white/75 hover:text-[#132C63] transition-colors cursor-pointer block"
+                      >
+                        {course.title}
+                      </button>
+                    ))}
+                  </div>
+                )}
               </div>
 
-              {/* Drawer Menu Links */}
-              <nav className="p-4 space-y-1 text-sm font-medium text-[#1E428E]">
-                {/* All Courses Accordion */}
-                <div>
-                  <button
-                    onClick={() => setDrawerCoursesExpanded(!drawerCoursesExpanded)}
-                    className="w-full flex items-center justify-between p-3 rounded-xl hover:bg-white/60 transition-colors text-left"
-                  >
-                    <span className="font-semibold text-[#1E428E] flex items-center gap-2">
-                      <GoogleIcon name="school" size={18} className="text-[#3869C3]" />
-                      All Courses
-                    </span>
-                    <GoogleIcon
-                      name="keyboard_arrow_down"
-                      size={18}
-                      className={`transition-transform text-[#3869C3] ${
-                        drawerCoursesExpanded ? 'rotate-180 text-[#1E428E]' : ''
-                      }`}
-                    />
-                  </button>
-
-                  {drawerCoursesExpanded && (
-                    <div className="pl-4 pr-2 py-1 space-y-1 text-xs border-l-2 border-[#3869C3]/40 ml-4 mt-1 max-h-60 overflow-y-auto">
-                      {ITV_COURSES.map((course) => (
-                        <button
-                          key={course.id}
-                          onClick={() => handleCourseClick(course.id)}
-                          className="w-full text-left py-2 px-3 rounded-lg hover:bg-white/80 text-[#1E428E] hover:text-[#3869C3] transition-colors block font-medium"
-                        >
-                          {course.title}
-                        </button>
-                      ))}
-                    </div>
-                  )}
-                </div>
-
+              {/* Primary Drawer Links */}
+              <div className="space-y-1 pt-1">
                 <button
-                  onClick={() => handleNavClick('placements')}
-                  className="w-full text-left p-3 rounded-xl hover:bg-white/60 transition-colors flex items-center justify-between text-[#1E428E]"
+                  type="button"
+                  onClick={() => handleNav('placements')}
+                  className="w-full flex items-center justify-between px-3 py-2.5 rounded-xl hover:bg-white/65 text-[#132C63] font-bold text-sm cursor-pointer transition-colors"
                 >
-                  <span className="flex items-center gap-2">
-                    <GoogleIcon name="workspace_premium" size={18} className="text-blue-600" />
-                    Placements
+                  <span className="inline-flex items-center gap-3">
+                    <Award className="w-4 h-4 text-[#2B59B5]" />
+                    <span>Placements</span>
                   </span>
-                  <span className="text-[11px] bg-blue-100 text-blue-800 font-bold px-2 py-0.5 rounded-full border border-blue-200">
+                  <span className="px-2.5 py-0.5 rounded-full bg-white text-[#1E428E] border border-[#BFD6F6] text-[11px] font-extrabold font-mono-tabular">
                     100%
                   </span>
                 </button>
 
                 <button
-                  onClick={() => handleNavClick('placements')}
-                  className="w-full text-left p-3 rounded-xl hover:bg-blue-50 transition-colors flex items-center gap-2 text-slate-800"
+                  type="button"
+                  onClick={() => handleNav('hire-from-us')}
+                  className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-white/65 text-[#132C63] font-bold text-sm cursor-pointer transition-colors"
                 >
-                  <GoogleIcon name="business_center" size={18} className="text-blue-600" />
-                  Hire From Us
+                  <Briefcase className="w-4 h-4 text-[#2B59B5]" />
+                  <span>Hire From Us</span>
                 </button>
 
                 <button
-                  onClick={() => handleNavClick('centers')}
-                  className="w-full text-left p-3 rounded-xl hover:bg-blue-50 transition-colors flex items-center gap-2 text-slate-800"
+                  type="button"
+                  onClick={() => handleNav('centers')}
+                  className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-white/65 text-[#132C63] font-bold text-sm cursor-pointer transition-colors"
                 >
-                  <GoogleIcon name="domain" size={18} className="text-blue-600" />
-                  Classroom Centers
+                  <Building2 className="w-4 h-4 text-[#2B59B5]" />
+                  <span>Classroom Centers</span>
                 </button>
 
                 <button
-                  onClick={() => handleNavClick('refer-earn')}
-                  className="w-full text-left p-3 rounded-xl hover:bg-blue-50 transition-colors flex items-center justify-between text-slate-800 font-semibold"
+                  type="button"
+                  onClick={() => handleNav('refer-earn')}
+                  className="w-full flex items-center justify-between px-3 py-2.5 rounded-xl hover:bg-white/65 text-[#132C63] font-bold text-sm cursor-pointer transition-colors"
                 >
-                  <span className="flex items-center gap-2">
-                    <GoogleIcon name="redeem" size={18} className="text-blue-600" />
-                    Refer & Earn
+                  <span className="inline-flex items-center gap-3">
+                    <Gift className="w-4 h-4 text-[#2B59B5]" />
+                    <span>Refer &amp; Earn</span>
                   </span>
-                  <span className="text-[11px] bg-gradient-to-r from-blue-600 to-sky-600 text-white font-bold px-2 py-0.5 rounded-full shadow-xs">
+                  <span className="px-2.5 py-0.5 rounded-full bg-[#2563EB] text-white text-[11px] font-extrabold font-mono-tabular shadow-xs">
                     ₹5000
                   </span>
                 </button>
 
                 <button
-                  onClick={() => handleNavClick('reviews')}
-                  className="w-full text-left p-3 rounded-xl hover:bg-blue-50 transition-colors flex items-center gap-2 text-slate-800"
+                  type="button"
+                  onClick={() => handleNav('reviews')}
+                  className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-white/65 text-[#132C63] font-bold text-sm cursor-pointer transition-colors"
                 >
-                  <GoogleIcon name="star_rate" size={18} className="text-blue-600" />
-                  Reviews & Success Stories
+                  <Star className="w-4 h-4 text-[#2B59B5]" />
+                  <span>Reviews &amp; Success Stories</span>
                 </button>
 
                 <button
-                  onClick={() => handleNavClick('contact')}
-                  className="w-full text-left p-3 rounded-xl hover:bg-blue-50 transition-colors flex items-center gap-2 font-semibold text-slate-800"
+                  type="button"
+                  onClick={() => handleNav('contact')}
+                  className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-white/65 text-[#132C63] font-bold text-sm cursor-pointer transition-colors"
                 >
-                  <GoogleIcon name="contact_phone" size={18} className="text-blue-600" />
-                  Contact Us
+                  <Contact className="w-4 h-4 text-[#2B59B5]" />
+                  <span>Contact Us</span>
+                </button>
+              </div>
+
+              {/* Role-Protected Workspace Cards */}
+              <div className="pt-3 border-t border-white/80 space-y-2">
+                <button
+                  type="button"
+                  onClick={() => handleNav('student')}
+                  className="w-full flex items-center justify-between px-3.5 py-3 rounded-2xl bg-white/95 hover:bg-white border border-white shadow-sm text-[#132C63] font-bold text-sm cursor-pointer transition-all"
+                >
+                  <span className="inline-flex items-center gap-2.5">
+                    <GraduationCap className="w-4 h-4 text-[#2563EB]" />
+                    <span>Student Dashboard &amp; LMS</span>
+                  </span>
+                  <span className="px-2.5 py-0.5 rounded-full bg-[#2563EB] text-white text-[11px] font-extrabold">
+                    Portal
+                  </span>
                 </button>
 
-                <div className="pt-2 pb-1 border-t border-blue-100 my-1">
-                  <button
-                    onClick={() => handleNavClick('student')}
-                    className="w-full text-left p-3 rounded-xl bg-blue-50 hover:bg-blue-100 transition-colors flex items-center justify-between font-bold text-blue-900"
-                  >
-                    <span className="flex items-center gap-2">
-                      <GoogleIcon name="school" size={18} className="text-blue-600" />
-                      Student Dashboard &amp; LMS
-                    </span>
-                    <span className="text-[10px] bg-blue-600 text-white font-bold px-2 py-0.5 rounded-full">
-                      Portal
-                    </span>
-                  </button>
+                <button
+                  type="button"
+                  onClick={() => handleNav('mentor-portal')}
+                  className="w-full flex items-center justify-between px-3.5 py-2.5 rounded-2xl bg-white/70 hover:bg-white border border-white/85 text-[#132C63] font-bold text-sm cursor-pointer transition-all"
+                >
+                  <span className="inline-flex items-center gap-2.5">
+                    <Users className="w-4 h-4 text-indigo-600" />
+                    <span>Faculty &amp; Mentor Hub</span>
+                  </span>
+                  <span className="px-2.5 py-0.5 rounded-full bg-[#E8F1FD] text-[#1E428E] text-[11px] font-extrabold">
+                    Mentor
+                  </span>
+                </button>
 
-                  <button
-                    onClick={() => handleNavClick('instructor')}
-                    className="w-full text-left p-3 rounded-xl hover:bg-slate-100 transition-colors flex items-center justify-between font-bold text-slate-800 mt-1"
-                  >
-                    <span className="flex items-center gap-2">
-                      <GoogleIcon name="admin_panel_settings" size={18} className="text-slate-600" />
-                      Admin Management Console
-                    </span>
-                    <span className="text-[10px] bg-slate-200 text-slate-800 font-bold px-2 py-0.5 rounded-full border border-slate-300">
-                      Admin
-                    </span>
-                  </button>
-                </div>
-              </nav>
+                <button
+                  type="button"
+                  onClick={() => handleNav('recruiter-portal')}
+                  className="w-full flex items-center justify-between px-3.5 py-2.5 rounded-2xl bg-white/70 hover:bg-white border border-white/85 text-[#132C63] font-bold text-sm cursor-pointer transition-all"
+                >
+                  <span className="inline-flex items-center gap-2.5">
+                    <Briefcase className="w-4 h-4 text-emerald-600" />
+                    <span>Recruiter &amp; Hiring Desk</span>
+                  </span>
+                  <span className="px-2.5 py-0.5 rounded-full bg-emerald-50 text-emerald-800 border border-emerald-200 text-[11px] font-extrabold">
+                    Recruiter
+                  </span>
+                </button>
+
+                <button
+                  type="button"
+                  onClick={() => handleNav('instructor')}
+                  className="w-full flex items-center justify-between px-3.5 py-2.5 rounded-2xl bg-white/70 hover:bg-white border border-white/85 text-[#132C63] font-bold text-sm cursor-pointer transition-all"
+                >
+                  <span className="inline-flex items-center gap-2.5">
+                    <ShieldCheck className="w-4 h-4 text-[#1E428E]" />
+                    <span>Admin Management Console</span>
+                  </span>
+                  <span className="px-2.5 py-0.5 rounded-full bg-white text-[#1E428E] border border-[#BFD6F6] text-[11px] font-extrabold">
+                    Admin
+                  </span>
+                </button>
+              </div>
             </div>
 
-            {/* Bottom of Drawer: Talk to Career Expert */}
-            <div className="p-5 border-t border-blue-100 bg-blue-50/50 space-y-3">
-              <div className="text-xs text-slate-600 text-center font-medium">
+            {/* Sticky Bottom Counseling CTA & Helpline */}
+            <div className="px-6 py-5 bg-white/70 border-t border-white/90 space-y-3 text-center shrink-0">
+              <p className="text-xs font-semibold text-[#3C5B8F]">
                 Confused about which course to select?
-              </div>
+              </p>
               <button
+                type="button"
                 onClick={() => {
                   setDrawerOpen(false);
-                  onRequestCallback();
+                  onRequestCallback('Drawer Career Expert Counseling');
                 }}
-                className="w-full py-3 rounded-xl btn-blue-primary font-semibold text-xs uppercase tracking-wider shadow-md cursor-pointer text-white"
+                className="w-full py-3.5 rounded-2xl metallic-btn-primary text-xs font-extrabold uppercase tracking-wider cursor-pointer"
               >
-                Talk to Career Expert
+                TALK TO CAREER EXPERT
               </button>
-              <div className="text-center space-y-1">
+              <div className="space-y-1 pt-1 text-xs font-bold text-[#1E428E]">
                 <a
                   href="tel:+918928466820"
-                  className="text-xs font-bold text-blue-700 hover:text-blue-800 block"
+                  className="block hover:text-[#2563EB] transition-colors font-mono-tabular"
                 >
                   Call Helpline: +91 89284 66820
                 </a>
                 <a
-                  href="https://wa.me/918928466820?text=Hi%20Hridayam%20by%20Belvo,%20I%20am%20interested%20in%20learning%20more%20about%20your%20courses."
+                  href="https://wa.me/918928466820?text=Hi%20Hridayam%20by%20Belvo,%20I%20need%20course%20guidance."
                   target="_blank"
                   rel="noreferrer"
-                  className="text-[11px] font-bold text-blue-600 hover:underline flex items-center justify-center gap-1"
+                  className="inline-flex items-center justify-center gap-1.5 text-[#2563EB] hover:text-[#132C63] transition-colors font-mono-tabular"
                 >
-                  <GoogleIcon name="chat" size={13} className="text-blue-600" filled />
+                  <MessageCircle className="w-3.5 h-3.5" />
                   <span>WhatsApp: +91 89284 66820</span>
                 </a>
               </div>
             </div>
-          </div>
+          </aside>
         </div>
       )}
     </>

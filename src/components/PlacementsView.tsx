@@ -1,6 +1,7 @@
 import React, { useState, useMemo } from 'react';
 import { GoogleIcon } from './GoogleIcon';
 import { PLACED_STUDENTS } from '../data/itvedantData';
+import { CompanyLogosInlineStrip } from './CompaniesSlidingMarquee';
 
 interface PlacementsViewProps {
   onRequestCallback: (courseInterest?: string) => void;
@@ -71,60 +72,58 @@ export const PlacementsView: React.FC<PlacementsViewProps> = ({ onRequestCallbac
       {/* 1. PLACEMENTS HERO (BLUE-WHITE PREMIUM TEXTURE) */}
       <section className="pt-8 pb-14 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
-          <div className="bg-white/95 backdrop-blur-2xl rounded-3xl p-8 sm:p-12 shadow-2xl relative overflow-hidden border-2 border-blue-200">
+          <div className="frame-waves-dark rounded-3xl p-8 sm:p-12 relative overflow-hidden text-white">
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
               <div className="lg:col-span-7 space-y-5">
-                <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-blue-50 border border-blue-200 text-blue-700 text-xs font-semibold">
-                  <GoogleIcon name="workspace_premium" size={17} className="text-blue-600" />
-                  <span>100% Placement Support Record</span>
-                </div>
-
-                <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold font-display text-slate-900 leading-tight">
-                  Placements at Hridayam by Belvo -{' '}
-                  <span className="text-blue-600">Empowering Careers</span> with 100% Placement Support
-                </h1>
-
-                <p className="text-slate-600 text-sm sm:text-base leading-relaxed max-w-2xl font-normal">
-                  We bridge the gap between fresh graduates, career switchers, and leading IT recruiters. Over 40,000+ alumni have transitioned into high-paying engineering, analytics, and cloud careers.
+                <p className="text-xs font-bold uppercase tracking-widest text-[#94BCF1]">
+                  100% Placement Support · NSDC Skill India Partner
                 </p>
 
-                <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 pt-4 border-t border-blue-100">
+                <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold font-display text-white leading-tight">
+                  Verified Indian Placements &amp; Corporate Hiring Drives
+                </h1>
+
+                <p className="text-[#D3E5FD] text-sm sm:text-base leading-relaxed max-w-2xl">
+                  We bridge fresh graduates, career switchers, and India’s leading IT and product recruiters. Over 40,000+ alumni have transitioned into engineering, analytics, and cloud roles.
+                </p>
+
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 pt-4 border-t border-white/20">
                   <div>
-                    <div className="text-2xl sm:text-3xl font-bold text-slate-900 font-display">
+                    <div className="text-2xl sm:text-3xl font-extrabold text-white font-mono-tabular">
                       40,000+
                     </div>
-                    <div className="text-xs text-slate-500">Careers Transformed</div>
+                    <div className="text-xs text-[#D3E5FD]">Careers Transformed</div>
                   </div>
                   <div>
-                    <div className="text-2xl sm:text-3xl font-bold text-blue-600 font-display">
+                    <div className="text-2xl sm:text-3xl font-extrabold text-[#94BCF1] font-mono-tabular">
                       2,000+
                     </div>
-                    <div className="text-xs text-slate-500">Hiring Partners</div>
+                    <div className="text-xs text-[#D3E5FD]">Hiring Partners</div>
                   </div>
                   <div>
-                    <div className="text-2xl sm:text-3xl font-bold text-slate-900 font-display">
+                    <div className="text-2xl sm:text-3xl font-extrabold text-white font-mono-tabular">
                       ₹30 LPA
                     </div>
-                    <div className="text-xs text-slate-500">Highest Package</div>
+                    <div className="text-xs text-[#D3E5FD]">Highest Package</div>
                   </div>
                   <div>
-                    <div className="text-2xl sm:text-3xl font-bold text-blue-600 font-display">
+                    <div className="text-2xl sm:text-3xl font-extrabold text-[#94BCF1] font-mono-tabular">
                       98.4%
                     </div>
-                    <div className="text-xs text-slate-500">Placement Success</div>
+                    <div className="text-xs text-[#D3E5FD]">Placement Success</div>
                   </div>
                 </div>
 
-                <div className="flex flex-wrap gap-4 pt-2">
+                <div className="flex flex-wrap gap-3 pt-2">
                   <button
                     onClick={() => onRequestCallback('Placement Assurance Inquiry')}
-                    className="btn-blue-primary px-6 py-3 rounded-xl text-xs font-semibold uppercase tracking-wider text-white shadow-xl cursor-pointer"
+                    className="px-6 py-3 rounded-xl bg-white text-[#0B1B3D] hover:bg-[#E8F1FD] text-xs font-extrabold uppercase tracking-wider shadow-lg cursor-pointer"
                   >
                     Download Placement Report
                   </button>
                   <a
                     href="#placed-directory"
-                    className="px-5 py-3 rounded-xl bg-blue-50 hover:bg-blue-100 text-blue-700 text-xs font-semibold transition-all border border-blue-200 flex items-center gap-1.5"
+                    className="px-5 py-3 rounded-xl bg-white/15 hover:bg-white/25 text-white text-xs font-bold transition-colors border border-white/30 flex items-center gap-1.5"
                   >
                     <span>Browse Placed Students</span>
                     <GoogleIcon name="arrow_downward" size={16} />
@@ -132,36 +131,34 @@ export const PlacementsView: React.FC<PlacementsViewProps> = ({ onRequestCallbac
                 </div>
               </div>
 
-              {/* Right Side: Graphic Card Illustrating Placement FAQs */}
+              {/* Right Side: Placement Facts Card */}
               <div className="lg:col-span-5">
-                <div className="bg-blue-50/70 backdrop-blur-xl rounded-2xl p-6 border border-blue-200 shadow-xl space-y-4">
-                  <div className="flex items-center justify-between pb-3 border-b border-blue-200">
+                <div className="bg-white/95 rounded-2xl p-6 border border-[#D3E5FD] shadow-xl space-y-4 text-[#0B1B3D]">
+                  <div className="flex items-center justify-between pb-3 border-b border-slate-200">
                     <div className="flex items-center gap-2">
-                      <GoogleIcon name="verified_user" size={20} className="text-blue-600" />
-                      <span className="font-semibold text-slate-900 text-sm">Placement FAQs & Facts</span>
+                      <GoogleIcon name="verified_user" size={20} className="text-[#1E428E]" />
+                      <span className="font-extrabold text-[#0B1B3D] text-sm">Placement FAQs &amp; Facts</span>
                     </div>
-                    <span className="text-[10px] bg-blue-600 text-white font-bold px-2 py-0.5 rounded shadow-xs">
-                      Verified Stats
-                    </span>
+                    <span className="text-[11px] font-bold text-[#1E428E]">Verified 2026</span>
                   </div>
 
                   <div className="space-y-3 text-xs">
-                    <div className="bg-white p-3.5 rounded-xl space-y-1 border border-blue-100 shadow-xs">
-                      <div className="font-semibold text-blue-800">How many interview calls do I get?</div>
+                    <div className="bg-[#F4F8FF] p-3.5 rounded-xl space-y-1 border border-[#D3E5FD]">
+                      <div className="font-bold text-[#132C63]">How many interview calls do I get?</div>
                       <div className="text-slate-600">
-                        Unlimited interview calls until you secure your desired offer letter! No arbitrary cap.
+                        Unlimited interview calls until you secure your offer letter across campus and virtual drives.
                       </div>
                     </div>
-                    <div className="bg-white p-3.5 rounded-xl space-y-1 border border-blue-100 shadow-xs">
-                      <div className="font-semibold text-blue-800">What if I am from a non-IT stream?</div>
+                    <div className="bg-[#F4F8FF] p-3.5 rounded-xl space-y-1 border border-[#D3E5FD]">
+                      <div className="font-bold text-[#132C63]">What if I am from a Non-IT stream?</div>
                       <div className="text-slate-600">
-                        65% of our placed students come from B.Sc, B.Com, Mechanical, Civil, or Arts backgrounds.
+                        65% of our placed Indian students graduated in B.Com, B.Sc, Mechanical, Civil, or Arts streams.
                       </div>
                     </div>
-                    <div className="bg-white p-3.5 rounded-xl space-y-1 border border-blue-100 shadow-xs">
-                      <div className="font-semibold text-blue-800">When does placement assistance start?</div>
+                    <div className="bg-[#F4F8FF] p-3.5 rounded-xl space-y-1 border border-[#D3E5FD]">
+                      <div className="font-bold text-[#132C63]">When does placement assistance begin?</div>
                       <div className="text-slate-600">
-                        Placement cell engages after 75% curriculum completion with resume grooming & 15+ mock interviews.
+                        Placement cell engages at 75% curriculum completion with ATS resume grooming and 15+ mock interviews.
                       </div>
                     </div>
                   </div>
@@ -172,59 +169,76 @@ export const PlacementsView: React.FC<PlacementsViewProps> = ({ onRequestCallbac
         </div>
       </section>
 
-      {/* 2. CAMPUS PLACEMENT DRIVES PHOTO CAROUSEL */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
+      {/* 1B. REAL HIRING PARTNER LOGOS STRIP */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="frame-border-blue rounded-3xl p-6 sm:p-8 space-y-4">
+          <div className="text-center space-y-1">
+            <span className="text-xs font-bold uppercase text-[#1E428E] tracking-widest">
+              2,000+ Hiring Partners Across India
+            </span>
+            <h2 className="text-xl sm:text-2xl font-extrabold text-[#0B1B3D] font-display">
+              Trusted by India’s Top IT Services, Product &amp; FinTech Leaders
+            </h2>
+          </div>
+          <CompanyLogosInlineStrip />
+        </div>
+      </section>
+
+      {/* 2. CAMPUS PLACEMENT DRIVES GALLERY (PROVIDED INDIAN IMAGES ONLY) */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="video-section-panel rounded-3xl p-6 sm:p-8 space-y-6 text-white">
         <div className="text-center max-w-2xl mx-auto space-y-2">
-          <span className="text-xs font-semibold uppercase text-blue-600 tracking-widest">
+          <span className="text-xs font-bold uppercase text-[#94BCF1] tracking-widest">
             Weekly Recruitment Drives
           </span>
-          <h2 className="text-2xl sm:text-3xl font-bold text-slate-900 font-display">
-            Campus Placement Drives in Action
+          <h2 className="text-2xl sm:text-3xl font-extrabold text-white font-display">
+            Indian Campus Placement Drives in Action
           </h2>
-          <p className="text-xs sm:text-sm text-slate-600">
-            Witness our on-campus and virtual hiring drives where top tech recruiters recruit directly from our training campuses.
+          <p className="text-xs sm:text-sm text-[#D3E5FD]">
+            On-campus and virtual recruitment sprints across Thane, Mumbai, Pune, and Bengaluru hubs.
           </p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <div className="glass-card rounded-2xl overflow-hidden shadow-md group h-64 bg-white relative border-2 border-blue-100 hover:border-blue-400">
+          <div className="glass-card rounded-2xl overflow-hidden h-64 bg-white relative">
             <img
-              src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=700&q=80"
-              alt="Campus Drive Felicitation"
-              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+              src="/assets/aistudio/Indians-Germany_8d220e87.jpg"
+              alt="Thane Campus Recruitment Day"
+              className="w-full h-full object-cover object-top"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-[#0A1633] via-[#0A1633]/60 to-transparent flex flex-col justify-end p-5 text-white">
-              <span className="text-xs font-semibold text-sky-300">Thane Main Campus</span>
-              <h4 className="font-bold text-base text-white">Capgemini & TCS Mega Recruitment Day</h4>
-              <p className="text-[11px] text-sky-200">32 Candidates Shortlisted in single drive</p>
+            <div className="absolute inset-0 bg-gradient-to-t from-[#0B1B3D] via-[#0B1B3D]/55 to-transparent flex flex-col justify-end p-5 text-white">
+              <span className="text-xs font-bold text-[#94BCF1]">Thane Main Campus</span>
+              <h4 className="font-extrabold text-base text-white">Capgemini &amp; TCS Mega Recruitment Day</h4>
+              <p className="text-[11px] text-[#D3E5FD]">32 Indian graduates shortlisted in a single drive</p>
             </div>
           </div>
 
-          <div className="glass-card rounded-2xl overflow-hidden shadow-md group h-64 bg-white relative border-2 border-blue-100 hover:border-blue-400">
+          <div className="glass-card rounded-2xl overflow-hidden h-64 bg-white relative">
             <img
-              src="https://images.unsplash.com/photo-1531497865144-0464ef8fb9a9?auto=format&fit=crop&w=700&q=80"
-              alt="Pune Campus Drive"
-              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+              src="/assets/aistudio/college-Admission-Guidance-1024x653.jpg_88c5e37a.webp"
+              alt="Pune FC Road Campus Hiring Sprint"
+              className="w-full h-full object-cover object-top"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-[#0A1633] via-[#0A1633]/60 to-transparent flex flex-col justify-end p-5 text-white">
-              <span className="text-xs font-semibold text-sky-300">Pune FC Road Campus</span>
-              <h4 className="font-bold text-base text-white">FinTech & Cloud Startup Hiring Sprint</h4>
-              <p className="text-[11px] text-sky-200">Highest Offer ₹12.5 LPA awarded on-spot</p>
+            <div className="absolute inset-0 bg-gradient-to-t from-[#0B1B3D] via-[#0B1B3D]/55 to-transparent flex flex-col justify-end p-5 text-white">
+              <span className="text-xs font-bold text-[#94BCF1]">Pune FC Road Campus</span>
+              <h4 className="font-extrabold text-base text-white">FinTech &amp; Cloud Startup Hiring Sprint</h4>
+              <p className="text-[11px] text-[#D3E5FD]">Highest offer ₹12.5 LPA awarded on-spot</p>
             </div>
           </div>
 
-          <div className="glass-card rounded-2xl overflow-hidden shadow-md group h-64 bg-white relative border-2 border-blue-100 hover:border-blue-400">
+          <div className="glass-card rounded-2xl overflow-hidden h-64 bg-white relative">
             <img
-              src="https://images.unsplash.com/photo-1515187029135-18ee286d815b?auto=format&fit=crop&w=700&q=80"
-              alt="Offer Letter Celebration"
-              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+              src="/assets/aistudio/images-3_93f13b2d.jpeg"
+              alt="Andheri Campus Offer Letter Celebration"
+              className="w-full h-full object-cover object-top"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-[#0A1633] via-[#0A1633]/60 to-transparent flex flex-col justify-end p-5 text-white">
-              <span className="text-xs font-semibold text-sky-300">Andheri Campus</span>
-              <h4 className="font-bold text-base text-white">Offer Letter Felicitations</h4>
-              <p className="text-[11px] text-sky-200">Celebrating career transformations weekly</p>
+            <div className="absolute inset-0 bg-gradient-to-t from-[#0B1B3D] via-[#0B1B3D]/55 to-transparent flex flex-col justify-end p-5 text-white">
+              <span className="text-xs font-bold text-[#94BCF1]">Andheri Campus</span>
+              <h4 className="font-extrabold text-base text-white">Offer Letter Felicitations</h4>
+              <p className="text-[11px] text-[#D3E5FD]">Celebrating verified career transitions weekly</p>
             </div>
           </div>
+        </div>
         </div>
       </section>
 
@@ -373,16 +387,16 @@ export const PlacementsView: React.FC<PlacementsViewProps> = ({ onRequestCallbac
       </section>
 
       {/* 4. THE 5-PILLAR PLACEMENT PROCESS */}
-      <section className="py-14 bg-blue-50/60 border-y border-blue-200">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="frame-border-blue rounded-3xl p-6 sm:p-10 space-y-10">
           <div className="text-center max-w-3xl mx-auto space-y-2">
-            <span className="text-xs font-semibold uppercase text-blue-600 tracking-widest">
+            <span className="text-xs font-extrabold uppercase text-[#1E428E] tracking-widest">
               Dedicated Placement Cell
             </span>
-            <h2 className="text-2xl sm:text-3xl font-bold text-slate-900 font-display">
-              Prepared by Latest Industry Curriculum & 5-Pillar Placement Cell
+            <h2 className="text-2xl sm:text-3xl font-extrabold text-[#0B1B3D] font-display">
+              Prepared by Latest Industry Curriculum &amp; 5-Pillar Placement Cell
             </h2>
-            <p className="text-xs sm:text-sm text-slate-600">
+            <p className="text-xs sm:text-sm text-slate-700">
               Our 50+ member full-time placement operations team coaches you from day 1 to offer letter.
             </p>
           </div>

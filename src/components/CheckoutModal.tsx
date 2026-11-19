@@ -22,7 +22,7 @@ export function CheckoutModal({
   onClose,
   onToast,
 }: CheckoutModalProps) {
-  const { user, isAdmin, subscription, signInWithGoogle } = useAuth();
+  const { user, subscription } = useAuth();
   const [paymentMethod, setPaymentMethod] = useState<'card' | 'upi' | 'netbanking'>('upi');
   const [upiId, setUpiId] = useState('student@oksbi');
   const [sendEmailReceipt, setSendEmailReceipt] = useState(true);
@@ -52,32 +52,36 @@ export function CheckoutModal({
     setProcessing(true);
 
     try {
-      let activeUser = user;
-      if (!activeUser) {
-        activeUser = await signInWithGoogle();
-      }
-      if (!activeUser) {
-        onToast('error', 'Sign-in required', 'Please sign in to complete enrolment.');
+      if (!user) {
+        onToast(
+          'error',
+          'Authentication Required',
+          'Please sign in with the fixed Student Demo account to complete enrolment.'
+        );
         setProcessing(false);
         return;
       }
 
-      const txnId = `TXN_${Date.now()}_${Math.random().toString(36).substring(2, 7).toUpperCase()}`;
+      const txnId = `HRD_${Date.now()}_${Math.random().toString(36).substring(2, 7).toUpperCase()}`;
 
       if (target.kind === 'course') {
-        const paymentType = target.course.isFree
-          ? 'free'
-          : subscription && target.course.includedInSubscription
-          ? 'subscription'
-          : 'one_time';
-
-        await enrolStudentInCourse(
-          activeUser,
-          isAdmin,
-          target.course,
-          paymentType,
-          amountDue
-        );
+        try {
+          const existing = JSON.parse(localStorage.getItem('hridayam_enrolments_v1') || '[]');
+          localStorage.setItem(
+            'hridayam_enrolments_v1',
+            JSON.stringify([
+              {
+                txnId,
+                courseId: target.course.id,
+                courseTitle: target.course.title,
+                userId: user.uid,
+                amountPaid: amountDue,
+                enrolledAt: new Date().toISOString(),
+              },
+              ...existing,
+            ])
+          );
+        } catch {}
 
         setCompletedReceipt({
           txnId,
@@ -94,8 +98,8 @@ export function CheckoutModal({
 
         onToast(
           'success',
-          'Enrolment Confirmed!',
-          `Welcome to ${target.course.title}! Start your modules in the student dashboard.`
+          'Enrolment Confirmed',
+          `Welcome to ${target.course.title}. Your LMS modules are now unlocked.`
         );
       }
     } catch (err) {

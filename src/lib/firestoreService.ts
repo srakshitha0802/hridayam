@@ -14,7 +14,12 @@ import {
   where,
   writeBatch,
 } from 'firebase/firestore';
-import { User } from 'firebase/auth';
+type User = {
+  uid: string;
+  displayName?: string | null;
+  email?: string | null;
+  photoURL?: string | null;
+};
 import { db, handleFirestoreError, OperationType } from './firebase';
 import { SEED_COURSES } from '../data/catalogSeed';
 import {

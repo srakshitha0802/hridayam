@@ -1,7 +1,9 @@
-import React, { Component, useCallback, useEffect, useState } from 'react';
+import React, { Component, useCallback, useEffect, useRef, useState } from 'react';
+import { Pause, Play, Search, Sparkles, Star } from 'lucide-react';
 import { AuthProvider, useAuth } from './context/AuthContext';
-import { AppView, Certificate, Course, Enrolment, ReferralSubmission } from './types';
+import { AppView, AuthRole, ReferralSubmission } from './types';
 import { Navbar } from './components/Navbar';
+import { MetallicCursorAura } from './components/MetallicCursorAura';
 import { HomeView } from './components/HomeView';
 import { PlacementsView } from './components/PlacementsView';
 import { ReferEarnView } from './components/ReferEarnView';
@@ -11,17 +13,20 @@ import { ContactView } from './components/ContactView';
 import { CatalogueView } from './components/CatalogueView';
 import { CourseDetailView } from './components/CourseDetailView';
 import { StudentPortalView } from './components/StudentPortalView';
+import { MentorPortalView } from './components/MentorPortalView';
+import { RecruiterPortalView } from './components/RecruiterPortalView';
 import { CounselorAdminView } from './components/CounselorAdminView';
-import { AdminLoginView } from './components/AdminLoginView';
-import { StudentLoginView } from './components/StudentLoginView';
+import { PortalLoginView } from './components/PortalLoginView';
+import { FrontPageChatbot } from './components/FrontPageChatbot';
+import { CommandPalette } from './components/CommandPalette';
 import { CallbackModal } from './components/CallbackModal';
 import { BrochureModal } from './components/BrochureModal';
 import { CheckoutModal, CheckoutTarget } from './components/CheckoutModal';
 import { ToastMessage, ToastStack } from './components/Toast';
 import { Footer } from './components/Footer';
-import { GoogleIcon } from './components/GoogleIcon';
-import { GlitterCursor } from './components/GlitterCursor';
 import { ITV_COURSES, ITvedantCourse } from './data/itvedantData';
+import { SITE_BACKGROUND_VIDEO } from './data/mediaAssets';
+import { useSeoMetadata } from './hooks/useSeoMetadata';
 
 class AppErrorBoundary extends Component<
   { children: React.ReactNode },
@@ -39,18 +44,18 @@ class AppErrorBoundary extends Component<
   render() {
     if (this.state.hasError) {
       return (
-        <div className="min-h-screen bg-[#060D1E] text-white flex items-center justify-center p-6">
-          <div className="max-w-md w-full glass-panel rounded-3xl p-8 text-center shadow-xl">
-            <h1 className="font-display text-xl font-bold text-white">
+        <div className="min-h-screen bg-[#071433] text-white flex items-center justify-center p-6">
+          <div className="max-w-md w-full bg-white text-[#0B1B3D] rounded-3xl p-8 text-center shadow-2xl space-y-4">
+            <h1 className="font-display text-xl font-extrabold">
               Something interrupted the session
             </h1>
-            <p className="text-sm text-sky-200 mt-2">
+            <p className="text-sm text-slate-600">
               Please reload the page to restore your Hridayam by Belvo session.
             </p>
             <button
               type="button"
               onClick={() => window.location.reload()}
-              className="btn-blue-primary mt-5 px-5 py-2.5 text-xs font-bold rounded-xl text-white shadow-md cursor-pointer"
+              className="btn-blue-primary px-5 py-2.5 text-xs font-bold rounded-xl text-white cursor-pointer"
             >
               Reload Platform
             </button>
@@ -63,9 +68,52 @@ class AppErrorBoundary extends Component<
 }
 
 function PlatformShell() {
-  const { user } = useAuth();
+  const { user, hasAccessToRole } = useAuth();
   const [view, setView] = useState<AppView>('home');
   const [selectedCourseId, setSelectedCourseId] = useState<string>(ITV_COURSES[0].id);
+
+  // Dynamic route-aware SEO metadata, canonical URL, OpenGraph & Course JSON-LD
+  useSeoMetadata(view, selectedCourseId);
+
+  // Chatbot, Cursor FX & Global Quick-Find Command Palette state
+  const [chatbotOpen, setChatbotOpen] = useState(false);
+  const [commandPaletteOpen, setCommandPaletteOpen] = useState(false);
+  const [videoPaused, setVideoPaused] = useState(false);
+  const [cursorFxEnabled, setCursorFxEnabled] = useState(true);
+  const bgVideoRef = useRef<HTMLVideoElement>(null);
+
+  useEffect(() => {
+    const prefersReduced =
+      typeof window !== 'undefined' &&
+      window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
+    if (prefersReduced && bgVideoRef.current) {
+      bgVideoRef.current.pause();
+      setVideoPaused(true);
+    }
+  }, []);
+
+  useEffect(() => {
+    const handleGlobalKeyDown = (e: KeyboardEvent) => {
+      if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
+        e.preventDefault();
+        setCommandPaletteOpen((prev) => !prev);
+      }
+    };
+    window.addEventListener('keydown', handleGlobalKeyDown);
+    return () => window.removeEventListener('keydown', handleGlobalKeyDown);
+  }, []);
+
+  const toggleAmbientVideo = () => {
+    const videoEl = bgVideoRef.current;
+    if (!videoEl) return;
+    if (videoEl.paused) {
+      videoEl.play().catch(() => {});
+      setVideoPaused(false);
+    } else {
+      videoEl.pause();
+      setVideoPaused(true);
+    }
+  };
 
   // Modals
   const [callbackModalOpen, setCallbackModalOpen] = useState(false);
@@ -111,6 +159,16 @@ function PlatformShell() {
   };
 
   const handleOpenCheckout = (course: ITvedantCourse) => {
+    if (!user) {
+      pushToast(
+        'info',
+        'Student Login Required',
+        'Sign in with the fixed Student Demo account to complete enrollment.'
+      );
+      navigate('student-login');
+      return;
+    }
+
     setCheckoutTarget({
       kind: 'course',
       course: {
@@ -132,7 +190,7 @@ function PlatformShell() {
         outcomes: course.keyHighlights || [],
         modulesCount: course.curriculum?.length || 4,
         enrolledCount: course.reviewCount || 100,
-      } as any,
+      },
     });
     setCheckoutModalOpen(true);
   };
@@ -145,46 +203,93 @@ function PlatformShell() {
   const handleReferralRegistered = (submission: ReferralSubmission) => {
     pushToast(
       'success',
-      'Referral Logged Successfully!',
+      'Referral Logged Successfully',
       `Referral code ${submission.referralCode} registered. ₹5,000 Amazon Voucher due on enrollment.`
     );
   };
 
-  return (
-    <div className="min-h-screen flex flex-col text-[#1E428E] relative selection:bg-[#3869C3]/25 overflow-x-hidden bg-[#94BCF1]">
-      {/* Shiny & Glittering Mouse Cursor with Particle Trails */}
-      <GlitterCursor />
+  const renderProtectedOrLogin = (
+    requiredRole: AuthRole,
+    targetView: AppView,
+    portalLabel: string,
+    content: React.ReactNode
+  ) => {
+    if (hasAccessToRole(requiredRole)) {
+      return content;
+    }
 
-      {/* Official Hridayam Background Video Layer (100% Crisp & Fully Visible) */}
-      <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden" aria-hidden="true">
+    const reason = user
+      ? `You are currently signed in as ${user.roleLabel}. Sign in with the ${portalLabel} fixed demo account (or Institute Admin) to open this page.`
+      : `Authentication required: Sign in with the fixed ${portalLabel} demo credentials to access this portal.`;
+
+    return (
+      <PortalLoginView
+        initialRole={requiredRole}
+        targetViewAfterLogin={targetView}
+        lockedReason={reason}
+        onAuthenticated={(dest) => navigate(dest)}
+        onBackHome={() => navigate('home')}
+        onToast={pushToast}
+      />
+    );
+  };
+
+  return (
+    <div className="min-h-screen flex flex-col text-[#132C63] relative selection:bg-[#94BCF1]/45 overflow-x-hidden">
+      {/* FULL-SITE ANIMATED VIDEO BACKGROUND */}
+      <div
+        className="fixed inset-0 z-0 pointer-events-none overflow-hidden bg-[#5B93E6]"
+        aria-hidden="true"
+      >
         <video
+          ref={bgVideoRef}
           autoPlay
           loop
           muted
           playsInline
-          className="w-full h-full object-cover object-center opacity-100"
-          src="/site-bg.mp4"
+          preload="auto"
+          className="w-full h-full object-cover object-center"
+          src={SITE_BACKGROUND_VIDEO}
         />
+        {/* Airy luminous pastel-sky veil so live waves glow vividly behind white-blue glass */}
+        <div className="absolute inset-0 bg-gradient-to-b from-[#6FA6EE]/20 via-[#9AC8FF]/16 to-[#2B59B5]/24" />
       </div>
+
+      {/* Interactive 60fps Metallic White-Blue Glitter Cursor & Specular Card Sheen */}
+      <MetallicCursorAura enabled={cursorFxEnabled} />
+
+      {/* Right-Edge Vertical Google Reviews Floating Tab (matches target design) */}
+      <button
+        type="button"
+        onClick={() => navigate('reviews')}
+        className="hidden md:flex fixed right-0 top-[34%] z-30 flex-col items-center gap-1.5 px-2 py-3.5 rounded-l-2xl bg-white/90 hover:bg-white backdrop-blur-lg border-y-2 border-l-2 border-white text-[#1E428E] shadow-lg transition-all hover:-translate-x-0.5 cursor-pointer"
+        aria-label="Read 5,280+ Verified Google Reviews (4.9 Stars)"
+      >
+        <span className="text-[10px] font-extrabold tracking-wide [writing-mode:vertical-rl] rotate-180">
+          Google Reviews
+        </span>
+        <span className="text-[11px] font-extrabold font-mono-tabular text-[#1E428E]">4.9</span>
+        <Star className="w-3.5 h-3.5 fill-amber-400 text-amber-400" />
+      </button>
 
       {/* Main Navbar */}
-      <div className="relative z-30">
-        <Navbar
-          currentView={view}
-          onNavigate={navigate}
-          onRequestCallback={handleOpenCallback}
-          onSelectCourse={handleSelectCourse}
-        />
-      </div>
+      <Navbar
+        currentView={view}
+        onNavigate={navigate}
+        onRequestCallback={handleOpenCallback}
+        onSelectCourse={handleSelectCourse}
+      />
 
       {/* Main View Router */}
-      <main className="flex-1 pt-20">
+      <main className="flex-1 pt-[74px] relative z-10">
         {view === 'home' && (
           <HomeView
             onNavigate={navigate}
             onSelectCourse={handleSelectCourse}
             onRequestCallback={handleOpenCallback}
             onDownloadBrochure={handleOpenBrochure}
+            onOpenChatbot={() => setChatbotOpen(true)}
+            onOpenCommandPalette={() => setCommandPaletteOpen(true)}
           />
         )}
 
@@ -192,24 +297,36 @@ function PlatformShell() {
           <PlacementsView onRequestCallback={handleOpenCallback} />
         )}
 
-        {view === 'refer-earn' && (
-          <ReferEarnView onReferralSuccess={handleReferralRegistered} />
-        )}
+        {view === 'hire-from-us' &&
+          renderProtectedOrLogin(
+            'recruiter',
+            'recruiter-portal',
+            'Hiring Partner',
+            <RecruiterPortalView
+              onLogout={() => navigate('home')}
+              onNavigate={navigate}
+              onToast={pushToast}
+            />
+          )}
 
-        {view === 'contact' && (
-          <ContactView onToast={pushToast} />
-        )}
+        {view === 'refer-earn' &&
+          renderProtectedOrLogin(
+            'student',
+            'refer-earn',
+            'Student LMS',
+            <ReferEarnView onReferralSuccess={handleReferralRegistered} onNavigate={navigate} />
+          )}
 
-        {view === 'hire-from-us' && (
-          <PlacementsView onRequestCallback={handleOpenCallback} />
-        )}
+        {view === 'contact' && <ContactView onToast={pushToast} />}
 
         {view === 'centers' && (
           <ClassroomCentersView onRequestCallback={handleOpenCallback} />
         )}
 
         {view === 'reviews' && (
-          <ReviewsView onRequestCallback={() => handleOpenCallback('General Inquiry')} />
+          <ReviewsView
+            onRequestCallback={() => handleOpenCallback('General Inquiry')}
+          />
         )}
 
         {view === 'catalogue' && (
@@ -229,40 +346,173 @@ function PlatformShell() {
           />
         )}
 
-        {view === 'student' && (
-          <StudentPortalView
-            onNavigateHome={() => navigate('home')}
-            onExploreCourses={() => navigate('catalogue')}
-            onToast={pushToast}
-          />
-        )}
+        {/* Role-Protected Portals */}
+        {view === 'student' &&
+          renderProtectedOrLogin(
+            'student',
+            'student',
+            'Student LMS',
+            <StudentPortalView
+              onNavigateHome={() => navigate('home')}
+              onExploreCourses={() => navigate('catalogue')}
+              onNavigate={navigate}
+              onToast={pushToast}
+            />
+          )}
 
-        {view === 'instructor' && (
-          <CounselorAdminView
-            onToast={pushToast}
-            onLogout={() => navigate('home')}
-          />
-        )}
+        {view === 'mentor-portal' &&
+          renderProtectedOrLogin(
+            'mentor',
+            'mentor-portal',
+            'Faculty & Mentor',
+            <MentorPortalView
+              onLogout={() => navigate('home')}
+              onNavigate={navigate}
+              onToast={pushToast}
+            />
+          )}
 
-        {view === 'admin-login' && (
-          <AdminLoginView
-            onEnterAdminConsole={() => navigate('instructor')}
-            onGoStudentHub={() => navigate('student')}
+        {view === 'recruiter-portal' &&
+          renderProtectedOrLogin(
+            'recruiter',
+            'recruiter-portal',
+            'Hiring Partner',
+            <RecruiterPortalView
+              onLogout={() => navigate('home')}
+              onNavigate={navigate}
+              onToast={pushToast}
+            />
+          )}
+
+        {view === 'instructor' &&
+          renderProtectedOrLogin(
+            'admin',
+            'instructor',
+            'Institute Admin',
+            <CounselorAdminView
+              onToast={pushToast}
+              onLogout={() => navigate('home')}
+              onNavigate={navigate}
+            />
+          )}
+
+        {/* Explicit Login Views */}
+        {view === 'portal-login' && (
+          <PortalLoginView
+            initialRole="student"
+            onAuthenticated={(dest) => navigate(dest)}
+            onBackHome={() => navigate('home')}
             onToast={pushToast}
           />
         )}
 
         {view === 'student-login' && (
-          <StudentLoginView
-            onSuccess={() => navigate('student')}
-            onGoAdminLogin={() => navigate('admin-login')}
+          <PortalLoginView
+            initialRole="student"
+            targetViewAfterLogin="student"
+            onAuthenticated={(dest) => navigate(dest)}
+            onBackHome={() => navigate('home')}
+            onToast={pushToast}
+          />
+        )}
+
+        {view === 'mentor-login' && (
+          <PortalLoginView
+            initialRole="mentor"
+            targetViewAfterLogin="mentor-portal"
+            onAuthenticated={(dest) => navigate(dest)}
+            onBackHome={() => navigate('home')}
+            onToast={pushToast}
+          />
+        )}
+
+        {view === 'recruiter-login' && (
+          <PortalLoginView
+            initialRole="recruiter"
+            targetViewAfterLogin="recruiter-portal"
+            onAuthenticated={(dest) => navigate(dest)}
+            onBackHome={() => navigate('home')}
+            onToast={pushToast}
+          />
+        )}
+
+        {view === 'admin-login' && (
+          <PortalLoginView
+            initialRole="admin"
+            targetViewAfterLogin="instructor"
+            onAuthenticated={(dest) => navigate(dest)}
+            onBackHome={() => navigate('home')}
             onToast={pushToast}
           />
         )}
       </main>
 
       {/* Footer */}
-      <Footer onNavigate={navigate} onRequestCallback={handleOpenCallback} />
+      <Footer
+        onNavigate={navigate}
+        onRequestCallback={handleOpenCallback}
+        onOpenCommandPalette={() => setCommandPaletteOpen(true)}
+      />
+
+      {/* Desktop Ambient Video, Mouse Sparkle FX & Quick-Find Control Dock */}
+      <div className="hidden md:flex fixed bottom-5 left-5 z-30 items-center gap-2">
+        <button
+          type="button"
+          onClick={toggleAmbientVideo}
+          className="metallic-btn-ice px-3 py-2 rounded-xl text-[11px] font-extrabold inline-flex items-center gap-1.5 cursor-pointer"
+          aria-label={videoPaused ? 'Play background video' : 'Pause background video'}
+          title={videoPaused ? 'Play background video' : 'Pause background video'}
+        >
+          {videoPaused ? (
+            <Play className="w-3.5 h-3.5 text-[#2B59B5]" />
+          ) : (
+            <Pause className="w-3.5 h-3.5 text-[#2B59B5]" />
+          )}
+          <span>{videoPaused ? 'Play Video' : 'Pause Video'}</span>
+        </button>
+
+        <button
+          type="button"
+          onClick={() => setCursorFxEnabled((prev) => !prev)}
+          className="metallic-btn-ice px-3 py-2 rounded-xl text-[11px] font-extrabold inline-flex items-center gap-1.5 cursor-pointer"
+          aria-label={cursorFxEnabled ? 'Disable metallic mouse effects' : 'Enable metallic mouse effects'}
+        >
+          <Sparkles
+            className={`w-3.5 h-3.5 ${cursorFxEnabled ? 'text-[#2563EB]' : 'text-slate-400'}`}
+          />
+          <span>{cursorFxEnabled ? 'Mouse FX On' : 'Mouse FX Off'}</span>
+        </button>
+
+        <button
+          type="button"
+          onClick={() => setCommandPaletteOpen(true)}
+          className="metallic-btn-ice px-3 py-2 rounded-xl text-[11px] font-extrabold inline-flex items-center gap-1.5 cursor-pointer"
+          aria-label="Open Quick Find Command Palette"
+        >
+          <Search className="w-3.5 h-3.5 text-[#2B59B5]" />
+          <span>Quick Find</span>
+          <kbd className="font-mono-tabular text-[10px] text-[#3869C3] ml-0.5">⌘K</kbd>
+        </button>
+      </div>
+
+      {/* Global Quick-Find Command Palette (Cmd+K / Ctrl+K) */}
+      <CommandPalette
+        isOpen={commandPaletteOpen}
+        onClose={() => setCommandPaletteOpen(false)}
+        onNavigate={navigate}
+        onSelectCourse={handleSelectCourse}
+        onRequestCallback={handleOpenCallback}
+        onDownloadBrochure={handleOpenBrochure}
+        onOpenChatbot={() => setChatbotOpen(true)}
+      />
+
+      {/* Front-Page & Site-Wide Career Advisor Chatbot */}
+      <FrontPageChatbot
+        isOpen={chatbotOpen}
+        onToggle={setChatbotOpen}
+        onNavigate={navigate}
+        onRequestCallback={handleOpenCallback}
+      />
 
       {/* Modals */}
       <CallbackModal
@@ -293,41 +543,6 @@ function PlatformShell() {
           onToast={pushToast}
         />
       )}
-
-      {/* WhatsApp Quick Floating Action Button */}
-      <aside aria-label="Support &amp; quick chat options">
-        <a
-          href="https://wa.me/918928466820?text=Hi%20Hridayam%20by%20Belvo,%20I%20am%20interested%20in%20learning%20more%20about%20your%20courses%20and%20100%25%20placement%20assurance."
-          target="_blank"
-          rel="noreferrer"
-          className="fixed bottom-6 right-6 z-40 bg-[#25D366] hover:bg-[#20bd5a] text-white p-3.5 rounded-full shadow-2xl flex items-center justify-center transition-all duration-200 hover:scale-110 group cursor-pointer border-2 border-white"
-          title="Chat on WhatsApp (+91 89284 66820)"
-          aria-label="Chat on WhatsApp"
-        >
-          <GoogleIcon name="chat" size={24} className="text-white" filled />
-          <span className="max-w-0 overflow-hidden whitespace-nowrap group-hover:max-w-xs transition-all duration-300 ease-in-out text-xs font-bold pl-0 group-hover:pl-2">
-            Chat on WhatsApp
-          </span>
-        </a>
-
-        {/* Sticky Mobile Quick Callback Bar */}
-        <div className="fixed bottom-0 left-0 right-0 z-30 lg:hidden bg-[#D3E5FD]/95 text-[#1E428E] p-3 border-t-2 border-white flex items-center justify-between gap-3 shadow-2xl backdrop-blur-md">
-          <a
-            href="tel:+918928466820"
-            className="flex-1 py-2.5 rounded-xl border border-white text-center font-bold text-xs flex items-center justify-center gap-1.5 text-[#1E428E] bg-white/80 shadow-xs"
-            aria-label="Call Hridayam Admissions at +91 89284 66820"
-          >
-            <GoogleIcon name="call" size={16} className="text-[#3869C3]" />
-            Call Admissions
-          </a>
-          <button
-            onClick={() => handleOpenCallback()}
-            className="flex-1 py-2.5 rounded-xl btn-blue-primary text-white text-center font-bold text-xs uppercase tracking-wider shadow-md"
-          >
-            Book Free Demo
-          </button>
-        </div>
-      </aside>
 
       {/* Global Toast Stack */}
       <ToastStack toasts={toasts} onDismiss={dismissToast} />

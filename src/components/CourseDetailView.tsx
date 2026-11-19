@@ -25,7 +25,7 @@ export const CourseDetailView: React.FC<CourseDetailViewProps> = ({
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6">
         <button
           onClick={onBack}
-          className="flex items-center gap-1.5 text-xs font-semibold text-slate-600 hover:text-blue-600 transition-colors cursor-pointer"
+          className="inline-flex items-center gap-1.5 text-xs font-bold text-white bg-[#0B1B3D]/80 hover:bg-[#1E428E] border border-sky-300/40 backdrop-blur-md px-4 py-2 rounded-xl shadow-md transition-colors cursor-pointer"
         >
           <GoogleIcon name="arrow_back" size={16} />
           <span>Back to All Courses</span>
@@ -142,139 +142,147 @@ export const CourseDetailView: React.FC<CourseDetailViewProps> = ({
       </section>
 
       {/* Course Highlights & Key Learning Outcomes */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
-        <h2 className="text-2xl font-bold text-slate-900 font-display">
-          Key Highlights of the Program
-        </h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {course.keyHighlights.map((highlight, idx) => (
-            <div
-              key={idx}
-              className="bg-white p-4 rounded-2xl flex items-start gap-3 hover:border-blue-400 transition-all border-2 border-blue-100 shadow-sm"
-            >
-              <GoogleIcon name="check_circle" size={18} className="text-blue-600 shrink-0 mt-0.5" filled />
-              <span className="text-xs font-semibold text-slate-800 leading-snug">{highlight}</span>
-            </div>
-          ))}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="video-section-panel rounded-3xl p-6 sm:p-8 space-y-6">
+          <h2 className="text-2xl font-bold text-white font-display">
+            Key Highlights of the Program
+          </h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            {course.keyHighlights.map((highlight, idx) => (
+              <div
+                key={idx}
+                className="bg-white/95 backdrop-blur-md p-4 rounded-2xl flex items-start gap-3 hover:border-blue-400 transition-all border-2 border-blue-100 shadow-sm"
+              >
+                <GoogleIcon name="check_circle" size={18} className="text-blue-600 shrink-0 mt-0.5" filled />
+                <span className="text-xs font-semibold text-slate-800 leading-snug">{highlight}</span>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 
       {/* Tools & Technologies Covered */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-4">
-        <h2 className="text-2xl font-bold text-slate-900 font-display">
-          Tools & Frameworks Mastered
-        </h2>
-        <div className="flex flex-wrap gap-2.5">
-          {course.toolsCovered.map((tool, idx) => (
-            <span
-              key={idx}
-              className="px-4 py-2 bg-white rounded-xl text-xs font-semibold text-slate-800 flex items-center gap-1.5 hover:border-blue-400 transition-all border-2 border-blue-100 shadow-xs"
-            >
-              <GoogleIcon name="auto_awesome" size={14} className="text-blue-600" />
-              {tool}
-            </span>
-          ))}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="video-section-panel rounded-3xl p-6 sm:p-8 space-y-4">
+          <h2 className="text-2xl font-bold text-white font-display">
+            Tools & Frameworks Mastered
+          </h2>
+          <div className="flex flex-wrap gap-2.5">
+            {course.toolsCovered.map((tool, idx) => (
+              <span
+                key={idx}
+                className="px-4 py-2 bg-white/95 rounded-xl text-xs font-semibold text-slate-800 flex items-center gap-1.5 hover:border-blue-400 transition-all border-2 border-blue-100 shadow-xs"
+              >
+                <GoogleIcon name="auto_awesome" size={14} className="text-blue-600" />
+                {tool}
+              </span>
+            ))}
+          </div>
         </div>
       </section>
 
       {/* Week-by-Week Detailed Curriculum Modules */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
-        <div className="flex items-center justify-between">
-          <div>
-            <h2 className="text-2xl font-bold text-slate-900 font-display">
-              Comprehensive Syllabus & Modules
-            </h2>
-            <p className="text-xs text-slate-600 mt-0.5">
-              Structured step-by-step from foundational concepts to advanced production architecture.
-            </p>
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="video-section-panel rounded-3xl p-6 sm:p-8 space-y-6">
+          <div className="flex flex-wrap items-center justify-between gap-4">
+            <div>
+              <h2 className="text-2xl font-bold text-white font-display">
+                Comprehensive Syllabus & Modules
+              </h2>
+              <p className="text-xs text-sky-100 mt-0.5">
+                Structured step-by-step from foundational concepts to advanced production architecture.
+              </p>
+            </div>
+            <button
+              onClick={() => onDownloadBrochure(course.title)}
+              className="px-4 py-2 rounded-xl bg-white/95 hover:bg-blue-50 text-xs font-bold text-blue-700 flex items-center gap-1.5 cursor-pointer shadow-sm"
+            >
+              <GoogleIcon name="download" size={16} />
+              Download PDF
+            </button>
           </div>
-          <button
-            onClick={() => onDownloadBrochure(course.title)}
-            className="text-xs font-bold text-blue-600 hover:text-blue-800 flex items-center gap-1 cursor-pointer"
-          >
-            <GoogleIcon name="download" size={16} />
-            Download PDF
-          </button>
-        </div>
 
-        <div className="space-y-3">
-          {course.curriculum.map((mod, idx) => {
-            const isOpen = openModuleIndex === idx;
-            return (
-              <div
-                key={idx}
-                className="bg-white rounded-2xl overflow-hidden shadow-sm hover:border-blue-400 transition-all border-2 border-blue-100 text-slate-900"
-              >
-                <button
-                  onClick={() => setOpenModuleIndex(isOpen ? null : idx)}
-                  className="w-full p-5 text-left flex items-center justify-between gap-4 hover:bg-blue-50 transition-colors cursor-pointer"
+          <div className="space-y-3">
+            {course.curriculum.map((mod, idx) => {
+              const isOpen = openModuleIndex === idx;
+              return (
+                <div
+                  key={idx}
+                  className="bg-white/95 rounded-2xl overflow-hidden shadow-sm hover:border-blue-400 transition-all border-2 border-blue-100 text-slate-900"
                 >
-                  <div className="flex items-center gap-3">
-                    <span className="w-8 h-8 rounded-lg bg-blue-600 text-white font-bold text-xs flex items-center justify-center shrink-0 shadow-sm">
-                      M{mod.moduleNumber}
-                    </span>
-                    <div>
-                      <h4 className="font-bold text-slate-900 text-sm">{mod.title}</h4>
-                      <span className="text-[11px] text-slate-500">{mod.duration}</span>
+                  <button
+                    onClick={() => setOpenModuleIndex(isOpen ? null : idx)}
+                    className="w-full p-5 text-left flex items-center justify-between gap-4 hover:bg-blue-50 transition-colors cursor-pointer"
+                  >
+                    <div className="flex items-center gap-3">
+                      <span className="w-8 h-8 rounded-lg bg-blue-600 text-white font-bold text-xs flex items-center justify-center shrink-0 shadow-sm">
+                        M{mod.moduleNumber}
+                      </span>
+                      <div>
+                        <h4 className="font-bold text-slate-900 text-sm">{mod.title}</h4>
+                        <span className="text-[11px] text-slate-500">{mod.duration}</span>
+                      </div>
                     </div>
-                  </div>
-                  <GoogleIcon
-                    name={isOpen ? 'expand_less' : 'expand_more'}
-                    size={20}
-                    className="text-blue-600"
-                  />
-                </button>
+                    <GoogleIcon
+                      name={isOpen ? 'expand_less' : 'expand_more'}
+                      size={20}
+                      className="text-blue-600"
+                    />
+                  </button>
 
-                {isOpen && (
-                  <div className="px-5 pb-5 pt-2 border-t border-blue-100 text-xs space-y-3">
-                    <div>
-                      <span className="font-bold text-slate-800 block mb-1.5">Topics Covered:</span>
-                      <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-slate-600">
-                        {mod.topics.map((t, i) => (
-                          <li key={i} className="flex items-center gap-2">
-                            <span className="w-1.5 h-1.5 rounded-full bg-blue-600" />
-                            <span>{t}</span>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
+                  {isOpen && (
+                    <div className="px-5 pb-5 pt-2 border-t border-blue-100 text-xs space-y-3">
+                      <div>
+                        <span className="font-bold text-slate-800 block mb-1.5">Topics Covered:</span>
+                        <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-slate-600">
+                          {mod.topics.map((t, i) => (
+                            <li key={i} className="flex items-center gap-2">
+                              <span className="w-1.5 h-1.5 rounded-full bg-blue-600" />
+                              <span>{t}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
 
-                    <div className="bg-blue-50/70 p-3 rounded-xl border border-blue-100 text-slate-700">
-                      <strong>Skills Acquired:</strong> {mod.skillsGained}
+                      <div className="bg-blue-50/70 p-3 rounded-xl border border-blue-100 text-slate-700">
+                        <strong>Skills Acquired:</strong> {mod.skillsGained}
+                      </div>
                     </div>
-                  </div>
-                )}
-              </div>
-            );
-          })}
+                  )}
+                </div>
+              );
+            })}
+          </div>
         </div>
       </section>
 
       {/* Capstone Projects Section */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
-        <h2 className="text-2xl font-bold text-slate-900 font-display">
-          Industry Capstone Projects
-        </h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {course.capstoneProjects.map((proj, idx) => (
-            <div
-              key={idx}
-              className="bg-white rounded-2xl p-6 space-y-3 hover:border-blue-400 transition-all border-2 border-blue-100 shadow-sm text-slate-900"
-            >
-              <h4 className="font-bold text-slate-900 text-base">{proj.title}</h4>
-              <p className="text-xs text-slate-600 leading-relaxed">{proj.description}</p>
-              <div className="flex flex-wrap gap-1.5 pt-2">
-                {proj.tools.map((t, i) => (
-                  <span
-                    key={i}
-                    className="px-2.5 py-0.5 rounded-md bg-blue-50 border border-blue-200 text-blue-800 text-[11px] font-semibold"
-                  >
-                    {t}
-                  </span>
-                ))}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="video-section-panel rounded-3xl p-6 sm:p-8 space-y-6">
+          <h2 className="text-2xl font-bold text-white font-display">
+            Industry Capstone Projects
+          </h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {course.capstoneProjects.map((proj, idx) => (
+              <div
+                key={idx}
+                className="bg-white/95 rounded-2xl p-6 space-y-3 hover:border-blue-400 transition-all border-2 border-blue-100 shadow-sm text-slate-900"
+              >
+                <h4 className="font-bold text-slate-900 text-base">{proj.title}</h4>
+                <p className="text-xs text-slate-600 leading-relaxed">{proj.description}</p>
+                <div className="flex flex-wrap gap-1.5 pt-2">
+                  {proj.tools.map((t, i) => (
+                    <span
+                      key={i}
+                      className="px-2.5 py-0.5 rounded-md bg-blue-50 border border-blue-200 text-blue-800 text-[11px] font-semibold"
+                    >
+                      {t}
+                    </span>
+                  ))}
+                </div>
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
       </section>
 

@@ -74,9 +74,9 @@ export const BrochureModal: React.FC<BrochureModalProps> = ({
               {/* Real Human Counselor Contact Box */}
               <div className="p-3.5 bg-white/90 rounded-2xl border-2 border-[#D3E5FD] text-left flex items-center gap-3 shadow-xs">
                 <img
-                  src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=400&q=80"
+                  src="/assets/aistudio/1760427272068_ff352634.jpeg"
                   alt="Ananya Sharma Counselor"
-                  className="w-12 h-12 rounded-full object-cover border-2 border-[#3869C3] shrink-0"
+                  className="w-12 h-12 rounded-full object-cover object-top border-2 border-[#3869C3] shrink-0"
                 />
                 <div>
                   <h5 className="font-extrabold text-xs text-[#1E428E]">Ananya Sharma</h5>

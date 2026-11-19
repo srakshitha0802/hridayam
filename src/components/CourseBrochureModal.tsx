@@ -110,7 +110,7 @@ export function CourseBrochureModal({
         <div className="px-6 py-5 border-b border-slate-200 bg-slate-50 flex flex-wrap items-center justify-between gap-4">
           <div className="flex items-center gap-3.5 min-w-0">
             <img
-              src="/assets/aistudio/image_60047325.png"
+              src="/logo.png"
               alt="Hridayam by Belvo"
               className="h-11 w-auto rounded-xl bg-white p-1 border border-slate-200 object-contain shrink-0"
             />

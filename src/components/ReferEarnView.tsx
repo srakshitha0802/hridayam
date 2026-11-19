@@ -1,29 +1,57 @@
-import React, { useState } from 'react';
-import { GoogleIcon } from './GoogleIcon';
+import React, { useEffect, useState } from 'react';
+import {
+  Gift,
+  UserPlus,
+  Ticket,
+  BookOpen,
+  HelpCircle,
+  Copy,
+  Check,
+  CheckCircle2,
+  ChevronDown,
+} from 'lucide-react';
 import { REFER_EARN_PROGRAMS, REFER_EARN_FAQS, ITV_COURSES } from '../data/itvedantData';
-import { ReferralSubmission } from '../types';
+import { AppView, ReferralSubmission } from '../types';
+import { useAuth } from '../context/AuthContext';
+import { PortalKpi, PortalNavItem, PortalWorkspaceShell } from './PortalWorkspaceShell';
 
 interface ReferEarnViewProps {
   onReferralSuccess?: (submission: ReferralSubmission) => void;
+  onNavigate?: (view: AppView) => void;
 }
 
-export const ReferEarnView: React.FC<ReferEarnViewProps> = ({ onReferralSuccess }) => {
+type ReferTab = 'overview' | 'refer-form' | 'my-referrals' | 'programs' | 'faq';
+
+export const ReferEarnView: React.FC<ReferEarnViewProps> = ({
+  onReferralSuccess,
+  onNavigate,
+}) => {
+  const { user, signOutUser } = useAuth();
+  const [activeTab, setActiveTab] = useState<ReferTab>('overview');
   const [openFaqIndex, setOpenFaqIndex] = useState<number | null>(0);
   const [formSubmitted, setFormSubmitted] = useState(false);
   const [copiedLink, setCopiedLink] = useState(false);
-  const [generatedRefCode, setGeneratedRefCode] = useState('');
+  const [generatedRefCode, setGeneratedRefCode] = useState('HRD-REF-2026-881');
+  const [referrals, setReferrals] = useState<ReferralSubmission[]>([]);
 
   const [formData, setFormData] = useState({
-    referrerName: '',
-    referrerPhone: '',
-    referrerEmail: '',
+    referrerName: user?.displayName || 'Aarav Deshmukh',
+    referrerPhone: '+91 98204 51920',
+    referrerEmail: user?.email || 'student@hridayam.in',
     referrerRole: 'Current Student',
     friendName: '',
     friendPhone: '',
     friendEmail: '',
-    interestedCourse: 'Master in Data Science and Analytics with AI',
+    interestedCourse: ITV_COURSES[0]?.title || 'Master in Data Science and Analytics with AI',
     preferredCenter: 'Thane Head Office',
   });
+
+  useEffect(() => {
+    try {
+      const existing = JSON.parse(localStorage.getItem('itv_referrals_v1') || '[]');
+      setReferrals(existing);
+    } catch {}
+  }, [activeTab]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -53,7 +81,9 @@ export const ReferEarnView: React.FC<ReferEarnViewProps> = ({ onReferralSuccess 
 
     try {
       const existing = JSON.parse(localStorage.getItem('itv_referrals_v1') || '[]');
-      localStorage.setItem('itv_referrals_v1', JSON.stringify([newSubmission, ...existing]));
+      const next = [newSubmission, ...existing];
+      localStorage.setItem('itv_referrals_v1', JSON.stringify(next));
+      setReferrals(next);
     } catch {}
 
     if (onReferralSuccess) {
@@ -61,458 +91,324 @@ export const ReferEarnView: React.FC<ReferEarnViewProps> = ({ onReferralSuccess 
     }
 
     setFormSubmitted(true);
+    setFormData((prev) => ({ ...prev, friendName: '', friendPhone: '', friendEmail: '' }));
   };
 
   const handleCopyCode = () => {
-    const shareText = `Hey! Check out Hridayam by Belvo's career programs with 100% placement assurance. Use my referral code ${generatedRefCode} or enroll here: https://itvedant.com/ref?code=${generatedRefCode}`;
+    const shareText = `Check out Hridayam by Belvo career programs with 100% placement support. Use my referral code ${generatedRefCode} to unlock priority counseling.`;
     navigator.clipboard.writeText(shareText);
     setCopiedLink(true);
-    setTimeout(() => setCopiedLink(false), 3000);
+    setTimeout(() => setCopiedLink(false), 2600);
   };
 
+  const dispatchedCount = referrals.filter((r) => r.voucherCode !== 'PENDING_ADMISSION').length;
+
+  const navItems: PortalNavItem[] = [
+    { id: 'overview', label: 'Rewards Overview', icon: Gift, group: 'Referral Hub' },
+    { id: 'refer-form', label: 'Refer a Friend', icon: UserPlus, group: 'Referral Hub' },
+    { id: 'my-referrals', label: 'My Vouchers & Log', icon: Ticket, badge: referrals.length, group: 'Referral Hub' },
+    { id: 'programs', label: 'Eligible Programs', icon: BookOpen, badge: REFER_EARN_PROGRAMS.length, group: 'Program Guide' },
+    { id: 'faq', label: 'Policy & FAQs', icon: HelpCircle, group: 'Program Guide' },
+  ];
+
+  const kpis: PortalKpi[] = [
+    { label: 'Reward Per Enrollment', value: '₹5,000', hint: 'Instant Amazon e-Voucher', pastelClass: 'pastel-peach-card' },
+    { label: 'Referrals Submitted', value: referrals.length, hint: 'No upper limit on invites', pastelClass: 'pastel-sky-card' },
+    { label: 'Vouchers Dispatched', value: dispatchedCount, hint: `₹${(dispatchedCount * 5000).toLocaleString('en-IN')} earned`, pastelClass: 'pastel-mint-card' },
+    { label: 'Active Share Code', value: generatedRefCode.slice(-6), hint: 'Valid across all campuses', pastelClass: 'pastel-lavender-card' },
+  ];
+
   return (
-    <div className="space-y-16 pb-20 relative z-10 text-slate-900">
-      {/* Breadcrumb Strip */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6">
-        <div className="text-xs text-slate-500 font-semibold flex items-center gap-1.5 uppercase tracking-wider">
-          <span>Home</span>
-          <span>&gt;</span>
-          <span className="text-blue-600">Refer and Earn</span>
-        </div>
-      </div>
-
-      {/* 1. HERO SECTION (BLUE-WHITE PREMIUM TEXTURE) */}
-      <section className="pt-4 pb-12 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-7xl mx-auto">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-            {/* Left Copy */}
-            <div className="lg:col-span-7 space-y-6">
-              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-blue-50 text-blue-700 border border-blue-200 text-xs font-semibold">
-                <GoogleIcon name="redeem" size={17} className="text-blue-600" />
-                <span>Share Knowledge & Get Rewarded</span>
-              </div>
-
-              <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-slate-900 font-display leading-tight">
-                Refer your friend and someone you know and earn an{' '}
-                <span className="text-blue-600">
-                  Amazon Gift voucher upto 5000 !!
-                </span>
-              </h1>
-
-              <p className="text-slate-600 text-sm sm:text-base leading-relaxed max-w-xl">
-                Share the gift of education with your friends and get a chance of earning upto ₹5000 Amazon vouchers on every successful enrollment!
+    <PortalWorkspaceShell
+      portalName="Refer & Earn Portal"
+      portalSubtitle="Invite friends to Hridayam by Belvo classroom or live online batches and earn ₹5,000 Amazon vouchers on every enrollment."
+      userName={user?.displayName || 'Aarav Deshmukh'}
+      userEmail={user?.email || 'student@hridayam.in'}
+      userBadgeCode={user?.badgeCode || 'HRD-STU-2026-4108'}
+      userCampus={user?.campus || 'Pune FC Road Campus'}
+      roleAccent="rose"
+      navItems={navItems}
+      activeId={activeTab}
+      onSelectNav={(id) => setActiveTab(id as ReferTab)}
+      kpis={kpis}
+      headerActions={
+        <>
+          <button
+            type="button"
+            onClick={() => setActiveTab('refer-form')}
+            className="px-4 py-2.5 rounded-xl bg-white/95 text-[#0B1B3D] hover:bg-white text-xs font-extrabold cursor-pointer whitespace-nowrap"
+          >
+            Refer a Friend Now
+          </button>
+          <button
+            type="button"
+            onClick={handleCopyCode}
+            className="px-4 py-2.5 rounded-xl bg-white/15 hover:bg-white/25 border border-white/30 text-white text-xs font-bold inline-flex items-center gap-1.5 cursor-pointer whitespace-nowrap"
+          >
+            {copiedLink ? <Check className="w-3.5 h-3.5" /> : <Copy className="w-3.5 h-3.5" />}
+            <span>{copiedLink ? 'Copied Invite' : 'Copy Share Link'}</span>
+          </button>
+        </>
+      }
+      onLogout={() => {
+        signOutUser();
+        onNavigate?.('home');
+      }}
+    >
+      {/* 1. OVERVIEW */}
+      {activeTab === 'overview' && (
+        <div className="grid grid-cols-1 xl:grid-cols-12 gap-6 items-stretch">
+          <div className="xl:col-span-7 glass-panel rounded-3xl p-6 sm:p-8 flex flex-col justify-between gap-5">
+            <div className="space-y-3">
+              <h2 className="text-2xl font-extrabold text-[#0B1B3D]">
+                Earn ₹5,000 Amazon Gift Vouchers for Every Friend Who Joins
+              </h2>
+              <p className="text-sm text-slate-700 leading-relaxed">
+                Share the gift of career-ready tech &amp; AI mentorship. When your referred friend completes admission and pays the initial 20% fee installment, your Amazon e-voucher is dispatched automatically via Institute Admin.
               </p>
-
-              <div className="flex flex-wrap items-center gap-4 pt-2">
-                <a
-                  href="#refer-form"
-                  className="btn-blue-primary px-7 py-3.5 rounded-xl text-xs font-semibold uppercase tracking-wider text-white shadow-xl flex items-center gap-2"
-                >
-                  <GoogleIcon name="redeem" size={17} />
-                  <span>Refer Now</span>
-                  <GoogleIcon name="arrow_downward" size={16} />
-                </a>
-                <a
-                  href="#refer-policy"
-                  className="px-5 py-3.5 rounded-xl text-xs font-semibold flex items-center gap-2 text-blue-700 bg-blue-50 border border-blue-200 hover:bg-blue-100 transition-all"
-                >
-                  <GoogleIcon name="description" size={17} />
-                  <span>Refer & Earn Policy</span>
-                </a>
+            </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+              <div className="pastel-sky-card rounded-2xl p-4 space-y-1">
+                <div className="text-xs font-mono-tabular font-extrabold text-[#2B4EA2]">Step 01</div>
+                <div className="text-sm font-extrabold text-[#0B1B3D]">Register Your Friend</div>
+                <p className="text-xs text-slate-700">Submit their contact details and preferred Indian campus or online track.</p>
+              </div>
+              <div className="pastel-mint-card rounded-2xl p-4 space-y-1">
+                <div className="text-xs font-mono-tabular font-extrabold text-emerald-800">Step 02</div>
+                <div className="text-sm font-extrabold text-[#0B1B3D]">Receive ₹5,000 Voucher</div>
+                <p className="text-xs text-slate-700">Voucher unlocks on admission confirmation with zero cap on total earnings.</p>
               </div>
             </div>
-
-            {/* Right Graphic: Amazon Voucher & Graphic Mockup */}
-            <div className="lg:col-span-5 flex justify-center">
-              <div className="relative w-full max-w-md bg-white/95 backdrop-blur-2xl rounded-3xl p-6 sm:p-8 border-2 border-blue-200 shadow-xl text-center space-y-4 text-slate-900">
-                <div className="w-16 h-16 bg-gradient-to-tr from-blue-600 to-sky-600 text-white rounded-2xl flex items-center justify-center mx-auto shadow-md">
-                  <GoogleIcon name="featured_seasonal_and_gifts" size={32} filled />
-                </div>
-                <div>
-                  <span className="text-[11px] font-semibold uppercase text-blue-600 tracking-wider">
-                    Official Referral Reward
-                  </span>
-                  <div className="text-3xl sm:text-4xl font-bold text-slate-900 font-display mt-1">
-                    Amazon Voucher
-                  </div>
-                  <div className="text-2xl font-bold text-blue-600 font-display mt-0.5">
-                    Upto ₹5,000 / Referral
-                  </div>
-                </div>
-                <div className="bg-blue-50/70 rounded-2xl p-4 border border-blue-100 text-xs text-slate-700 space-y-1.5 text-left">
-                  <div className="flex items-center gap-2 font-semibold text-slate-900">
-                    <GoogleIcon name="check_circle" size={16} className="text-blue-600" filled />
-                    <span>Instant Amazon e-Voucher Dispatch</span>
-                  </div>
-                  <div className="flex items-center gap-2 font-semibold text-slate-900">
-                    <GoogleIcon name="check_circle" size={16} className="text-blue-600" filled />
-                    <span>No Upper Limit on Referrals</span>
-                  </div>
-                  <div className="flex items-center gap-2 font-semibold text-slate-900">
-                    <GoogleIcon name="check_circle" size={16} className="text-blue-600" filled />
-                    <span>Valid for All Classroom & Online Batches</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* 2. IT TAKES ONLY 2 STEPS TO UNLOCK THE BENEFIT */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
-        <div className="text-center max-w-2xl mx-auto space-y-2">
-          <span className="text-xs font-semibold uppercase text-blue-600 tracking-widest">
-            Simple Process
-          </span>
-          <h2 className="text-2xl sm:text-3xl font-bold text-slate-900 font-display">
-            It takes only 2 steps to unlock the benefit
-          </h2>
-          <p className="text-xs sm:text-sm text-slate-600">
-            No complex hurdles or prolonged waiting. Transparent and direct rewards.
-          </p>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-          {/* Step 01 */}
-          <div className="bg-white rounded-3xl p-8 border-2 border-blue-100 shadow-md space-y-4 text-center text-slate-900">
-            <div className="w-14 h-14 bg-blue-50 border border-blue-200 text-blue-700 rounded-2xl font-bold text-xl flex items-center justify-center mx-auto shadow-sm font-display">
-              01
-            </div>
-            <h3 className="text-xl font-bold text-slate-900 font-display">
-              Step 01: Fill up a Form
-            </h3>
-            <p className="text-xs text-slate-600 leading-relaxed">
-              Fill our Refer & Earn Form mentioned below. Add all the mandatory details of your referred friend (Name, Contact No, Course interest, and preferred learning center).
-            </p>
-          </div>
-
-          {/* Step 02 */}
-          <div className="bg-white rounded-3xl p-8 border-2 border-blue-100 shadow-md space-y-4 text-center text-slate-900">
-            <div className="w-14 h-14 bg-gradient-to-tr from-blue-600 to-sky-600 text-white rounded-2xl font-bold text-xl flex items-center justify-center mx-auto shadow-md font-display border border-blue-300">
-              02
-            </div>
-            <h3 className="text-xl font-bold text-slate-900 font-display">
-              Step 02: Reward Received
-            </h3>
-            <p className="text-xs text-slate-600 leading-relaxed">
-              You will receive a referral reward/voucher once your referee completes their admission and pays the first 20% of their course fees! Voucher sent to WhatsApp & Email.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      {/* 3. PROGRAM-WISE REWARD BREAKDOWN */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="bg-white/95 backdrop-blur-2xl rounded-3xl p-8 sm:p-12 shadow-xl space-y-8 border-2 border-blue-200 text-slate-900">
-          <div className="text-center max-w-3xl mx-auto space-y-2">
-            <span className="text-xs font-semibold uppercase text-blue-600 tracking-widest">
-              Reward Matrix
-            </span>
-            <h2 className="text-2xl sm:text-3xl font-bold text-slate-900 font-display">
-              By referring below mentioned programs you and your friends will receive respective benefits
-            </h2>
-          </div>
-
-          {/* Amazon Voucher Visual Mockup */}
-          <div className="max-w-md mx-auto bg-gradient-to-r from-blue-700 via-blue-600 to-sky-600 rounded-3xl p-6 text-white shadow-xl border-4 border-blue-200 text-center space-y-1.5">
-            <div className="text-xs font-bold tracking-widest uppercase text-sky-100">amazon.com Gift Voucher</div>
-            <div className="text-4xl sm:text-5xl font-bold font-display text-white">₹5000</div>
-            <div className="text-[11px] font-medium text-sky-100">
-              Redeemable for any product on Amazon India
-            </div>
-          </div>
-
-          {/* Program Cards Matrix */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 pt-2">
-            {REFER_EARN_PROGRAMS.map((item, index) => (
-              <div
-                key={index}
-                className="bg-blue-50/70 border border-blue-200 rounded-2xl p-5 flex flex-col justify-between group hover:border-blue-400 transition-all shadow-sm text-slate-900"
+            <div className="flex flex-wrap gap-3">
+              <button
+                type="button"
+                onClick={() => setActiveTab('refer-form')}
+                className="px-5 py-3 rounded-xl btn-blue-primary text-xs font-extrabold cursor-pointer"
               >
-                <div className="space-y-2">
-                  <div className="flex items-center justify-between">
-                    <span className="text-[10px] font-bold uppercase text-blue-700 bg-white px-2 py-0.5 rounded border border-blue-200">
-                      {item.badge}
-                    </span>
-                    <span className="text-xs text-slate-500 font-medium">{item.courseDuration}</span>
-                  </div>
-                  <h4 className="font-semibold text-slate-900 text-sm group-hover:text-blue-600 transition-colors leading-snug">
-                    {item.courseName}
-                  </h4>
-                  <p className="text-xs text-blue-600 font-medium">{item.category}</p>
-                </div>
+                Open Referral Form
+              </button>
+              <button
+                type="button"
+                onClick={() => setActiveTab('my-referrals')}
+                className="px-5 py-3 rounded-xl btn-blue-glass text-xs font-extrabold cursor-pointer"
+              >
+                Track My Vouchers ({referrals.length})
+              </button>
+            </div>
+          </div>
 
-                <div className="pt-4 mt-4 border-t border-blue-200 flex items-center justify-between">
-                  <span className="text-xs text-slate-500 font-medium">Voucher:</span>
-                  <span className="text-base font-bold text-blue-600 font-display">
-                    ₹{item.voucherAmount.toLocaleString()}
-                  </span>
+          <div className="xl:col-span-5 metallic-chrome-surface rounded-3xl p-6 sm:p-8 flex flex-col justify-between gap-4 text-center">
+            <div className="space-y-3">
+              <div className="w-14 h-14 rounded-2xl btn-blue-primary flex items-center justify-center mx-auto">
+                <Gift className="w-7 h-7 text-white" />
+              </div>
+              <div className="text-xs font-bold uppercase tracking-wider text-[#2B4EA2]">
+                Personal Referral Code
+              </div>
+              <div className="text-2xl font-mono-tabular font-extrabold text-[#0B1B3D] bg-white/85 rounded-2xl py-3 px-4 border border-[#D3E2FA]">
+                {generatedRefCode}
+              </div>
+            </div>
+            <div className="space-y-2 text-left text-xs text-slate-700 pastel-lavender-card rounded-2xl p-4">
+              <div className="flex items-center gap-2 font-bold text-[#0B1B3D]">
+                <CheckCircle2 className="w-4 h-4 text-[#2B4EA2]" />
+                <span>Valid across all 11 Belvo career tracks</span>
+              </div>
+              <div className="flex items-center gap-2 font-bold text-[#0B1B3D]">
+                <CheckCircle2 className="w-4 h-4 text-[#2B4EA2]" />
+                <span>Direct tracking in Institute Admin CRM</span>
+              </div>
+            </div>
+            <button
+              type="button"
+              onClick={handleCopyCode}
+              className="w-full py-3 rounded-xl btn-blue-primary text-xs font-extrabold inline-flex items-center justify-center gap-2 cursor-pointer"
+            >
+              {copiedLink ? <Check className="w-4 h-4" /> : <Copy className="w-4 h-4" />}
+              <span>{copiedLink ? 'Invite Message Copied' : 'Copy Referral Message'}</span>
+            </button>
+          </div>
+        </div>
+      )}
+
+      {/* 2. REFER A FRIEND FORM */}
+      {activeTab === 'refer-form' && (
+        <div className="glass-panel rounded-3xl p-6 sm:p-8 max-w-3xl space-y-5">
+          <div>
+            <h2 className="text-xl font-extrabold text-[#0B1B3D]">Register a New Referral</h2>
+            <p className="text-xs text-slate-600">Logged referrals sync directly to the Institute Admin Voucher Queue.</p>
+          </div>
+
+          {formSubmitted && (
+            <div className="pastel-mint-card rounded-2xl p-4 flex flex-wrap items-center justify-between gap-3 text-xs">
+              <div>
+                <div className="font-extrabold text-[#0B1B3D]">Referral Registered ({generatedRefCode})</div>
+                <div className="text-slate-700">Your friend will receive priority counseling and your voucher is queued.</div>
+              </div>
+              <button
+                type="button"
+                onClick={handleCopyCode}
+                className="px-3.5 py-2 rounded-xl btn-blue-primary text-xs font-bold cursor-pointer"
+              >
+                Copy Code
+              </button>
+            </div>
+          )}
+
+          <form onSubmit={handleSubmit} className="space-y-4 text-xs">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <div>
+                <label className="block font-bold text-[#0B1B3D] mb-1">Your Name *</label>
+                <input
+                  type="text"
+                  required
+                  value={formData.referrerName}
+                  onChange={(e) => setFormData({ ...formData, referrerName: e.target.value })}
+                  className="w-full px-3.5 py-2.5 rounded-xl glass-input font-medium"
+                />
+              </div>
+              <div>
+                <label className="block font-bold text-[#0B1B3D] mb-1">Your Phone *</label>
+                <input
+                  type="tel"
+                  required
+                  value={formData.referrerPhone}
+                  onChange={(e) => setFormData({ ...formData, referrerPhone: e.target.value })}
+                  className="w-full px-3.5 py-2.5 rounded-xl glass-input font-medium"
+                />
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2 border-t border-[#D3E2FA]">
+              <div>
+                <label className="block font-bold text-[#0B1B3D] mb-1">Friend&apos;s Full Name *</label>
+                <input
+                  type="text"
+                  required
+                  value={formData.friendName}
+                  onChange={(e) => setFormData({ ...formData, friendName: e.target.value })}
+                  placeholder="Enter friend's name"
+                  className="w-full px-3.5 py-2.5 rounded-xl glass-input font-medium"
+                />
+              </div>
+              <div>
+                <label className="block font-bold text-[#0B1B3D] mb-1">Friend&apos;s Phone *</label>
+                <input
+                  type="tel"
+                  required
+                  value={formData.friendPhone}
+                  onChange={(e) => setFormData({ ...formData, friendPhone: e.target.value })}
+                  placeholder="+91 98XXX XXXXX"
+                  className="w-full px-3.5 py-2.5 rounded-xl glass-input font-medium"
+                />
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <div>
+                <label className="block font-bold text-[#0B1B3D] mb-1">Interested Track</label>
+                <select
+                  value={formData.interestedCourse}
+                  onChange={(e) => setFormData({ ...formData, interestedCourse: e.target.value })}
+                  className="w-full px-3.5 py-2.5 rounded-xl glass-input font-bold"
+                >
+                  {ITV_COURSES.map((c) => (
+                    <option key={c.id} value={c.title}>{c.title}</option>
+                  ))}
+                </select>
+              </div>
+              <div>
+                <label className="block font-bold text-[#0B1B3D] mb-1">Preferred Campus</label>
+                <select
+                  value={formData.preferredCenter}
+                  onChange={(e) => setFormData({ ...formData, preferredCenter: e.target.value })}
+                  className="w-full px-3.5 py-2.5 rounded-xl glass-input font-bold"
+                >
+                  <option>Thane Head Office</option>
+                  <option>Pune FC Road Campus</option>
+                  <option>Bengaluru Koramangala Hub</option>
+                  <option>Hyderabad HITEC City</option>
+                  <option>Live Online Pan-India</option>
+                </select>
+              </div>
+            </div>
+
+            <button type="submit" className="w-full py-3.5 rounded-xl btn-blue-primary text-xs font-extrabold cursor-pointer">
+              Submit Referral &amp; Generate Reward Code
+            </button>
+          </form>
+        </div>
+      )}
+
+      {/* 3. MY REFERRALS & VOUCHERS */}
+      {activeTab === 'my-referrals' && (
+        <div className="glass-panel rounded-3xl p-6 space-y-4">
+          <h2 className="text-lg font-extrabold text-[#0B1B3D]">Referral History &amp; Voucher Status ({referrals.length})</h2>
+          {referrals.length === 0 ? (
+            <div className="pastel-sky-card rounded-2xl p-6 text-center space-y-3 text-xs">
+              <p className="font-bold text-[#0B1B3D]">No referrals submitted yet.</p>
+              <button
+                type="button"
+                onClick={() => setActiveTab('refer-form')}
+                className="px-4 py-2 rounded-xl btn-blue-primary text-xs font-bold cursor-pointer"
+              >
+                Submit Your First Referral
+              </button>
+            </div>
+          ) : (
+            <div className="space-y-3">
+              {referrals.map((r) => (
+                <div key={r.id} className="metallic-chrome-surface rounded-2xl p-4 flex flex-wrap items-center justify-between gap-3 text-xs">
+                  <div>
+                    <div className="font-extrabold text-sm text-[#0B1B3D]">{r.friendName} ({r.friendPhone})</div>
+                    <div className="text-slate-600">{r.interestedCourse} · {r.preferredCenter}</div>
+                    <div className="font-mono-tabular text-[11px] text-[#334873]">Code: {r.referralCode}</div>
+                  </div>
+                  <div className="text-right font-mono-tabular">
+                    <div className="font-extrabold text-[#1E428E]">{r.rewardStatus}</div>
+                    <div className="text-[11px] text-slate-600">{r.voucherCode}</div>
+                  </div>
                 </div>
+              ))}
+            </div>
+          )}
+        </div>
+      )}
+
+      {/* 4. ELIGIBLE PROGRAMS */}
+      {activeTab === 'programs' && (
+        <div className="glass-panel rounded-3xl p-6 space-y-4">
+          <h2 className="text-lg font-extrabold text-[#0B1B3D]">Eligible Career Programs</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {REFER_EARN_PROGRAMS.map((p) => (
+              <div key={p.courseName} className="metallic-chrome-surface rounded-2xl p-5 space-y-1.5 text-xs">
+                <div className="font-extrabold text-sm text-[#0B1B3D]">{p.courseName}</div>
+                <div className="text-slate-600">{p.category} · {p.courseDuration}</div>
+                <div className="font-mono-tabular font-extrabold text-[#2B4EA2]">Reward: {p.voucherLabel}</div>
               </div>
             ))}
           </div>
         </div>
-      </section>
+      )}
 
-      {/* 4. THE INTERACTIVE REFER & EARN FORM */}
-      <section id="refer-form" className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
-        <div className="text-center space-y-2">
-          <span className="text-xs font-semibold uppercase text-blue-600 tracking-widest">
-            Enter Details
-          </span>
-          <h2 className="text-3xl font-bold text-slate-900 font-display">
-            Refer & Earn
-          </h2>
-          <p className="text-xs sm:text-sm text-slate-600">
-            Fill all the mandatory details in the below form to ensure correct credit of your Amazon Gift Voucher.
-          </p>
-        </div>
-
-        <div className="bg-white/95 backdrop-blur-2xl rounded-3xl p-6 sm:p-10 border-2 border-blue-200 shadow-xl text-slate-900">
-          {formSubmitted ? (
-            <div className="text-center space-y-5 py-4">
-              <div className="w-16 h-16 bg-gradient-to-tr from-blue-600 to-sky-600 text-white rounded-2xl flex items-center justify-center mx-auto shadow-md">
-                <GoogleIcon name="check" size={32} weight={600} />
-              </div>
-              <div>
-                <h3 className="text-2xl font-bold text-slate-900 font-display">
-                  Referral Successfully Registered!
-                </h3>
-                <p className="text-xs sm:text-sm text-slate-600 mt-1 max-w-md mx-auto">
-                  We have logged your recommendation for <strong className="text-slate-900">{formData.friendName}</strong>. Our counselors will reach out to them within 2 hours.
-                </p>
-              </div>
-
-              {/* Unique Referral Code Badge */}
-              <div className="bg-blue-50/70 border border-blue-200 rounded-2xl p-5 max-w-md mx-auto space-y-3">
-                <span className="text-xs font-semibold text-blue-700 uppercase tracking-wider">
-                  Your Unique Referral Code
-                </span>
-                <div className="text-2xl font-bold text-slate-900 font-mono tracking-wider">
-                  {generatedRefCode}
-                </div>
-                <div className="flex gap-2">
-                  <button
-                    onClick={handleCopyCode}
-                    className="flex-1 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-xs font-semibold flex items-center justify-center gap-1.5 transition-colors cursor-pointer text-white shadow-sm"
-                  >
-                    <GoogleIcon name={copiedLink ? 'done' : 'content_copy'} size={16} />
-                    <span>{copiedLink ? 'Copied to Clipboard!' : 'Copy Referral Link'}</span>
-                  </button>
-
-                  <a
-                    href={`https://wa.me/?text=${encodeURIComponent(
-                      `Hey! Check out Hridayam by Belvo's 100% placement IT courses in Data Science, Full Stack & Cloud. Use my referral code ${generatedRefCode} for exclusive student benefits: https://itvedant.com`
-                    )}`}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="px-4 py-2.5 rounded-xl bg-gradient-to-r from-blue-600 to-sky-600 hover:from-blue-700 hover:to-sky-700 text-white text-xs font-semibold flex items-center justify-center gap-1.5 transition-all shadow-md"
-                  >
-                    <span>WhatsApp</span>
-                  </a>
-                </div>
-              </div>
-
-              <button
-                onClick={() => {
-                  setFormSubmitted(false);
-                  setFormData({
-                    ...formData,
-                    friendName: '',
-                    friendPhone: '',
-                    friendEmail: '',
-                  });
-                }}
-                className="text-xs font-semibold text-blue-600 underline cursor-pointer hover:text-blue-800"
-              >
-                Refer another friend now
-              </button>
-            </div>
-          ) : (
-            <form onSubmit={handleSubmit} className="space-y-8">
-              {/* Part 1: Your Details */}
-              <div className="space-y-4">
-                <div className="flex items-center gap-2 pb-2 border-b border-blue-100">
-                  <GoogleIcon name="person" size={20} className="text-blue-600" />
-                  <h3 className="font-bold text-slate-900 text-base font-display">
-                    Your Details (Referrer)
-                  </h3>
-                </div>
-
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
-                  <div>
-                    <label className="block font-semibold text-slate-700 mb-1">
-                      Your Full Name <span className="text-blue-600">*</span>
-                    </label>
-                    <input
-                      type="text"
-                      required
-                      placeholder="e.g. Sameer Kulkarni"
-                      value={formData.referrerName}
-                      onChange={(e) => setFormData({ ...formData, referrerName: e.target.value })}
-                      className="w-full px-3.5 py-2.5 rounded-xl glass-input text-xs font-medium text-slate-900"
-                    />
-                  </div>
-                  <div>
-                    <label className="block font-semibold text-slate-700 mb-1">
-                      Your Contact Number (for Voucher Delivery) <span className="text-blue-600">*</span>
-                    </label>
-                    <input
-                      type="tel"
-                      required
-                      placeholder="+91 98765 43210"
-                      value={formData.referrerPhone}
-                      onChange={(e) => setFormData({ ...formData, referrerPhone: e.target.value })}
-                      className="w-full px-3.5 py-2.5 rounded-xl glass-input text-xs font-medium text-slate-900"
-                    />
-                  </div>
-                </div>
-
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
-                  <div>
-                    <label className="block font-semibold text-slate-700 mb-1">Your Email Address *</label>
-                    <input
-                      type="email"
-                      required
-                      placeholder="sameer@example.com"
-                      value={formData.referrerEmail}
-                      onChange={(e) => setFormData({ ...formData, referrerEmail: e.target.value })}
-                      className="w-full px-3.5 py-2.5 rounded-xl glass-input text-xs font-medium text-slate-900"
-                    />
-                  </div>
-                  <div>
-                    <label className="block font-semibold text-slate-700 mb-1">Are you an enrolled learner?</label>
-                    <select
-                      value={formData.referrerRole}
-                      onChange={(e) => setFormData({ ...formData, referrerRole: e.target.value })}
-                      className="w-full px-3.5 py-2.5 rounded-xl glass-input text-xs font-medium text-slate-900 bg-white"
-                    >
-                      <option value="Current Student" className="bg-white text-slate-900">Current Enrolled Student</option>
-                      <option value="Placed Alumni" className="bg-white text-slate-900">Placed Alumni</option>
-                      <option value="External Advocate" className="bg-white text-slate-900">External Friend / Advocate</option>
-                    </select>
-                  </div>
-                </div>
-              </div>
-
-              {/* Part 2: Your Friend's Details */}
-              <div className="space-y-4">
-                <div className="flex items-center gap-2 pb-2 border-b border-blue-100">
-                  <GoogleIcon name="redeem" size={20} className="text-blue-600" />
-                  <h3 className="font-bold text-slate-900 text-base font-display">
-                    Your Friend's Details (Referee)
-                  </h3>
-                </div>
-
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
-                  <div>
-                    <label className="block font-semibold text-slate-700 mb-1">
-                      Friend's Full Name <span className="text-blue-600">*</span>
-                    </label>
-                    <input
-                      type="text"
-                      required
-                      placeholder="e.g. Pooja Deshpande"
-                      value={formData.friendName}
-                      onChange={(e) => setFormData({ ...formData, friendName: e.target.value })}
-                      className="w-full px-3.5 py-2.5 rounded-xl glass-input text-xs font-medium text-slate-900"
-                    />
-                  </div>
-                  <div>
-                    <label className="block font-semibold text-slate-700 mb-1">
-                      Friend's Contact Number <span className="text-blue-600">*</span>
-                    </label>
-                    <input
-                      type="tel"
-                      required
-                      placeholder="+91 91234 56789"
-                      value={formData.friendPhone}
-                      onChange={(e) => setFormData({ ...formData, friendPhone: e.target.value })}
-                      className="w-full px-3.5 py-2.5 rounded-xl glass-input text-xs font-medium text-slate-900"
-                    />
-                  </div>
-                </div>
-
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
-                  <div>
-                    <label className="block font-semibold text-slate-700 mb-1">Friend's Email (Optional)</label>
-                    <input
-                      type="email"
-                      placeholder="friend@example.com"
-                      value={formData.friendEmail}
-                      onChange={(e) => setFormData({ ...formData, friendEmail: e.target.value })}
-                      className="w-full px-3.5 py-2.5 rounded-xl glass-input text-xs font-medium text-slate-900"
-                    />
-                  </div>
-                  <div>
-                    <label className="block font-semibold text-slate-700 mb-1">Course Friend is Interested In</label>
-                    <select
-                      value={formData.interestedCourse}
-                      onChange={(e) => setFormData({ ...formData, interestedCourse: e.target.value })}
-                      className="w-full px-3.5 py-2.5 rounded-xl glass-input text-xs font-medium text-slate-900 bg-white"
-                    >
-                      {ITV_COURSES.map((course) => (
-                        <option key={course.id} value={course.title} className="bg-white text-slate-900">
-                          {course.shortTitle}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
-                </div>
-              </div>
-
-              <button
-                type="submit"
-                className="w-full py-4 rounded-xl btn-blue-primary font-semibold text-xs uppercase tracking-wider shadow-xl hover:shadow-2xl transition-all cursor-pointer flex items-center justify-center gap-2 text-white"
-              >
-                <span>Submit Referral & Unlock Benefit</span>
-                <GoogleIcon name="rocket_launch" size={18} className="text-white" />
-              </button>
-            </form>
-          )}
-        </div>
-      </section>
-
-      {/* 5. REFER & EARN FAQ ACCORDION */}
-      <section id="refer-policy" className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
-        <div className="text-center space-y-2">
-          <span className="text-xs font-semibold uppercase text-blue-600 tracking-widest">
-            Policy Guidelines
-          </span>
-          <h2 className="text-2xl sm:text-3xl font-bold text-slate-900 font-display">
-            Frequently Asked Questions About Our Refer & Earn Policy
-          </h2>
-        </div>
-
-        <div className="space-y-3">
-          {REFER_EARN_FAQS.map((faq, index) => {
-            const isOpen = openFaqIndex === index;
+      {/* 5. POLICY & FAQS */}
+      {activeTab === 'faq' && (
+        <div className="glass-panel rounded-3xl p-6 space-y-3">
+          <h2 className="text-lg font-extrabold text-[#0B1B3D]">Refer &amp; Earn Policy FAQs</h2>
+          {REFER_EARN_FAQS.map((faq, idx) => {
+            const isOpen = openFaqIndex === idx;
             return (
-              <div
-                key={index}
-                className="bg-white rounded-2xl overflow-hidden transition-all shadow-md border border-blue-200 text-slate-900"
-              >
+              <div key={faq.question} className="bg-white/85 rounded-2xl border border-[#D3E2FA] overflow-hidden">
                 <button
-                  onClick={() => setOpenFaqIndex(isOpen ? null : index)}
-                  className="w-full px-5 py-4 text-left font-semibold text-slate-900 text-sm flex items-center justify-between gap-4 hover:bg-blue-50 transition-colors cursor-pointer"
+                  type="button"
+                  onClick={() => setOpenFaqIndex(isOpen ? null : idx)}
+                  className="w-full px-5 py-4 text-left flex items-center justify-between gap-3 text-xs sm:text-sm font-extrabold text-[#0B1B3D] cursor-pointer"
                 >
-                  <span className="flex items-center gap-3">
-                    <span className="text-xs font-bold text-blue-600">
-                      {String(index + 1).padStart(2, '0')}
-                    </span>
-                    <span>{faq.question}</span>
-                  </span>
-                  <GoogleIcon
-                    name="keyboard_arrow_down"
-                    size={20}
-                    className={`text-blue-600 transition-transform duration-200 ${
-                      isOpen ? 'rotate-180 text-blue-800' : ''
-                    }`}
-                  />
+                  <span>{faq.question}</span>
+                  <ChevronDown className={`w-4 h-4 shrink-0 transition-transform ${isOpen ? 'rotate-180' : ''}`} />
                 </button>
                 {isOpen && (
-                  <div className="px-5 pb-4 text-xs text-slate-600 leading-relaxed border-t border-blue-100 pt-3">
+                  <div className="px-5 pb-4 text-xs text-slate-700 leading-relaxed border-t border-slate-100 pt-3">
                     {faq.answer}
                   </div>
                 )}
@@ -520,7 +416,7 @@ export const ReferEarnView: React.FC<ReferEarnViewProps> = ({ onReferralSuccess 
             );
           })}
         </div>
-      </section>
-    </div>
+      )}
+    </PortalWorkspaceShell>
   );
 };

@@ -687,7 +687,7 @@ export function StudentDashboard({
                     <div className="flex items-center justify-between gap-4 pb-4 border-b border-slate-200">
                       <div className="flex items-center gap-2.5">
                         <img
-                          src="/assets/aistudio/image_60047325.png"
+                          src="/logo.png"
                           alt="Hridayam by Belvo"
                           className="h-8 w-auto rounded-lg bg-white p-0.5 border border-slate-200 object-contain"
                         />

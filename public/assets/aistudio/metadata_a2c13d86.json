@@ -1,0 +1,6 @@
+{
+  "name": "Hridayam by Belvo",
+  "description": "Practical, industry-relevant courses across 11 digital and technical domains with subscription memberships, student learning workspace, and instructor studio.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

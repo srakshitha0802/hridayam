@@ -1,15 +1,57 @@
 import React, { useState, useEffect } from 'react';
-import { GoogleIcon } from './GoogleIcon';
+import {
+  BarChart3,
+  BookOpen,
+  CloudUpload,
+  Users,
+  PhoneCall,
+  Plus,
+  Download,
+  Megaphone,
+  Building2,
+  Receipt,
+  ShieldCheck,
+  CheckCircle2,
+  X,
+  ArrowRight,
+  Gift,
+} from 'lucide-react';
 import { ITV_COURSES, ITvedantCourse } from '../data/itvedantData';
-import { BELVO_CATEGORIES, BelvoCategory, CallbackLead, ReferralSubmission } from '../types';
+import { AppView, BELVO_CATEGORIES, BelvoCategory, CallbackLead, ReferralSubmission } from '../types';
+import {
+  AdminAuditEvent,
+  CampusBatchOperation,
+  exportRowsToCsv,
+  PortalStore,
+  ScholarshipRequest,
+  SharedAnnouncement,
+} from '../lib/portalStore';
+import { FIXED_DEMO_ACCOUNTS, useAuth } from '../context/AuthContext';
+import { PortalKpi, PortalNavItem, PortalWorkspaceShell } from './PortalWorkspaceShell';
 
 interface CounselorAdminViewProps {
   onToast: (type: 'success' | 'error' | 'info', title: string, description?: string) => void;
   onLogout: () => void;
+  onNavigate?: (view: AppView) => void;
 }
 
-export const CounselorAdminView: React.FC<CounselorAdminViewProps> = ({ onToast, onLogout }) => {
-  const [activeTab, setActiveTab] = useState<'analytics' | 'courses' | 'materials' | 'students' | 'leads'>('analytics');
+type AdminTab =
+  | 'analytics'
+  | 'batches'
+  | 'courses'
+  | 'materials'
+  | 'students'
+  | 'leads'
+  | 'revenue'
+  | 'access';
+
+export const CounselorAdminView: React.FC<CounselorAdminViewProps> = ({
+  onToast,
+  onLogout,
+  onNavigate,
+}) => {
+  const { user, signOutUser } = useAuth();
+  const [activeTab, setActiveTab] = useState<AdminTab>('analytics');
 
   // Courses state
   const [coursesList, setCoursesList] = useState<ITvedantCourse[]>(ITV_COURSES);
@@ -34,23 +76,50 @@ export const CounselorAdminView: React.FC<CounselorAdminViewProps> = ({ onToast,
     title: '',
     type: 'video' as 'video' | 'reading' | 'assignment' | 'quiz',
     duration: '35 mins',
-    videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',
+    videoUrl: '/assets/aistudio/gemini_generated_video_6b621472_6fc879d0.mp4',
     materialUrl: 'https://belvo.edu/materials/starter-guide.pdf',
     summary: '',
-    quizQuestion: '',
-    quizOptions: 'Option A, Option B, Option C, Option D',
   });
 
-  // Leads & referrals state
+  // Cross-portal Admin data
   const [leads, setLeads] = useState<CallbackLead[]>([]);
+  const [leadFilter, setLeadFilter] = useState<string>('all');
   const [referrals, setReferrals] = useState<ReferralSubmission[]>([]);
+  const [batches, setBatches] = useState<CampusBatchOperation[]>(() => PortalStore.getBatches());
+  const [scholarships, setScholarships] = useState<ScholarshipRequest[]>(() => PortalStore.getScholarships());
+  const [auditLog, setAuditLog] = useState<AdminAuditEvent[]>(() => PortalStore.getAuditLog());
+  const [attendance] = useState(() => PortalStore.getAttendance());
 
-  // Integrations state
+  // New Campus Batch Form
+  const [batchCode, setBatchCode] = useState('AI-2026-B5');
+  const [batchCampus, setBatchCampus] = useState('Pune FC Road Campus');
+  const [batchTrack, setBatchTrack] = useState('Artificial Intelligence, Machine Learning, and Automation');
+  const [batchMentor, setBatchMentor] = useState('Prof. Kavita Nair');
+  const [batchSeats, setBatchSeats] = useState(30);
+  const [batchStart, setBatchStart] = useState('07 Dec 2026');
+
+  // Broadcast & Settings state
+  const [broadcastTitle, setBroadcastTitle] = useState('');
+  const [broadcastBody, setBroadcastBody] = useState('');
   const [emailNotificationsEnabled, setEmailNotificationsEnabled] = useState(true);
   const [paymentGatewayActive, setPaymentGatewayActive] = useState(true);
 
-  // Load leads and referrals
+  const appendAudit = (action: string, target: string) => {
+    const entry: AdminAuditEvent = {
+      id: `aud_${Date.now()}`,
+      actor: `${user?.displayName || 'Siddharth Menon'} (Admin)`,
+      action,
+      target,
+      timestamp: 'Just now',
+    };
+    const next = [entry, ...auditLog].slice(0, 12);
+    PortalStore.saveAuditLog(next);
+    setAuditLog(next);
+  };
+
   useEffect(() => {
+    setScholarships(PortalStore.getScholarships());
+    setBatches(PortalStore.getBatches());
     try {
       const storedLeads = JSON.parse(localStorage.getItem('itv_leads_v1') || '[]');
       if (storedLeads.length === 0) {
@@ -118,12 +187,115 @@ export const CounselorAdminView: React.FC<CounselorAdminViewProps> = ({ onToast,
         setReferrals(storedRef);
       }
     } catch {}
-  }, []);
+  }, [activeTab]);
+
+  const handleUpdateLeadStatus = (id: string, status: CallbackLead['status']) => {
+    const updated = leads.map((l) => (l.id === id ? { ...l, status } : l));
+    setLeads(updated);
+    try {
+      localStorage.setItem('itv_leads_v1', JSON.stringify(updated));
+    } catch {}
+    const lead = leads.find((l) => l.id === id);
+    appendAudit(`Updated CRM Lead to ${status.toUpperCase()}`, lead?.name || id);
+    onToast('success', 'CRM Status Updated', `Lead status set to "${status.toUpperCase()}".`);
+  };
+
+  const handleDispatchVoucher = (refId: string) => {
+    const code = `AMZ-5000-HRID-${Math.floor(1000 + Math.random() * 9000)}`;
+    const updated = referrals.map((r) =>
+      r.id === refId ? { ...r, rewardStatus: 'Voucher Dispatched (₹5,000)', voucherCode: code } : r
+    );
+    setReferrals(updated);
+    try {
+      localStorage.setItem('itv_referrals_v1', JSON.stringify(updated));
+    } catch {}
+    appendAudit('Dispatched ₹5,000 Amazon Voucher', code);
+    onToast('success', 'Voucher Dispatched', `Amazon gift code ${code} issued.`);
+  };
+
+  const handleScholarshipDecision = (id: string, status: 'Approved' | 'Declined') => {
+    const updated = scholarships.map((s) => (s.id === id ? { ...s, status } : s));
+    PortalStore.saveScholarships(updated);
+    setScholarships(updated);
+    const target = scholarships.find((s) => s.id === id);
+    appendAudit(`${status} ${target?.type || 'Grant'}`, target?.studentName || id);
+    onToast('success', `Scholarship ${status}`, `${target?.studentName} notified in Student LMS.`);
+  };
+
+  const handleAddBatch = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!batchCode.trim()) return;
+    const created: CampusBatchOperation = {
+      id: `bat_${Date.now()}`,
+      batchCode: batchCode.trim(),
+      campus: batchCampus,
+      track: batchTrack,
+      leadMentor: batchMentor,
+      enrolledSeats: 4,
+      maxSeats: Number(batchSeats) || 30,
+      startDate: batchStart,
+      mode: 'Hybrid',
+      status: 'Enrolling',
+    };
+    const next = [created, ...batches];
+    PortalStore.saveBatches(next);
+    setBatches(next);
+    appendAudit('Launched Campus Batch', `${created.batchCode} · ${created.campus}`);
+    onToast('success', 'Batch Opened', `${created.batchCode} is now enrolling at ${created.campus}.`);
+  };
+
+  const handleCycleBatchStatus = (id: string) => {
+    const order: CampusBatchOperation['status'][] = ['Enrolling', 'Running', 'Placement Phase'];
+    const updated = batches.map((b) => {
+      if (b.id !== id) return b;
+      const nextStatus = order[(order.indexOf(b.status) + 1) % order.length];
+      return { ...b, status: nextStatus };
+    });
+    PortalStore.saveBatches(updated);
+    setBatches(updated);
+    onToast('info', 'Batch Phase Updated', 'Campus operations status refreshed.');
+  };
+
+  const handleExportLeads = () => {
+    exportRowsToCsv(
+      'hridayam-counselor-leads.csv',
+      ['Name', 'Phone', 'Email', 'Program Interest', 'Campus', 'Status'],
+      leads.map((l) => [l.name || '', l.phone || '', l.email || '', l.courseInterest || '', l.cityOrCenter || '', l.status || 'new'])
+    );
+    onToast('success', 'Leads CSV Exported', 'Counselor admissions sheet downloaded.');
+  };
+
+  const handleExportRevenueCsv = () => {
+    exportRowsToCsv(
+      'hridayam-revenue-ledger.csv',
+      ['Program', 'Category', 'Fee INR', 'Learners', 'Gross Tuition INR'],
+      coursesList.map((c) => [c.title, c.category, c.fee || 0, c.reviewCount || 10, (c.fee || 0) * (c.reviewCount || 10)])
+    );
+    onToast('success', 'Financial Ledger Exported', 'GST & tuition revenue CSV downloaded.');
+  };
+
+  const handleBroadcast = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!broadcastTitle.trim() || !broadcastBody.trim()) return;
+    const ann: SharedAnnouncement = {
+      id: `ann_${Date.now()}`,
+      title: broadcastTitle.trim(),
+      message: broadcastBody.trim(),
+      author: 'Institute Admin · Academic Operations',
+      audience: 'All Students',
+      createdAt: 'Just now',
+    };
+    const next = [ann, ...PortalStore.getAnnouncements()];
+    PortalStore.saveAnnouncements(next);
+    setBroadcastTitle('');
+    setBroadcastBody('');
+    appendAudit('Published Platform Broadcast', ann.title);
+    onToast('success', 'Platform Notice Published', 'Visible immediately at the top of the Student LMS.');
+  };
 
   const handleCreateCourse = (e: React.FormEvent) => {
     e.preventDefault();
     if (!newCourse.title) return;
-
     const created: ITvedantCourse = {
       id: `course_${Date.now()}`,
       slug: newCourse.title.toLowerCase().replace(/[^a-z0-9]+/g, '-'),
@@ -171,19 +343,16 @@ export const CounselorAdminView: React.FC<CounselorAdminViewProps> = ({ onToast,
 
     setCoursesList([created, ...coursesList]);
     setIsCreatingCourse(false);
-    onToast('success', 'Course Published!', `${created.title} is now live on the platform catalogue.`);
+    appendAudit('Published Career Program', created.title);
+    onToast('success', 'Course Published', `${created.title} is now live on the platform catalogue.`);
   };
 
   const handleUploadLesson = (e: React.FormEvent) => {
     e.preventDefault();
     if (!newLesson.title) return;
-    onToast(
-      'success',
-      'Learning Material Uploaded!',
-      `Added "${newLesson.title}" (${newLesson.type.toUpperCase()}) to ${
-        coursesList.find((c) => c.id === selectedCourseForLesson)?.title || 'course'
-      }.`
-    );
+    const courseTitle = coursesList.find((c) => c.id === selectedCourseForLesson)?.title || 'course';
+    appendAudit(`Uploaded ${newLesson.type.toUpperCase()} Module`, `${newLesson.title} (${courseTitle})`);
+    onToast('success', 'Learning Material Uploaded', `Added "${newLesson.title}" to ${courseTitle}.`);
     setNewLesson({
       title: '',
       type: 'video',
@@ -191,630 +360,678 @@ export const CounselorAdminView: React.FC<CounselorAdminViewProps> = ({ onToast,
       videoUrl: '',
       materialUrl: '',
       summary: '',
-      quizQuestion: '',
-      quizOptions: '',
     });
   };
 
   const handlePriceUpdate = (courseId: string, newPrice: number) => {
-    setCoursesList(
-      coursesList.map((c) => (c.id === courseId ? { ...c, fee: newPrice } : c))
-    );
-    onToast('info', 'Pricing Updated', `Course fee updated to ₹${newPrice.toLocaleString()}`);
+    setCoursesList(coursesList.map((c) => (c.id === courseId ? { ...c, fee: newPrice } : c)));
+    const target = coursesList.find((c) => c.id === courseId);
+    appendAudit('Updated INR Fee', `${target?.shortTitle || courseId} → ₹${newPrice.toLocaleString('en-IN')}`);
+    onToast('info', 'Pricing Updated', `Course fee updated to ₹${newPrice.toLocaleString('en-IN')}.`);
   };
 
   const totalRevenue = coursesList.reduce((sum, c) => sum + (c.fee || 0) * (c.reviewCount || 10), 0);
+  const filteredLeads = leadFilter === 'all' ? leads : leads.filter((l) => l.status === leadFilter);
+  const pendingScholarships = scholarships.filter((s) => s.status === 'Pending Review').length;
+
+  const navItems: PortalNavItem[] = [
+    { id: 'analytics', label: 'Executive Overview', icon: BarChart3, group: 'Executive Ops' },
+    { id: 'batches', label: 'Campus & Batches', icon: Building2, badge: batches.length, group: 'Executive Ops' },
+    { id: 'courses', label: 'Programs & Pricing', icon: BookOpen, badge: coursesList.length, group: 'Academics' },
+    { id: 'materials', label: 'Studio Lesson Upload', icon: CloudUpload, group: 'Academics' },
+    { id: 'students', label: 'Students & Grants', icon: Users, badge: pendingScholarships || undefined, group: 'Admissions & Finance' },
+    { id: 'leads', label: 'CRM & Referrals', icon: PhoneCall, badge: leads.length, group: 'Admissions & Finance' },
+    { id: 'revenue', label: 'Revenue & GST Ledger', icon: Receipt, group: 'Admissions & Finance' },
+    { id: 'access', label: 'Role Access & Portals', icon: ShieldCheck, group: 'Governance' },
+  ];
+
+  const kpis: PortalKpi[] = [
+    { label: 'Total Tuition Ledger', value: `₹${(totalRevenue / 100000).toFixed(1)}L`, hint: 'UPI & 0% EMI rails active', pastelClass: 'pastel-sky-card' },
+    { label: 'Live Belvo Tracks', value: `${coursesList.length} Programs`, hint: `${batches.length} active campus batches`, pastelClass: 'pastel-lavender-card' },
+    { label: 'Admissions CRM Leads', value: leads.length, hint: `${referrals.length} referral vouchers tracked`, pastelClass: 'pastel-mint-card' },
+    { label: 'Pending Grant Reviews', value: pendingScholarships, hint: `${scholarships.length} total requests`, pastelClass: 'pastel-rose-card' },
+  ];
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8 relative z-10 text-slate-900">
-      {/* Admin Header */}
-      <div className="bg-white/95 backdrop-blur-2xl rounded-3xl p-6 sm:p-8 shadow-xl relative overflow-hidden border-2 border-blue-200 text-slate-900">
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 relative z-10">
-          <div className="space-y-2">
-            <div className="flex items-center gap-2">
-              <span className="bg-gradient-to-r from-blue-600 to-sky-600 text-white text-[10px] font-bold uppercase px-3 py-1 rounded-full shadow-xs">
-                Executive Console
-              </span>
-              <span className="text-xs text-blue-600 font-mono">Belvo Platform Admin v2.6</span>
-            </div>
-            <h1 className="text-2xl sm:text-3xl font-bold font-display text-slate-900">
-              Hridayam by Belvo Admin &amp; Studio Dashboard
-            </h1>
-            <p className="text-xs sm:text-sm text-slate-600">
-              Manage all 11 Belvo course tracks, upload video lessons, adjust pricing, and track platform performance.
-            </p>
-          </div>
-
-          <div className="flex items-center gap-3">
-            <button
-              onClick={() => setIsCreatingCourse(true)}
-              className="btn-blue-primary px-5 py-2.5 rounded-xl text-xs font-bold uppercase tracking-wider text-white shadow-md flex items-center gap-2 cursor-pointer"
-            >
-              <GoogleIcon name="add" size={18} />
-              <span>Create New Course</span>
-            </button>
-            <button
-              onClick={onLogout}
-              className="px-4 py-2.5 rounded-xl bg-blue-50 hover:bg-blue-100 text-blue-700 text-xs font-semibold border border-blue-200 transition-colors cursor-pointer"
-            >
-              Exit Console
-            </button>
-          </div>
-        </div>
-
-        {/* Quick Metrics Bar */}
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mt-6 pt-6 border-t border-blue-100 text-xs text-slate-700">
-          <div>
-            <span className="text-blue-700 block text-[10px] uppercase font-semibold">Total Revenue (Simulated)</span>
-            <span className="text-xl sm:text-2xl font-bold text-slate-900 font-mono">
-              ₹{(totalRevenue / 100000).toFixed(1)}L
-            </span>
-          </div>
-          <div>
-            <span className="text-blue-700 block text-[10px] uppercase font-semibold">Live Belvo Courses</span>
-            <span className="text-xl sm:text-2xl font-bold text-blue-600 font-mono">
-              {coursesList.length} Tracks
-            </span>
-          </div>
-          <div>
-            <span className="text-blue-700 block text-[10px] uppercase font-semibold">Active Inquiries</span>
-            <span className="text-xl sm:text-2xl font-bold text-blue-600 font-mono">
-              {leads.length} Leads
-            </span>
-          </div>
-          <div>
-            <span className="text-blue-700 block text-[10px] uppercase font-semibold">Gateway Status</span>
-            <span className="text-xl sm:text-2xl font-bold text-emerald-600 font-display flex items-center gap-1.5">
-              <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse" />
-              UPI &amp; Cards Active
-            </span>
-          </div>
-        </div>
-      </div>
-
-      {/* Tabs */}
-      <div className="flex items-center gap-2 overflow-x-auto pb-2 border-b border-sky-200/80">
-        {[
-          { id: 'analytics', label: '01. Live Analytics & Overview', icon: 'monitoring' },
-          { id: 'courses', label: '02. Manage Courses & Pricing', icon: 'menu_book' },
-          { id: 'materials', label: '03. Upload Lessons & Quizzes', icon: 'cloud_upload' },
-          { id: 'students', label: '04. Enrolled Students', icon: 'group' },
-          { id: 'leads', label: '05. Inquiries & Referrals', icon: 'contact_support' },
-        ].map((tab) => (
+    <PortalWorkspaceShell
+      portalName="Institute Admin Console"
+      portalSubtitle="Executive oversight across curriculum pricing, Indian campus batches, admissions CRM, scholarships, and all role portals."
+      userName={user?.displayName || 'Siddharth Menon'}
+      userEmail={user?.email || 'admin@hridayam.in'}
+      userBadgeCode={user?.badgeCode || 'HRD-ADM-2026-001'}
+      userCampus={user?.campus || 'Thane West Head Office'}
+      roleAccent="rose"
+      navItems={navItems}
+      activeId={activeTab}
+      onSelectNav={(id) => setActiveTab(id as AdminTab)}
+      kpis={kpis}
+      headerActions={
+        <>
           <button
-            key={tab.id}
-            onClick={() => setActiveTab(tab.id as any)}
-            className={`px-4 py-2.5 rounded-xl text-xs font-bold transition-all whitespace-nowrap flex items-center gap-2 cursor-pointer ${
-              activeTab === tab.id
-                ? 'bg-gradient-to-r from-blue-600 to-sky-600 text-white shadow-md'
-                : 'glass-card text-slate-700 hover:border-sky-300'
-            }`}
+            type="button"
+            onClick={() => setIsCreatingCourse(true)}
+            className="px-4 py-2.5 rounded-xl bg-white/95 text-[#0B1B3D] hover:bg-white text-xs font-extrabold inline-flex items-center gap-1.5 cursor-pointer whitespace-nowrap"
           >
-            <GoogleIcon name={tab.icon} size={16} />
-            <span>{tab.label}</span>
+            <Plus className="w-4 h-4" />
+            <span>Publish Program</span>
           </button>
-        ))}
-      </div>
-
-      {/* MODAL: CREATE COURSE */}
+          <button
+            type="button"
+            onClick={handleExportLeads}
+            className="px-4 py-2.5 rounded-xl bg-white/15 hover:bg-white/25 border border-white/30 text-white text-xs font-bold inline-flex items-center gap-1.5 cursor-pointer whitespace-nowrap"
+          >
+            <Download className="w-3.5 h-3.5" />
+            <span>Export CRM CSV</span>
+          </button>
+        </>
+      }
+      quickPortalLinks={
+        onNavigate
+          ? [
+              { label: 'Student LMS', view: 'student' },
+              { label: 'Mentor Hub', view: 'mentor-portal' },
+              { label: 'Recruiter', view: 'recruiter-portal' },
+              { label: 'Admin', view: 'instructor', active: true },
+            ]
+          : undefined
+      }
+      onQuickSwitchPortal={onNavigate}
+      onLogout={() => {
+        signOutUser();
+        onLogout();
+      }}
+    >
+      {/* CREATE COURSE MODAL */}
       {isCreatingCourse && (
-        <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-md flex items-center justify-center p-4 animate-in fade-in duration-200">
-          <div className="glass-panel rounded-3xl max-w-xl w-full p-6 sm:p-8 shadow-2xl border-2 border-sky-300 bg-white/95 max-h-[90vh] overflow-y-auto space-y-4">
-            <div className="flex items-center justify-between pb-3 border-b border-sky-100">
-              <h3 className="font-bold text-lg text-slate-900 font-display flex items-center gap-2">
-                <GoogleIcon name="add_circle" size={20} className="text-blue-400" />
-                <span>Publish New Course Track</span>
-              </h3>
+        <div className="fixed inset-0 z-50 bg-[#071433]/75 backdrop-blur-md flex items-center justify-center p-4">
+          <div className="glass-panel rounded-3xl max-w-xl w-full p-6 sm:p-8 max-h-[90vh] overflow-y-auto space-y-4">
+            <div className="flex items-center justify-between pb-3 border-b border-[#D3E5FD]">
+              <h3 className="font-extrabold text-lg text-[#0B1B3D]">Publish New Career Program</h3>
               <button
+                type="button"
                 onClick={() => setIsCreatingCourse(false)}
-                className="p-1 rounded-lg text-slate-400 hover:text-slate-800"
+                className="p-2 rounded-xl hover:bg-white text-slate-600 cursor-pointer"
               >
-                <GoogleIcon name="close" size={20} />
+                <X className="w-4 h-4" />
               </button>
             </div>
-
             <form onSubmit={handleCreateCourse} className="space-y-3.5 text-xs">
-              <div>
-                <label className="block font-semibold text-slate-700 mb-1">Course Title *</label>
+              <input
+                type="text"
+                required
+                value={newCourse.title}
+                onChange={(e) => setNewCourse({ ...newCourse, title: e.target.value })}
+                placeholder="Program Title (e.g., Master in Generative AI Engineering)"
+                className="w-full px-3.5 py-2.5 rounded-xl glass-input font-medium"
+              />
+              <select
+                value={newCourse.category}
+                onChange={(e) => setNewCourse({ ...newCourse, category: e.target.value as BelvoCategory })}
+                className="w-full px-3.5 py-2.5 rounded-xl glass-input font-bold"
+              >
+                {BELVO_CATEGORIES.map((cat) => (
+                  <option key={cat} value={cat}>{cat}</option>
+                ))}
+              </select>
+              <div className="grid grid-cols-2 gap-3">
                 <input
                   type="text"
-                  required
-                  placeholder="e.g. Advanced Spatial Computing & Vision Pro Architecture"
-                  value={newCourse.title}
-                  onChange={(e) => setNewCourse({ ...newCourse, title: e.target.value })}
-                  className="w-full px-3.5 py-2.5 rounded-xl border border-sky-200 bg-white text-xs focus:outline-none focus:border-sky-500"
+                  value={newCourse.duration}
+                  onChange={(e) => setNewCourse({ ...newCourse, duration: e.target.value })}
+                  placeholder="Duration"
+                  className="px-3.5 py-2.5 rounded-xl glass-input font-medium"
                 />
-              </div>
-
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                <div>
-                  <label className="block font-semibold text-slate-700 mb-1">Belvo Category *</label>
-                  <select
-                    value={newCourse.category}
-                    onChange={(e) => setNewCourse({ ...newCourse, category: e.target.value })}
-                    className="w-full px-3.5 py-2.5 rounded-xl border border-sky-200 bg-white text-xs focus:outline-none focus:border-sky-500 font-medium"
-                  >
-                    {BELVO_CATEGORIES.map((cat) => (
-                      <option key={cat} value={cat}>
-                        {cat}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-
-                <div>
-                  <label className="block font-semibold text-slate-700 mb-1">Duration *</label>
-                  <input
-                    type="text"
-                    value={newCourse.duration}
-                    onChange={(e) => setNewCourse({ ...newCourse, duration: e.target.value })}
-                    className="w-full px-3.5 py-2.5 rounded-xl border border-sky-200 bg-white text-xs focus:outline-none focus:border-sky-500"
-                  />
-                </div>
-              </div>
-
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                <div>
-                  <label className="block font-semibold text-slate-700 mb-1">Course Fee (₹ INR) *</label>
-                  <input
-                    type="number"
-                    value={newCourse.price}
-                    onChange={(e) => setNewCourse({ ...newCourse, price: Number(e.target.value) })}
-                    disabled={newCourse.isFree}
-                    className="w-full px-3.5 py-2.5 rounded-xl border border-sky-200 bg-white text-xs focus:outline-none focus:border-sky-500 disabled:opacity-50"
-                  />
-                </div>
-
-                <div className="flex items-center pt-6">
-                  <label className="flex items-center gap-2 cursor-pointer">
-                    <input
-                      type="checkbox"
-                      checked={newCourse.isFree}
-                      onChange={(e) => setNewCourse({ ...newCourse, isFree: e.target.checked })}
-                      className="rounded accent-[#3869C3] cursor-pointer"
-                    />
-                    <span className="font-semibold text-sky-300">Make Free / Scholarship Access</span>
-                  </label>
-                </div>
-              </div>
-
-              <div>
-                <label className="block font-semibold text-slate-700 mb-1">Tools &amp; Frameworks (Comma separated)</label>
                 <input
-                  type="text"
-                  value={newCourse.tools}
-                  onChange={(e) => setNewCourse({ ...newCourse, tools: e.target.value })}
-                  className="w-full px-3.5 py-2.5 rounded-xl border border-sky-200 bg-white text-xs focus:outline-none focus:border-sky-500"
+                  type="number"
+                  value={newCourse.price}
+                  onChange={(e) => setNewCourse({ ...newCourse, price: Number(e.target.value) })}
+                  placeholder="Tuition Fee (INR)"
+                  className="px-3.5 py-2.5 rounded-xl glass-input font-mono-tabular font-bold"
                 />
               </div>
-
-              <div>
-                <label className="block font-semibold text-slate-700 mb-1">Course Summary</label>
-                <textarea
-                  rows={3}
-                  value={newCourse.summary}
-                  onChange={(e) => setNewCourse({ ...newCourse, summary: e.target.value })}
-                  placeholder="Summary of skills, outcomes and who this program is for..."
-                  className="w-full px-3.5 py-2.5 rounded-xl border border-sky-200 bg-white text-xs focus:outline-none focus:border-sky-500"
-                />
-              </div>
-
-              <div className="flex items-center justify-end gap-2 pt-2">
-                <button
-                  type="button"
-                  onClick={() => setIsCreatingCourse(false)}
-                  className="px-4 py-2.5 rounded-xl border border-sky-200 text-slate-600 font-semibold"
-                >
-                  Cancel
-                </button>
-                <button
-                  type="submit"
-                  className="btn-blue-primary px-6 py-2.5 rounded-xl text-white font-bold uppercase tracking-wider shadow-md"
-                >
-                  Publish Course Now
-                </button>
-              </div>
+              <input
+                type="text"
+                value={newCourse.tools}
+                onChange={(e) => setNewCourse({ ...newCourse, tools: e.target.value })}
+                placeholder="Tools covered (comma separated)"
+                className="w-full px-3.5 py-2.5 rounded-xl glass-input font-medium"
+              />
+              <textarea
+                rows={3}
+                value={newCourse.summary}
+                onChange={(e) => setNewCourse({ ...newCourse, summary: e.target.value })}
+                placeholder="Curriculum summary..."
+                className="w-full px-3.5 py-2.5 rounded-xl glass-input font-medium"
+              />
+              <button type="submit" className="w-full py-3 rounded-xl btn-blue-primary font-extrabold cursor-pointer">
+                Publish to Live Catalogue
+              </button>
             </form>
           </div>
         </div>
       )}
 
-      {/* TAB 1: ANALYTICS & OVERVIEW */}
+      {/* 1. ANALYTICS & BROADCASTS */}
       {activeTab === 'analytics' && (
-        <div className="space-y-6">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div className="glass-card rounded-2xl p-6 space-y-2 border-sky-200">
-              <div className="flex items-center justify-between">
-                <span className="text-xs font-bold text-slate-500 uppercase tracking-wider">Gross Platform Enrolments</span>
-                <GoogleIcon name="school" size={20} className="text-blue-400" />
-              </div>
-              <div className="text-3xl font-bold text-slate-900 font-display">18,490</div>
-              <p className="text-xs text-sky-300 font-semibold">+14.2% increase this month across 11 tracks</p>
+        <div className="grid grid-cols-1 xl:grid-cols-12 gap-6 items-start">
+          <form onSubmit={handleBroadcast} className="xl:col-span-6 glass-panel rounded-3xl p-6 space-y-4">
+            <div className="flex items-center gap-2">
+              <Megaphone className="w-5 h-5 text-[#2B4EA2]" />
+              <h2 className="text-lg font-extrabold text-[#0B1B3D]">Publish Institute-Wide Announcement</h2>
             </div>
+            <p className="text-xs text-slate-600">
+              Pushes an official notice banner immediately into every logged-in Student LMS dashboard.
+            </p>
+            <input
+              type="text"
+              required
+              value={broadcastTitle}
+              onChange={(e) => setBroadcastTitle(e.target.value)}
+              placeholder="Headline (e.g., Infosys & Deloitte Mega Campus Drive)"
+              className="w-full px-3.5 py-2.5 rounded-xl glass-input text-xs font-medium"
+            />
+            <textarea
+              rows={4}
+              required
+              value={broadcastBody}
+              onChange={(e) => setBroadcastBody(e.target.value)}
+              placeholder="Enter official circular, scholarship window, or exam schedule..."
+              className="w-full px-3.5 py-2.5 rounded-xl glass-input text-xs font-medium"
+            />
+            <button type="submit" className="w-full py-3 rounded-xl btn-blue-primary text-xs font-extrabold cursor-pointer">
+              Broadcast Notice to All Learners
+            </button>
+          </form>
 
-            <div className="glass-card rounded-2xl p-6 space-y-2 border-sky-200">
-              <div className="flex items-center justify-between">
-                <span className="text-xs font-bold text-slate-500 uppercase tracking-wider">Average Course Completion</span>
-                <GoogleIcon name="fact_check" size={20} className="text-blue-400" />
-              </div>
-              <div className="text-3xl font-bold text-sky-300 font-display">89.4%</div>
-              <p className="text-xs text-slate-500">Highest completion in AI Automation &amp; UI/UX</p>
-            </div>
-
-            <div className="glass-card rounded-2xl p-6 space-y-2 border-sky-200">
-              <div className="flex items-center justify-between">
-                <span className="text-xs font-bold text-slate-500 uppercase tracking-wider">Placement Drive Conversion</span>
-                <GoogleIcon name="trending_up" size={20} className="text-blue-400" />
-              </div>
-              <div className="text-3xl font-bold text-slate-900 font-display">98.4%</div>
-              <p className="text-xs text-blue-400 font-semibold">Average salary: ₹7.6 LPA across cohorts</p>
-            </div>
-          </div>
-
-          {/* Integrations & Notification Settings */}
-          <div className="glass-panel rounded-3xl p-6 space-y-4 border-sky-200">
-            <div className="flex items-center justify-between">
-              <div>
-                <h3 className="font-bold text-slate-900 text-base font-display">Platform Integrations &amp; Automated Webhooks</h3>
-                <p className="text-xs text-slate-500">Essential platform automations, email dispatches, and payment gateways.</p>
-              </div>
-              <span className="text-[10px] font-bold bg-blue-950 text-sky-200 border border-sky-200 px-3 py-1 rounded-full uppercase">
-                All Systems Operational
-              </span>
-            </div>
-
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-2">
-              <div className="p-4 glass-card rounded-2xl border-sky-100 flex items-center justify-between">
-                <div>
-                  <div className="text-xs font-bold text-slate-900">Email Notifications</div>
-                  <div className="text-[10px] text-slate-500">Enrolment receipts &amp; certificate alerts</div>
+          <div className="xl:col-span-6 glass-panel rounded-3xl p-6 space-y-4">
+            <h2 className="text-lg font-extrabold text-[#0B1B3D]">Recent Executive Actions</h2>
+            <div className="space-y-2.5">
+              {auditLog.map((ev) => (
+                <div key={ev.id} className="metallic-chrome-surface rounded-2xl p-4 text-xs space-y-1">
+                  <div className="flex justify-between gap-2 font-extrabold text-[#0B1B3D]">
+                    <span>{ev.action}</span>
+                    <span className="font-mono-tabular text-[11px] text-[#334873]">{ev.timestamp}</span>
+                  </div>
+                  <div className="text-slate-600">{ev.target} · {ev.actor}</div>
                 </div>
-                <input
-                  type="checkbox"
-                  checked={emailNotificationsEnabled}
-                  onChange={(e) => {
-                    setEmailNotificationsEnabled(e.target.checked);
-                    onToast('info', 'Settings Saved', 'Email notification preference updated.');
-                  }}
-                  className="rounded accent-[#3869C3] cursor-pointer w-4 h-4"
-                />
-              </div>
-
-              <div className="p-4 glass-card rounded-2xl border-sky-100 flex items-center justify-between">
-                <div>
-                  <div className="text-xs font-bold text-slate-900">Payment Gateway</div>
-                  <div className="text-[10px] text-slate-500">UPI, Cards, and NetBanking</div>
-                </div>
-                <input
-                  type="checkbox"
-                  checked={paymentGatewayActive}
-                  onChange={(e) => {
-                    setPaymentGatewayActive(e.target.checked);
-                    onToast('info', 'Gateway Updated', 'Payment processing status modified.');
-                  }}
-                  className="rounded accent-[#3869C3] cursor-pointer w-4 h-4"
-                />
-              </div>
-
-              <div className="p-4 glass-card rounded-2xl border-sky-100 flex items-center justify-between">
-                <div>
-                  <div className="text-xs font-bold text-slate-900">Cloud CDN Storage</div>
-                  <div className="text-[10px] text-slate-500">High-speed video &amp; PDF delivery</div>
-                </div>
-                <span className="text-[11px] font-bold text-blue-400">Active</span>
-              </div>
+              ))}
             </div>
           </div>
         </div>
       )}
 
-      {/* TAB 2: MANAGE COURSES & PRICING */}
+      {/* 2. CAMPUS & BATCH OPERATIONS */}
+      {activeTab === 'batches' && (
+        <div className="grid grid-cols-1 xl:grid-cols-12 gap-6 items-start">
+          <form onSubmit={handleAddBatch} className="xl:col-span-5 glass-panel rounded-3xl p-6 space-y-3.5">
+            <h2 className="text-lg font-extrabold text-[#0B1B3D]">Launch New Indian Campus Batch</h2>
+            <input
+              type="text"
+              required
+              value={batchCode}
+              onChange={(e) => setBatchCode(e.target.value)}
+              placeholder="Batch Code (e.g., AI-2026-B5)"
+              className="w-full px-3.5 py-2.5 rounded-xl glass-input text-xs font-mono-tabular font-bold"
+            />
+            <select
+              value={batchCampus}
+              onChange={(e) => setBatchCampus(e.target.value)}
+              className="w-full px-3.5 py-2.5 rounded-xl glass-input text-xs font-bold"
+            >
+              <option>Pune FC Road Campus</option>
+              <option>Bengaluru Koramangala Hub</option>
+              <option>Thane West Head Office</option>
+              <option>Hyderabad HITEC City</option>
+              <option>Mumbai Andheri West</option>
+            </select>
+            <input
+              type="text"
+              value={batchTrack}
+              onChange={(e) => setBatchTrack(e.target.value)}
+              className="w-full px-3.5 py-2.5 rounded-xl glass-input text-xs font-medium"
+            />
+            <div className="grid grid-cols-2 gap-3">
+              <input
+                type="text"
+                value={batchMentor}
+                onChange={(e) => setBatchMentor(e.target.value)}
+                placeholder="Lead Mentor"
+                className="px-3.5 py-2.5 rounded-xl glass-input text-xs font-medium"
+              />
+              <input
+                type="number"
+                value={batchSeats}
+                onChange={(e) => setBatchSeats(Number(e.target.value))}
+                placeholder="Max Seats"
+                className="px-3.5 py-2.5 rounded-xl glass-input text-xs font-mono-tabular font-bold"
+              />
+            </div>
+            <input
+              type="text"
+              value={batchStart}
+              onChange={(e) => setBatchStart(e.target.value)}
+              placeholder="Start Date"
+              className="w-full px-3.5 py-2.5 rounded-xl glass-input text-xs font-medium"
+            />
+            <button type="submit" className="w-full py-3 rounded-xl btn-blue-primary text-xs font-extrabold cursor-pointer">
+              Create &amp; Open Batch
+            </button>
+          </form>
+
+          <div className="xl:col-span-7 glass-panel rounded-3xl p-6 space-y-3">
+            <h2 className="text-lg font-extrabold text-[#0B1B3D]">Active Campus Cohorts ({batches.length})</h2>
+            {batches.map((b) => {
+              const pct = Math.round((b.enrolledSeats / Math.max(b.maxSeats, 1)) * 100);
+              return (
+                <div key={b.id} className="metallic-chrome-surface rounded-2xl p-5 space-y-2.5 text-xs">
+                  <div className="flex flex-wrap items-start justify-between gap-2">
+                    <div>
+                      <div className="font-mono-tabular font-extrabold text-[#2B4EA2]">{b.batchCode} · {b.mode}</div>
+                      <h3 className="text-sm font-extrabold text-[#0B1B3D]">{b.campus}</h3>
+                      <div className="text-slate-600">{b.track} · Mentor: {b.leadMentor}</div>
+                    </div>
+                    <button
+                      type="button"
+                      onClick={() => handleCycleBatchStatus(b.id)}
+                      className="px-3 py-1.5 rounded-xl btn-blue-glass text-[11px] font-extrabold cursor-pointer"
+                    >
+                      Phase: {b.status}
+                    </button>
+                  </div>
+                  <div className="flex items-center justify-between text-[11px] font-mono-tabular text-[#334873]">
+                    <span>Starts {b.startDate}</span>
+                    <span>Seats Filled: {b.enrolledSeats}/{b.maxSeats} ({pct}%)</span>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      )}
+
+      {/* 3. COURSES & INR PRICING */}
       {activeTab === 'courses' && (
-        <div className="space-y-4">
-          <div className="flex flex-wrap items-center justify-between gap-4">
-            <h3 className="font-bold text-slate-900 text-lg font-display">
-              All {coursesList.length} Active Courses &amp; Pricing Overrides
-            </h3>
-            <span className="text-xs text-sky-300 font-semibold">
-              Changes reflect instantly across the student catalogue.
-            </span>
+        <div className="glass-panel rounded-3xl p-6 space-y-4">
+          <div className="flex flex-wrap items-center justify-between gap-3">
+            <div>
+              <h2 className="text-lg font-extrabold text-[#0B1B3D]">Belvo Career Programs &amp; Live INR Pricing</h2>
+              <p className="text-xs text-slate-600">Adjust tuition fees and review EMI structure across all {coursesList.length} tracks.</p>
+            </div>
+            <button
+              type="button"
+              onClick={() => setIsCreatingCourse(true)}
+              className="px-4 py-2 rounded-xl btn-blue-primary text-xs font-extrabold inline-flex items-center gap-1.5 cursor-pointer"
+            >
+              <Plus className="w-3.5 h-3.5" />
+              <span>Add Program</span>
+            </button>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {coursesList.map((course) => (
+              <div key={course.id} className="metallic-chrome-surface rounded-2xl p-5 flex flex-col justify-between gap-3 text-xs">
+                <div>
+                  <div className="font-bold text-[#2B4EA2]">{course.categoryLabel} · {course.duration}</div>
+                  <h3 className="text-sm font-extrabold text-[#0B1B3D] mt-0.5">{course.title}</h3>
+                  <div className="text-slate-600 mt-1">
+                    Highest CTC: {course.highestPackage} · Next Batch: {course.nextBatch}
+                  </div>
+                </div>
+                <div className="flex items-center justify-between gap-3 pt-3 border-t border-[#D3E2FA]">
+                  <span className="font-mono-tabular font-extrabold text-sm text-[#0B1B3D]">
+                    ₹{(course.fee || 0).toLocaleString('en-IN')}
+                  </span>
+                  <div className="flex gap-1.5">
+                    <button
+                      type="button"
+                      onClick={() => handlePriceUpdate(course.id, Math.max(25000, (course.fee || 48000) - 2000))}
+                      className="px-2.5 py-1.5 rounded-lg btn-blue-glass text-[11px] font-bold cursor-pointer"
+                    >
+                      -₹2k
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => handlePriceUpdate(course.id, (course.fee || 48000) + 2000)}
+                      className="px-2.5 py-1.5 rounded-lg btn-blue-glass text-[11px] font-bold cursor-pointer"
+                    >
+                      +₹2k
+                    </button>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* 4. STUDIO LESSON PUBLISHER */}
+      {activeTab === 'materials' && (
+        <form onSubmit={handleUploadLesson} className="glass-panel rounded-3xl p-6 max-w-3xl space-y-4">
+          <h2 className="text-lg font-extrabold text-[#0B1B3D]">Upload Studio Video / Reading / Assessment Module</h2>
+          <select
+            value={selectedCourseForLesson}
+            onChange={(e) => setSelectedCourseForLesson(e.target.value)}
+            className="w-full px-3.5 py-2.5 rounded-xl glass-input text-xs font-bold"
+          >
+            {coursesList.map((c) => (
+              <option key={c.id} value={c.id}>{c.title}</option>
+            ))}
+          </select>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <input
+              type="text"
+              required
+              value={newLesson.title}
+              onChange={(e) => setNewLesson({ ...newLesson, title: e.target.value })}
+              placeholder="Module Title"
+              className="px-3.5 py-2.5 rounded-xl glass-input text-xs font-medium"
+            />
+            <select
+              value={newLesson.type}
+              onChange={(e) => setNewLesson({ ...newLesson, type: e.target.value as typeof newLesson.type })}
+              className="px-3.5 py-2.5 rounded-xl glass-input text-xs font-bold"
+            >
+              <option value="video">Studio Video Lesson</option>
+              <option value="reading">Architecture Reading Guide</option>
+              <option value="assignment">Capstone Lab Brief</option>
+              <option value="quiz">Timed Skill Quiz</option>
+            </select>
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <input
+              type="text"
+              value={newLesson.duration}
+              onChange={(e) => setNewLesson({ ...newLesson, duration: e.target.value })}
+              placeholder="Duration (e.g., 45 mins)"
+              className="px-3.5 py-2.5 rounded-xl glass-input text-xs font-medium"
+            />
+            <input
+              type="text"
+              value={newLesson.materialUrl}
+              onChange={(e) => setNewLesson({ ...newLesson, materialUrl: e.target.value })}
+              placeholder="Workbook / Slide Deck URL"
+              className="px-3.5 py-2.5 rounded-xl glass-input text-xs font-medium"
+            />
+          </div>
+          <textarea
+            rows={3}
+            value={newLesson.summary}
+            onChange={(e) => setNewLesson({ ...newLesson, summary: e.target.value })}
+            placeholder="Key takeaways and lab deliverables..."
+            className="w-full px-3.5 py-2.5 rounded-xl glass-input text-xs font-medium"
+          />
+          <button type="submit" className="px-6 py-3 rounded-xl btn-blue-primary text-xs font-extrabold cursor-pointer">
+            Publish Module to Student LMS
+          </button>
+        </form>
+      )}
+
+      {/* 5. ENROLLED STUDENTS & SCHOLARSHIP APPROVALS */}
+      {activeTab === 'students' && (
+        <div className="grid grid-cols-1 xl:grid-cols-12 gap-6 items-start">
+          <div className="xl:col-span-6 glass-panel rounded-3xl p-6 space-y-4">
+            <h2 className="text-lg font-extrabold text-[#0B1B3D]">Scholarship &amp; EMI Relief Queue ({scholarships.length})</h2>
+            <div className="space-y-3">
+              {scholarships.map((s) => (
+                <div key={s.id} className="metallic-chrome-surface rounded-2xl p-5 space-y-2.5 text-xs">
+                  <div className="flex items-start justify-between gap-2">
+                    <div>
+                      <div className="font-extrabold text-sm text-[#0B1B3D]">{s.studentName}</div>
+                      <div className="text-[#2B4EA2] font-bold">{s.type} · ₹{s.amountINR.toLocaleString('en-IN')}</div>
+                    </div>
+                    <span className="font-mono-tabular font-extrabold text-[#132C63]">{s.status}</span>
+                  </div>
+                  <p className="text-slate-700">{s.reason}</p>
+                  {s.status === 'Pending Review' && (
+                    <div className="flex gap-2 pt-2">
+                      <button
+                        type="button"
+                        onClick={() => handleScholarshipDecision(s.id, 'Approved')}
+                        className="px-3.5 py-1.5 rounded-xl btn-blue-primary text-xs font-bold cursor-pointer"
+                      >
+                        Approve Grant
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => handleScholarshipDecision(s.id, 'Declined')}
+                        className="px-3.5 py-1.5 rounded-xl btn-blue-glass text-xs font-bold cursor-pointer"
+                      >
+                        Decline
+                      </button>
+                    </div>
+                  )}
+                </div>
+              ))}
+            </div>
           </div>
 
-          <div className="space-y-3">
-            {coursesList.map((course) => (
-              <div
-                key={course.id}
-                className="glass-card rounded-2xl p-5 hover:border-sky-300 transition-all flex flex-col md:flex-row md:items-center justify-between gap-4"
-              >
-                <div className="space-y-1 min-w-0 flex-1">
-                  <div className="flex flex-wrap items-center gap-2">
-                    <span className="text-[10px] font-bold text-sky-300 bg-blue-950 px-2 py-0.5 rounded-full uppercase">
-                      {course.category}
-                    </span>
-                    <span className="text-xs text-slate-400">• {course.duration}</span>
+          <div className="xl:col-span-6 glass-panel rounded-3xl p-6 space-y-4">
+            <h2 className="text-lg font-extrabold text-[#0B1B3D]">Active Student Roster ({attendance.length})</h2>
+            <div className="space-y-2.5">
+              {attendance.map((st) => (
+                <div key={st.id} className="pastel-sky-card rounded-2xl p-4 flex items-center justify-between gap-3 text-xs">
+                  <div>
+                    <div className="font-extrabold text-[#0B1B3D]">{st.studentName}</div>
+                    <div className="text-slate-700">{st.batch} · {st.rollNo}</div>
                   </div>
-                  <h4 className="font-bold text-slate-900 text-base">{course.title}</h4>
-                  <p className="text-xs text-slate-500 line-clamp-1">{course.summary}</p>
+                  <div className="text-right font-mono-tabular">
+                    <div className="font-extrabold text-[#0B1B3D]">{st.progress}% LMS</div>
+                    <div className="text-[11px] text-[#334873]">{st.attendancePercent}% Attendance</div>
+                  </div>
                 </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
 
-                <div className="flex items-center gap-4 shrink-0">
-                  <div className="text-right">
-                    <span className="text-[10px] text-slate-400 block uppercase font-semibold">Course Fee</span>
-                    <div className="flex items-center gap-1">
-                      <span className="font-bold text-slate-900 text-sm">₹</span>
-                      <input
-                        type="number"
-                        defaultValue={course.fee}
-                        onBlur={(e) => handlePriceUpdate(course.id, Number(e.target.value))}
-                        className="w-24 px-2 py-1 text-xs font-bold rounded-lg border border-sky-200 bg-white text-right focus:outline-none focus:border-sky-500"
-                      />
+      {/* 6. ADMISSIONS CRM & REFERRAL VOUCHERS */}
+      {activeTab === 'leads' && (
+        <div className="space-y-6">
+          <div className="glass-panel rounded-3xl p-6 space-y-4">
+            <div className="flex flex-wrap items-center justify-between gap-3">
+              <h2 className="text-lg font-extrabold text-[#0B1B3D]">Admissions Counseling Leads ({filteredLeads.length})</h2>
+              <div className="flex flex-wrap gap-1.5">
+                {['all', 'new', 'contacted', 'counseled', 'enrolled'].map((st) => (
+                  <button
+                    key={st}
+                    type="button"
+                    onClick={() => setLeadFilter(st)}
+                    className={`px-3 py-1.5 rounded-lg text-xs font-bold capitalize cursor-pointer ${
+                      leadFilter === st ? 'btn-blue-primary text-white' : 'bg-white border border-[#D3E2FA] text-[#132C63]'
+                    }`}
+                  >
+                    {st}
+                  </button>
+                ))}
+              </div>
+            </div>
+            <div className="space-y-3">
+              {filteredLeads.map((lead) => (
+                <div key={lead.id} className="metallic-chrome-surface rounded-2xl p-4 flex flex-wrap items-center justify-between gap-3 text-xs">
+                  <div>
+                    <div className="font-extrabold text-sm text-[#0B1B3D]">{lead.name} · {lead.phone}</div>
+                    <div className="text-slate-600">{lead.courseInterest} · {lead.cityOrCenter}</div>
+                  </div>
+                  <div className="flex flex-wrap gap-1.5">
+                    {(['new', 'contacted', 'counseled', 'enrolled'] as const).map((st) => (
+                      <button
+                        key={st}
+                        type="button"
+                        onClick={() => handleUpdateLeadStatus(lead.id, st)}
+                        className={`px-2.5 py-1 rounded-lg text-[11px] font-bold capitalize cursor-pointer ${
+                          lead.status === st ? 'btn-blue-primary text-white' : 'bg-white border border-[#D3E2FA] text-slate-700'
+                        }`}
+                      >
+                        {st}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="glass-panel rounded-3xl p-6 space-y-4">
+            <div className="flex items-center gap-2">
+              <Gift className="w-5 h-5 text-[#2B4EA2]" />
+              <h2 className="text-lg font-extrabold text-[#0B1B3D]">Referral Payout &amp; Amazon Voucher Queue ({referrals.length})</h2>
+            </div>
+            <div className="space-y-3">
+              {referrals.map((ref) => (
+                <div key={ref.id} className="pastel-lavender-card rounded-2xl p-4 flex flex-wrap items-center justify-between gap-3 text-xs">
+                  <div>
+                    <div className="font-extrabold text-sm text-[#0B1B3D]">
+                      {ref.referrerName} referred {ref.friendName}
+                    </div>
+                    <div className="text-slate-700">
+                      Code: <span className="font-mono-tabular font-bold">{ref.referralCode}</span> · {ref.interestedCourse}
+                    </div>
+                    <div className="font-mono-tabular text-[11px] text-[#334873]">
+                      {ref.rewardStatus} ({ref.voucherCode})
                     </div>
                   </div>
-
-                  <button
-                    onClick={() => {
-                      setSelectedCourseForLesson(course.id);
-                      setActiveTab('materials');
-                    }}
-                    className="btn-blue-glass px-3.5 py-2 rounded-xl text-xs font-bold text-sky-300 flex items-center gap-1.5 cursor-pointer"
-                  >
-                    <GoogleIcon name="cloud_upload" size={16} />
-                    <span>Upload Materials</span>
-                  </button>
+                  {ref.voucherCode === 'PENDING_ADMISSION' ? (
+                    <button
+                      type="button"
+                      onClick={() => handleDispatchVoucher(ref.id)}
+                      className="px-4 py-2 rounded-xl btn-blue-primary text-xs font-extrabold cursor-pointer"
+                    >
+                      Dispatch ₹5,000 Voucher
+                    </button>
+                  ) : (
+                    <span className="inline-flex items-center gap-1 font-extrabold text-emerald-900">
+                      <CheckCircle2 className="w-4 h-4" />
+                      Issued
+                    </span>
+                  )}
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
         </div>
       )}
 
-      {/* TAB 3: UPLOAD LESSONS, VIDEOS & QUIZZES */}
-      {activeTab === 'materials' && (
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-          <div className="lg:col-span-6 glass-panel rounded-3xl p-6 sm:p-8 space-y-4 border-sky-200">
+      {/* 7. REVENUE & GST LEDGER */}
+      {activeTab === 'revenue' && (
+        <div className="glass-panel rounded-3xl p-6 space-y-5">
+          <div className="flex flex-wrap items-center justify-between gap-3">
             <div>
-              <span className="text-[10px] font-bold text-sky-300 bg-blue-950 px-3 py-1 rounded-full uppercase tracking-wider">
-                Curriculum Uploader
-              </span>
-              <h3 className="text-xl font-bold text-slate-900 font-display mt-2">
-                Add Lesson, Video or Quiz
-              </h3>
-              <p className="text-xs text-slate-500">
-                Upload new studio material for the selected course track.
-              </p>
+              <h2 className="text-lg font-extrabold text-[#0B1B3D]">Tuition Collections &amp; GST Financial Ledger</h2>
+              <p className="text-xs text-slate-600">Breakdown by Belvo career program with 18% GST reconciliation.</p>
             </div>
-
-            <form onSubmit={handleUploadLesson} className="space-y-3.5 text-xs">
-              <div>
-                <label className="block font-semibold text-slate-700 mb-1">Target Course *</label>
-                <select
-                  value={selectedCourseForLesson}
-                  onChange={(e) => setSelectedCourseForLesson(e.target.value)}
-                  className="w-full px-3.5 py-2.5 rounded-xl border border-sky-200 bg-white text-xs font-semibold text-slate-800 focus:outline-none focus:border-sky-500"
-                >
-                  {coursesList.map((c) => (
-                    <option key={c.id} value={c.id}>
-                      {c.title}
-                    </option>
-                  ))}
-                </select>
-              </div>
-
-              <div>
-                <label className="block font-semibold text-slate-700 mb-1">Lesson Title *</label>
-                <input
-                  type="text"
-                  required
-                  placeholder="e.g. Masterclass: Fine-Tuning Open Source LLMs on GPU"
-                  value={newLesson.title}
-                  onChange={(e) => setNewLesson({ ...newLesson, title: e.target.value })}
-                  className="w-full px-3.5 py-2.5 rounded-xl border border-sky-200 bg-white text-xs focus:outline-none focus:border-sky-500"
-                />
-              </div>
-
-              <div className="grid grid-cols-2 gap-3">
-                <div>
-                  <label className="block font-semibold text-slate-700 mb-1">Content Type</label>
-                  <select
-                    value={newLesson.type}
-                    onChange={(e) => setNewLesson({ ...newLesson, type: e.target.value as any })}
-                    className="w-full px-3.5 py-2.5 rounded-xl border border-sky-200 bg-white text-xs font-medium focus:outline-none focus:border-sky-500"
-                  >
-                    <option value="video">Interactive Video</option>
-                    <option value="reading">Reading / Cheatsheet</option>
-                    <option value="assignment">Project Assignment</option>
-                    <option value="quiz">Assessment Quiz</option>
-                  </select>
-                </div>
-
-                <div>
-                  <label className="block font-semibold text-slate-700 mb-1">Duration / Time</label>
-                  <input
-                    type="text"
-                    value={newLesson.duration}
-                    onChange={(e) => setNewLesson({ ...newLesson, duration: e.target.value })}
-                    className="w-full px-3.5 py-2.5 rounded-xl border border-sky-200 bg-white text-xs focus:outline-none focus:border-sky-500"
-                  />
-                </div>
-              </div>
-
-              {newLesson.type === 'video' && (
-                <div>
-                  <label className="block font-semibold text-slate-700 mb-1">Video Stream URL (MP4 / HLS / Cloud)</label>
-                  <input
-                    type="url"
-                    placeholder="https://..."
-                    value={newLesson.videoUrl}
-                    onChange={(e) => setNewLesson({ ...newLesson, videoUrl: e.target.value })}
-                    className="w-full px-3.5 py-2.5 rounded-xl border border-sky-200 bg-white text-xs font-mono focus:outline-none focus:border-sky-500"
-                  />
-                </div>
-              )}
-
-              <div>
-                <label className="block font-semibold text-slate-700 mb-1">Downloadable PDF / Resource URL</label>
-                <input
-                  type="url"
-                  placeholder="https://..."
-                  value={newLesson.materialUrl}
-                  onChange={(e) => setNewLesson({ ...newLesson, materialUrl: e.target.value })}
-                  className="w-full px-3.5 py-2.5 rounded-xl border border-sky-200 bg-white text-xs font-mono focus:outline-none focus:border-sky-500"
-                />
-              </div>
-
-              <div>
-                <label className="block font-semibold text-slate-700 mb-1">Lesson Summary &amp; Key Takeaways</label>
-                <textarea
-                  rows={3}
-                  value={newLesson.summary}
-                  onChange={(e) => setNewLesson({ ...newLesson, summary: e.target.value })}
-                  placeholder="Brief description of skills acquired in this module..."
-                  className="w-full px-3.5 py-2.5 rounded-xl border border-sky-200 bg-white text-xs focus:outline-none focus:border-sky-500"
-                />
-              </div>
-
-              <button
-                type="submit"
-                className="w-full py-3 rounded-xl btn-blue-primary font-bold text-xs uppercase tracking-wider text-white shadow-md cursor-pointer flex items-center justify-center gap-2"
-              >
-                <GoogleIcon name="cloud_upload" size={16} />
-                <span>Upload Lesson &amp; Publish</span>
-              </button>
-            </form>
+            <button
+              type="button"
+              onClick={handleExportRevenueCsv}
+              className="px-4 py-2 rounded-xl btn-blue-primary text-xs font-extrabold inline-flex items-center gap-1.5 cursor-pointer"
+            >
+              <Download className="w-3.5 h-3.5" />
+              <span>Export Ledger CSV</span>
+            </button>
           </div>
-
-          <div className="lg:col-span-6 glass-panel rounded-3xl p-6 sm:p-8 space-y-4 border-sky-200">
-            <h4 className="font-bold text-slate-900 text-base font-display">
-              Curriculum Upload Guidelines
-            </h4>
-            <div className="space-y-3 text-xs text-slate-600 leading-relaxed">
-              <div className="p-3.5 bg-blue-950/60/70 rounded-xl border border-sky-100 flex items-start gap-2.5">
-                <GoogleIcon name="videocam" size={18} className="text-blue-400 shrink-0 mt-0.5" />
-                <div>
-                  <strong className="text-slate-900 block">Video Format:</strong>
-                  Upload 1080p MP4 or WebM encoded at 60fps with clear audio commentary.
-                </div>
-              </div>
-
-              <div className="p-3.5 bg-blue-950/60/70 rounded-xl border border-sky-100 flex items-start gap-2.5">
-                <GoogleIcon name="quiz" size={18} className="text-blue-400 shrink-0 mt-0.5" />
-                <div>
-                  <strong className="text-slate-900 block">Assessment Rubrics:</strong>
-                  Every core module must feature a 4-option multiple-choice check and real coding or design assignment.
-                </div>
-              </div>
-
-              <div className="p-3.5 bg-blue-950/60/70 rounded-xl border border-sky-100 flex items-start gap-2.5">
-                <GoogleIcon name="description" size={18} className="text-blue-400 shrink-0 mt-0.5" />
-                <div>
-                  <strong className="text-slate-900 block">Templates &amp; Workbooks:</strong>
-                  Attach downloadable Figma files, SQL schemas, or ad spreadsheets to maximize hands-on engagement.
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* TAB 4: ENROLLED STUDENTS */}
-      {activeTab === 'students' && (
-        <div className="space-y-4">
-          <div className="flex items-center justify-between">
-            <h3 className="font-bold text-slate-900 text-lg font-display">
-              Student Directory &amp; Progress Auditing
-            </h3>
-            <span className="text-xs text-sky-300 font-semibold">18,490 Active Learners</span>
-          </div>
-
-          <div className="glass-panel rounded-2xl overflow-hidden border-sky-200">
-            <div className="overflow-x-auto">
-              <table className="w-full text-left text-xs">
-                <thead className="bg-blue-950/60/70 text-slate-700 font-bold uppercase tracking-wider text-[10px] border-b border-sky-100">
-                  <tr>
-                    <th className="p-3.5">Student</th>
-                    <th className="p-3.5">Course Track</th>
-                    <th className="p-3.5">Progress</th>
-                    <th className="p-3.5">Status</th>
-                    <th className="p-3.5">Certificate</th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-[#D3E5FD] text-slate-700">
-                  {[
-                    { name: 'Priya Sharma', roll: 'BELVO-2026-8942', course: 'Artificial Intelligence, Machine Learning', progress: '85%', status: 'Active' },
-                    { name: 'Rahul Joshi', roll: 'BELVO-2026-4412', course: 'Web, App, and Software Development', progress: '92%', status: 'Active' },
-                    { name: 'Sneha Rao', roll: 'BELVO-2026-1189', course: 'Graphic Design, Branding, and UI/UX', progress: '100%', status: 'Graduated' },
-                    { name: 'Amit Verma', roll: 'BELVO-2026-7731', course: 'Digital Marketing & Social Media', progress: '74%', status: 'Active' },
-                  ].map((s, idx) => (
-                    <tr key={idx} className="hover:bg-blue-950/60/40">
-                      <td className="p-3.5">
-                        <div className="font-bold text-slate-900">{s.name}</div>
-                        <div className="text-[10px] text-slate-400 font-mono">{s.roll}</div>
-                      </td>
-                      <td className="p-3.5 font-medium">{s.course}</td>
-                      <td className="p-3.5">
-                        <span className="font-bold text-sky-300">{s.progress}</span>
-                      </td>
-                      <td className="p-3.5">
-                        <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-blue-950 text-sky-200 border border-sky-200">
-                          {s.status}
-                        </span>
-                      </td>
-                      <td className="p-3.5">
-                        <button
-                          onClick={() => onToast('info', 'Certificate Ready', `BELVO-CERT-2026 verified for ${s.name}.`)}
-                          className="text-sky-300 hover:text-[#1E428E] font-semibold underline"
-                        >
-                          View Credential
-                        </button>
+          <div className="overflow-x-auto">
+            <table className="w-full text-left border-collapse text-xs">
+              <thead>
+                <tr className="border-b border-[#D3E2FA] text-[#334873]">
+                  <th className="py-3 pr-4 font-extrabold">Program</th>
+                  <th className="py-3 px-4 font-extrabold text-right">Fee (INR)</th>
+                  <th className="py-3 px-4 font-extrabold text-right">Learners</th>
+                  <th className="py-3 pl-4 font-extrabold text-right">Gross Collection</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-[#E4EEFC]">
+                {coursesList.slice(0, 8).map((c) => {
+                  const learners = c.reviewCount || 10;
+                  const gross = (c.fee || 0) * learners;
+                  return (
+                    <tr key={c.id}>
+                      <td className="py-3 pr-4 font-bold text-[#0B1B3D]">{c.title}</td>
+                      <td className="py-3 px-4 text-right font-mono-tabular">₹{(c.fee || 0).toLocaleString('en-IN')}</td>
+                      <td className="py-3 px-4 text-right font-mono-tabular">{learners}</td>
+                      <td className="py-3 pl-4 text-right font-mono-tabular font-extrabold text-[#1E428E]">
+                        ₹{(gross / 100000).toFixed(2)}L
                       </td>
                     </tr>
-                  ))}
-                </tbody>
-              </table>
+                  );
+                })}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      )}
+
+      {/* 8. ROLE ACCESS & PLATFORM CONTROLS */}
+      {activeTab === 'access' && (
+        <div className="space-y-6">
+          <div className="glass-panel rounded-3xl p-6 space-y-4">
+            <h2 className="text-lg font-extrabold text-[#0B1B3D]">Role-Protected Workspaces Directory</h2>
+            <p className="text-xs text-slate-600">
+              As Institute Admin, you hold elevated single-sign-on oversight and can open any workspace directly.
+            </p>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {FIXED_DEMO_ACCOUNTS.map((acc) => (
+                <div key={acc.id} className="metallic-chrome-surface rounded-2xl p-5 flex flex-col justify-between gap-3 text-xs">
+                  <div className="space-y-1">
+                    <div className="font-extrabold text-sm text-[#0B1B3D]">{acc.roleLabel}</div>
+                    <div className="font-mono-tabular text-[#2B4EA2] font-bold">
+                      {acc.email} · {acc.password}
+                    </div>
+                    <div className="text-slate-600">{acc.displayName} · {acc.campus}</div>
+                  </div>
+                  {onNavigate && (
+                    <button
+                      type="button"
+                      onClick={() => onNavigate(acc.defaultView)}
+                      className="self-start px-4 py-2 rounded-xl btn-blue-primary text-xs font-bold inline-flex items-center gap-1.5 cursor-pointer"
+                    >
+                      <span>Open {acc.roleLabel}</span>
+                      <ArrowRight className="w-3.5 h-3.5" />
+                    </button>
+                  )}
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="glass-panel rounded-3xl p-6 space-y-3">
+            <h3 className="text-base font-extrabold text-[#0B1B3D]">Operational Rail Toggles</h3>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
+              <div className="pastel-sky-card rounded-2xl p-4 flex items-center justify-between gap-3">
+                <div>
+                  <div className="font-extrabold text-[#0B1B3D]">Automated Admissions Emails</div>
+                  <div className="text-slate-600">Send syllabus PDFs &amp; fee receipts automatically</div>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setEmailNotificationsEnabled((v) => !v);
+                    onToast('info', 'Email Rail Updated', `Automated emails ${!emailNotificationsEnabled ? 'enabled' : 'paused'}.`);
+                  }}
+                  className="px-3.5 py-2 rounded-xl btn-blue-primary text-xs font-bold cursor-pointer"
+                >
+                  {emailNotificationsEnabled ? 'Enabled' : 'Paused'}
+                </button>
+              </div>
+
+              <div className="pastel-mint-card rounded-2xl p-4 flex items-center justify-between gap-3">
+                <div>
+                  <div className="font-extrabold text-[#0B1B3D]">UPI &amp; 0% EMI Gateway</div>
+                  <div className="text-slate-600">Checkout enrollment settlement rail</div>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setPaymentGatewayActive((v) => !v);
+                    onToast('info', 'Payment Rail Updated', `Gateway ${!paymentGatewayActive ? 'activated' : 'set to maintenance'}.`);
+                  }}
+                  className="px-3.5 py-2 rounded-xl btn-blue-primary text-xs font-bold cursor-pointer"
+                >
+                  {paymentGatewayActive ? 'Active' : 'Maintenance'}
+                </button>
+              </div>
             </div>
           </div>
         </div>
       )}
-
-      {/* TAB 5: INQUIRIES & LEADS */}
-      {activeTab === 'leads' && (
-        <div className="space-y-4">
-          <div className="flex items-center justify-between">
-            <h3 className="font-bold text-slate-900 text-lg font-display">
-              Incoming Callback Inquiries &amp; Referral Payouts
-            </h3>
-            <span className="text-xs text-sky-300 font-semibold">15-Minute Response SLA</span>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {leads.map((lead) => (
-              <div key={lead.id} className="glass-card rounded-2xl p-5 border-sky-200 space-y-2">
-                <div className="flex items-center justify-between">
-                  <h4 className="font-bold text-slate-900 text-sm">{lead.name}</h4>
-                  <span className="text-[10px] font-bold uppercase px-2 py-0.5 rounded bg-blue-950 text-sky-300">
-                    {lead.status || 'New'}
-                  </span>
-                </div>
-                <p className="text-xs text-slate-600 font-medium">{lead.courseInterest}</p>
-                <div className="flex flex-wrap items-center gap-3 text-[11px] text-slate-500 pt-1">
-                  <span>{lead.phone}</span>
-                  <span>•</span>
-                  <span>{lead.email}</span>
-                </div>
-                <div className="pt-2 flex justify-end">
-                  <a
-                    href={`tel:${lead.phone}`}
-                    className="btn-blue-glass px-3 py-1.5 rounded-lg text-xs font-bold text-sky-300 flex items-center gap-1"
-                  >
-                    <GoogleIcon name="call" size={14} />
-                    <span>Call Back Now</span>
-                  </a>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      )}
-    </div>
+    </PortalWorkspaceShell>
   );
 };

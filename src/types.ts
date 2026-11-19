@@ -1,21 +1,35 @@
 export const BELVO_CATEGORIES = [
-  'Digital Marketing and Social Media Management',
-  'Web, App, and Software Development',
-  'Graphic Design, Branding, and UI/UX',
-  'Video Editing, Animation, and VFX',
-  'Artificial Intelligence, Machine Learning, and Automation',
-  'E-commerce and Online Business',
-  'Photography and Content Creation',
-  'Business Development, Sales, and Entrepreneurship',
-  'Copywriting, SEO, and Content Marketing',
-  'Cloud Computing, IT, and Cybersecurity Awareness',
-  'Data Analytics and Business Intelligence',
-  'Interior Design and Spatial Architecture',
-  'Product Marketing Management',
-  'Marketing Design and Visual Communication',
+  'Tech, AI & Product Lab',
+  'Design, Studio & Spatial Craft',
+  'Growth, Marketing & Creator Economy',
+  'Business, Startup & Leadership',
+  'Finance, Accounting & Tax Mastery',
+  'Career Acceleration & Communication',
 ] as const;
 
 export type BelvoCategory = (typeof BELVO_CATEGORIES)[number] | string;
+
+export type AuthRole = 'student' | 'mentor' | 'recruiter' | 'admin';
+
+export type AppView =
+  | 'home'
+  | 'placements'
+  | 'refer-earn'
+  | 'contact'
+  | 'hire-from-us'
+  | 'centers'
+  | 'reviews'
+  | 'catalogue'
+  | 'course'
+  | 'student'
+  | 'mentor-portal'
+  | 'recruiter-portal'
+  | 'instructor'
+  | 'portal-login'
+  | 'admin-login'
+  | 'student-login'
+  | 'mentor-login'
+  | 'recruiter-login';
 
 export type CourseLevel = 'Beginner' | 'Intermediate' | 'Advanced';
 export type CourseStatus = 'draft' | 'published' | 'archived';
@@ -27,10 +41,42 @@ export type EnquiryType =
   | 'university_partnership'
   | 'instructor_application';
 
+export interface DemoAccount {
+  id: string;
+  role: AuthRole;
+  roleLabel: string;
+  email: string;
+  password: string;
+  displayName: string;
+  title: string;
+  campus: string;
+  badgeCode: string;
+  description: string;
+  defaultView: AppView;
+}
+
+export interface UserPublicProfile {
+  uid: string;
+  displayName: string;
+  headline?: string;
+  photoURL?: string;
+  createdAt?: unknown;
+  updatedAt?: unknown;
+}
+
+export interface UserPrivateInfo {
+  uid: string;
+  email: string;
+  phone?: string;
+  organization?: string;
+  createdAt?: unknown;
+  updatedAt?: unknown;
+}
+
 export interface Course {
   id: string;
   title: string;
-  category: BelvoCategory;
+  category: string;
   level: CourseLevel;
   summary: string;
   description: string;
@@ -128,31 +174,6 @@ export interface Enquiry {
   updatedAt?: unknown;
 }
 
-export interface UserPrivateInfo {
-  uid: string;
-  email: string;
-  phone?: string;
-  organization?: string;
-  createdAt?: unknown;
-  updatedAt?: unknown;
-}
-
-export type AppView =
-  | 'home'
-  | 'catalogue'
-  | 'course'
-  | 'placements'
-  | 'refer-earn'
-  | 'contact'
-  | 'hire-from-us'
-  | 'centers'
-  | 'reviews'
-  | 'student'
-  | 'instructor'
-  | 'enquire'
-  | 'admin-login'
-  | 'student-login';
-
 export interface CallbackLead {
   id: string;
   name: string;
@@ -160,9 +181,8 @@ export interface CallbackLead {
   email?: string;
   courseInterest: string;
   cityOrCenter?: string;
-  preferredMode?: string;
-  status?: 'new' | 'contacted' | 'counseled';
-  createdAt?: string;
+  status: 'new' | 'contacted' | 'counseled' | 'enrolled' | string;
+  createdAt: string;
 }
 
 export interface ReferralSubmission {
@@ -173,11 +193,11 @@ export interface ReferralSubmission {
   referrerRole: string;
   friendName: string;
   friendPhone: string;
-  friendEmail?: string;
+  friendEmail: string;
   interestedCourse: string;
   preferredCenter: string;
-  rewardStatus: 'Pending Verification' | 'Referee Contacted' | 'Admitted - Reward Due' | 'Voucher Dispatched (₹5,000)';
-  voucherCode?: string;
+  rewardStatus: string;
+  voucherCode: string;
   referralCode: string;
   createdAt: string;
 }

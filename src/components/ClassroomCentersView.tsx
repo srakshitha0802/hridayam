@@ -20,24 +20,23 @@ export const ClassroomCentersView: React.FC<ClassroomCentersViewProps> = ({ onRe
     <div className="space-y-16 pb-20 relative z-10 text-[#1E428E]">
       {/* Hero Section */}
       <section className="pt-6 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-7xl mx-auto glass-panel rounded-3xl p-8 sm:p-12 shadow-2xl relative overflow-hidden border-2 border-white text-center space-y-4">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/90 border-2 border-[#D3E5FD] text-[#1E428E] text-xs font-semibold shadow-xs">
-            <GoogleIcon name="apartment" size={16} className="text-[#3869C3]" />
-            <span>State-of-the-Art Physical Classrooms</span>
-          </div>
+        <div className="max-w-7xl mx-auto frame-sparkle-blue rounded-3xl p-8 sm:p-12 relative overflow-hidden text-center space-y-4 text-white">
+          <p className="text-xs font-extrabold uppercase tracking-widest text-[#94BCF1]">
+            State-of-the-Art Indian Physical Classrooms &amp; Live Online Labs
+          </p>
 
-          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold font-display text-[#1E428E]">
+          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold font-display text-white">
             Hridayam by Belvo Campus Locations
           </h1>
 
-          <p className="text-[#1E428E]/85 text-sm sm:text-base max-w-2xl mx-auto leading-relaxed font-medium">
-            Experience high-performance computing labs, 1-on-1 mentor guidance, and daily interactive practice across Mumbai, Pune, Nagpur, or connect via our Live Online classrooms.
+          <p className="text-[#D3E5FD] text-sm sm:text-base max-w-2xl mx-auto leading-relaxed font-medium">
+            Experience high-performance computing labs, 1-on-1 mentor guidance, and daily interactive practice across Mumbai, Thane, Pune, Nagpur, or Pan-India live online cohorts.
           </p>
 
           <div className="flex justify-center gap-4 pt-2">
             <button
               onClick={() => onRequestCallback('Campus Visit Booking')}
-              className="btn-blue-primary px-7 py-3 rounded-xl text-xs font-bold uppercase tracking-wider text-white shadow-xl hover:shadow-2xl cursor-pointer flex items-center gap-2 border border-white"
+              className="px-7 py-3 rounded-xl bg-white text-[#0B1B3D] hover:bg-[#E8F1FD] text-xs font-extrabold uppercase tracking-wider shadow-xl cursor-pointer flex items-center gap-2"
             >
               <GoogleIcon name="calendar_month" size={16} />
               Book a Free Campus Tour &amp; Demo

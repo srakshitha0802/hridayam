@@ -1,817 +1,1019 @@
-import React, { useState } from 'react';
-import { GoogleIcon } from './GoogleIcon';
-import { CompaniesSlidingMarquee } from './CompaniesSlidingMarquee';
-import { IndustryAlignedProgramsSection } from './IndustryAlignedProgramsSection';
-import { BelvoVerticalsInteractiveSection } from './BelvoVerticalsInteractiveSection';
-import { directDownloadCurriculumPdf } from '../utils/downloadBrochurePdf';
+import React, { useState, useMemo } from 'react';
+import {
+  ArrowRight,
+  CheckCircle2,
+  MapPin,
+  Clock,
+  GraduationCap,
+  Users,
+  Briefcase,
+  ShieldCheck,
+  MessageSquare,
+  Download,
+  ChevronDown,
+  PhoneCall,
+  Rocket,
+  Star,
+  Award,
+  BadgeCheck,
+  Search,
+  Copy,
+  Check,
+  Calculator,
+  AlertCircle,
+  Sparkles,
+  BookOpen,
+  Heart,
+  Trophy,
+  Compass,
+} from 'lucide-react';
+import { AppView } from '../types';
 import {
   ITV_COURSES,
   CLASSROOM_CENTERS,
   HOME_FAQS,
 } from '../data/itvedantData';
-import { AppView } from '../types';
+import { PROVIDED_IMAGES } from '../data/mediaAssets';
+import { FIXED_DEMO_ACCOUNTS } from '../context/AuthContext';
+import { CompanyLogosInlineStrip } from './CompaniesSlidingMarquee';
+import { BelvoVerticalsSection } from './BelvoVerticalsSection';
+import { FlagshipMasterConsole } from './FlagshipMasterConsole';
+import {
+  PlacementMomentumAndWhySection,
+  IndustryMentorsAndWorkshopsSection,
+  ReferAndQuickCallbackSections,
+} from './LiveSiteShowcaseSections';
 
 interface HomeViewProps {
   onNavigate: (view: AppView) => void;
   onSelectCourse: (courseId: string) => void;
   onRequestCallback: (courseInterest?: string) => void;
   onDownloadBrochure: (courseTitle?: string) => void;
+  onOpenChatbot: () => void;
+  onOpenCommandPalette?: () => void;
 }
+
+const MATCHER_BACKGROUNDS = [
+  { id: 'non-it', label: 'Non-IT / Fresh Graduate', avgSalaryMonthly: 48000 },
+  { id: 'cs-it', label: 'CS / IT Student', avgSalaryMonthly: 62000 },
+  { id: 'working', label: 'Working Professional', avgSalaryMonthly: 92000 },
+] as const;
+
+const MATCHER_GOALS = [
+  { id: 'ai-auto', label: 'AI & Automation', keyword: 'ai & automation' },
+  { id: 'engineering', label: 'Full Stack, App & Software', keyword: 'full stack' },
+  { id: 'product', label: 'Product Development', keyword: 'product development' },
+  { id: 'design-craft', label: 'UI/UX, Interior & Fashion Design', keyword: 'interior design' },
+  { id: 'growth-startup', label: 'Marketing, Social & Startups', keyword: 'entrepreneurship' },
+  { id: 'finance-career', label: 'Finance, GST & Career Prep', keyword: 'gst & taxation' },
+] as const;
+
+const EMI_TENURES = [6, 12, 18] as const;
 
 export const HomeView: React.FC<HomeViewProps> = ({
   onNavigate,
   onSelectCourse,
   onRequestCallback,
   onDownloadBrochure,
+  onOpenChatbot,
+  onOpenCommandPalette,
 }) => {
-  const [selectedCenterTab, setSelectedCenterTab] = useState(0);
-  const [openFaqIndex, setOpenFaqIndex] = useState<number | null>(0);
-  const [heroFormSubmitted, setHeroFormSubmitted] = useState(false);
-  const [heroForm, setHeroForm] = useState({
-    phone: '',
-    name: '',
-    email: '',
-  });
+  const [selectedCampusId, setSelectedCampusId] = useState<string>(CLASSROOM_CENTERS[0].id);
+  const [openFaq, setOpenFaq] = useState<number | null>(0);
+  const [curriculumDropdownOpen, setCurriculumDropdownOpen] = useState(false);
+  const [copiedAccountId, setCopiedAccountId] = useState<string | null>(null);
 
-  const [bottomFormSubmitted, setBottomFormSubmitted] = useState(false);
-  const [bottomForm, setBottomForm] = useState({
-    name: '',
-    phone: '',
-    course: 'Master in Data Science and Analytics with AI',
-  });
+  // Interactive Career Track Matcher & ROI Simulator State
+  const [matcherBg, setMatcherBg] = useState<(typeof MATCHER_BACKGROUNDS)[number]['id']>('non-it');
+  const [matcherGoal, setMatcherGoal] = useState<(typeof MATCHER_GOALS)[number]['id']>('ai-auto');
+  const [matcherTenure, setMatcherTenure] = useState<(typeof EMI_TENURES)[number]>(12);
 
-  const handleHeroSubmit = (e: React.FormEvent) => {
+  // Hero Career Growth Lead Form State
+  const [leadPhone, setLeadPhone] = useState('');
+  const [leadName, setLeadName] = useState('');
+  const [leadEmail, setLeadEmail] = useState('');
+  const [leadError, setLeadError] = useState<string | null>(null);
+  const [leadSubmitted, setLeadSubmitted] = useState(false);
+
+  const matchedTrackResult = useMemo(() => {
+    const goalObj = MATCHER_GOALS.find((g) => g.id === matcherGoal) || MATCHER_GOALS[0];
+    const bgObj = MATCHER_BACKGROUNDS.find((b) => b.id === matcherBg) || MATCHER_BACKGROUNDS[0];
+    const course =
+      ITV_COURSES.find(
+        (c) =>
+          c.title.toLowerCase().includes(goalObj.keyword) ||
+          c.category.toLowerCase().includes(goalObj.keyword)
+      ) || ITV_COURSES[0];
+
+    const monthlyEmi = Math.round(course.fee / matcherTenure);
+    const paybackMonths = Math.max(0.6, +(course.fee / bgObj.avgSalaryMonthly).toFixed(1));
+    const expectedCtcRange =
+      matcherBg === 'working'
+        ? `₹9.5 – ${course.highestPackage}`
+        : matcherBg === 'cs-it'
+          ? `₹6.5 – ${course.highestPackage}`
+          : `₹5.0 – ₹14 LPA`;
+
+    return {
+      course,
+      monthlyEmi,
+      paybackMonths,
+      expectedCtcRange,
+    };
+  }, [matcherBg, matcherGoal, matcherTenure]);
+
+  const activeCampus =
+    CLASSROOM_CENTERS.find((c) => c.id === selectedCampusId) || CLASSROOM_CENTERS[0];
+
+  const handleCopyCredentials = (accountId: string, email: string, password: string) => {
+    try {
+      navigator.clipboard?.writeText(`${email} / ${password}`);
+    } catch {}
+    setCopiedAccountId(accountId);
+    setTimeout(() => {
+      setCopiedAccountId((prev) => (prev === accountId ? null : prev));
+    }, 1800);
+  };
+
+  const handleHeroLeadSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!heroForm.phone || !heroForm.name) return;
+    const cleanedDigits = leadPhone.replace(/\D/g, '');
+    if (cleanedDigits.length < 10) {
+      setLeadError('Please enter a valid 10-digit Indian mobile number.');
+      return;
+    }
+    if (leadName.trim().length < 2) {
+      setLeadError('Please enter your full name.');
+      return;
+    }
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(leadEmail.trim())) {
+      setLeadError('Please enter a valid email address.');
+      return;
+    }
+
+    setLeadError(null);
 
     try {
       const existing = JSON.parse(localStorage.getItem('itv_leads_v1') || '[]');
       const newLead = {
-        id: `hero_${Date.now()}`,
-        name: heroForm.name,
-        phone: heroForm.phone,
-        email: heroForm.email,
-        courseInterest: 'General Inquiry / Career Growth',
-        cityOrCenter: 'Thane Head Office',
+        id: `lead_${Date.now()}`,
+        name: leadName.trim(),
+        phone: leadPhone.trim(),
+        email: leadEmail.trim(),
+        courseInterest: 'Hero Career Roadmap Counseling',
+        cityOrCenter: 'Pan-India Online / Campus',
         status: 'new',
         createdAt: new Date().toISOString(),
       };
       localStorage.setItem('itv_leads_v1', JSON.stringify([newLead, ...existing]));
     } catch {}
 
-    setHeroFormSubmitted(true);
+    setLeadSubmitted(true);
   };
-
-  const handleBottomSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!bottomForm.name || !bottomForm.phone) return;
-
-    try {
-      const existing = JSON.parse(localStorage.getItem('itv_leads_v1') || '[]');
-      const newLead = {
-        id: `bottom_${Date.now()}`,
-        name: bottomForm.name,
-        phone: bottomForm.phone,
-        courseInterest: bottomForm.course,
-        status: 'new',
-        createdAt: new Date().toISOString(),
-      };
-      localStorage.setItem('itv_leads_v1', JSON.stringify([newLead, ...existing]));
-    } catch {}
-
-    setBottomFormSubmitted(true);
-  };
-
-  const campusPhotos = [
-    {
-      title: 'Technical Assessment & Coding Session',
-      subtitle: 'Learner Showcase • High-Tech Computer Lab',
-      imageUrl: 'https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=800&q=80',
-    },
-    {
-      title: 'Placed Batch Felicitations & Offer Letters',
-      subtitle: 'QuickHeal & Tech Mahindra Hires • Pune Campus',
-      imageUrl: 'https://images.unsplash.com/photo-1531482615713-2afd69097998?auto=format&fit=crop&w=800&q=80',
-    },
-    {
-      title: 'QualityKiosk & Capgemini Hiring Drive',
-      subtitle: 'On-Campus Recruitment Day • Main Campus',
-      imageUrl: 'https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&w=800&q=80',
-    },
-    {
-      title: '1-on-1 Code Clinic & Technical Mentorship',
-      subtitle: 'Daily Doubt Clearance Desk • Andheri Hub',
-      imageUrl: 'https://images.unsplash.com/photo-1524178232363-1fb2b075b655?auto=format&fit=crop&w=800&q=80',
-    },
-  ];
 
   return (
-    <div className="space-y-16 pb-20 relative z-10 text-[#1E428E]">
-      {/* 1. HERO SECTION (HRIDAYAM OFFICIAL PALETTE - DREAMY GLASS & HERO ART) */}
-      <section className="relative pt-6 pb-16 sm:pt-10 sm:pb-20 px-4 sm:px-6 lg:px-8 overflow-hidden rounded-b-[40px] sm:rounded-b-[56px] border-b-2 border-white/60">
-        {/* 3 Dreamy Floating Pills from Official Reference Image */}
-        <div className="max-w-7xl mx-auto mb-6 flex flex-wrap items-center justify-center sm:justify-between gap-3 relative z-10">
-          <div className="hridayam-pill px-4 py-1.5 rounded-full text-xs font-bold flex items-center gap-2 cursor-pointer shadow-xs animate-smooth-float">
-            <span className="text-base">💡</span>
-            <span>Explore Knowledge</span>
-          </div>
+    <div className="space-y-16 sm:space-y-20 pb-24 relative z-10">
+      {/* =====================================================================
+          HERO SECTION: FLOATING PASTEL PILLS + 2 FROSTED WHITE-BLUE GLASS CARDS
+         ===================================================================== */}
+      <section className="pt-4 sm:pt-6 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto space-y-5">
+          {/* Top Floating Ambient Ribbon over Live Sapphire Video (exact match to screenshot) */}
+          <div className="flex flex-wrap items-center justify-between gap-3 px-1">
+            <button
+              type="button"
+              onClick={() => onNavigate('catalogue')}
+              className="animate-float-smooth inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-white/80 backdrop-blur-md border border-white text-[11px] font-extrabold text-[#1E428E] shadow-md hover:bg-white transition-colors cursor-pointer"
+            >
+              <Compass className="w-3.5 h-3.5 text-[#3869C3]" />
+              <span>Explore Knowledge</span>
+            </button>
 
-          <div className="text-2xl sm:text-3xl font-extrabold tracking-widest text-white drop-shadow-md font-display select-none">
-            HRID<span className="text-[#D3E5FD]">♡</span>YAM
-          </div>
-
-          <div className="flex items-center gap-3">
-            <div className="hridayam-pill px-4 py-1.5 rounded-full text-xs font-bold flex items-center gap-2 cursor-pointer shadow-xs animate-smooth-float-delayed">
-              <span className="text-base">📖</span>
-              <span>Learn &amp; Grow</span>
-            </div>
-            <div className="hridayam-pill px-4 py-1.5 rounded-full text-xs font-bold hidden md:flex items-center gap-2 cursor-pointer shadow-xs animate-smooth-float">
-              <span className="text-base">📈</span>
-              <span>Achieve More</span>
-            </div>
-          </div>
-        </div>
-
-        <div className="max-w-7xl mx-auto relative z-10">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center">
-            {/* Left Column: Headlines & Accreditations (Frosted Ice Blue Glass Frame) */}
-            <div className="lg:col-span-7 space-y-6 glass-panel rounded-3xl p-6 sm:p-8 sm:py-10 border-2 border-white/90 shadow-2xl relative overflow-hidden backdrop-blur-2xl text-[#1E428E]">
-              {/* Subtle ambient light blue flare */}
-              <div className="absolute top-0 right-0 w-72 h-72 bg-[#D3E5FD]/40 rounded-full blur-3xl pointer-events-none" />
-
-              {/* Trust Badge with Google Icon */}
-              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/80 border-2 border-[#D3E5FD] text-[#1E428E] text-xs font-bold shadow-xs">
-                <GoogleIcon name="auto_awesome" size={14} className="text-[#3869C3]" />
-                <span>Next-Gen Career EdTech • Hridayam by Belvo</span>
-                <span className="w-1.5 h-1.5 rounded-full bg-[#3869C3]" />
-                <span className="text-[#3869C3] font-extrabold">100% Placement</span>
-              </div>
-
-              {/* Main Headline (GenZ learning by a GenZ) */}
-              <div className="space-y-3">
-                <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-[#1E428E] leading-[1.12] font-display tracking-tight">
-                  GenZ learning by a <span className="text-[#3869C3]">GenZ</span>
-                </h1>
-                <p className="text-base sm:text-lg text-[#1E428E] font-bold max-w-xl leading-relaxed">
-                  Fast-track your tech &amp; creative career with real-world agency projects, elite mentors, and guaranteed career placement.
-                </p>
-              </div>
-
-              {/* Accreditations Bar (NSDC, Skill India, ISO, NASSCOM, AWS) */}
-              <div className="flex flex-wrap items-center gap-3 py-3 border-y border-[#D3E5FD] text-xs text-[#1E428E]/90">
-                <div className="flex items-center gap-1.5 font-bold text-[#1E428E]">
-                  <GoogleIcon name="verified" size={18} className="text-[#3869C3]" filled />
-                  <span>NSDC Partner</span>
-                </div>
-                <span className="text-[#5A87D7]">•</span>
-                <div className="flex items-center gap-1.5 font-bold text-[#1E428E]">
-                  <GoogleIcon name="military_tech" size={18} className="text-[#3869C3]" />
-                  <span>Skill India</span>
-                </div>
-                <span className="text-[#5A87D7]">•</span>
-                <div className="flex items-center gap-1.5 font-bold text-[#1E428E]">
-                  <GoogleIcon name="workspace_premium" size={18} className="text-[#3869C3]" />
-                  <span>ISO 9001:2015</span>
-                </div>
-                <span className="text-[#5A87D7]">•</span>
-                <span className="font-bold text-[#1E428E]">NASSCOM</span>
-                <span className="text-[#5A87D7]">•</span>
-                <span className="font-bold text-[#1E428E]">AWS Academy</span>
-              </div>
-
-              {/* Google Reviews Badge */}
-              <div className="flex items-center gap-2 text-xs font-semibold text-[#1E428E]">
-                <div className="w-6 h-6 rounded-full bg-white shadow-xs border border-[#D3E5FD] flex items-center justify-center font-bold text-[#3869C3]">
-                  G
-                </div>
-                <div className="flex text-amber-400">
-                  {[...Array(5)].map((_, i) => (
-                    <GoogleIcon key={i} name="star" size={16} filled className="text-amber-400" />
-                  ))}
-                </div>
-                <span className="text-[#1E428E] font-bold">4.9 / 5.0 (5,280+ Student Reviews)</span>
-              </div>
-
-              {/* Download Brochure Button & Quick Guidance */}
-              <div className="flex flex-wrap items-center gap-4 pt-1">
-                <button
-                  onClick={() => {
-                    directDownloadCurriculumPdf('Digital Marketing and Social Media Management');
-                    onDownloadBrochure('Digital Marketing and Social Media Management');
-                  }}
-                  className="btn-blue-primary px-7 py-3.5 rounded-2xl text-xs font-semibold uppercase tracking-wider flex items-center gap-2 cursor-pointer shadow-lg text-white"
-                >
-                  <GoogleIcon name="download" size={18} className="text-white" />
-                  <span>Download Curriculum PDF</span>
-                  <GoogleIcon name="keyboard_arrow_down" size={18} className="text-white" />
-                </button>
-
-                <button
-                  onClick={() => onRequestCallback()}
-                  className="btn-blue-glass px-5 py-3.5 rounded-2xl text-xs font-semibold flex items-center gap-1.5 cursor-pointer text-[#1E428E] hover:border-[#3869C3]"
-                >
-                  <GoogleIcon name="call" size={17} className="text-[#3869C3]" />
-                  <span>Talk to Counselor</span>
-                </button>
-              </div>
+            <div className="flex items-center gap-1.5 font-display text-sm sm:text-base font-extrabold tracking-[0.26em] text-white text-video-crisp select-none">
+              <span>HRID</span>
+              <Heart className="w-4 h-4 text-white fill-white/85 drop-shadow" />
+              <span>YAM</span>
             </div>
 
-            {/* Right Column: Hero Form Card ("Let's talk about your career growth!") */}
-            <div className="lg:col-span-5 flex justify-center">
-              <div className="w-full max-w-md glass-panel rounded-3xl p-6 sm:p-8 relative overflow-hidden border-2 border-white shadow-2xl backdrop-blur-2xl text-[#1E428E]">
-                {/* Decorative Ambient Highlights inside card */}
-                <div className="absolute top-0 right-0 w-36 h-36 bg-[#D3E5FD]/50 rounded-full blur-2xl pointer-events-none" />
-                <div className="absolute bottom-0 left-0 w-32 h-32 bg-[#84ADEB]/30 rounded-full blur-2xl pointer-events-none" />
+            <div className="flex items-center gap-2">
+              <button
+                type="button"
+                onClick={() => onNavigate('student')}
+                className="animate-float-smooth-delayed hidden sm:inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-white/80 backdrop-blur-md border border-white text-[11px] font-extrabold text-[#1E428E] shadow-md hover:bg-white transition-colors cursor-pointer"
+              >
+                <BookOpen className="w-3.5 h-3.5 text-[#3869C3]" />
+                <span>Learn &amp; Grow</span>
+              </button>
+              <button
+                type="button"
+                onClick={() => onNavigate('placements')}
+                className="animate-float-smooth inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-white/80 backdrop-blur-md border border-white text-[11px] font-extrabold text-[#1E428E] shadow-md hover:bg-white transition-colors cursor-pointer"
+              >
+                <Trophy className="w-3.5 h-3.5 text-[#3869C3]" />
+                <span>Achieve More</span>
+              </button>
+            </div>
+          </div>
 
-                <div className="relative z-10 space-y-4">
-                  <div className="flex items-center justify-between">
-                    <h3 className="text-xl font-bold text-[#1E428E] font-display">
-                      Let's talk about your career growth!
-                    </h3>
-                    <GoogleIcon name="auto_awesome" size={20} className="text-[#3869C3]" />
-                  </div>
-                  <p className="text-xs text-[#1E428E]/80 font-medium">
-                    Get a tailored curriculum roadmap and 100% placement assurance details.
-                  </p>
+          {/* 2-Column Translucent White-Blue Pastel Hero Cards (live video clearly visible around & behind) */}
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-7 items-stretch">
+            {/* Left Frosted White-Blue Hero Card */}
+            <div className="lg:col-span-7 pastel-glass-hero metallic-sheen-card rounded-3xl p-7 sm:p-9 lg:p-10 flex flex-col justify-between gap-6 animate-fade-up-soft">
+              <div className="space-y-5">
+                {/* Top Pill Badge & Quick Find */}
+                <div className="flex flex-wrap items-center justify-between gap-3">
+                  <span className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-white/90 border border-[#BFD6F6] text-[11px] font-extrabold text-[#1E428E] shadow-xs">
+                    <Sparkles className="w-3.5 h-3.5 text-[#3869C3]" />
+                    <span>Next-Gen Career EdTech · Hridayam by Belvo · 100% Placement</span>
+                  </span>
 
-                  {heroFormSubmitted ? (
-                    <div className="bg-white/90 border-2 border-[#D3E5FD] rounded-2xl p-6 text-center space-y-3 shadow-md">
-                      <div className="w-12 h-12 bg-gradient-to-tr from-[#1E428E] via-[#3869C3] to-[#5A87D7] text-white rounded-full flex items-center justify-center mx-auto shadow-md">
-                        <GoogleIcon name="check" size={24} weight={600} />
-                      </div>
-                      <h4 className="font-bold text-[#1E428E] text-base">Request Submitted!</h4>
-                      <p className="text-xs text-[#1E428E]/80">
-                        Thank you, {heroForm.name}. A senior career advisor will call you at <strong>{heroForm.phone}</strong> within 15 minutes.
-                      </p>
-                      <button
-                        onClick={() => setHeroFormSubmitted(false)}
-                        className="text-xs font-semibold text-[#3869C3] underline cursor-pointer hover:text-[#1E428E]"
-                      >
-                        Submit another inquiry
-                      </button>
-                    </div>
-                  ) : (
-                    <form onSubmit={handleHeroSubmit} className="space-y-3.5 text-xs">
-                      <div>
-                        <label className="block text-[#1E428E] font-semibold mb-1">
-                          Phone Number
-                        </label>
-                        <div className="relative">
-                          <GoogleIcon
-                            name="call"
-                            size={16}
-                            className="absolute left-3.5 top-3 text-[#3869C3]"
-                          />
-                          <input
-                            type="tel"
-                            required
-                            placeholder="Enter 10 digit Mobile Number"
-                            value={heroForm.phone}
-                            onChange={(e) => setHeroForm({ ...heroForm, phone: e.target.value })}
-                            className="w-full pl-10 pr-3.5 py-2.5 rounded-xl glass-input text-xs sm:text-sm font-medium"
-                          />
-                        </div>
-                      </div>
-
-                      <div>
-                        <label className="block text-[#1E428E] font-semibold mb-1">
-                          Full Name
-                        </label>
-                        <div className="relative">
-                          <GoogleIcon
-                            name="person"
-                            size={16}
-                            className="absolute left-3.5 top-3 text-[#3869C3]"
-                          />
-                          <input
-                            type="text"
-                            required
-                            placeholder="Your Name"
-                            value={heroForm.name}
-                            onChange={(e) => setHeroForm({ ...heroForm, name: e.target.value })}
-                            className="w-full pl-10 pr-3.5 py-2.5 rounded-xl glass-input text-xs sm:text-sm font-medium"
-                          />
-                        </div>
-                      </div>
-
-                      <div>
-                        <label className="block text-[#1E428E] font-semibold mb-1">
-                          Email ID
-                        </label>
-                        <div className="relative">
-                          <GoogleIcon
-                            name="mail"
-                            size={16}
-                            className="absolute left-3.5 top-3 text-[#3869C3]"
-                          />
-                          <input
-                            type="email"
-                            placeholder="e.g. yourname@gmail.com"
-                            value={heroForm.email}
-                            onChange={(e) => setHeroForm({ ...heroForm, email: e.target.value })}
-                            className="w-full pl-10 pr-3.5 py-2.5 rounded-xl glass-input text-xs sm:text-sm font-medium"
-                          />
-                        </div>
-                      </div>
-
-                      <button
-                        type="submit"
-                        className="w-full py-3.5 rounded-xl btn-blue-primary font-semibold text-xs uppercase tracking-wider shadow-md hover:shadow-lg transition-all cursor-pointer flex items-center justify-center gap-2 mt-2 text-white"
-                      >
-                        <span>Submit</span>
-                        <GoogleIcon name="rocket_launch" size={17} className="text-white" />
-                      </button>
-                    </form>
+                  {onOpenCommandPalette && (
+                    <button
+                      type="button"
+                      onClick={onOpenCommandPalette}
+                      className="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white/85 hover:bg-white border border-[#BFD6F6] text-[11px] font-bold text-[#1E428E] cursor-pointer transition-colors"
+                    >
+                      <Search className="w-3 h-3 text-[#3869C3]" />
+                      <span>Quick Find</span>
+                      <kbd className="font-mono-tabular text-[10px] text-[#3869C3]">⌘K</kbd>
+                    </button>
                   )}
                 </div>
+
+                {/* Display Headline matching screenshot */}
+                <div className="space-y-3">
+                  <h1 className="font-display text-[clamp(2.35rem,4.5vw,3.75rem)] font-extrabold text-[#1E428E] leading-[1.06] tracking-tight">
+                    GenZ learning by a{' '}
+                    <span className="text-[#3869C3]">GenZ</span>
+                  </h1>
+
+                  <p className="text-[#365486] text-base sm:text-lg font-medium leading-relaxed max-w-xl">
+                    Fast-track your tech &amp; creative career with real-world agency projects,
+                    elite mentors, and guaranteed career placement.
+                  </p>
+                </div>
+
+                {/* Accreditation Trust Row */}
+                <div className="flex flex-wrap items-center gap-x-3 gap-y-2 py-3.5 border-y border-[#BFD6F6]/80 text-xs font-extrabold text-[#1E428E]">
+                  <span className="inline-flex items-center gap-1.5">
+                    <BadgeCheck className="w-4 h-4 text-[#2B59B5]" />
+                    NSDC Partner
+                  </span>
+                  <span className="text-[#84ADEB]" aria-hidden="true">·</span>
+                  <span className="inline-flex items-center gap-1.5">
+                    <Award className="w-4 h-4 text-[#2B59B5]" />
+                    Skill India
+                  </span>
+                  <span className="text-[#84ADEB]" aria-hidden="true">·</span>
+                  <span className="inline-flex items-center gap-1.5">
+                    <ShieldCheck className="w-4 h-4 text-[#2B59B5]" />
+                    ISO 9001:2015
+                  </span>
+                  <span className="text-[#84ADEB]" aria-hidden="true">·</span>
+                  <span>NASSCOM</span>
+                  <span className="text-[#84ADEB]" aria-hidden="true">·</span>
+                  <span>AWS Academy</span>
+                </div>
+
+                {/* Google Rating Proof */}
+                <div className="flex flex-wrap items-center gap-2.5">
+                  <span className="w-7 h-7 rounded-full bg-white border border-[#D3E5FD] flex items-center justify-center shadow-xs shrink-0">
+                    <svg className="w-4 h-4" viewBox="0 0 24 24" aria-label="Google">
+                      <path
+                        d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
+                        fill="#4285F4"
+                      />
+                      <path
+                        d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"
+                        fill="#34A853"
+                      />
+                      <path
+                        d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"
+                        fill="#FBBC05"
+                      />
+                      <path
+                        d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"
+                        fill="#EA4335"
+                      />
+                    </svg>
+                  </span>
+                  <div className="flex items-center gap-0.5 text-amber-400" aria-label="5 out of 5 stars">
+                    {[...Array(5)].map((_, i) => (
+                      <Star key={i} className="w-4 h-4 fill-amber-400 text-amber-400" />
+                    ))}
+                  </div>
+                  <span className="text-xs sm:text-sm font-extrabold text-[#132C63] font-mono-tabular">
+                    4.9 / 5.0 <span className="font-semibold text-[#4C6B9E]">(5,280+ Student Reviews)</span>
+                  </span>
+                </div>
               </div>
+
+              {/* Action Buttons Row */}
+              <div className="flex flex-wrap items-center gap-3 pt-1 relative">
+                <div className="relative">
+                  <button
+                    type="button"
+                    onClick={() => setCurriculumDropdownOpen((prev) => !prev)}
+                    className="metallic-btn-primary px-6 py-3.5 rounded-2xl text-xs sm:text-[13px] font-extrabold uppercase tracking-wider inline-flex items-center gap-2 cursor-pointer whitespace-nowrap"
+                    aria-expanded={curriculumDropdownOpen}
+                  >
+                    <Download className="w-4 h-4" />
+                    <span>DOWNLOAD CURRICULUM PDF</span>
+                    <ChevronDown
+                      className={`w-4 h-4 transition-transform duration-200 ${
+                        curriculumDropdownOpen ? 'rotate-180' : ''
+                      }`}
+                    />
+                  </button>
+
+                  {curriculumDropdownOpen && (
+                    <div className="absolute left-0 mt-2 w-80 pastel-glass-panel rounded-2xl p-2 z-30 space-y-1 shadow-xl">
+                      <div className="max-h-64 overflow-y-auto pastel-scrollbar space-y-1 pr-1">
+                        {ITV_COURSES.map((course) => (
+                          <button
+                            key={course.id}
+                            type="button"
+                            onClick={() => {
+                              setCurriculumDropdownOpen(false);
+                              onDownloadBrochure(course.title);
+                            }}
+                            className="w-full text-left px-3 py-2 rounded-xl hover:bg-white text-xs font-bold text-[#132C63] cursor-pointer transition-colors"
+                          >
+                            {course.title}
+                          </button>
+                        ))}
+                      </div>
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setCurriculumDropdownOpen(false);
+                          onDownloadBrochure('Complete Hridayam by Belvo 22-Course 2026 Prospectus');
+                        }}
+                        className="w-full text-left px-3 py-2 rounded-xl bg-[#E8F1FD] hover:bg-[#D3E5FD] text-xs font-extrabold text-[#1E428E] cursor-pointer transition-colors"
+                      >
+                        Download All 22 Courses Master PDF
+                      </button>
+                    </div>
+                  )}
+                </div>
+
+                <button
+                  type="button"
+                  onClick={() => onRequestCallback('Hero Talk to Counselor')}
+                  className="metallic-btn-ice px-6 py-3.5 rounded-2xl text-xs sm:text-[13px] font-extrabold inline-flex items-center gap-2 cursor-pointer whitespace-nowrap"
+                >
+                  <PhoneCall className="w-4 h-4 text-[#2B59B5]" />
+                  <span>Talk to Counselor</span>
+                </button>
+
+                <button
+                  type="button"
+                  onClick={onOpenChatbot}
+                  className="px-3 py-2.5 rounded-xl text-[#2B59B5] hover:text-[#132C63] hover:bg-white/70 text-xs font-extrabold inline-flex items-center gap-1.5 cursor-pointer transition-colors whitespace-nowrap"
+                >
+                  <MessageSquare className="w-3.5 h-3.5" />
+                  <span>Ask Career Advisor</span>
+                </button>
+              </div>
+            </div>
+
+            {/* Right Frosted White-Blue Career Growth Form Card */}
+            <div className="lg:col-span-5 pastel-glass-hero metallic-sheen-card rounded-3xl p-6 sm:p-8 flex flex-col justify-between animate-fade-up-soft">
+              <div className="flex items-start justify-between gap-2 mb-4">
+                <div>
+                  <h2 className="font-display text-xl sm:text-2xl font-extrabold text-[#1E428E] leading-snug">
+                    Let&apos;s talk about your career growth!
+                  </h2>
+                  <p className="text-xs sm:text-[13px] text-[#456396] font-medium mt-1 leading-relaxed">
+                    Get a tailored curriculum roadmap and 100% placement assurance details.
+                  </p>
+                </div>
+                <Sparkles className="w-5 h-5 text-[#3869C3] shrink-0 mt-1" />
+              </div>
+
+              {leadSubmitted ? (
+                <div className="bg-white/90 rounded-2xl p-6 border border-[#BFD6F6] text-center space-y-4 my-auto shadow-sm">
+                  <div className="w-12 h-12 rounded-2xl bg-emerald-50 border border-emerald-200 text-emerald-600 flex items-center justify-center mx-auto">
+                    <CheckCircle2 className="w-6 h-6" />
+                  </div>
+                  <div className="space-y-1.5">
+                    <h3 className="font-display text-lg font-extrabold text-[#132C63]">
+                      Roadmap Request Confirmed
+                    </h3>
+                    <p className="text-xs text-[#456396] leading-relaxed">
+                      Thank you, <strong>{leadName}</strong>. Our senior academic counselor will
+                      call{' '}
+                      <span className="font-mono-tabular font-bold text-[#1E428E]">
+                        {leadPhone}
+                      </span>{' '}
+                      within 15 minutes.
+                    </p>
+                  </div>
+                  <div className="flex flex-col gap-2 pt-1">
+                    <button
+                      type="button"
+                      onClick={() => onDownloadBrochure('Hridayam by Belvo 2026 Roadmap')}
+                      className="w-full py-2.5 rounded-xl metallic-btn-primary text-xs font-extrabold inline-flex items-center justify-center gap-1.5 cursor-pointer"
+                    >
+                      <Download className="w-3.5 h-3.5" />
+                      <span>Download Roadmap PDF Now</span>
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setLeadSubmitted(false);
+                        setLeadPhone('');
+                        setLeadName('');
+                        setLeadEmail('');
+                      }}
+                      className="text-xs font-bold text-[#2B59B5] hover:text-[#132C63] underline cursor-pointer py-1"
+                    >
+                      Submit another inquiry
+                    </button>
+                  </div>
+                </div>
+              ) : (
+                <form onSubmit={handleHeroLeadSubmit} className="space-y-4" noValidate>
+                  <div>
+                    <label
+                      htmlFor="hero-lead-phone"
+                      className="block text-xs font-extrabold text-[#1E428E] mb-1.5"
+                    >
+                      Phone Number
+                    </label>
+                    <input
+                      id="hero-lead-phone"
+                      type="tel"
+                      required
+                      value={leadPhone}
+                      onChange={(e) => {
+                        setLeadPhone(e.target.value);
+                        if (leadError) setLeadError(null);
+                      }}
+                      placeholder="Enter 10 digit Mobile Number"
+                      className="w-full px-4 py-3 rounded-xl pastel-input text-sm font-medium"
+                    />
+                  </div>
+
+                  <div>
+                    <label
+                      htmlFor="hero-lead-name"
+                      className="block text-xs font-extrabold text-[#1E428E] mb-1.5"
+                    >
+                      Full Name
+                    </label>
+                    <input
+                      id="hero-lead-name"
+                      type="text"
+                      required
+                      value={leadName}
+                      onChange={(e) => {
+                        setLeadName(e.target.value);
+                        if (leadError) setLeadError(null);
+                      }}
+                      placeholder="Your Name"
+                      className="w-full px-4 py-3 rounded-xl pastel-input text-sm font-medium"
+                    />
+                  </div>
+
+                  <div>
+                    <label
+                      htmlFor="hero-lead-email"
+                      className="block text-xs font-extrabold text-[#1E428E] mb-1.5"
+                    >
+                      Email ID
+                    </label>
+                    <input
+                      id="hero-lead-email"
+                      type="email"
+                      required
+                      value={leadEmail}
+                      onChange={(e) => {
+                        setLeadEmail(e.target.value);
+                        if (leadError) setLeadError(null);
+                      }}
+                      placeholder="e.g. yourname@gmail.com"
+                      className="w-full px-4 py-3 rounded-xl pastel-input text-sm font-medium"
+                    />
+                  </div>
+
+                  {leadError && (
+                    <div
+                      role="alert"
+                      className="flex items-center gap-2 px-3 py-2 rounded-xl bg-rose-50 border border-rose-200 text-xs font-bold text-rose-700"
+                    >
+                      <AlertCircle className="w-4 h-4 shrink-0 text-rose-500" />
+                      <span>{leadError}</span>
+                    </div>
+                  )}
+
+                  <button
+                    type="submit"
+                    className="w-full py-3.5 rounded-2xl metallic-btn-primary text-sm font-extrabold uppercase tracking-wider inline-flex items-center justify-center gap-2 cursor-pointer mt-1"
+                  >
+                    <span>SUBMIT</span>
+                    <Rocket className="w-4 h-4" />
+                  </button>
+                </form>
+              )}
             </div>
           </div>
         </div>
       </section>
 
-      {/* 2. SLIDING PLACEMENT COMPANIES MARQUEE */}
-      <CompaniesSlidingMarquee />
-
-      {/* 3. A HIRING CALL EVERY 12 HOURS & STATS (MODERN BOLD HRIDAYAM FRAMES) */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
-        <div className="max-w-3xl mx-auto text-center">
-          <div className="glass-panel rounded-3xl p-5 sm:p-7 space-y-2.5 border-2 border-white shadow-xl backdrop-blur-2xl">
-            <div className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-white text-[#1E428E] border-2 border-[#D3E5FD] text-xs font-extrabold shadow-sm">
-              <GoogleIcon name="schedule" size={16} className="text-[#3869C3]" />
-              <span>Consistent Placement Momentum</span>
+      {/* =====================================================================
+          SECTION 2: 3,500+ LEARNERS PLACED + SLIDING PASTEL COMPANY MARQUEE
+         ===================================================================== */}
+      <section className="space-y-6">
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="pastel-glass-panel metallic-sheen-card rounded-3xl px-6 sm:px-10 py-6 text-center space-y-2">
+            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/90 border border-[#BFD6F6] text-[10px] font-extrabold uppercase tracking-widest text-[#2B59B5]">
+              <Award className="w-3 h-3" />
+              <span>3,500+ Placements Across India</span>
             </div>
-            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-[#1E428E] font-display">
-              A Hiring Call Every 12 Hours. <span className="text-[#3869C3]">Your Turn Next.</span>
+            <h2 className="font-display text-2xl sm:text-3xl font-extrabold text-[#1E428E] leading-snug">
+              3,500+ Learners Have Been Placed By Our India&apos;s Largest Placement Team
             </h2>
-          </div>
-        </div>
-
-        {/* 4 Stat Boxes with Hridayam Blue-White Glass Aesthetics */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-          <div className="glass-card rounded-2xl p-6 text-center space-y-1 border-2 border-white/90 shadow-md hover:border-[#3869C3] transition-all text-[#1E428E]">
-            <div className="text-2xl sm:text-3xl font-extrabold text-[#1E428E] font-display">
-              5,000+
-            </div>
-            <div className="text-xs text-[#1E428E]/80 font-semibold">No. Of Hiring Companies</div>
-          </div>
-
-          <div className="glass-card rounded-2xl p-6 text-center space-y-1 border-2 border-white/90 shadow-md hover:border-[#3869C3] transition-all text-[#1E428E]">
-            <div className="text-2xl sm:text-3xl font-extrabold text-[#3869C3] font-display">
-              2.5 - 4.5 LPA
-            </div>
-            <div className="text-xs text-[#1E428E]/80 font-semibold">Average Fresher Salary</div>
-          </div>
-
-          <div className="glass-card rounded-2xl p-6 text-center space-y-1 border-2 border-white/90 shadow-md hover:border-[#3869C3] transition-all text-[#1E428E]">
-            <div className="text-2xl sm:text-3xl font-extrabold text-[#1E428E] font-display">
-              19.5 LPA
-            </div>
-            <div className="text-xs text-[#1E428E]/80 font-semibold">Highest Salary Offered</div>
-          </div>
-
-          <div className="glass-card rounded-2xl p-6 text-center space-y-1 border-2 border-white/90 shadow-md hover:border-[#3869C3] transition-all text-[#1E428E]">
-            <div className="text-2xl sm:text-3xl font-extrabold text-[#3869C3] font-display">
-              12,682
-            </div>
-            <div className="text-xs text-[#1E428E]/80 font-semibold">Alumni Network</div>
-          </div>
-        </div>
-
-        {/* 4 Real Classroom / Placement Photos Carousel */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
-          {campusPhotos.map((photo, idx) => (
-            <div
-              key={idx}
-              className="glass-card rounded-2xl overflow-hidden group border-2 border-white hover:border-[#3869C3] shadow-lg hover:shadow-2xl transition-all"
-            >
-              <div className="h-44 bg-[#D3E5FD]/30 relative overflow-hidden">
-                <img
-                  src={photo.imageUrl}
-                  alt={photo.title}
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#1E428E]/70 via-transparent to-transparent opacity-60 group-hover:opacity-80 transition-opacity" />
-              </div>
-              <div className="p-4 space-y-1 text-center bg-white/70 backdrop-blur-md">
-                <h4 className="font-semibold text-[#1E428E] text-xs truncate">{photo.title}</h4>
-                <p className="text-[11px] text-[#1E428E]/75 truncate font-medium">{photo.subtitle}</p>
-              </div>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* 4. FOUNDER / MENTOR SPOTLIGHT ("Why Hridayam by Belvo?") */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="glass-blue-contrast rounded-3xl p-6 sm:p-10 border-2 border-white/80 flex flex-col md:flex-row items-center justify-between gap-8 relative overflow-hidden shadow-2xl">
-          {/* User Provided Frame Background Texture */}
-          <div className="absolute inset-0 pointer-events-none overflow-hidden z-0">
-            <img
-              src="/frame-bg-sparkle.jpg"
-              alt="Sparkle Frame Texture"
-              className="w-full h-full object-cover opacity-35 filter contrast-125 scale-105"
-            />
-            <div className="absolute inset-0 bg-gradient-to-r from-[#1E428E]/90 via-[#3869C3]/80 to-[#1E428E]/90" />
-          </div>
-
-          <div className="flex items-center gap-6 relative z-10">
-            <div className="w-24 h-24 sm:w-32 sm:h-32 rounded-2xl overflow-hidden border-2 border-white shadow-md shrink-0 bg-[#1E428E]">
-              <img
-                src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&q=80"
-                alt="Senior Tech Lead Mentor"
-                className="w-full h-full object-cover"
-              />
-            </div>
-            <div className="space-y-1">
-              <span className="text-[11px] font-semibold uppercase text-[#D3E5FD] tracking-wider">
-                Leadership &amp; Pedagogy
-              </span>
-              <h3 className="text-xl sm:text-2xl font-bold text-white font-display">
-                Why Hridayam by Belvo?
-              </h3>
-              <p className="text-xs text-[#D3E5FD] max-w-sm">
-                "Our single mission is to ensure every learner walks away with practical mastery and a confirmed tech offer letter."
-              </p>
-            </div>
-          </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs text-white">
-            <div className="flex items-center gap-2">
-              <GoogleIcon name="check_circle" size={18} className="text-[#D3E5FD]" filled />
-              <span><strong>100% Placement Assurance</strong></span>
-            </div>
-            <div className="flex items-center gap-2">
-              <GoogleIcon name="check_circle" size={18} className="text-[#D3E5FD]" filled />
-              <span><strong>80% Practical Hands-on Labs</strong></span>
-            </div>
-            <div className="flex items-center gap-2">
-              <GoogleIcon name="check_circle" size={18} className="text-[#D3E5FD]" filled />
-              <span><strong>35+ Real Industry Capstones</strong></span>
-            </div>
-            <div className="flex items-center gap-2">
-              <GoogleIcon name="check_circle" size={18} className="text-[#D3E5FD]" filled />
-              <span><strong>1-on-1 Mentor Guidance</strong></span>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* BELVO 11 COURSE CATEGORIES SHOWCASE (CREATIVE FLOW GRAPH, SLIDESHOW & GRID) */}
-      <BelvoVerticalsInteractiveSection
-        onSelectCourse={onSelectCourse}
-        onRequestCallback={onRequestCallback}
-      />
-
-      {/* 4.5 MEET YOUR REAL INDUSTRY MENTORS (HUMANIZED ACADEMY PRESENCE) */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
-        <div className="max-w-3xl mx-auto text-center">
-          <div className="glass-panel rounded-3xl p-6 sm:p-8 space-y-3 border-2 border-white shadow-xl backdrop-blur-2xl">
-            <div className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-white border-2 border-[#D3E5FD] text-[#1E428E] text-xs font-extrabold uppercase tracking-wider shadow-sm">
-              <GoogleIcon name="groups" size={16} className="text-[#3869C3]" />
-              <span>Real Practitioners • Not Just Lecturers</span>
-            </div>
-            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-[#1E428E] font-display tracking-tight">
-              Meet Your Real <span className="text-[#3869C3]">Industry Mentors</span>
-            </h2>
-            <p className="text-sm sm:text-base text-[#1E428E] leading-relaxed font-bold">
-              Every week, our senior practitioners conduct live 1-on-1 portfolio audits, technical code clinics, and commercial pitch simulations.
+            <p className="text-xs sm:text-sm text-[#456396]">
+              From global product giants to premier tech consultancies, our students launch their
+              careers across 2,000+ top enterprises.
             </p>
           </div>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {[
-            {
-              name: 'Aarav Singhania',
-              role: 'Principal AI & Cloud Architect',
-              background: 'Ex-Amazon & Microsoft • 12+ Yrs Experience',
-              track: 'Artificial Intelligence, Machine Learning & Cloud',
-              photoUrl: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=400&q=80',
-              rating: '4.95 ★ (1,240+ Mentored)',
-              quote: 'We teach you the exact production workflows used in high-scale tech teams — zero fluff, pure implementation.',
-              courseId: 'course_ai_automation_workflows',
-            },
-            {
-              name: 'Pooja Iyer',
-              role: 'Lead Product Marketing Manager (PMM)',
-              background: 'Ex-Swiggy & Freshworks • GTM Strategist',
-              track: 'Product Marketing Management (PMM)',
-              photoUrl: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=400&q=80',
-              rating: '4.92 ★ (940+ Mentored)',
-              quote: 'Positioning and market launch strategy are superpowers. I help you build battlecards and GTM playbooks that recruiters notice immediately.',
-              courseId: 'course_product_marketing_management',
-            },
-            {
-              name: 'Arjun Malhotra',
-              role: 'Lead Interior Architect & Spatial Director',
-              background: 'SPA Delhi Alum • 10+ Yrs Architectural Practice',
-              track: 'Interior Design and Spatial Architecture',
-              photoUrl: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=400&q=80',
-              rating: '4.96 ★ (880+ Mentored)',
-              quote: 'From AutoCAD structural blueprints to cinema-quality 3D V-Ray renders, we prepare you for high-ticket residential and commercial clients.',
-              courseId: 'course_interior_design',
-            },
-            {
-              name: 'Tanya Kapoor',
-              role: 'Marketing Design & Creative Art Director',
-              background: 'Ex-Ogilvy & Schbang • Performance Brand Lead',
-              track: 'Marketing Design and Visual Communication',
-              photoUrl: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&w=400&q=80',
-              rating: '4.94 ★ (1,150+ Mentored)',
-              quote: 'Design that does not convert is just art. We train you to create visual campaign assets that drive verifiable business results.',
-              courseId: 'course_marketing_design',
-            },
-          ].map((mentor, idx) => (
-            <div
-              key={idx}
-              className="glass-card rounded-3xl p-6 border-2 border-white hover:border-[#3869C3] shadow-lg hover:shadow-2xl transition-all flex flex-col justify-between group text-[#1E428E]"
-            >
-              <div className="space-y-4">
-                <div className="relative">
-                  <div className="w-24 h-24 sm:w-28 sm:h-28 mx-auto rounded-2xl overflow-hidden border-2 border-white shadow-md relative">
-                    <img
-                      src={mentor.photoUrl}
-                      alt={mentor.name}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                    />
-                  </div>
-                  <span className="absolute -bottom-2.5 left-1/2 -translate-x-1/2 bg-[#1E428E] text-white text-[10px] font-bold px-2.5 py-0.5 rounded-full border border-white whitespace-nowrap shadow-xs">
-                    {mentor.rating}
-                  </span>
-                </div>
-
-                <div className="text-center pt-2 space-y-1">
-                  <h4 className="font-extrabold text-base text-[#1E428E] group-hover:text-[#3869C3] transition-colors">
-                    {mentor.name}
-                  </h4>
-                  <p className="text-xs font-bold text-[#3869C3]">{mentor.role}</p>
-                  <p className="text-[11px] text-[#1E428E]/75 font-semibold">{mentor.background}</p>
-                </div>
-
-                <div className="p-3 rounded-2xl bg-[#D3E5FD]/50 border border-white text-xs text-[#1E428E] italic leading-relaxed">
-                  "{mentor.quote}"
-                </div>
-              </div>
-
-              <div className="pt-4 mt-4 border-t border-[#D3E5FD] space-y-2">
-                <button
-                  type="button"
-                  onClick={() => onRequestCallback(`1-on-1 Mentorship with ${mentor.name} (${mentor.track})`)}
-                  className="w-full py-2.5 rounded-xl btn-blue-primary font-bold text-xs uppercase tracking-wider text-white shadow-md flex items-center justify-center gap-1.5 cursor-pointer border border-white"
-                >
-                  <GoogleIcon name="calendar_month" size={14} />
-                  <span>Book 1-on-1 Session</span>
-                </button>
-
-                <button
-                  type="button"
-                  onClick={() => onSelectCourse(mentor.courseId)}
-                  className="w-full py-2 rounded-xl text-xs font-bold text-[#3869C3] hover:text-[#1E428E] text-center block cursor-pointer transition-colors"
-                >
-                  View {mentor.name.split(' ')[0]}'s Track →
-                </button>
-              </div>
-            </div>
-          ))}
-        </div>
+        <CompanyLogosInlineStrip pastel />
       </section>
 
-      {/* 5. INDUSTRY ALIGNED PROGRAMS & CAREER TRANSFORMATIONS */}
-      <IndustryAlignedProgramsSection
+      {/* =====================================================================
+          SECTION 3: A HIRING CALL EVERY 12 HOURS + WHY HRIDAYAM BY BELVO?
+         ===================================================================== */}
+      <PlacementMomentumAndWhySection onRequestCallback={onRequestCallback} />
+
+      {/* =====================================================================
+          SECTION 4: EXPLORE PROGRAMS ACROSS ALL 11 BELVO VERTICALS
+         ===================================================================== */}
+      <BelvoVerticalsSection
         onSelectCourse={onSelectCourse}
         onRequestCallback={onRequestCallback}
         onDownloadBrochure={onDownloadBrochure}
       />
 
-      {/* 6. CLASSROOM CENTERS TABS & EXPLORER (HRIDAYAM BLUE-WHITE LAB FRAME) */}
-      <section className="relative py-16 px-4 sm:px-6 lg:px-8 overflow-hidden rounded-3xl sm:rounded-[40px] border-2 border-white shadow-2xl my-8 glass-panel">
-        {/* User Provided Frame Background Texture */}
-        <div className="absolute inset-0 pointer-events-none overflow-hidden z-0">
-          <img
-            src="/frame-bg-sparkle.jpg"
-            alt="Campus Frame Sparkle"
-            className="w-full h-full object-cover opacity-20 filter contrast-125"
-          />
+      {/* =====================================================================
+          SECTION 5: MEET YOUR REAL INDUSTRY MENTORS + LIVE CLINICS
+         ===================================================================== */}
+      <IndustryMentorsAndWorkshopsSection
+        onSelectCourse={onSelectCourse}
+        onRequestCallback={onRequestCallback}
+      />
+
+      {/* =====================================================================
+          SECTION 6: FLAGSHIP MASTER PROGRAMS CONSOLE + CAREER TRANSFORMATIONS
+         ===================================================================== */}
+      <FlagshipMasterConsole
+        onSelectCourse={onSelectCourse}
+        onRequestCallback={onRequestCallback}
+        onDownloadBrochure={onDownloadBrochure}
+      />
+
+      {/* =====================================================================
+          SECTION 7 (ADDITIONAL FEATURE): INTERACTIVE TRACK MATCHER & 0% EMI ROI
+         ===================================================================== */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="pastel-glass-panel metallic-sheen-card rounded-3xl p-6 sm:p-9 grid grid-cols-1 lg:grid-cols-12 gap-7 items-center">
+          <div className="lg:col-span-7 space-y-5">
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 rounded-2xl bg-[#1E428E] text-white flex items-center justify-center shrink-0 shadow-sm">
+                <Calculator className="w-5 h-5" />
+              </div>
+              <div>
+                <span className="text-[10px] font-extrabold uppercase tracking-widest text-[#3869C3] block">
+                  Smart Tuition &amp; Payback Planner
+                </span>
+                <h3 className="font-display text-xl font-extrabold text-[#1E428E]">
+                  Interactive Track Matcher &amp; 0% EMI Calculator
+                </h3>
+              </div>
+            </div>
+
+            <div className="space-y-4">
+              <div>
+                <span className="block text-xs font-extrabold text-[#132C63] mb-2">
+                  1. Your Current Background
+                </span>
+                <div className="flex flex-wrap gap-2">
+                  {MATCHER_BACKGROUNDS.map((bg) => (
+                    <button
+                      key={bg.id}
+                      type="button"
+                      onClick={() => setMatcherBg(bg.id)}
+                      className={`px-3.5 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer whitespace-nowrap ${
+                        matcherBg === bg.id ? 'metallic-btn-primary' : 'metallic-btn-ice'
+                      }`}
+                    >
+                      {bg.label}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              <div>
+                <span className="block text-xs font-extrabold text-[#132C63] mb-2">
+                  2. Target Career Track
+                </span>
+                <div className="flex flex-wrap gap-2">
+                  {MATCHER_GOALS.map((goal) => (
+                    <button
+                      key={goal.id}
+                      type="button"
+                      onClick={() => setMatcherGoal(goal.id)}
+                      className={`px-3.5 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer whitespace-nowrap ${
+                        matcherGoal === goal.id ? 'metallic-btn-primary' : 'metallic-btn-ice'
+                      }`}
+                    >
+                      {goal.label}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              <div>
+                <span className="block text-xs font-extrabold text-[#132C63] mb-2">
+                  3. 0% Interest Installment Tenure
+                </span>
+                <div className="inline-flex items-center gap-1 p-1 rounded-xl bg-white/80 border border-[#BFD6F6]">
+                  {EMI_TENURES.map((months) => (
+                    <button
+                      key={months}
+                      type="button"
+                      onClick={() => setMatcherTenure(months)}
+                      className={`px-4 py-1.5 rounded-lg text-xs font-extrabold font-mono-tabular transition-all cursor-pointer whitespace-nowrap ${
+                        matcherTenure === months
+                          ? 'bg-[#1E428E] text-white shadow-xs'
+                          : 'text-[#1E428E] hover:bg-[#E8F1FD]'
+                      }`}
+                    >
+                      {months} Months
+                    </button>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="lg:col-span-5 bg-white/90 border-2 border-white rounded-3xl p-5 sm:p-6 space-y-4 shadow-md">
+            <div className="space-y-1">
+              <p className="text-[11px] font-extrabold uppercase tracking-wider text-[#3869C3]">
+                Recommended Track · {matchedTrackResult.course.duration}
+              </p>
+              <h4 className="font-display text-lg font-extrabold text-[#132C63] leading-snug">
+                {matchedTrackResult.course.title}
+              </h4>
+            </div>
+
+            <div className="grid grid-cols-2 gap-3 pt-3 border-t border-[#D3E5FD]">
+              <div className="p-3 rounded-2xl bg-[#EEF5FF]">
+                <div className="text-[11px] font-bold text-[#5273A8]">0% Monthly EMI</div>
+                <div className="text-xl font-extrabold font-mono-tabular text-[#1E428E]">
+                  ₹{matchedTrackResult.monthlyEmi.toLocaleString('en-IN')}
+                  <span className="text-xs font-semibold text-[#5273A8]">/mo</span>
+                </div>
+              </div>
+              <div className="p-3 rounded-2xl bg-[#EEF5FF]">
+                <div className="text-[11px] font-bold text-[#5273A8]">Total Program Fee</div>
+                <div className="text-xl font-extrabold font-mono-tabular text-[#1E428E]">
+                  ₹{matchedTrackResult.course.fee.toLocaleString('en-IN')}
+                </div>
+              </div>
+              <div className="p-3 rounded-2xl bg-emerald-50/90 border border-emerald-200/70">
+                <div className="text-[11px] font-bold text-emerald-800">Projected CTC</div>
+                <div className="text-sm font-extrabold font-mono-tabular text-emerald-700 mt-0.5">
+                  {matchedTrackResult.expectedCtcRange}
+                </div>
+              </div>
+              <div className="p-3 rounded-2xl bg-[#F4F8FF] border border-[#D3E5FD]">
+                <div className="text-[11px] font-bold text-[#5273A8]">Est. Fee Payback</div>
+                <div className="text-sm font-extrabold font-mono-tabular text-[#1E428E] mt-0.5">
+                  ~{matchedTrackResult.paybackMonths} mo salary
+                </div>
+              </div>
+            </div>
+
+            <div className="pt-1 grid grid-cols-2 gap-2.5">
+              <button
+                type="button"
+                onClick={() => onSelectCourse(matchedTrackResult.course.id)}
+                className="py-2.5 px-3 rounded-xl metallic-btn-primary text-xs font-extrabold cursor-pointer text-center"
+              >
+                Inspect Syllabus
+              </button>
+              <button
+                type="button"
+                onClick={() => onDownloadBrochure(matchedTrackResult.course.title)}
+                className="py-2.5 px-3 rounded-xl metallic-btn-ice text-xs font-extrabold cursor-pointer inline-flex items-center justify-center gap-1.5"
+              >
+                <Download className="w-3.5 h-3.5" />
+                <span>Roadmap PDF</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* =====================================================================
+          SECTION 8 (ADDITIONAL FEATURE): ROLE-PROTECTED WORKSPACES
+         ===================================================================== */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
+        <div className="pastel-glass-panel rounded-3xl px-6 sm:px-8 py-6 flex flex-col md:flex-row md:items-center justify-between gap-4">
+          <div className="space-y-1">
+            <span className="text-[10px] font-extrabold uppercase tracking-widest text-[#2B59B5]">
+              Role-Protected Workspaces · Fixed Demo Authentication Required
+            </span>
+            <h2 className="font-display text-2xl sm:text-3xl font-extrabold text-[#1E428E]">
+              Dedicated Left-Sidebar Portals for Every Role
+            </h2>
+          </div>
+          <button
+            type="button"
+            onClick={() => onNavigate('portal-login')}
+            className="self-start md:self-auto px-5 py-2.5 rounded-xl metallic-btn-primary text-xs font-extrabold inline-flex items-center gap-1.5 cursor-pointer whitespace-nowrap"
+          >
+            <span>Open Portal Login</span>
+            <ArrowRight className="w-3.5 h-3.5" />
+          </button>
         </div>
 
-        <div className="max-w-7xl mx-auto space-y-8 relative z-10">
-          <div className="text-center max-w-2xl mx-auto space-y-2">
-            <span className="text-xs font-extrabold uppercase text-[#3869C3] tracking-widest">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
+          {[
+            {
+              account: FIXED_DEMO_ACCOUNTS[0],
+              title: 'Student LMS Portal',
+              view: 'student' as AppView,
+              icon: <GraduationCap className="w-5 h-5 text-[#1E428E]" />,
+              cardTone: 'pastel-sky-card',
+              bullets: [
+                '10 left-sidebar LMS modules',
+                'Interactive Code Sandbox & ATS Resume',
+                'Live Placement Drives & Certificates',
+              ],
+            },
+            {
+              account: FIXED_DEMO_ACCOUNTS[1],
+              title: 'Faculty & Mentor Hub',
+              view: 'mentor-portal' as AppView,
+              icon: <Users className="w-5 h-5 text-indigo-700" />,
+              cardTone: 'pastel-lavender-card',
+              bullets: [
+                '8 left-sidebar faculty modules',
+                'Rubric Code Audits & Lab Authoring',
+                'Mock Panel Scheduling & Doubts Queue',
+              ],
+            },
+            {
+              account: FIXED_DEMO_ACCOUNTS[2],
+              title: 'Recruiter & Hiring Desk',
+              view: 'recruiter-portal' as AppView,
+              icon: <Briefcase className="w-5 h-5 text-emerald-700" />,
+              cardTone: 'pastel-mint-card',
+              bullets: [
+                '7 left-sidebar ATS & hiring modules',
+                'Verified Talent Pool & Drive Venues',
+                'Live Candidate Offer Tracking',
+              ],
+            },
+            {
+              account: FIXED_DEMO_ACCOUNTS[3],
+              title: 'Institute Admin Console',
+              view: 'instructor' as AppView,
+              icon: <ShieldCheck className="w-5 h-5 text-rose-700" />,
+              cardTone: 'pastel-rose-card',
+              bullets: [
+                '8 left-sidebar governance modules',
+                'Counselor CRM, Batches & GST Ledger',
+                'Scholarship Grants & Audit Logs',
+              ],
+            },
+          ].map((portal) => {
+            const isCopied = copiedAccountId === portal.account.role;
+            return (
+              <div
+                key={portal.title}
+                className={`${portal.cardTone} metallic-sheen-card rounded-3xl p-5 flex flex-col justify-between gap-4 shadow-md transition-transform duration-300 hover:-translate-y-1`}
+              >
+                <div className="space-y-3">
+                  <div className="flex items-center justify-between">
+                    <div className="w-10 h-10 rounded-xl bg-white/95 border border-white flex items-center justify-center shadow-xs">
+                      {portal.icon}
+                    </div>
+                    <button
+                      type="button"
+                      onClick={() =>
+                        handleCopyCredentials(
+                          portal.account.role,
+                          portal.account.email,
+                          portal.account.password
+                        )
+                      }
+                      className="px-2.5 py-1 rounded-lg bg-white/85 hover:bg-white border border-white text-[10px] font-extrabold text-[#1E428E] inline-flex items-center gap-1 cursor-pointer transition-colors"
+                      title="Copy demo email and password"
+                    >
+                      {isCopied ? (
+                        <>
+                          <Check className="w-3 h-3 text-emerald-600" />
+                          <span>Copied</span>
+                        </>
+                      ) : (
+                        <>
+                          <Copy className="w-3 h-3" />
+                          <span>Copy Login</span>
+                        </>
+                      )}
+                    </button>
+                  </div>
+
+                  <div>
+                    <h3 className="font-display text-base font-extrabold text-[#132C63]">
+                      {portal.title}
+                    </h3>
+                    <p className="text-[11px] font-mono-tabular font-bold text-[#2B59B5] mt-0.5 truncate">
+                      {portal.account.email}
+                    </p>
+                  </div>
+
+                  <ul className="space-y-1.5 text-xs text-[#365486]">
+                    {portal.bullets.map((b) => (
+                      <li key={b} className="flex items-start gap-1.5">
+                        <CheckCircle2 className="w-3.5 h-3.5 text-[#2B59B5] shrink-0 mt-0.5" />
+                        <span>{b}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+
+                <button
+                  type="button"
+                  onClick={() => onNavigate(portal.view)}
+                  className="w-full py-2.5 rounded-xl metallic-btn-primary text-xs font-extrabold inline-flex items-center justify-center gap-1.5 cursor-pointer"
+                >
+                  <span>Open Workspace</span>
+                  <ArrowRight className="w-3.5 h-3.5" />
+                </button>
+              </div>
+            );
+          })}
+        </div>
+      </section>
+
+      {/* =====================================================================
+          SECTION 9: OUR TRAINING CENTERS IN MUMBAI, PUNE & NAGPUR (exact match)
+         ===================================================================== */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="pastel-glass-panel rounded-3xl p-6 sm:p-10 space-y-7">
+          <div className="text-center space-y-2 max-w-2xl mx-auto">
+            <span className="text-[10px] font-extrabold uppercase tracking-widest text-[#3869C3]">
               Campus Locations
             </span>
-            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-[#1E428E] font-display">
+            <h2 className="font-display text-2xl sm:text-4xl font-extrabold text-[#1E428E]">
               Our Training Centers in Mumbai, Pune &amp; Nagpur
             </h2>
-            <p className="text-sm text-[#1E428E] font-bold">
+            <p className="text-xs sm:text-sm text-[#456396]">
               Walk in for a 1-on-1 counseling session and experience live classroom labs.
             </p>
           </div>
 
-          {/* Center Tabs */}
-          <div className="flex items-center justify-center gap-2 overflow-x-auto pb-2">
-            {CLASSROOM_CENTERS.map((c, idx) => (
-              <button
-                key={c.id}
-                onClick={() => setSelectedCenterTab(idx)}
-                className={`px-4 py-2 rounded-xl text-xs font-semibold transition-all cursor-pointer whitespace-nowrap ${
-                  selectedCenterTab === idx
-                    ? 'btn-blue-primary shadow-md border-2 border-white text-white'
-                    : 'glass-card text-[#1E428E] border-2 border-white hover:border-[#3869C3]'
-                }`}
-              >
-                {c.name.split(' ')[0]} {c.name.split(' ')[1] || ''}
-              </button>
-            ))}
+          {/* City Tab Pills */}
+          <div className="flex flex-wrap items-center justify-center gap-2">
+            {CLASSROOM_CENTERS.map((center) => {
+              const active = center.id === activeCampus.id;
+              return (
+                <button
+                  key={center.id}
+                  type="button"
+                  onClick={() => setSelectedCampusId(center.id)}
+                  className={`px-4 py-2 rounded-xl text-xs font-extrabold transition-all cursor-pointer whitespace-nowrap ${
+                    active ? 'metallic-btn-primary' : 'metallic-btn-ice'
+                  }`}
+                >
+                  {center.city}
+                </button>
+              );
+            })}
           </div>
 
-          {/* Active Center Card */}
-          {CLASSROOM_CENTERS[selectedCenterTab] && (
-            <div className="glass-panel rounded-3xl p-6 sm:p-8 border-2 border-white grid grid-cols-1 md:grid-cols-12 gap-8 items-center max-w-5xl mx-auto shadow-2xl">
-              <div className="md:col-span-5 h-64 rounded-2xl overflow-hidden bg-slate-100 border border-[#D3E5FD]">
-                <img
-                  src={CLASSROOM_CENTERS[selectedCenterTab].imageUrl}
-                  alt={CLASSROOM_CENTERS[selectedCenterTab].name}
-                  className="w-full h-full object-cover"
-                />
+          {/* Active Campus Showcase Card */}
+          <div className="bg-white/88 border-2 border-white rounded-3xl p-5 sm:p-7 grid grid-cols-1 lg:grid-cols-12 gap-6 items-center shadow-md metallic-sheen-card">
+            <div className="lg:col-span-5 h-60 sm:h-64 rounded-2xl overflow-hidden border border-[#D3E5FD] shadow-sm">
+              <img
+                src={PROVIDED_IMAGES.indianCampusSteps}
+                alt={activeCampus.name}
+                referrerPolicy="no-referrer"
+                className="w-full h-full object-cover object-top"
+              />
+            </div>
+
+            <div className="lg:col-span-7 space-y-4">
+              <div className="flex flex-wrap items-start justify-between gap-2">
+                <div>
+                  <h3 className="font-display text-xl sm:text-2xl font-extrabold text-[#1E428E]">
+                    {activeCampus.name}
+                  </h3>
+                  <p className="text-xs sm:text-sm text-[#456396] mt-1 leading-relaxed">
+                    {activeCampus.address}
+                  </p>
+                </div>
+                <span className="px-3 py-1 rounded-full bg-[#E8F1FD] border border-[#BFD6F6] text-[10px] font-extrabold uppercase tracking-wider text-[#1E428E] shrink-0">
+                  {activeCampus.id === CLASSROOM_CENTERS[0].id ? 'HEAD OFFICE' : 'CAMPUS HUB'}
+                </span>
               </div>
 
-              <div className="md:col-span-7 space-y-4">
-                <div className="flex items-center justify-between">
-                  <h3 className="font-bold text-[#1E428E] text-xl font-display">
-                    {CLASSROOM_CENTERS[selectedCenterTab].name}
-                  </h3>
-                  {CLASSROOM_CENTERS[selectedCenterTab].isHeadOffice && (
-                    <span className="bg-[#D3E5FD] text-[#1E428E] font-bold text-[10px] uppercase px-2 py-0.5 rounded border border-white">
-                      Head Office
-                    </span>
-                  )}
+              <div className="p-4 rounded-2xl bg-[#EEF5FF] border border-[#D3E5FD] space-y-2 text-xs text-[#132C63]">
+                <div className="flex items-start gap-2">
+                  <MapPin className="w-4 h-4 text-[#2B59B5] shrink-0 mt-0.5" />
+                  <span>
+                    <strong>Transit:</strong> {activeCampus.metroStation}
+                  </span>
                 </div>
-
-                <p className="text-xs text-[#1E428E]/80 leading-relaxed font-medium">
-                  {CLASSROOM_CENTERS[selectedCenterTab].address}
-                </p>
-
-                <div className="space-y-2 text-xs text-[#1E428E] bg-[#D3E5FD]/40 p-3.5 rounded-2xl border border-[#84ADEB]/30">
-                  <div className="flex items-center gap-2">
-                    <GoogleIcon name="near_me" size={16} className="text-[#3869C3]" />
-                    <span><strong>Transit / Metro:</strong> {CLASSROOM_CENTERS[selectedCenterTab].metroStation}</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <GoogleIcon name="call" size={16} className="text-[#3869C3]" />
-                    <span><strong>Phone:</strong> {CLASSROOM_CENTERS[selectedCenterTab].contactNumber}</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <GoogleIcon name="schedule" size={16} className="text-[#3869C3]" />
-                    <span><strong>Timing:</strong> {CLASSROOM_CENTERS[selectedCenterTab].timing}</span>
-                  </div>
+                <div className="flex items-center gap-2">
+                  <PhoneCall className="w-4 h-4 text-[#2B59B5] shrink-0" />
+                  <span className="font-mono-tabular">
+                    <strong>Phone:</strong> {activeCampus.contactNumber}
+                  </span>
                 </div>
-
-                <div className="flex gap-3 pt-2">
-                  <button
-                    onClick={() => onRequestCallback(`Campus Visit: ${CLASSROOM_CENTERS[selectedCenterTab].name}`)}
-                    className="btn-blue-primary px-5 py-2.5 rounded-xl font-semibold text-xs uppercase tracking-wider shadow-md cursor-pointer text-white"
-                  >
-                    Book Campus Tour
-                  </button>
-                  <button
-                    onClick={() => onNavigate('contact')}
-                    className="btn-blue-glass px-4 py-2.5 rounded-xl text-xs font-semibold text-[#1E428E] hover:border-[#3869C3]"
-                  >
-                    Contact Center
-                  </button>
+                <div className="flex items-center gap-2">
+                  <Clock className="w-4 h-4 text-[#2B59B5] shrink-0" />
+                  <span>
+                    <strong>Timing:</strong> {activeCampus.timing}
+                  </span>
                 </div>
+              </div>
+
+              <div className="flex flex-wrap gap-3 pt-1">
+                <button
+                  type="button"
+                  onClick={() => onRequestCallback(`Campus Visit: ${activeCampus.name}`)}
+                  className="metallic-btn-primary px-6 py-3 rounded-xl text-xs font-extrabold uppercase tracking-wider cursor-pointer"
+                >
+                  BOOK CAMPUS TOUR
+                </button>
+                <button
+                  type="button"
+                  onClick={() => onNavigate('centers')}
+                  className="metallic-btn-ice px-5 py-3 rounded-xl text-xs font-extrabold cursor-pointer"
+                >
+                  Contact Center
+                </button>
               </div>
             </div>
-          )}
-        </div>
-      </section>
-
-      {/* 7. REFER & EARN PROMOTION BANNER */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="bg-gradient-to-r from-[#1E428E] via-[#3869C3] to-[#5A87D7] rounded-3xl p-8 sm:p-10 border-2 border-white/80 flex flex-col md:flex-row items-center justify-between gap-8 shadow-2xl relative overflow-hidden text-white">
-          <div className="space-y-3 max-w-xl">
-            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/20 text-white text-xs font-bold uppercase tracking-wider border border-white/30 backdrop-blur-md">
-              <GoogleIcon name="redeem" size={16} className="text-white" />
-              Referral Program
-            </span>
-            <h2 className="text-2xl sm:text-3xl font-bold font-display text-white">
-              Refer your friend and someone you know and earn an{' '}
-              <span className="text-[#D3E5FD]">Amazon Gift voucher upto 5000 !!</span>
-            </h2>
-            <p className="text-xs sm:text-sm text-[#D3E5FD]">
-              Share the gift of education with your friends and get a chance of earning upto ₹5000 on every successful enrollment.
-            </p>
-          </div>
-
-          <div className="flex flex-col sm:flex-row items-center gap-3 shrink-0">
-            <button
-              onClick={() => onNavigate('refer-earn')}
-              className="bg-white text-[#1E428E] hover:bg-[#D3E5FD] font-bold px-6 py-3.5 rounded-xl text-xs uppercase tracking-wider shadow-xl cursor-pointer transition-all border border-white"
-            >
-              Refer Now →
-            </button>
-            <button
-              onClick={() => onNavigate('refer-earn')}
-              className="text-xs font-semibold text-[#D3E5FD] hover:text-white hover:underline p-2"
-            >
-              Refer &amp; Earn Policy
-            </button>
           </div>
         </div>
       </section>
 
-      {/* 8. PRE-FOOTER CALLBACK FORM */}
-      <section className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="glass-panel rounded-3xl p-8 border-2 border-white text-center space-y-4 shadow-xl text-[#1E428E] relative overflow-hidden">
-          {/* User Provided Frame Border Background Texture */}
-          <div className="absolute inset-0 pointer-events-none overflow-hidden z-0">
-            <img
-              src="/frame-bg-border.jpg"
-              alt="Frame Border Texture"
-              className="w-full h-full object-cover opacity-20 filter contrast-125"
-            />
-          </div>
+      {/* =====================================================================
+          SECTION 10: REFER & EARN ₹5,000 + CONFUSED ABOUT COURSE CALLBACK
+         ===================================================================== */}
+      <ReferAndQuickCallbackSections
+        onNavigate={onNavigate}
+        onSelectCourse={onSelectCourse}
+        onRequestCallback={onRequestCallback}
+      />
 
-          <div className="relative z-10 space-y-4">
-            <h2 className="text-2xl sm:text-3xl font-extrabold text-[#1E428E] font-display">
-              Are You Confused About Which Course to Choose?
-            </h2>
-            <p className="text-sm text-[#1E428E] max-w-lg mx-auto font-bold">
-              Speak to our Senior Academic Advisors. We evaluate your qualification and recommend the optimal career program.
-            </p>
-
-            {bottomFormSubmitted ? (
-              <div className="bg-white/90 border-2 border-[#D3E5FD] rounded-2xl p-4 text-center max-w-md mx-auto space-y-1 shadow-xs">
-                <div className="text-sm font-semibold text-[#1E428E]">Thank You, {bottomForm.name}!</div>
-                <p className="text-xs text-[#1E428E]/80">Our advisor will reach out to you within 15 minutes.</p>
-              </div>
-            ) : (
-              <form onSubmit={handleBottomSubmit} className="flex flex-col sm:flex-row gap-3 max-w-xl mx-auto pt-2">
-                <input
-                  type="text"
-                  required
-                  placeholder="Your Name"
-                  value={bottomForm.name}
-                  onChange={(e) => setBottomForm({ ...bottomForm, name: e.target.value })}
-                  className="flex-1 px-4 py-2.5 rounded-xl glass-input text-xs font-medium"
-                />
-                <input
-                  type="tel"
-                  required
-                  placeholder="Mobile Number"
-                  value={bottomForm.phone}
-                  onChange={(e) => setBottomForm({ ...bottomForm, phone: e.target.value })}
-                  className="flex-1 px-4 py-2.5 rounded-xl glass-input text-xs font-medium"
-                />
-                <button
-                  type="submit"
-                  className="btn-blue-primary px-6 py-2.5 rounded-xl font-semibold text-xs uppercase tracking-wider shadow-md cursor-pointer whitespace-nowrap text-white"
-                >
-                  Request Callback
-                </button>
-              </form>
-            )}
-          </div>
-        </div>
-      </section>
-
-      {/* 9. FAQS */}
+      {/* =====================================================================
+          SECTION 11: FREQUENTLY ASKED QUESTIONS (exact match to screenshot)
+         ===================================================================== */}
       <section className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
-        <div className="max-w-2xl mx-auto text-center">
-          <div className="glass-panel rounded-3xl p-5 sm:p-6 space-y-2 border-2 border-white shadow-xl backdrop-blur-2xl">
-            <span className="text-xs font-extrabold uppercase text-[#3869C3] tracking-widest">
-              Frequently Asked Questions
-            </span>
-            <h2 className="text-2xl sm:text-3xl font-extrabold text-[#1E428E] font-display">
-              Got Questions About Hridayam by Belvo?
-            </h2>
-          </div>
+        <div className="pastel-glass-panel rounded-3xl px-6 py-6 text-center space-y-1.5">
+          <span className="text-[10px] font-extrabold uppercase tracking-widest text-[#3869C3]">
+            Frequently Asked Questions
+          </span>
+          <h2 className="font-display text-2xl sm:text-3xl font-extrabold text-[#1E428E]">
+            Got Questions About Hridayam by Belvo?
+          </h2>
         </div>
 
         <div className="space-y-3">
-          {HOME_FAQS.slice(0, 5).map((faq, index) => {
-            const isOpen = openFaqIndex === index;
+          {HOME_FAQS.map((faq, idx) => {
+            const isOpen = openFaq === idx;
             return (
               <div
-                key={index}
-                className="glass-card rounded-2xl overflow-hidden transition-all shadow-sm border-2 border-white/90 hover:border-[#3869C3] text-[#1E428E]"
+                key={faq.question}
+                className="pastel-glass-card rounded-2xl overflow-hidden transition-all"
               >
                 <button
-                  onClick={() => setOpenFaqIndex(isOpen ? null : index)}
-                  className="w-full px-5 py-4 text-left font-bold text-[#1E428E] text-sm flex items-center justify-between gap-4 hover:bg-[#D3E5FD]/30 transition-colors"
+                  type="button"
+                  onClick={() => setOpenFaq(isOpen ? null : idx)}
+                  aria-expanded={isOpen}
+                  className="w-full px-6 py-4 text-left flex items-center justify-between gap-4 cursor-pointer"
                 >
-                  <span>{faq.question}</span>
-                  <GoogleIcon
-                    name="keyboard_arrow_down"
-                    size={20}
-                    className={`text-[#3869C3] transition-transform duration-200 ${
-                      isOpen ? 'rotate-180 text-[#1E428E]' : ''
+                  <span className="font-display text-sm sm:text-base font-extrabold text-[#1E428E]">
+                    {faq.question}
+                  </span>
+                  <ChevronDown
+                    className={`w-4 h-4 text-[#2B59B5] shrink-0 transition-transform duration-200 ${
+                      isOpen ? 'rotate-180' : ''
                     }`}
                   />
                 </button>
                 {isOpen && (
-                  <div className="px-5 pb-4 text-xs text-[#1E428E]/85 leading-relaxed border-t border-[#D3E5FD] pt-3">
+                  <div className="px-6 pb-5 pt-1 text-xs sm:text-sm text-[#456396] leading-relaxed border-t border-[#D3E5FD]/80">
                     {faq.answer}
                   </div>
                 )}

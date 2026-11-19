@@ -203,13 +203,13 @@ export const ContactView: React.FC<ContactViewProps> = ({ onToast }) => {
                       onChange={(e) => setFormData({ ...formData, center: e.target.value })}
                       className="w-full px-3.5 py-2.5 rounded-xl glass-input text-xs font-medium"
                     >
-                      <option value="Thane Head Office" className="bg-[#0A1633] text-white">Thane Head Office</option>
-                      <option value="Andheri Campus (Mumbai)" className="bg-[#0A1633] text-white">Andheri Campus (Mumbai)</option>
-                      <option value="Navi Mumbai (Vashi)" className="bg-[#0A1633] text-white">Navi Mumbai (Vashi)</option>
-                      <option value="Pune (FC Road)" className="bg-[#0A1633] text-white">Pune (FC Road)</option>
-                      <option value="Pune (Pimpri)" className="bg-[#0A1633] text-white">Pune (Pimpri)</option>
-                      <option value="Nagpur Campus" className="bg-[#0A1633] text-white">Nagpur Campus</option>
-                      <option value="Online Live Interactive" className="bg-[#0A1633] text-white">Online Live Interactive</option>
+                      <option value="Thane Head Office" className="bg-white text-[#0B1B3D]">Thane Head Office</option>
+                      <option value="Andheri Campus (Mumbai)" className="bg-white text-[#0B1B3D]">Andheri Campus (Mumbai)</option>
+                      <option value="Navi Mumbai (Vashi)" className="bg-white text-[#0B1B3D]">Navi Mumbai (Vashi)</option>
+                      <option value="Pune (FC Road)" className="bg-white text-[#0B1B3D]">Pune (FC Road)</option>
+                      <option value="Pune (Pimpri)" className="bg-white text-[#0B1B3D]">Pune (Pimpri)</option>
+                      <option value="Nagpur Campus" className="bg-white text-[#0B1B3D]">Nagpur Campus</option>
+                      <option value="Online Live Interactive" className="bg-white text-[#0B1B3D]">Online Live Interactive</option>
                     </select>
                   </div>
                   <div>
@@ -220,7 +220,7 @@ export const ContactView: React.FC<ContactViewProps> = ({ onToast }) => {
                       className="w-full px-3.5 py-2.5 rounded-xl glass-input text-xs font-medium"
                     >
                       {ITV_COURSES.map((c) => (
-                        <option key={c.id} value={c.title} className="bg-[#0A1633] text-white">
+                        <option key={c.id} value={c.title} className="bg-white text-[#0B1B3D]">
                           {c.shortTitle}
                         </option>
                       ))}
